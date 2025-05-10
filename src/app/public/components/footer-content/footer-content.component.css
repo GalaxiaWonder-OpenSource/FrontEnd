@@ -1,0 +1,145 @@
+.footer {
+  background-color: #22396B;
+  color: white;
+  padding: 3dvmax 2dvmax;
+  font-size: 0.95dvmax;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2dvmax;
+  margin-bottom: 2dvmax;
+}
+
+.footer-brand {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-logo {
+  width: 80px;
+  margin-bottom: 1dvmax;
+}
+
+.footer-column {
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5dvmax;
+}
+
+.footer-column h4 {
+  font-weight: bold;
+  margin-bottom: 0.5dvmax;
+}
+
+.footer-column a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-column a:hover {
+  opacity: 0.7;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1dvmax;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-social a {
+  margin-left: 1dvmax;
+  background-color: rgba(255,255,255,0.1);
+  padding: 0.5dvmax;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social mat-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.desktop-only { display: flex; }
+.mobile-only  { display: none; }
+
+@media (max-width: 768px) {
+  .footer-logo {
+    margin-bottom: 0;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #22396B;
+    color: white;
+    padding: 3dvmax 2dvmax;
+    text-align: center;
+  }
+
+  .footer-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4dvmax;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 2dvmax;
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+  }
+
+  .footer-column h4 {
+    margin-bottom: 0.5dvmax;
+    font-weight: bold;
+  }
+
+  .footer-column a {
+    margin: 0.3dvmax 0;
+    font-size: 0.9dvmax;
+    color: white;
+    text-decoration: none;
+  }
+
+  .footer-column a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 2dvmax;
+    margin-bottom: 1dvmax;
+  }
+
+  .footer-bottom {
+    font-size: 0.8dvmax;
+    opacity: 0.7;
+  }
+
+  .desktop-only { display: none; }
+  .mobile-only  {
+    display: block;
+    max-height: 120px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2dvmax;
+  }
+}

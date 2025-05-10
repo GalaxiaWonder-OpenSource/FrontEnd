@@ -1,19 +1,28 @@
-import { Injectable } from '@angular/core';
-import { signal } from '@angular/core';
+import { Injectable, signal, effect } from '@angular/core';
 
 type UserType = 'Worker' | 'Client';
 type OrgRole = 'Contractor' | 'Worker';
-type ProjectRole = 'Coordinator' | 'Specialist' | 'Client' | null;
+type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null;
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-  private userType = signal<UserType | null>(null);
+  // SIGNALS
+  private userType = signal<UserType | null>(this.loadFromStorage('userType'));
+  private organizationId = signal<string | null>(this.loadFromStorage('organizationId'));
+  private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));
+  private projectId = signal<string | null>(this.loadFromStorage('projectId'));
+  private projectRole = signal<ProjectRole>(this.loadFromStorage('projectRole'));
 
-  private organizationId = signal<string | null>(null);
-  private organizationRole = signal<OrgRole | null>(null);
-
-  private projectId = signal<string | null>(null);
-  private projectRole = signal<ProjectRole>(null);
+  constructor() {
+    // Persistencia reactiva automática
+    effect(() => {
+      this.saveToStorage('userType', this.userType());
+      this.saveToStorage('organizationId', this.organizationId());
+      this.saveToStorage('organizationRole', this.organizationRole());
+      this.saveToStorage('projectId', this.projectId());
+      this.saveToStorage('projectRole', this.projectRole());
+    });
+  }
 
   // Setters
   setUserType(type: UserType) {
@@ -30,7 +39,7 @@ export class SessionService {
     this.projectRole.set(role);
   }
 
-  // Clearers
+  // Limpieza
   clearOrganization() {
     this.organizationId.set(null);
     this.organizationRole.set(null);
@@ -66,5 +75,23 @@ export class SessionService {
 
   getProjectRole(): ProjectRole {
     return this.projectRole();
+  }
+
+  // Helpers de persistencia
+  private saveToStorage(key: string, value: any) {
+    if (value !== null && value !== undefined) {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.removeItem(key);
+    }
+  }
+
+  private loadFromStorage(key: string): any {
+    const val = localStorage.getItem(key);
+    try {
+      return val ? JSON.parse(val) : null;
+    } catch {
+      return null;
+    }
   }
 }

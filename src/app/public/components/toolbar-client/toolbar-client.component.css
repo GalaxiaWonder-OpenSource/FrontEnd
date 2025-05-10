@@ -1,0 +1,17 @@
+.toolbar {
+  padding: 0 1rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.active {
+  font-weight: bold;
+  text-decoration: underline;
+}

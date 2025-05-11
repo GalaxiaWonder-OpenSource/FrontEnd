@@ -1,0 +1,41 @@
+<!-- Parte superior (azul oscuro) -->
+<mat-toolbar class="toolbar-top" color="primary">
+  <button mat-icon-button class="icon-left" (click)="goBackToOrganization()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <span class="title">{{ 'navigation.project.title' | translate }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <app-language-switcher />
+</mat-toolbar>
+
+<!-- Barra inferior (navegación) -->
+<mat-toolbar class="toolbar-nav" color="default">
+  <button mat-button (click)="navigateTo('information')" routerLinkActive="active">
+    {{ 'navigation.project.information' | translate }}
+  </button>
+  <button *ngIf="!isClient" mat-button (click)="navigateTo('technical-file')" routerLinkActive="active">
+    {{ 'navigation.project.technical-file' | translate }}
+  </button>
+  <button *ngIf="!isClient" mat-button (click)="navigateTo('schedule')" routerLinkActive="active">
+    {{ 'navigation.project.schedule' | translate }}
+  </button>
+  <button *ngIf="!isClient" mat-button (click)="navigateTo('working-team')" routerLinkActive="active">
+    {{ 'navigation.project.working-team' | translate }}
+  </button>
+  <button mat-button (click)="navigateTo('change-management')" routerLinkActive="active">
+    {{ 'navigation.project.change-management' | translate }}
+  </button>
+  <button *ngIf="isContractor" mat-button (click)="navigateTo('configuration')" routerLinkActive="active">
+    {{ 'navigation.project.configuration' | translate }}
+  </button>
+</mat-toolbar>

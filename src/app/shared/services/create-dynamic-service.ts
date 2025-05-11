@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EndpointConfig } from '../model/endpoint-config';
-import { HttpMethod } from '../model/http-method.enum';
+import { EndpointConfig } from '../model/endpoint-config.vo';
+import { HttpMethod } from '../model/http-method.vo';
 
 /**
  * Extracts the underlying value from an object.
@@ -107,7 +107,9 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
 
       switch (cfg.method) {
         case HttpMethod.GET:
-          return http.get<T>(url, httpOptions);
+          const queryParams = new URLSearchParams(serializeData(params)).toString();
+          const fullUrl = queryParams ? `${url}?${queryParams}` : url;
+          return http.get<T>(fullUrl, httpOptions);
         case HttpMethod.POST:
           return http.post<T>(url, body, httpOptions);
         case HttpMethod.PUT:

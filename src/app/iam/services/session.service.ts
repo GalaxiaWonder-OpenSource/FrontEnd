@@ -12,6 +12,7 @@ export class SessionService {
   private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));
   private projectId = signal<string | null>(this.loadFromStorage('projectId'));
   private projectRole = signal<ProjectRole>(this.loadFromStorage('projectRole'));
+  private milestoneId = signal<string | null>(this.loadFromStorage('milestoneId'));
 
   constructor() {
     // Persistencia reactiva automática
@@ -39,6 +40,11 @@ export class SessionService {
     this.projectRole.set(role);
   }
 
+  setMilestone(id: string) {
+    this.milestoneId.set(id);
+    this.saveToStorage('milestoneId', id);
+  }
+
   // Limpieza
   clearOrganization() {
     this.organizationId.set(null);
@@ -50,10 +56,16 @@ export class SessionService {
     this.projectRole.set(null);
   }
 
+  clearMilestone() {
+    this.milestoneId.set(null);
+    this.saveToStorage('milestoneId', null);
+  }
+
   clearAll() {
     this.userType.set(null);
     this.clearOrganization();
     this.clearProject();
+    this.clearMilestone();
   }
 
   // Getters
@@ -75,6 +87,10 @@ export class SessionService {
 
   getProjectRole(): ProjectRole {
     return this.projectRole();
+  }
+
+  getMilestoneId(): string | null {
+    return this.milestoneId();
   }
 
   // Helpers de persistencia

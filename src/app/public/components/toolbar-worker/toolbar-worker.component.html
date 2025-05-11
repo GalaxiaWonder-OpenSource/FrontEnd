@@ -1,8 +1,26 @@
-<mat-toolbar color="primary" class="toolbar">
-  <span class="title">Panel de Usuario</span>
+<!-- Parte superior (barra azul oscuro) -->
+<mat-toolbar class="toolbar-top" color="primary">
+
+  <span class="title">Panel</span>
 
   <span class="spacer"></span>
 
-  <button mat-button routerLink="/organizations" routerLinkActive="active">Organizaciones</button>
-  <button mat-button routerLink="/invitations" routerLinkActive="active">Invitaciones</button>
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <app-language-switcher/>
+</mat-toolbar>
+
+<!-- Barra inferior (navegación de secciones) -->
+<mat-toolbar class="toolbar-nav" color="default">
+  <button mat-button routerLink="/organizations" routerLinkActive="active">
+    {{ 'navigation.worker.organizations' | translate }}
+  </button>
+  <button mat-button routerLink="/invitations" routerLinkActive="active">
+    {{ 'navigation.worker.invitations' | translate }}
+  </button>
 </mat-toolbar>

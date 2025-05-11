@@ -1,17 +1,39 @@
-.toolbar {
+.toolbar-top {
+  background-color: #22396B;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toolbar-top mat-icon {
+  color: white !important;
+}
+
+
+.toolbar-nav {
+  background-color: white;
+  color: #333;
+  justify-content: center;
+  gap: 1.5rem;
   padding: 0 1rem;
+  border-bottom: 1px solid #ddd;
 }
 
 .title {
+  font-size: 1.2rem;
   font-weight: bold;
-  font-size: 1.1rem;
+  margin: 0 auto;
 }
 
 .spacer {
   flex: 1 1 auto;
 }
 
-.active {
-  font-weight: bold;
+.icon-left {
+  margin-right: 0.5rem;
+}
+
+button.mat-button.active {
   text-decoration: underline;
+  font-weight: bold;
 }

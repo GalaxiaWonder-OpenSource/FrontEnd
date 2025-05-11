@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-toolbar-worker',
@@ -11,7 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     RouterModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    LanguageSwitcherComponent,
+    TranslatePipe,
+    MatIcon
   ],
   templateUrl: './toolbar-worker.component.html',
   styleUrls: ['./toolbar-worker.component.css']

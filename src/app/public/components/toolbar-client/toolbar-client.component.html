@@ -1,0 +1,23 @@
+<!-- Parte superior (barra azul oscuro) -->
+<mat-toolbar class="toolbar-top" color="primary">
+
+  <span class="title">{{ 'navigation.client.title' | translate }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <app-language-switcher />
+</mat-toolbar>
+
+<!-- Barra inferior (navegación) -->
+<mat-toolbar class="toolbar-nav" color="default">
+  <button mat-button routerLink="/projects" routerLinkActive="active">
+    {{ 'navigation.client.projects' | translate }}
+  </button>
+</mat-toolbar>

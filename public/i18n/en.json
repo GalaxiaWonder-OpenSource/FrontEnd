@@ -1,7 +1,36 @@
 {
-  "test": {
-    "one": "One",
-    "two": "Two"
+  "navigation": {
+    "client": {
+      "title": "Client area",
+      "projects": "Projects"
+    },
+    "worker": {
+      "title": "Dashboard",
+      "organizations": "Organizations",
+      "invitations": "Invitations"
+    },
+    "organization": {
+      "title": "Organization",
+      "information": "Information",
+      "projects": "Projects",
+      "members": "Members",
+      "configuration": "Configuration"
+    },
+    "project": {
+      "title": "Project",
+      "information": "Information",
+      "technical-file": "Technical File",
+      "schedule": "Schedule",
+      "working-team": "Working Team",
+      "change-management": "Change Management",
+      "configuration": "Configuration"
+    },
+    "milestone": {
+      "title": "Milestone",
+      "tasks": "Tasks",
+      "meetings": "Meetings",
+      "configuration": "Configuration"
+    }
   },
   "footer": {
     "learn-about": {

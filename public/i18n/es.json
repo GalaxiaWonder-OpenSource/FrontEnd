@@ -1,7 +1,36 @@
 {
-  "test": {
-    "one": "Uno",
-    "two": "Dos"
+  "navigation": {
+    "client": {
+      "title": "Área de cliente",
+      "projects": "Proyectos"
+    },
+    "worker": {
+      "title": "Dashboard",
+      "organizations": "Organizaciones",
+      "invitations": "Invitaciones"
+    },
+    "organization": {
+      "title": "Organización",
+      "information": "Información",
+      "projects": "Proyectos",
+      "members": "Miembros",
+      "configuration": "Configuración"
+    },
+    "project": {
+      "title": "Proyecto",
+      "information": "Información",
+      "technical-file": "Expediente técnico",
+      "schedule": "Cronograma",
+      "working-team": "Equipo de trabajo",
+      "change-management": "Gestión de cambios",
+      "configuration": "Configuración"
+    },
+    "milestone": {
+      "title": "Hito",
+      "tasks": "Tareas",
+      "meetings": "Reuniones",
+      "configuration": "Configuración"
+    }
   },
   "footer": {
     "learn-about": {

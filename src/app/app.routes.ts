@@ -21,7 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () => import('./iam/components/register/register.component').then(m => m.RegisterComponent)
+    loadComponent: () => import('./iam/pages/register-page/register-page.component').then(m => m.RegisterPageComponent)
   },
 
   // Views for Worker

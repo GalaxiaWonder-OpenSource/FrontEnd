@@ -39,6 +39,14 @@
       "password": "ASDFGH123",
       "role": "CLIENT_USER",
       "status": "ACTIVE"
+    },
+    {
+      "id": "72a7ee5e-4eea-4ec0-ad38-539fdafed33c",
+      "personId": "7f2291e8-749b-485b-8c35-07bbae4a6581",
+      "username": "cornelioxd",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -76,6 +84,13 @@
       "phone": "123456789",
       "firstName": "Mario",
       "lastName": "Taco"
+    },
+    {
+      "id": "7f2291e8-749b-485b-8c35-07bbae4a6581",
+      "email": "cornelio@shitty.com",
+      "phone": "123456789",
+      "firstName": "Cornelio",
+      "lastName": "shitty"
     }
   ]
 }

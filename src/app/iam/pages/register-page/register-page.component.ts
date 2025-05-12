@@ -13,11 +13,13 @@ import { RegisterFormComponent } from '../../components/register-form/register-f
 import {MatButton} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [RegisterFormComponent, MatButton, MatCardModule, TranslatePipe],
+  imports: [RegisterFormComponent, MatButton, MatCardModule, TranslatePipe, RouterModule],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css'
 })
@@ -26,12 +28,12 @@ export class RegisterPageComponent {
   successMessage = '';
   errorMessage = '';
   isLoading = false;
-  private router: any;
 
   constructor(
     private personService: PersonService,
     private userAccountService: UserAccountService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   resetValues() {

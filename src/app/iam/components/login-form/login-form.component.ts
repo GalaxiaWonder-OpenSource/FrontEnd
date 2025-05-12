@@ -4,7 +4,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import {MatCardModule} from '@angular/material/card';
 import {RouterLink} from '@angular/router';
@@ -17,7 +16,6 @@ import {RouterLink} from '@angular/router';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    NgIf,
     TranslatePipe,
     MatCardModule,
     RouterLink

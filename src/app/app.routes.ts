@@ -1,16 +1,15 @@
-import { Routes } from '@angular/router';
-import { UserTypeGuard } from './iam/guards/user-type';
-import { WorkerLayoutComponent } from './organizations/pages/worker-layout/worker-layout.component';
-import { ClientLayoutComponent } from './projects/pages/client-layout/client-layout.component';
+import {Routes} from '@angular/router';
+import {UserTypeGuard} from './iam/guards/user-type';
+import {WorkerLayoutComponent} from './organizations/pages/worker-layout/worker-layout.component';
+import {ClientLayoutComponent} from './projects/pages/client-layout/client-layout.component';
 import {OrgRoleGuard} from './organizations/guards/org-role';
 import {OrganizationMemberGuard} from './organizations/guards/organization-member-guard';
-import {
-  OrganizationLayoutComponent
-} from './organizations/pages/organization-layout/organization-layout.component';
+import {OrganizationLayoutComponent} from './organizations/pages/organization-layout/organization-layout.component';
 import {ProjectAccessGuard} from './projects/guards/project-acces-guard';
 import {ProjectLayoutComponent} from './projects/pages/project-layout/project-layout.component';
 import {MilestoneAccessGuard} from './projects/guards/milestone-acces-guard';
 import {MilestoneLayoutComponent} from './projects/pages/milestone-layout/milestone-layout.component';
+import {UserRole} from './iam/model/user-role.vo';
 
 export const routes: Routes = [
   // Public
@@ -28,7 +27,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: 'Worker' },
+    data: { expectedUserType: UserRole.ORGANIZATION_USER },
     component: WorkerLayoutComponent,
     children: [
       {
@@ -46,7 +45,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: 'Client' },
+    data: { expectedUserType: UserRole.CLIENT_USER },
     component: ClientLayoutComponent,
     children: [
       {

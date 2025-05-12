@@ -47,6 +47,22 @@
       "password": "ASDFGH123",
       "role": "CLIENT_USER",
       "status": "ACTIVE"
+    },
+    {
+      "id": "4691ced6-bccd-4ab9-80ee-d9e1aea84566",
+      "personId": "8548ca95-682a-4698-ab33-09f2c792d42c",
+      "username": "pol",
+      "password": "polpol",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "4792eae6-3aa6-4454-bca6-f6ec0939fd17",
+      "personId": "0258e216-2680-4643-a454-04a609bd1915",
+      "username": "robotcito",
+      "password": "robotcito",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -91,6 +107,27 @@
       "phone": "123456789",
       "firstName": "Cornelio",
       "lastName": "shitty"
+    },
+    {
+      "id": "2a0e61d0-d946-489d-85ec-a2d37412d8c3",
+      "email": "pol@hotmai.com",
+      "phone": "990434234234",
+      "firstName": "Carlos",
+      "lastName": "Vela"
+    },
+    {
+      "id": "8548ca95-682a-4698-ab33-09f2c792d42c",
+      "email": "podwadwal@hotmai.com",
+      "phone": "964419415",
+      "firstName": "Carlos",
+      "lastName": "Vela"
+    },
+    {
+      "id": "0258e216-2680-4643-a454-04a609bd1915",
+      "email": "robotcito@gmail.com",
+      "phone": "964419415",
+      "firstName": "Robotcito",
+      "lastName": "Reaño"
     }
   ]
 }

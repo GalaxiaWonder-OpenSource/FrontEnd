@@ -109,6 +109,20 @@
       },
       "submit": "Register user"
     }
+  },
+  "login-page": {
+    "title": "Login",
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "submit": "Sign in",
+      "no-account": "Don't have an account?",
+      "register-link": "Register here"
+    },
+    "errors": {
+      "invalid-credentials": "Incorrect username or password.",
+      "server": "Unable to connect to the server. Please try again."
+    }
   }
 }
 

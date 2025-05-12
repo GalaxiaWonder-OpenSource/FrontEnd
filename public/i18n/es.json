@@ -109,5 +109,19 @@
       },
       "submit": "Registrar usuario"
     }
+  },
+  "login-page": {
+    "title": "Iniciar sesión",
+    "form": {
+      "username": "Nombre de usuario",
+      "password": "Contraseña",
+      "submit": "Entrar",
+      "no-account": "¿No tienes una cuenta?",
+      "register-link": "Regístrate aquí"
+    },
+    "errors": {
+      "invalid-credentials": "Usuario o contraseña incorrectos.",
+      "server": "No se pudo conectar con el servidor. Intenta nuevamente."
+    }
   }
 }

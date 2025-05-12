@@ -1,4 +1,81 @@
 {
+  "navigation": {
+    "client": {
+      "title": "Client area",
+      "projects": "Projects"
+    },
+    "worker": {
+      "title": "Dashboard",
+      "organizations": "Organizations",
+      "invitations": "Invitations"
+    },
+    "organization": {
+      "title": "Organization",
+      "information": "Information",
+      "projects": "Projects",
+      "members": "Members",
+      "configuration": "Configuration"
+    },
+    "project": {
+      "title": "Project",
+      "information": "Information",
+      "technical-file": "Technical File",
+      "schedule": "Schedule",
+      "working-team": "Working Team",
+      "change-management": "Change Management",
+      "configuration": "Configuration"
+    },
+    "milestone": {
+      "title": "Milestone",
+      "tasks": "Tasks",
+      "meetings": "Meetings",
+      "configuration": "Configuration"
+    }
+  },
+  "footer": {
+    "learn-about": {
+      "title": "Learn about",
+      "privacy-policy": "Privacy Policy",
+      "terms-and-conditions": "Terms & Conditions"
+    },
+    "contact-us": "Contact Us",
+    "rights": "All rights reserved",
+    "terms-and-conditions": {
+      "title": "Terms & Conditions",
+      "introduction": {
+        "title": "Introduction",
+        "content": "This document establishes the terms and conditions of use for ProP GMS, developed by the Galaxia Wonder team. By accessing and using this platform, you agree to be bound by these terms."
+      },
+      "use-of-the-service": {
+        "title": "Use of the Service",
+        "content": "The user agrees to make responsible and ethical use of the platform, respecting the features offered and avoiding misuse."
+      },
+      "user-responsibility": {
+        "title": "User Responsability",
+        "content": "The user is responsible for the accuracy of the data they provide and for the proper use of the platform."
+      },
+      "responsibility-of-the-development-team": {
+        "title": "Responsibility of the Development Team",
+        "content": "The team is committed to ensuring the software runs smoothly, performing ongoing maintenance, and acting professionally and ethically throughout all stages of development."
+      },
+      "privacy-and-data-protection": {
+        "title": "Privacy and Data Protection",
+        "content": "The confidentiality and security of the user's personal data is guaranteed, and it will not be shared with third parties without consent. Privacy by design principles and compliance with current regulations are adhered to."
+      },
+      "intellectual-property": {
+        "title": "Intellectual Property",
+        "content": "All design, development, and content rights belong to the development team unless otherwise stated."
+      },
+      "ethical-and-professional-principles": {
+        "title": "Ethical and Professional Principles",
+        "content": "Our team adheres to the ACM/IEEE Code of Professional Ethics and the College of Engineers of Peru (CIP). We promote:\nTransparency in software engineering.\nCommitment to quality, equity, and accessibility.\nRespect for the rights of users and society."
+      },
+      "modifications-and-contact": {
+        "title": "Modifications and Contact",
+        "content": "We reserve the right to update these terms. For questions, please contact us at:"
+      }
+    }
+  },
   "register-page": {
     "title": "Sign Up",
     "success-card": {
@@ -34,3 +111,4 @@
     }
   }
 }
+

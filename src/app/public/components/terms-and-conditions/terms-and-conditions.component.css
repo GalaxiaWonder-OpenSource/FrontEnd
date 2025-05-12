@@ -1,0 +1,14 @@
+.link-button {
+  background: none;
+  border: none;
+  color: white !important;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+  color: #90caf9;
+}

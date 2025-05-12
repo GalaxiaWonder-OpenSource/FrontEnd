@@ -1,0 +1,15 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-container {
+  margin-top: 1rem;
+  text-align: right;
+}

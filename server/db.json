@@ -1,3 +1,81 @@
 {
-
+  "user-accounts": [
+    {
+      "id": "b28d1ffa-83e5-4467-bc08-39babf2f8d29",
+      "personId": "b4596780-a687-4346-a3fd-3af5b4ef51c1",
+      "username": "popedeidad",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "f279cd04-4d7c-4daf-bd71-7ee8fcbc5f08",
+      "personId": "b65296d4-bac9-40dd-a72b-be58ae76df24",
+      "username": "hijoprodigo",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ba06256a-f1e0-4ed6-bf2d-ffcc64dc5c3e",
+      "personId": "ff08deca-aebc-4e55-977b-a376f7a27a57",
+      "username": "stalemartyr",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "6d97777b-5dc9-47e5-889d-7842b7d9f2ed",
+      "personId": "2989a3d9-4837-4180-962d-3ec250d461bb",
+      "username": "codylion",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "a57144c1-ba74-44d0-aa2a-68b5a66dfd20",
+      "personId": "91d2469e-8b10-4063-bb22-9659872a90e8",
+      "username": "mariotaco",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
+    }
+  ],
+  "persons": [
+    {
+      "id": "b4596780-a687-4346-a3fd-3af5b4ef51c1",
+      "email": "popeyin@deidad.com",
+      "phone": "987654321",
+      "firstName": "Carlos",
+      "lastName": "Ochoa"
+    },
+    {
+      "id": "b65296d4-bac9-40dd-a72b-be58ae76df24",
+      "email": "panaelmer@prodigo.com",
+      "phone": "123456789",
+      "firstName": "Elmer",
+      "lastName": "Riva"
+    },
+    {
+      "id": "ff08deca-aebc-4e55-977b-a376f7a27a57",
+      "email": "pedro@gallegos.com",
+      "phone": "123456789",
+      "firstName": "Pedro",
+      "lastName": "Gallegos"
+    },
+    {
+      "id": "2989a3d9-4837-4180-962d-3ec250d461bb",
+      "email": "cody@lion.com",
+      "phone": "987654321",
+      "firstName": "Cody",
+      "lastName": "Lion"
+    },
+    {
+      "id": "91d2469e-8b10-4063-bb22-9659872a90e8",
+      "email": "mario@taco.com",
+      "phone": "123456789",
+      "firstName": "Mario",
+      "lastName": "Taco"
+    }
+  ]
 }

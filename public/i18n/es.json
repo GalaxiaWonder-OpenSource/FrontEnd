@@ -1,6 +1,36 @@
 {
-  "test": {
-    "one": "Uno",
-    "two": "Dos"
+  "register-page": {
+    "title": "Registro",
+    "success-card": {
+      "title": "¡Registro exitoso!",
+      "content": "Tu cuenta ha sido creada correctamente. Ya puedes iniciar sesión con tu nombre de usuario.",
+      "action": "Ir al inicio de sesión"
+    },
+    "form": {
+      "personal-data": {
+        "title": "Datos personales",
+        "names": "Nombres",
+        "surname": "Apellidos",
+        "email": "Correo electrónico",
+        "phone": "Teléfono"
+      },
+      "access-data": {
+        "title": "Datos de acceso",
+        "username": "Nombre de usuario",
+        "password": "Contraseña",
+        "user-type": {
+          "label": "Tipo de usuario",
+          "CLIENT_USER": "Cliente",
+          "ORGANIZATION_USER": "Organización"
+        }
+      },
+      "errors": {
+        "email-taken": "Ya existe un usuario con ese correo.",
+        "create-person": "Error al crear persona.",
+        "create-account": "Error al crear cuenta de usuario.",
+        "check-email": "Error al verificar el correo."
+      },
+      "submit": "Registrar usuario"
+    }
   }
 }

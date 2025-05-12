@@ -1,6 +1,36 @@
 {
-  "test": {
-    "one": "One",
-    "two": "Two"
+  "register-page": {
+    "title": "Sign Up",
+    "success-card": {
+      "title": "Registration Successful!",
+      "content": "Your account has been created successfully. You can now log in with your username.",
+      "action": "Go to Login"
+    },
+    "form": {
+      "personal-data": {
+        "title": "Personal data",
+        "names": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "access-data": {
+        "title": "Access data",
+        "username": "Username",
+        "password": "Password",
+        "user-type": {
+          "label": "User type",
+          "CLIENT_USER": "Client",
+          "ORGANIZATION_USER": "Organization"
+        }
+      },
+      "errors": {
+        "email-taken": "A user with this email already exists.",
+        "create-person": "Failed to create person.",
+        "create-account": "Failed to create user account.",
+        "check-email": "Failed to verify email."
+      },
+      "submit": "Register user"
+    }
   }
 }

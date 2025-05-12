@@ -59,7 +59,7 @@ export class RegisterPageComponent {
     return new UserAccount({
       username: new Username(formData.username),
       password: new Password(formData.password),
-      role: UserRole.CLIENT_USER,
+      role: formData.role,
       status: AccountStatus.ACTIVE,
       personId
     });

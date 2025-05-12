@@ -10,6 +10,7 @@ import { UserAccount } from '../model/user-account.entity';
 export class UserAccountService {
   private readonly service = createDynamicService<UserAccount>([
     createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'user-accounts'),
+    createEndpointConfig({ name: 'getByUsername', method: HttpMethod.GET }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'user-accounts', '/:id'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'user-accounts', '/:id'),
@@ -17,6 +18,7 @@ export class UserAccountService {
   ]);
 
   getAll = this.service['getAll'];
+  getByUsername = this.service['getByUsername']
   getById = this.service['getById'];
   create = this.service['create'];
   update = this.service['update'];

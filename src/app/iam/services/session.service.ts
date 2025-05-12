@@ -1,6 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
+import {UserRole} from '../model/user-role.vo';
 
-type UserType = 'Worker' | 'Client';
+type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER ;
 type OrgRole = 'Contractor' | 'Worker';
 type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null;
 

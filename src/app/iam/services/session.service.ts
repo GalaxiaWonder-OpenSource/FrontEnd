@@ -1,5 +1,6 @@
 import { Injectable, signal, effect } from '@angular/core';
 import {UserRole} from '../model/user-role.vo';
+import {PersonId} from '../../shared/model/person-id.vo';
 
 type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER ;
 type OrgRole = 'Contractor' | 'Worker';
@@ -8,6 +9,7 @@ type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   // SIGNALS
+  private personId = signal<PersonId | null>(this.loadFromStorage('userId'));
   private userType = signal<UserType | null>(this.loadFromStorage('userType'));
   private organizationId = signal<string | null>(this.loadFromStorage('organizationId'));
   private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));
@@ -18,6 +20,7 @@ export class SessionService {
   constructor() {
     // Persistencia reactiva automática
     effect(() => {
+      this.saveToStorage('personId', this.personId());
       this.saveToStorage('userType', this.userType());
       this.saveToStorage('organizationId', this.organizationId());
       this.saveToStorage('organizationRole', this.organizationRole());
@@ -27,6 +30,10 @@ export class SessionService {
   }
 
   // Setters
+  setPersonId(id: PersonId) {
+    this.personId.set(id);
+  }
+
   setUserType(type: UserType) {
     this.userType.set(type);
   }
@@ -47,6 +54,11 @@ export class SessionService {
   }
 
   // Limpieza
+  clearIdentity() {
+    this.personId.set(null);
+    this.userType.set(null);
+  }
+
   clearOrganization() {
     this.organizationId.set(null);
     this.organizationRole.set(null);
@@ -70,6 +82,10 @@ export class SessionService {
   }
 
   // Getters
+  getPersonId(): PersonId | null {
+    return this.personId();
+  }
+
   getUserType(): UserType | null {
     return this.userType();
   }

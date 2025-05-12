@@ -123,6 +123,27 @@
       "invalid-credentials": "Incorrect username or password.",
       "server": "Unable to connect to the server. Please try again."
     }
+  },
+  "organization-card": {
+    "ruc": "RUC",
+    "status": "Status",
+    "created-at": "Created on"
+  },
+  "organization-list": {
+    "empty": "No organizations found."
+  },
+  "create-organization": {
+    "title": "Create new organization",
+    "legal-name": "Legal name",
+    "comercial-name": "Commercial name",
+    "ruc": "RUC",
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
+  "organization-tab": {
+    "title": "Organizations",
+    "create": "New organization"
   }
+
 }
 

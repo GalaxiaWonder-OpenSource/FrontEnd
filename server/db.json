@@ -92,5 +92,19 @@
       "firstName": "Specialist",
       "lastName": "B"
     }
-  ]
+  ],
+  "organizations": [
+    {
+      "id": "0ca9bb36-da58-448d-b7c1-67125c7e30a6",
+      "legalName": "ASD",
+      "ruc": "10164120517",
+      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "createdAt": "2025-05-12T09:31:25.887Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    }
+  ],
+  "organization-invitations": [],
+  "organization-members": []
 }

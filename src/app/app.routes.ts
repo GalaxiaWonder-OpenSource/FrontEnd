@@ -32,7 +32,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'organizations',
-        loadComponent: () => import('./organizations/components/organization-list/organization-list.component').then(m => m.OrganizationListComponent)
+        loadComponent: () => import('./organizations/components/organization-tab/organization-tab.component').then(m => m.OrganizationTabComponent)
       },
       {
         path: 'invitations',

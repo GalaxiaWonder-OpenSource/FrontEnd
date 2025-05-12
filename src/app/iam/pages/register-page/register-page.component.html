@@ -1,0 +1,24 @@
+<section class="register-page">
+  @if (!isRegistered) {
+    <h1>{{ 'register-page.title' | translate }}</h1>
+    <app-register-form (submitted)="onRegisterSubmitted($event)" />
+  } @else {
+    <mat-card class="success-card">
+      <mat-card-header>
+        <mat-card-title class="title">{{ 'register-page.success-card.title' | translate}}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="message">{{ 'register-page.success-card.content' | translate}}</p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" (click)="goToLogin()">{{ 'register-page.success-card.action' | translate}}</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+</section>

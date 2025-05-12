@@ -1,0 +1,21 @@
+.register-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.success {
+  color: green;
+  margin-top: 1rem;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+.success-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: center;
+}

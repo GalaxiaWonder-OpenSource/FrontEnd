@@ -1,0 +1,4 @@
+export enum ChangeOrigin {
+  CHANGE_REQUEST = 'CHANGE_REQUEST',
+  TECHNICAL_QUERY = 'TECHNICAL_QUERY'
+}

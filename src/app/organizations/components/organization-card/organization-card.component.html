@@ -1,0 +1,14 @@
+<mat-card class="organization-card">
+  <mat-card-header>
+    <mat-card-title>{{ organization.legalName }}</mat-card-title>
+    <mat-card-subtitle *ngIf="organization.commercialName">
+      {{ organization.commercialName }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>{{ 'organization-card.ruc' | translate }}:</strong> {{ organization.ruc }}</p>
+    <p><strong>{{ 'organization-card.status' | translate }}:</strong> {{ organization.status }}</p>
+    <p><strong>{{ 'organization-card.created-at' | translate }}:</strong> {{ organization.createdAt | date }}</p>
+  </mat-card-content>
+</mat-card>

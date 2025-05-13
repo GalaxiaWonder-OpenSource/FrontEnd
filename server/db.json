@@ -92,5 +92,44 @@
       "firstName": "Specialist",
       "lastName": "B"
     }
+  ],
+  "organizations": [
+    {
+      "id": "42ab1195-8521-4d70-9e65-319fc923e9ae",
+      "legalName": "Organization A",
+      "ruc": "10164120517",
+      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "createdAt": "2025-05-12T23:57:00.073Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    },
+    {
+      "id": "1bd67a73-62a2-4152-b9e4-71cf130519ec",
+      "legalName": "Organization B",
+      "ruc": "10164134517",
+      "createdBy": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "createdAt": "2025-05-12T23:57:39.496Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    }
+  ],
+  "organization-invitations": [],
+  "organization-members": [
+    {
+      "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
+      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "organizationId": "42ab1195-8521-4d70-9e65-319fc923e9ae",
+      "memberType": "Contractor",
+      "joinedAt": "2025-05-12T23:57:00.082Z"
+    },
+    {
+      "id": "71f09284-aecd-4447-b272-3de2754d0401",
+      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "organizationId": "1bd67a73-62a2-4152-b9e4-71cf130519ec",
+      "memberType": "Contractor",
+      "joinedAt": "2025-05-12T23:57:39.503Z"
+    }
   ]
 }

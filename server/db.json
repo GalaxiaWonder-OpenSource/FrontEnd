@@ -1,133 +1,135 @@
 {
   "user-accounts": [
     {
-      "id": "b28d1ffa-83e5-4467-bc08-39babf2f8d29",
-      "personId": "b4596780-a687-4346-a3fd-3af5b4ef51c1",
-      "username": "popedeidad",
+      "id": "60b264a9-e3a0-4e4b-a5d5-e51095d17cd7",
+      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "username": "contractora",
+      "password": "ASDFGH123",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "f60826b3-61e9-44de-855b-3c3d6f0c8860",
+      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "username": "contractorb",
+      "password": "ASDFGH123",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "10e7985b-9cc5-4b87-918c-c6d92bb79bae",
+      "personId": "396e2e75-395e-4339-b5fc-1608027b3cbe",
+      "username": "clienta",
       "password": "ASDFGH123",
       "role": "CLIENT_USER",
       "status": "ACTIVE"
     },
     {
-      "id": "f279cd04-4d7c-4daf-bd71-7ee8fcbc5f08",
-      "personId": "b65296d4-bac9-40dd-a72b-be58ae76df24",
-      "username": "hijoprodigo",
+      "id": "58b7d8dd-a9f4-4c1a-9ded-6ab477c785b3",
+      "personId": "bc8993f5-2cd1-42fe-bf1e-6fd8d2ca0848",
+      "username": "clientb",
       "password": "ASDFGH123",
       "role": "CLIENT_USER",
       "status": "ACTIVE"
     },
     {
-      "id": "ba06256a-f1e0-4ed6-bf2d-ffcc64dc5c3e",
-      "personId": "ff08deca-aebc-4e55-977b-a376f7a27a57",
-      "username": "stalemartyr",
+      "id": "73bf37a5-39a8-4655-affd-0db81a784c07",
+      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
+      "username": "specialista",
       "password": "ASDFGH123",
-      "role": "CLIENT_USER",
+      "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
     },
     {
-      "id": "6d97777b-5dc9-47e5-889d-7842b7d9f2ed",
-      "personId": "2989a3d9-4837-4180-962d-3ec250d461bb",
-      "username": "codylion",
+      "id": "e99d082c-9f4f-429c-af29-e68fd3402cc9",
+      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
+      "username": "specialistb",
       "password": "ASDFGH123",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "a57144c1-ba74-44d0-aa2a-68b5a66dfd20",
-      "personId": "91d2469e-8b10-4063-bb22-9659872a90e8",
-      "username": "mariotaco",
-      "password": "ASDFGH123",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "72a7ee5e-4eea-4ec0-ad38-539fdafed33c",
-      "personId": "7f2291e8-749b-485b-8c35-07bbae4a6581",
-      "username": "cornelioxd",
-      "password": "ASDFGH123",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "4691ced6-bccd-4ab9-80ee-d9e1aea84566",
-      "personId": "8548ca95-682a-4698-ab33-09f2c792d42c",
-      "username": "pol",
-      "password": "polpol",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "4792eae6-3aa6-4454-bca6-f6ec0939fd17",
-      "personId": "0258e216-2680-4643-a454-04a609bd1915",
-      "username": "robotcito",
-      "password": "robotcito",
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
     }
   ],
   "persons": [
     {
-      "id": "b4596780-a687-4346-a3fd-3af5b4ef51c1",
-      "email": "popeyin@deidad.com",
-      "phone": "987654321",
-      "firstName": "Carlos",
-      "lastName": "Ochoa"
-    },
-    {
-      "id": "b65296d4-bac9-40dd-a72b-be58ae76df24",
-      "email": "panaelmer@prodigo.com",
+      "id": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "email": "contractora@example.com",
       "phone": "123456789",
-      "firstName": "Elmer",
-      "lastName": "Riva"
+      "firstName": "Contractor",
+      "lastName": "A"
     },
     {
-      "id": "ff08deca-aebc-4e55-977b-a376f7a27a57",
-      "email": "pedro@gallegos.com",
+      "id": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "email": "contractob@example.com",
       "phone": "123456789",
-      "firstName": "Pedro",
-      "lastName": "Gallegos"
+      "firstName": "Contractor",
+      "lastName": "B"
     },
     {
-      "id": "2989a3d9-4837-4180-962d-3ec250d461bb",
-      "email": "cody@lion.com",
-      "phone": "987654321",
-      "firstName": "Cody",
-      "lastName": "Lion"
-    },
-    {
-      "id": "91d2469e-8b10-4063-bb22-9659872a90e8",
-      "email": "mario@taco.com",
+      "id": "396e2e75-395e-4339-b5fc-1608027b3cbe",
+      "email": "clienta@example.com",
       "phone": "123456789",
-      "firstName": "Mario",
-      "lastName": "Taco"
+      "firstName": "Client",
+      "lastName": "A"
     },
     {
-      "id": "7f2291e8-749b-485b-8c35-07bbae4a6581",
-      "email": "cornelio@shitty.com",
+      "id": "bc8993f5-2cd1-42fe-bf1e-6fd8d2ca0848",
+      "email": "clientb@example.com",
       "phone": "123456789",
-      "firstName": "Cornelio",
-      "lastName": "shitty"
+      "firstName": "Client",
+      "lastName": "B"
     },
     {
-      "id": "2a0e61d0-d946-489d-85ec-a2d37412d8c3",
-      "email": "pol@hotmai.com",
-      "phone": "990434234234",
-      "firstName": "Carlos",
-      "lastName": "Vela"
+      "id": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
+      "email": "specialista@example.com",
+      "phone": "123456789",
+      "firstName": "Specialist",
+      "lastName": "A"
     },
     {
-      "id": "8548ca95-682a-4698-ab33-09f2c792d42c",
-      "email": "podwadwal@hotmai.com",
-      "phone": "964419415",
-      "firstName": "Carlos",
-      "lastName": "Vela"
+      "id": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
+      "email": "specialistb@example.com",
+      "phone": "123456789",
+      "firstName": "Specialist",
+      "lastName": "B"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "42ab1195-8521-4d70-9e65-319fc923e9ae",
+      "legalName": "Organization A",
+      "ruc": "10164120517",
+      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "createdAt": "2025-05-12T23:57:00.073Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
     },
     {
-      "id": "0258e216-2680-4643-a454-04a609bd1915",
-      "email": "robotcito@gmail.com",
-      "phone": "964419415",
-      "firstName": "Robotcito",
-      "lastName": "Reaño"
+      "id": "1bd67a73-62a2-4152-b9e4-71cf130519ec",
+      "legalName": "Organization B",
+      "ruc": "10164134517",
+      "createdBy": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "createdAt": "2025-05-12T23:57:39.496Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    }
+  ],
+  "organization-invitations": [],
+  "organization-members": [
+    {
+      "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
+      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "organizationId": "42ab1195-8521-4d70-9e65-319fc923e9ae",
+      "memberType": "Contractor",
+      "joinedAt": "2025-05-12T23:57:00.082Z"
+    },
+    {
+      "id": "71f09284-aecd-4447-b272-3de2754d0401",
+      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "organizationId": "1bd67a73-62a2-4152-b9e4-71cf130519ec",
+      "memberType": "Contractor",
+      "joinedAt": "2025-05-12T23:57:39.503Z"
     }
   ]
 }

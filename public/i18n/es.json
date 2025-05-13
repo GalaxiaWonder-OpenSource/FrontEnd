@@ -123,5 +123,26 @@
       "invalid-credentials": "Usuario o contraseña incorrectos.",
       "server": "No se pudo conectar con el servidor. Intenta nuevamente."
     }
+  },
+  "organization-card": {
+    "ruc": "RUC",
+    "status": "Estado",
+    "created-at": "Creada el"
+  },
+  "organization-list": {
+    "empty": "No se encontraron organizaciones."
+  },
+  "create-organization": {
+    "title": "Crear nueva organización",
+    "legal-name": "Razón social",
+    "comercial-name": "Nombre comercial",
+    "ruc": "RUC",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
+  "organization-tab": {
+    "title": "Organizaciones",
+    "create": "Nueva organización"
   }
+
 }

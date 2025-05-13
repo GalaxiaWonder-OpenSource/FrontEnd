@@ -11,12 +11,14 @@ export class PersonService {
   private readonly service = createDynamicService<Person>([
     createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'persons'),
     createEndpointConfig({ name: 'getByEmail', method: HttpMethod.GET }, undefined, 'persons'),
+    createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'persons', '/:id'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'persons'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'persons', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'persons', '/:id')
   ]);
 
   getAll = this.service['getAll'];
+  getById = this.service['getById'];
   getByEmail = this.service['getByEmail'];
   create = this.service['create'];
   update = this.service['update'];

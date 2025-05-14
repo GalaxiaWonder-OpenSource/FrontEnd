@@ -9,7 +9,7 @@ type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   // SIGNALS
-  private personId = signal<PersonId | null>(this.loadFromStorage('userId'));
+  private personId = signal<PersonId | null>(this.loadFromStorage('personId'));
   private userType = signal<UserType | null>(this.loadFromStorage('userType'));
   private organizationId = signal<string | null>(this.loadFromStorage('organizationId'));
   private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));

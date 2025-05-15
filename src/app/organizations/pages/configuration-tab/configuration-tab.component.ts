@@ -79,7 +79,7 @@ export class ConfigurationTabComponent {
     fullUpdate.legalName = updated.legalName
     fullUpdate.commercialName = updated.commercialName
 
-    this.organizationService.replace({fullUpdate}, { id: this.org.id }).subscribe({
+    this.organizationService.replace({legalName: fullUpdate.legalName, commercialName: fullUpdate.commercialName}, { id: this.org.id }).subscribe({
       next: () => {
         this.message = 'organization-configuration.success.updated';
         this.messageType = 'success';

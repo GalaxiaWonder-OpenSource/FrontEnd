@@ -1,0 +1,14 @@
+<mat-card class="project-card">
+  <mat-card-header>
+    <mat-card-title>{{ project.name }}</mat-card-title>
+    <mat-card-subtitle *ngIf="project.description">
+      {{ project.description }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>{{ 'organization-card.ruc' | translate }}:</strong> {{ project.startingDate | date }}</p>
+    <!--<p><strong>{{ 'organization-card.status' | translate }}:</strong> {{ organization.status }}</p>-->
+    <p><strong>{{ 'organization-card.created-at' | translate }}:</strong> {{ project.endingDate | date }}</p>
+  </mat-card-content>
+</mat-card>

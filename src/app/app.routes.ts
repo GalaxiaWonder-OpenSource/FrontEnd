@@ -65,7 +65,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'info', pathMatch: 'full' },
       {
         path: 'info',
-        loadComponent: () => import('./organizations/components/info/info.component').then(m => m.InfoComponent)
+        loadComponent: () => import('./organizations/pages/organization-information-tab/organization-information-tab.component').then(m => m.OrganizationInformationTabComponent)
       },
       {
         path: 'projects',

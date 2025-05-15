@@ -16,6 +16,7 @@ export class OrganizationService {
     createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'deactivate', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id/deactivate'),
+    createEndpointConfig({ name: 'replace', method: HttpMethod.PUT }, undefined, 'organizations', '/:id'),
   ]);
 
   getAll = this.service['getAll'];
@@ -25,4 +26,5 @@ export class OrganizationService {
   update = this.service['update'];
   delete = this.service['delete'];
   deactivate = this.service['deactivate'];
+  replace = this.service['replace'];
 }

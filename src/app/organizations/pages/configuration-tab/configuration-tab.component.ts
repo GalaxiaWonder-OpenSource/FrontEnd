@@ -49,7 +49,7 @@ export class ConfigurationTabComponent {
   }
 
   onSubmitChanges() {
-    if (!this.org?.id) return;
+    if (!this.org?.id || !this.originalOrg) return;
 
     const updated = this.formComponent.getUpdatedOrganization();
 
@@ -62,8 +62,8 @@ export class ConfigurationTabComponent {
 
     // Validación 2: sin cambios
     const noChanges =
-        updated.legalName === this.originalOrg?.legalName &&
-        updated.commercialName === this.originalOrg?.commercialName;
+      updated.legalName === this.originalOrg.legalName &&
+      updated.commercialName === this.originalOrg.commercialName;
 
     if (noChanges) {
       this.message = 'organization-configuration.errors.no-changes';
@@ -71,12 +71,20 @@ export class ConfigurationTabComponent {
       return;
     }
 
-    // PATCH
-    this.organizationService.update(updated, { id: this.org.id }).subscribe({
+    // Generar nuevo objeto con todo (PUT)
+    const fullUpdate: any = {
+      ...this.originalOrg
+    };
+
+    fullUpdate.legalName = updated.legalName
+    fullUpdate.commercialName = updated.commercialName
+
+    this.organizationService.replace({fullUpdate}, { id: this.org.id }).subscribe({
       next: () => {
         this.message = 'organization-configuration.success.updated';
         this.messageType = 'success';
-        this.originalOrg = JSON.parse(JSON.stringify(this.org));
+        this.originalOrg = JSON.parse(JSON.stringify(fullUpdate));
+        this.org = JSON.parse(JSON.stringify(fullUpdate));
       },
       error: (err: any) => {
         console.error('Error', err);

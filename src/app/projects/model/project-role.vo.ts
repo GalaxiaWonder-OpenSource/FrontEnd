@@ -1,0 +1,4 @@
+export enum ProjectRole {
+  COORDINATOR = 'COORDINATOR',
+  SPECIALIST = 'SPECIALIST'
+}

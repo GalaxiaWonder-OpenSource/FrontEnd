@@ -51,7 +51,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'projects',
-        loadComponent: () => import('./projects/components/project-list/project-list.component').then(m => m.ProjectListComponent)
+        loadComponent: () => import('./projects/pages/client-layout/client-layout.component').then(m => m.ClientLayoutComponent)
       }
     ]
   },

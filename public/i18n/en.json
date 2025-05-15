@@ -157,6 +157,28 @@
     "success": {
       "updated": "Organization updated successfully!"
     }
+  },
+  "project-card": {
+    "starting-date": "Start date",
+    "ending-date": "End date",
+    "descriptions": {
+      "project-a": "Description of Project A"
+    }
+  },
+  "organization-configuration": {
+    "title": "Edit Organization",
+    "legal-name": "Legal Name",
+    "commercial-name": "Commercial Name",
+    "submit": "Change",
+    "errors": {
+      "empty-legal-name": "The legal name cannot be empty.",
+      "no-changes": "No changes were made.",
+      "api-failed": "An error occurred while updating the organization."
+    },
+    "success": {
+      "updated": "Organization updated successfully!"
+    }
   }
+
 }
 

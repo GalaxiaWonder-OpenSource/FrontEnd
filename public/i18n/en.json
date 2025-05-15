@@ -148,7 +148,15 @@
     "title": "Edit Organization",
     "legal-name": "Legal Name",
     "commercial-name": "Commercial Name",
-    "submit": "Change"
+    "submit": "Change",
+    "errors": {
+      "empty-legal-name": "The legal name cannot be empty.",
+      "no-changes": "No changes were made.",
+      "api-failed": "An error occurred while updating the organization."
+    },
+    "success": {
+      "updated": "Organization updated successfully!"
+    }
   }
 }
 

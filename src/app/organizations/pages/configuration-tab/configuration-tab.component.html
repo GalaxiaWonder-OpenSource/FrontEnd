@@ -5,7 +5,9 @@
     *ngIf="org"
     [organization]="org"
   ></app-configuration-form>
-
+  <div *ngIf="message" [ngClass]="messageType" class="status-message">
+    {{ message | translate }}
+  </div>
   <div class="button-container">
     <button mat-raised-button color="primary" (click)="onSubmitChanges()">
       {{ 'organization-configuration.submit' | translate }}

@@ -3,14 +3,14 @@ import { ConfigurationFormComponent } from '../../components/configuration-form/
 import { OrganizationService } from '../../services/organization.service';
 import { SessionService } from '../../../iam/services/session.service';
 import { Organization } from '../../model/organization.entity';
-import { NgIf } from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-configuration-tab',
   standalone: true,
-    imports: [ConfigurationFormComponent, NgIf, MatButtonModule, TranslatePipe],
+  imports: [ConfigurationFormComponent, NgIf, MatButtonModule, TranslatePipe, NgClass],
   templateUrl: './configuration-tab.component.html',
   styleUrls: ['./configuration-tab.component.css']
 })
@@ -21,11 +21,14 @@ export class ConfigurationTabComponent {
 
   @ViewChild(ConfigurationFormComponent)
   private formComponent!: ConfigurationFormComponent;
+  message: string = '';
+  messageType: 'success' | 'error' | '' = '';
 
   constructor(
     private organizationService: OrganizationService,
     private session: SessionService
-  ) {
+
+) {
     this.loadOrganization();
   }
 
@@ -47,28 +50,39 @@ export class ConfigurationTabComponent {
 
   onSubmitChanges() {
     if (!this.org?.id) return;
+
     const updated = this.formComponent.getUpdatedOrganization();
-    // Empty
+
+    // Validación 1: legalName vacío
     if (!updated.legalName || updated.legalName.trim() === '') {
-      console.warn('Legal name is required');
+      this.message = 'organization-configuration.errors.empty-legal-name';
+      this.messageType = 'error';
       return;
     }
 
-    // No changes
+    // Validación 2: sin cambios
     const noChanges =
-      updated.legalName === this.originalOrg?.legalName &&
-      updated.commercialName === this.originalOrg?.commercialName;
-
+        updated.legalName === this.originalOrg?.legalName &&
+        updated.commercialName === this.originalOrg?.commercialName;
 
     if (noChanges) {
-      console.info('No changes in organization');
+      this.message = 'organization-configuration.errors.no-changes';
+      this.messageType = 'error';
       return;
     }
 
-    // Patch
+    // PATCH
     this.organizationService.update(updated, { id: this.org.id }).subscribe({
-      next: () => console.log('Organization updated'),
-      error: (err: any) => console.error('Error', err)
+      next: () => {
+        this.message = 'organization-configuration.success.updated';
+        this.messageType = 'success';
+        this.originalOrg = JSON.parse(JSON.stringify(this.org));
+      },
+      error: (err: any) => {
+        console.error('Error', err);
+        this.message = 'organization-configuration.errors.api-failed';
+        this.messageType = 'error';
+      }
     });
   }
 }

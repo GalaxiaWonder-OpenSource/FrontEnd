@@ -79,7 +79,7 @@ export const routes: Routes = [
         path: 'settings',
         canActivate: [OrgRoleGuard],
         data: { roles: [OrganizationMemberType.CONTRACTOR] },
-        loadComponent: () => import('./organizations/components/settings/settings.component').then(m => m.SettingsComponent)
+        loadComponent: () => import('./organizations/pages/configuration-tab/configuration-tab.component').then(m => m.ConfigurationTabComponent)
       }
     ]
   },

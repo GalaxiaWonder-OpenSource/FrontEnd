@@ -13,7 +13,7 @@ export class OrganizationInvitationService {
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organization-invitations', '/:id'),
     createEndpointConfig({ name: 'getByPersonId', method: HttpMethod.GET }, undefined, 'organization-invitations'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organization-invitations'),
-    createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'organization-invitations', '/:id'),
+    createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organization-invitations', '/:id'),
     createEndpointConfig({ name: 'accept', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id/accept'),
     createEndpointConfig({ name: 'reject', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id/reject')

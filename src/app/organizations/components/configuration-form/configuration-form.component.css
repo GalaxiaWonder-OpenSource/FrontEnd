@@ -1,0 +1,11 @@
+
+.organization-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.button-container {
+  grid-column: 2 / 3;
+  justify-self: end;
+}

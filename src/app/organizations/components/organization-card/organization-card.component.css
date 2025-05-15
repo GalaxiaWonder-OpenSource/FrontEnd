@@ -2,4 +2,10 @@
   margin: 1rem auto;
   max-width: 480px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.organization-card:hover {
+  transform: scale(1.02);
 }

@@ -5,11 +5,12 @@ import { SessionService } from '../../../iam/services/session.service';
 import { Organization } from '../../model/organization.entity';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-configuration-tab',
   standalone: true,
-  imports: [ConfigurationFormComponent, NgIf, MatButtonModule],
+    imports: [ConfigurationFormComponent, NgIf, MatButtonModule, TranslatePipe],
   templateUrl: './configuration-tab.component.html',
   styleUrls: ['./configuration-tab.component.css']
 })

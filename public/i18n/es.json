@@ -143,6 +143,11 @@
   "organization-tab": {
     "title": "Organizaciones",
     "create": "Nueva organización"
+  },
+  "organization-configuration": {
+    "title": "Editar Organización",
+    "legal-name": "Razón Social",
+    "commercial-name": "Nombre Comercial",
+    "submit": "Cambiar"
   }
-
 }

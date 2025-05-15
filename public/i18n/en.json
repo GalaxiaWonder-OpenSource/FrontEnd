@@ -143,7 +143,12 @@
   "organization-tab": {
     "title": "Organizations",
     "create": "New organization"
+  },
+  "organization-configuration": {
+    "title": "Edit Organization",
+    "legal-name": "Legal Name",
+    "commercial-name": "Commercial Name",
+    "submit": "Change"
   }
-
 }
 

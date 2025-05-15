@@ -3,11 +3,12 @@ import { Organization } from '../../model/organization.entity';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-configuration-form',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, TranslatePipe],
   templateUrl: './configuration-form.component.html',
   styleUrls: ['./configuration-form.component.css']
 })

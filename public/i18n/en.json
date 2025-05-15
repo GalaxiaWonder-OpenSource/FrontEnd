@@ -145,10 +145,11 @@
     "create": "New organization"
   },
   "project-card": {
-    "name": "Name",
     "starting-date": "Start date",
-    "ending-date": "End date"
+    "ending-date": "End date",
+    "descriptions": {
+      "project-a": "Description of Project A"
+    }
   }
-
 }
 

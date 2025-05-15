@@ -4,7 +4,7 @@
       <span class="project-title">{{ project.name }}</span>
     </mat-card-title>
     <mat-card-subtitle *ngIf="project.description">
-      <span class="project-subtitle">{{ project.description }}</span>
+      <span class="project-subtitle">{{ project.description | translate }}</span>
     </mat-card-subtitle>
   </mat-card-header>
 
@@ -13,3 +13,4 @@
     <p><strong>{{ 'project-card.ending-date' | translate }}:</strong> {{ project.endingDate | date }}</p>
   </mat-card-content>
 </mat-card>
+

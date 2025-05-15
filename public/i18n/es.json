@@ -145,9 +145,10 @@
     "create": "Nueva organización"
   },
   "project-card": {
-    "name": "Name",
-    "starting-date": "Fecha de creación",
-    "ending-date": "Fecha de finalización"
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de fin",
+    "descriptions": {
+      "project-a": "Descripción del Proyecto A"
+    }
   }
-
 }

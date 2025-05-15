@@ -1,0 +1,11 @@
+<form class="organization-form">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'organization-configuration.legal-name' | translate }}</mat-label>
+    <input matInput [(ngModel)]="organization.legalName" [name]="'organization-configuration.legal-name' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'organization-configuration.commercial-name' | translate }}</mat-label>
+    <input matInput [(ngModel)]="organization.commercialName" [name]="'organization-configuration.commercial-name' | translate" />
+  </mat-form-field>
+</form>

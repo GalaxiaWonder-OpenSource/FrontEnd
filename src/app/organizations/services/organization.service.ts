@@ -13,7 +13,7 @@ export class OrganizationService {
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'getByContractorId', method: HttpMethod.GET }, undefined, 'organizations'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organizations'),
-    createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'organizations', '/:id'),
+    createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'deactivate', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id/deactivate'),
   ]);

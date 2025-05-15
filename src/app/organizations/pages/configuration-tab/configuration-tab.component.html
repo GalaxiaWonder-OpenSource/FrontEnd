@@ -1,0 +1,16 @@
+<div class="form-container">
+  <h2>{{ 'organization-configuration.title' | translate }}</h2>
+
+  <app-configuration-form
+    *ngIf="org"
+    [organization]="org"
+  ></app-configuration-form>
+  <div *ngIf="message" [ngClass]="messageType" class="status-message">
+    {{ message | translate }}
+  </div>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="onSubmitChanges()">
+      {{ 'organization-configuration.submit' | translate }}
+    </button>
+  </div>
+</div>

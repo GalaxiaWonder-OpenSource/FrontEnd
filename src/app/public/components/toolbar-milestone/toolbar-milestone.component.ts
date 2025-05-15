@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { SessionService } from '../../../iam/services/session.service';
-import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import {Component} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
+import {SessionService} from '../../../iam/services/session.service';
+import {CommonModule} from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
 import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
+import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
   selector: 'app-toolbar-milestone',
@@ -37,7 +37,7 @@ export class ToolbarMilestoneComponent {
   ngOnInit() {
     this.projectId = this.session.getProjectId() ?? '';
     this.milestoneId = this.session.getMilestoneId?.() ?? ''; // si implementas esta función
-    this.isContractor = this.session.getOrganizationRole() === 'Contractor';
+    this.isContractor = this.session.getOrganizationRole() === OrganizationMemberType.CONTRACTOR;
   }
 
   navigateTo(subpath: string) {

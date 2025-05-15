@@ -1,0 +1,21 @@
+.info-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.info-field {
+  margin: 1.5rem 0;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.value {
+  display: block;
+  font-size: 1.1rem;
+}

@@ -144,6 +144,20 @@
     "title": "Organizaciones",
     "create": "Nueva organización"
   },
+  "organization-configuration": {
+    "title": "Editar Organización",
+    "legal-name": "Razón Social",
+    "commercial-name": "Nombre Comercial",
+    "submit": "Cambiar",
+    "errors": {
+      "empty-legal-name": "El nombre legal no puede estar vacío.",
+      "no-changes": "No se realizaron cambios.",
+      "api-failed": "Ocurrió un error al actualizar la organización."
+    },
+    "success": {
+      "updated": "¡Organización actualizada correctamente!"
+    }
+  },
   "project-card": {
     "starting-date": "Fecha de inicio",
     "ending-date": "Fecha de fin",
@@ -151,4 +165,5 @@
       "project-a": "Descripción del Proyecto A"
     }
   }
+
 }

@@ -24,7 +24,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class CreateOrganizationModalComponent {
   legalName = '';
-  comercialName = '';
+  commercialName = '';
   ruc = '';
 
   constructor(private dialogRef: MatDialogRef<CreateOrganizationModalComponent>) {}
@@ -37,7 +37,7 @@ export class CreateOrganizationModalComponent {
     if (this.legalName && this.ruc) {
       const data = {
         legalName: this.legalName,
-        comercialName: this.comercialName,
+        commercialName: this.commercialName,
         ruc: this.ruc
       };
       this.dialogRef.close(data);

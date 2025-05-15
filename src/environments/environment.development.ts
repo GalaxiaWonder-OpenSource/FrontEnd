@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  propgmsApiBaseUrl: 'http://localhost:3000/api/v1',
+  propgmsApiBaseUrl: 'https://682584880f0188d7e72d3e85.mockapi.io/v1',
   userAccountsEndpointPath: '/users'
 };

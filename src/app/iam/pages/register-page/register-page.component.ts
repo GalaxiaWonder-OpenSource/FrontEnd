@@ -112,11 +112,17 @@ export class RegisterPageComponent {
         }
 
         const person = this.buildPerson(formData);
-
         this.createPersonAndAccount(person, formData);
       },
       error: (err: any) => {
-        this.setError('register-page.errors.check-email', err.message);
+        // Si es un 404, tratamos como si no hubiera resultados
+        if (err.status === 404 && err.statusText === 'Not Found') {
+          const person = this.buildPerson(formData);
+          this.createPersonAndAccount(person, formData);
+        } else {
+          // Otros errores sí los mostramos
+          this.setError('register-page.errors.check-email', err.message);
+        }
       }
     });
   }

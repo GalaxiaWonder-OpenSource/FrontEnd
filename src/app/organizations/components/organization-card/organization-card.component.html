@@ -1,4 +1,4 @@
-<mat-card class="organization-card">
+<mat-card (click)="onCardClick()" class="organization-card">
   <mat-card-header>
     <mat-card-title>{{ organization.legalName }}</mat-card-title>
     <mat-card-subtitle *ngIf="organization.commercialName">

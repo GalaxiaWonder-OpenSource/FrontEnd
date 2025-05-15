@@ -131,5 +131,26 @@
       "memberType": "Contractor",
       "joinedAt": "2025-05-12T23:57:39.503Z"
     }
+  ],
+  "projects": [
+    {
+      "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
+      "name": "Project A",
+      "description": "Description of Project A",
+      "startingDate": "2025-05-12T23:57:00.082Z",
+      "endingDate": "2025-05-12T23:57:00.082Z",
+      "team": [],
+      "organizationId": "42ab1195-8521-4d70-9e65-319fc923e9ae",
+      "contractor": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "contractingEntityId": "396e2e75-395e-4339-b5fc-1608027b3cbe"
+    }
+  ],
+  "project-team-members": [
+    {
+      "id": "28f3bdd8-37a3-44b7-983b-cd21182b6ed4",
+      "personId": "396e2e75-395e-4339-b5fc-1608027b3cbe",
+      "projectId": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
+      "role": "Client"
+    }
   ]
 }

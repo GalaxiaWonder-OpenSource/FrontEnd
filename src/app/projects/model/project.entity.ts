@@ -1,4 +1,9 @@
 import { ProjectId } from '../../shared/model/project-id.vo';
+import {ProjectTeamMember} from './project-team-member.entity';
+import {ProjectTeamMemberId} from '../../shared/model/project-team-member-id.vo';
+import {OrganizationId} from '../../shared/model/organization-id.vo';
+import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
+import {PersonId} from '../../shared/model/person-id.vo';
 
 
 export class Project {
@@ -12,10 +17,11 @@ export class Project {
   //public budget: Money;
   public readonly startingDate: Date;
   public readonly endingDate: Date;
-  //public readonly team: ProjectTeamMember[] = [];
+  public readonly team: ProjectTeamMember[] = [];
 
-  //public readonly organizationId: OrganizationId;
-  //public readonly contractingEntityId: ContractingEntityId;
+  public readonly organizationId: OrganizationId;
+  public readonly contractor: OrganizationMemberId;
+  public readonly contractingEntityId: PersonId;
   //public readonly activeChangeProcessId: ChangeProcessId;
 
   /**
@@ -23,18 +29,12 @@ export class Project {
    *
    * @param projectId - Optional ID (default: new UUID).
    * @param name - Project name.
-   * @param contract - Contract associated with the project.
-   * @param technicalFile - Technical file associated with the project.
-   * @param status - Project status.
-   * @param schedule - Project schedule.
-   * @param budget - Project budget.
    * @param startingDate - Project starting date.
    * @param endingDate - Project ending date.
    * @param team - Optional existing team members.
    * @param organizationId - ID of the organization associated with the project.
-   * @param contractingEntityId - ID of the
-   * contracting entity associated with the project.
-   * @param activeChangeProcess - ID of the active change process associated with the project.
+   * @param contractor - ID of the contractor associated with the project.
+   * @param contractingEntityId - ID of the contracting entity associated with the project.
    *
    */
   constructor({
@@ -48,9 +48,10 @@ export class Project {
                 //budget,
                 startingDate = new Date(),
                 endingDate = new Date(),
-                //team = [],
-                //organizationId,
-                //contractingEntityId,
+                team = [],
+                organizationId,
+                contractor,
+                contractingEntityId,
                 //activeChangeProcessId
 
               }: {
@@ -64,9 +65,10 @@ export class Project {
     //budget: Money;
     startingDate: Date;
     endingDate: Date;
-    //team?: ProjectTeamMember[];
-    //organizationId: OrganizationId;
-    //contractingEntityId: ContractingEntityId;
+    team?: ProjectTeamMember[];
+    organizationId: OrganizationId;
+    contractor: OrganizationMemberId;
+    contractingEntityId: PersonId;
     //activeChangeProcessId: ChangeProcessId;
   }) {
     if (!name
@@ -84,11 +86,12 @@ export class Project {
     //this.budget = budget;
     this.startingDate = startingDate;
     this.endingDate = endingDate;
-    //this.team = team;
+    this.team = team;
 
     // Optional fields
-    //this.organizationId = organizationId;
-    //this.contractingEntityId = contractingEntityId;
+    this.organizationId = organizationId;
+    this.contractor = contractor;
+    this.contractingEntityId = contractingEntityId;
     //this.activeChangeProcessId = activeChangeProcessId;
   }
 
@@ -119,11 +122,11 @@ export class Project {
   /**
    * Adds a team member to the project.
    * @param member - Team member to add.
+  */
 
   addTeamMember(member: ProjectTeamMember): void {
     this.team.push(member);
   }
-   */
   /**
    * Removes a team member from the project.
    * @param member - Team member to remove.
@@ -150,9 +153,10 @@ export class Project {
       //budget: this.budget.toJSON(),
       startingDate: this.startingDate.toISOString(),
       endingDate: this.endingDate.toISOString(),
-      //team: this.team.map((m) => m.toJSON()),
-      //organizationId: this.organizationId.value,
-      //contractingEntityId: this.contractingEntityId.value,
+      team: this.team.map((m) => m.toJSON()),
+      organizationId: this.organizationId.value,
+      contractor: this.contractor.value,
+      contractingEntityId: this.contractingEntityId.value,
       //activeChangeProcessId: this.activeChangeProcessId.value
     };
   }

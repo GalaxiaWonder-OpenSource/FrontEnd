@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, HostListener, OnChanges, SimpleChanges} from '@angular/core';
 import {ProjectCardComponent} from '../project-card/project-card.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -13,4 +13,17 @@ import {Project} from '../../model/project.entity';
 })
 export class ProjectListComponent {
   @Input() projects: Project[] = [];
+
+  definirConsoleLog() {
+    console.log("PROYECTOSsxd", this.projects);
+  }
+
+  // Método que se activa cuando se presiona cualquier tecla
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    // Escucha específicamente la tecla "K"
+    if (event.key.toLowerCase() === 'k') {
+      this.definirConsoleLog(); // Imprime los proyectos cuando se presiona la tecla "K"
+    }
+  }
 }

@@ -143,6 +143,11 @@
   "organization-tab": {
     "title": "Organizations",
     "create": "New organization"
+  },
+  "project-card": {
+    "name": "Name",
+    "starting-date": "Start date",
+    "ending-date": "End date"
   }
 
 }

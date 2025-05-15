@@ -136,7 +136,7 @@
     {
       "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
       "name": "Project A",
-      "description": "Description of Project A",
+      "description": "project-card.descriptions.project-a",
       "startingDate": "2025-05-12T23:57:00.082Z",
       "endingDate": "2025-10-12T23:57:00.082Z",
       "team": [],

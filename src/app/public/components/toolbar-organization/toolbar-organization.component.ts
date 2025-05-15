@@ -47,8 +47,6 @@ export class ToolbarOrganizationComponent {
   }
 
   get isContractor() {
-    console.log("ORGANIZATION ROLE: ",this.organizationRole);
-    console.log("ORGANIZATION MEMBER TYPE: ",OrganizationMemberType.CONTRACTOR);
     return this.organizationRole === OrganizationMemberType.CONTRACTOR;
   }
 

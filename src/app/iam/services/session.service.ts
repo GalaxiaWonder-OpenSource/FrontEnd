@@ -1,15 +1,16 @@
 import { Injectable, signal, effect } from '@angular/core';
 import {UserRole} from '../model/user-role.vo';
 import {PersonId} from '../../shared/model/person-id.vo';
+import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
 
 type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER ;
-type OrgRole = 'Contractor' | 'Worker';
+type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
 type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null;
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   // SIGNALS
-  private personId = signal<PersonId | null>(this.loadFromStorage('userId'));
+  private personId = signal<PersonId | null>(this.loadFromStorage('personId'));
   private userType = signal<UserType | null>(this.loadFromStorage('userType'));
   private organizationId = signal<string | null>(this.loadFromStorage('organizationId'));
   private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));

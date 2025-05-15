@@ -104,7 +104,6 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
     service[cfg.name] = (data: any = {}, params: any = {}): Observable<T> => {
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
-
       switch (cfg.method) {
         case HttpMethod.GET:
           const queryParams = new URLSearchParams(serializeData(params)).toString();

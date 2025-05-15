@@ -10,6 +10,7 @@ import {ProjectLayoutComponent} from './projects/pages/project-layout/project-la
 import {MilestoneAccessGuard} from './projects/guards/milestone-acces-guard';
 import {MilestoneLayoutComponent} from './projects/pages/milestone-layout/milestone-layout.component';
 import {UserRole} from './iam/model/user-role.vo';
+import {OrganizationMemberType} from './organizations/model/organization-member-type.vo';
 
 export const routes: Routes = [
   // Public
@@ -77,8 +78,8 @@ export const routes: Routes = [
       {
         path: 'settings',
         canActivate: [OrgRoleGuard],
-        data: { roles: ['Contractor'] },
-        loadComponent: () => import('./organizations/components/settings/settings.component').then(m => m.SettingsComponent)
+        data: { roles: [OrganizationMemberType.CONTRACTOR] },
+        loadComponent: () => import('./organizations/pages/configuration-tab/configuration-tab.component').then(m => m.ConfigurationTabComponent)
       }
     ]
   },
@@ -113,7 +114,7 @@ export const routes: Routes = [
       {
         path: 'configuration',
         canActivate: [OrgRoleGuard],
-        data: { roles: ['Contractor'] },
+        data: { roles: [OrganizationMemberType.CONTRACTOR] },
         loadComponent: () => import('./projects/components/project-configuration/project-configuration.component').then(m => m.ProjectConfigurationComponent)
       }
     ]
@@ -137,7 +138,7 @@ export const routes: Routes = [
       {
         path: 'configuration',
         canActivate: [OrgRoleGuard],
-        data: { roles: ['Contractor'] },
+        data: { roles: [OrganizationMemberType.CONTRACTOR] },
         loadComponent: () => import('./projects/components/milestone-configuration/milestone-configuration.component').then(m => m.MilestoneConfigurationComponent)
       }
     ]

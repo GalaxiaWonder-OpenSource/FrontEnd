@@ -1,0 +1,14 @@
+<section class="organization-list">
+  <ng-container *ngIf="organizations.length > 0; else noResults">
+    <app-organization-card
+      *ngFor="let org of organizations"
+      [organization]="org"
+    />
+  </ng-container>
+
+  <ng-template #noResults>
+    <p class="empty-message">
+      {{ 'organization-list.empty' | translate }}
+    </p>
+  </ng-template>
+</section>

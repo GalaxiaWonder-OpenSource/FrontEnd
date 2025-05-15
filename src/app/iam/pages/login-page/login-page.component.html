@@ -1,0 +1,8 @@
+<!-- login-page.component.html -->
+<section class="login-page">
+  <app-login-form (submitted)="onLoginSubmitted($event)" />
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+</section>

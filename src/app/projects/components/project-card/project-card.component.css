@@ -1,0 +1,22 @@
+.project-card {
+  background-color: #f8fafa;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1rem auto;
+  max-width: 480px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.project-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #0a0a0a;
+}
+
+.project-subtitle {
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  opacity: 0.85;
+  margin-top: 0.15rem;
+}
+

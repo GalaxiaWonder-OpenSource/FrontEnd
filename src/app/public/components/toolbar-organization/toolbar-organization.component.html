@@ -1,0 +1,35 @@
+<!-- Barra superior (azul oscuro) -->
+<mat-toolbar class="toolbar-top" color="primary">
+  <button mat-icon-button class="icon-left" (click)="goBackToDashboard()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <span class="title">{{ 'navigation.organization.title' | translate }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <app-language-switcher />
+</mat-toolbar>
+
+<!-- Barra de navegación inferior -->
+<mat-toolbar class="toolbar-nav" color="default">
+  <button mat-button (click)="navigateTo('info')" routerLinkActive="active">
+    {{ 'navigation.organization.information' | translate }}
+  </button>
+  <button mat-button (click)="navigateTo('projects')" routerLinkActive="active">
+    {{ 'navigation.organization.projects' | translate }}
+  </button>
+  <button mat-button (click)="navigateTo('members')" routerLinkActive="active">
+    {{ 'navigation.organization.members' | translate }}
+  </button>
+  <button *ngIf="isContractor" mat-button (click)="navigateTo('settings')" routerLinkActive="active">
+    {{ 'navigation.organization.configuration' | translate }}
+  </button>
+</mat-toolbar>

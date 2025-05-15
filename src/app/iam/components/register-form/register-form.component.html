@@ -1,0 +1,52 @@
+<mat-card class="register-card">
+  <form (ngSubmit)="submitForm()" class="register-form">
+    <h2>{{ 'register-page.form.personal-data.title' | translate }}</h2>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.personal-data.names' | translate }}</mat-label>
+      <input matInput [(ngModel)]="firstName" name="firstName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.personal-data.surname' | translate }}</mat-label>
+      <input matInput [(ngModel)]="lastName" name="lastName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.personal-data.email' | translate }}</mat-label>
+      <input matInput type="email" [(ngModel)]="email" name="email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.personal-data.phone' | translate }}</mat-label>
+      <input matInput [(ngModel)]="phone" name="phone" required />
+    </mat-form-field>
+
+    <h2>{{ 'register-page.form.access-data.title' | translate }}</h2>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.access-data.username' | translate }}</mat-label>
+      <input matInput [(ngModel)]="username" name="username" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.access-data.password' | translate }}</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'register-page.form.access-data.user-type.label' | translate }}</mat-label>
+      <mat-select [(ngModel)]="role" name="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ ('register-page.form.access-data.user-type.' + role) | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="submit-container">
+      <button mat-raised-button color="primary" type="submit">
+        {{ 'register-page.form.submit' | translate }}
+      </button>
+    </div>
+  </form>
+</mat-card>

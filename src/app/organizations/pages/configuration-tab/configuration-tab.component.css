@@ -1,0 +1,28 @@
+.form-container {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+h2 {
+  margin-bottom: 2rem;
+}
+.status-message {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}

@@ -1,0 +1,33 @@
+.login-card {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.register-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  margin-left: 0.3rem;
+  text-decoration: underline;
+  color: #3f51b5;
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+<section class="project-list">
+  <ng-container *ngIf="projects.length > 0; else noResults">
+    <app-project-card
+      *ngFor="let project of projects"
+      [project]="project"
+    />
+  </ng-container>
+
+  <ng-template #noResults>
+    <p class="empty-message">
+      {{ 'project-list.empty' | translate }}
+    </p>
+  </ng-template>
+</section>

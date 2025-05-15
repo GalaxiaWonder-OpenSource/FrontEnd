@@ -1,0 +1,32 @@
+<!-- Barra superior -->
+<mat-toolbar class="toolbar-top" color="primary">
+  <button mat-icon-button class="icon-left" (click)="goBackToProject()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <span class="title">{{ 'navigation.milestone.title' | translate }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <app-language-switcher />
+</mat-toolbar>
+
+<!-- Barra inferior -->
+<mat-toolbar class="toolbar-nav" color="default">
+  <button mat-button (click)="navigateTo('tasks')" routerLinkActive="active">
+    {{ 'navigation.milestone.tasks' | translate }}
+  </button>
+  <button mat-button (click)="navigateTo('meetings')" routerLinkActive="active">
+    {{ 'navigation.milestone.meetings' | translate }}
+  </button>
+  <button *ngIf="isContractor" mat-button (click)="navigateTo('configuration')" routerLinkActive="active">
+    {{ 'navigation.milestone.configuration' | translate }}
+  </button>
+</mat-toolbar>

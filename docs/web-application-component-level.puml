@@ -1,0 +1,104 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Layouts
+Component(workerLayout, "Worker Layout", "Angular + TypeScript", "Wrapper layout for worker-related views.")
+Component(clientLayout, "Client Layout", "Angular + TypeScript", "Wrapper layout for client-related views.")
+Component(organizationLayout, "Organization Layout", "Angular + TypeScript", "Layout for managing organizations.")
+Component(projectLayout, "Project Layout", "Angular + TypeScript", "Layout for project-specific sections.")
+Component(milestoneLayout, "Milestone Layout", "Angular + TypeScript", "Layout for milestone-specific sections.")
+
+' App Base
+Component(appComponent, "AppComponent", "Angular + TypeScript", "Root application component.")
+Component(routerOutlet, "RouterOutlet", "Angular + TypeScript", "Dynamic component loader via routing.")
+Component(footer, "FooterContent", "Angular + TypeScript", "Persistent footer across views.")
+Component(terms, "TermsAndConditions", "Angular + TypeScript", "Static legal view.")
+
+' Auth Zone
+Component(login, "Login", "Angular + TypeScript", "Login route.")
+Component(loginForm, "LoginForm", "Angular + TypeScript", "User authentication form.")
+Component(register, "Register", "Angular + TypeScript", "Registration route.")
+Component(registerForm, "RegisterForm", "Angular + TypeScript", "New user registration form.")
+
+' Worker Zone
+Component(toolbarWorker, "ToolbarWorker", "Angular + TypeScript", "Top navigation for worker.")
+Component(organizationTab, "OrganizationTab", "Angular + TypeScript", "Tab view for organization features.")
+Component(organizationList, "OrganizationList", "Angular + TypeScript", "Displays assigned organizations.")
+
+' Client Zone
+Component(toolbarClient, "ToolbarClient", "Angular + TypeScript", "Top navigation for client.")
+Component(projectList, "ProjectList", "Angular + TypeScript", "Shows all projects.")
+
+' Organization Zone
+Component(toolbarOrg, "ToolbarOrganization", "Angular + TypeScript", "Navigation inside organization context.")
+Component(orgInfoTab, "OrganizationInformationTab", "Angular + TypeScript", "Tab for general organization info.")
+Component(orgInfoCard, "OrganizationInformationCard", "Angular + TypeScript", "Card displaying organization summary.")
+Component(configTab, "ConfigurationTab", "Angular + TypeScript", "Settings view for organizations.")
+Component(configForm, "ConfigurationForm", "Angular + TypeScript", "Form to configure organization details.")
+Component(projects, "Projects", "Angular + TypeScript", "Project list under the organization.")
+Component(projectCard, "ProjectCard", "Angular + TypeScript", "Individual project summary card.")
+Component(invitationList, "InvitationList", "Angular + TypeScript", "Pending – Invitation management view.")
+Component(members, "Members", "Angular + TypeScript", "Pending – Organization members list.")
+
+' Project Zone
+Component(projectToolbar, "ProjectToolbar", "Angular + TypeScript", "Toolbar for project navigation.")
+Component(projectInfo, "ProjectInfo", "Angular + TypeScript", "Displays basic project information.")
+Component(technicalFile, "TechnicalFile", "Angular + TypeScript", "Pending – Holds technical documentation.")
+Component(projectConfig, "ProjectConfiguration", "Angular + TypeScript", "Settings form for a project.")
+Component(schedule, "ScheduleComponent", "Angular + TypeScript", "Pending – Scheduling and timeline view.")
+Component(changeMgmt, "ChangeManagement", "Angular + TypeScript", "Pending – Project change request flow.")
+Component(team, "Team", "Angular + TypeScript", "Pending – Displays project team info.")
+
+' Milestone Zone
+Component(toolbarMilestone, "ToolbarMilestone", "Angular + TypeScript", "Pending – Navigation for milestones.")
+Component(milestoneConfig, "MilestoneConfiguration", "Angular + TypeScript", "Pending – Setup view for milestones.")
+Component(taskList, "TaskList", "Angular + TypeScript", "Pending – Task manager for milestones.")
+Component(meetingList, "MeetingList", "Angular + TypeScript", "Pending – Meeting calendar for milestones.")
+
+' Connections
+Rel_D(footer, terms, "contains")
+Rel(appComponent, routerOutlet, "contains")
+Rel(appComponent, footer, "contains")
+
+Rel(routerOutlet, login, "redirects")
+Rel(routerOutlet, register, "redirects")
+Rel(login, loginForm, "contains")
+Rel(register, registerForm, "contains")
+
+Rel(routerOutlet, workerLayout, "redirects")
+Rel(workerLayout, toolbarWorker, "contains")
+Rel(workerLayout, organizationTab, "redirects")
+Rel(organizationTab, organizationList, "displays")
+
+Rel(routerOutlet, clientLayout, "redirects")
+Rel(clientLayout, toolbarClient, "contains")
+Rel(clientLayout, projectList, "displays")
+
+Rel(routerOutlet, organizationLayout, "redirects")
+Rel(organizationLayout, toolbarOrg, "contains")
+Rel(organizationLayout, orgInfoTab, "redirects")
+Rel(orgInfoTab, orgInfoCard, "displays")
+Rel(organizationLayout, configTab, "redirects")
+Rel(configTab, configForm, "displays")
+Rel(organizationLayout, projects, "redirects")
+Rel(projects, projectCard, "displays")
+Rel(organizationLayout, invitationList, "displays")
+Rel(organizationLayout, members, "displays")
+
+Rel(routerOutlet, projectLayout, "redirects")
+Rel(projectLayout, projectToolbar, "contains")
+Rel(projectLayout, projectInfo, "redirects")
+Rel(projectLayout, technicalFile, "redirects")
+Rel(projectLayout, projectConfig, "redirects")
+Rel(projectLayout, schedule, "redirects")
+Rel(projectLayout, changeMgmt, "redirects")
+Rel(projectLayout, team, "redirects")
+
+Rel(routerOutlet, milestoneLayout, "redirects")
+Rel(milestoneLayout, toolbarMilestone, "contains")
+Rel(milestoneLayout, milestoneConfig, "redirects")
+Rel(milestoneLayout, taskList, "redirects")
+Rel(milestoneLayout, meetingList, "redirects")
+@enduml

@@ -19,17 +19,17 @@
     <mat-label>{{ 'create-project.ending-date' | translate }}</mat-label>
     <input matInput [(ngModel)]="endingDate" required />
   </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width">
+  <!--<mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-project.contract' | translate }}</mat-label>
     <input matInput [(ngModel)]="contract" required />
-  </mat-form-field>
+  </mat-form-field>-->
 </div>
 
 <div mat-dialog-actions align="end">
   <button mat-button (click)="close()">
     {{ 'create-organization.cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!legalName || !ruc">
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!name || !description">
     {{ 'create-organization.submit' | translate }}
   </button>
 </div>

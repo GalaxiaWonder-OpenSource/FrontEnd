@@ -35,7 +35,7 @@ export class CreateProjectModalComponent {
   }
 
   submit(): void {
-    if (this.name && this.endingDate) {
+    if (this.name && this.description) {
       const data = {
         name: this.name,
         description: this.description,

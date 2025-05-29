@@ -158,6 +158,19 @@
       "updated": "¡Organización actualizada correctamente!"
     }
   },
+  "project-tab": {
+    "title": "Proyectos",
+    "create": "Nuevo proyecto"
+  },
+  "create-project": {
+    "title": "Crear nuevo proyecto",
+    "name": "Nombre del proyecto",
+    "description": "Descripción del proyecto",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de fin",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
   "project-card": {
     "starting-date": "Fecha de inicio",
     "ending-date": "Fecha de fin",

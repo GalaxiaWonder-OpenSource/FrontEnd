@@ -47,6 +47,14 @@
       "password": "ASDFGH123",
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
+    },
+    {
+      "id": "aef10e56-12c1-4b4a-8a9c-53157768a335",
+      "personId": "1f4839fb-42f1-4edb-b925-c2f2c60af6af",
+      "username": "you",
+      "password": "you123",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -91,6 +99,13 @@
       "phone": "123456789",
       "firstName": "Specialist",
       "lastName": "B"
+    },
+    {
+      "id": "1f4839fb-42f1-4edb-b925-c2f2c60af6af",
+      "email": "ejemplo@hotmail.com",
+      "phone": "123456789",
+      "firstName": "db",
+      "lastName": "mONGO"
     }
   ],
   "organizations": [
@@ -104,6 +119,28 @@
       "status": "Active",
       "members": [],
       "invitations": []
+    },
+    {
+      "id": "c9541dd9-672d-44a5-a6e0-1dfb2a0db805",
+      "legalName": "jeropa",
+      "commercialName": "jeropaSAC",
+      "ruc": "20849692541",
+      "createdBy": "1f4839fb-42f1-4edb-b925-c2f2c60af6af",
+      "createdAt": "2025-05-28T00:07:16.609Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    },
+    {
+      "id": "b3db5c9d-239b-4b66-9d18-dcd74ce3132d",
+      "legalName": "GOLA",
+      "commercialName": "GOLASAC",
+      "ruc": "20494949491",
+      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "createdAt": "2025-05-28T00:15:49.943Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
     }
   ],
   "organization-invitations": [],
@@ -114,6 +151,20 @@
       "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-05-15T03:14:53.711Z"
+    },
+    {
+      "id": "33f18bc3-b493-4f06-8e55-920b337815f0",
+      "personId": "1f4839fb-42f1-4edb-b925-c2f2c60af6af",
+      "organizationId": "c9541dd9-672d-44a5-a6e0-1dfb2a0db805",
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-05-28T00:07:16.638Z"
+    },
+    {
+      "id": "0cb4828a-b758-4595-b820-2a3cb8ff9f40",
+      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "organizationId": "b3db5c9d-239b-4b66-9d18-dcd74ce3132d",
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-05-28T00:15:49.973Z"
     }
   ],
   "projects": [

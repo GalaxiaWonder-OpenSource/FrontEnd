@@ -1,0 +1,13 @@
+<section class="project-tab">
+  <div class="tab-header">
+    <h2>{{ 'project-tab.title' | translate }}</h2>
+    <button mat-flat-button color="primary" (click)="openCreateDialog()">
+      {{ 'project-tab.create' | translate }}
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <app-project-list [projects]="projects()"/>
+
+</section>

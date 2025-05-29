@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>{{ 'create-organization.title' | translate }}</h2>
+
+<div mat-dialog-content class="form-container">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.name' | translate }}</mat-label>
+    <input matInput [(ngModel)]="name" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.description' | translate }}</mat-label>
+    <input matInput [(ngModel)]="description" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.starting-date' | translate }}</mat-label>
+    <input matInput [(ngModel)]="startingDate" required />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.ending-date' | translate }}</mat-label>
+    <input matInput [(ngModel)]="endingDate" required />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.contract' | translate }}</mat-label>
+    <input matInput [(ngModel)]="contract" required />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">
+    {{ 'create-organization.cancel' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!legalName || !ruc">
+    {{ 'create-organization.submit' | translate }}
+  </button>
+</div>

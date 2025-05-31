@@ -9,6 +9,7 @@
   </mat-card-header>
 
   <mat-card-content>
+    <p><strong>{{ 'project-card.status' | translate }}:</strong> {{ getStatusTranslation() }}</p>
     <p><strong>{{ 'project-card.starting-date' | translate }}:</strong> {{ project.startingDate | date }}</p>
     <p><strong>{{ 'project-card.ending-date' | translate }}:</strong> {{ project.endingDate | date }}</p>
   </mat-card-content>

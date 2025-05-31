@@ -157,26 +157,43 @@
     "success": {
       "updated": "¡Organización actualizada correctamente!"
     }
+  },  "project-tab": {
+    "title": "Gestión de Proyectos",
+    "create": "Crear Proyecto",
+    "organization-selector": "Selecciona una organización",    "organization-projects": "Proyectos de la organización",
+    "no-organizations": "No tienes organizaciones. Primero debes crear una organización.",
+    "no-projects": "Esta organización no tiene proyectos. Crea uno con el botón 'Crear Proyecto'.",
+    "loading": "Cargando proyectos...",
+    "no-golasac": "La organización GOLASAC no fue encontrada o no tienes acceso a ella.",
+    "no-organization": "La organización especificada no fue encontrada o no tienes acceso a ella."
   },
-  "project-tab": {
-    "title": "Proyectos",
-    "create": "Nuevo proyecto"
-  },
-  "create-project": {
-    "title": "Crear nuevo proyecto",
-    "name": "Nombre del proyecto",
-    "description": "Descripción del proyecto",
-    "starting-date": "Fecha de inicio",
-    "ending-date": "Fecha de fin",
-    "cancel": "Cancelar",
-    "submit": "Crear"
+  "project-list": {
+    "empty": "No hay proyectos disponibles."
   },
   "project-card": {
     "starting-date": "Fecha de inicio",
     "ending-date": "Fecha de fin",
+    "status": "Estado",
     "descriptions": {
       "project-a": "Descripción del Proyecto A"
     }
+  },
+  "create-project": {
+    "title": "Crear nuevo proyecto",
+    "name": "Nombre del proyecto",
+    "description": "Descripción",
+    "organization": "Organización",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de finalización",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
+  "create-organization": {
+    "title": "Crear nueva organización",
+    "legal-name": "Razón social",
+    "comercial-name": "Nombre comercial",
+    "ruc": "RUC",
+    "cancel": "Cancelar",
+    "submit": "Crear"
   }
-
 }

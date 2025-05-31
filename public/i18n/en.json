@@ -157,15 +157,19 @@
     "success": {
       "updated": "Organization updated successfully!"
     }
-  },
-  "project-tab": {
+  },  "project-tab": {
     "title": "Projects",
-    "create": "New project"
+    "create": "New project",
+    "organization-selector": "Select an organization",
+    "organization-projects": "Organization projects",
+    "no-organizations": "You have no organizations. Create an organization first.",
+    "no-projects": "This organization has no projects yet."
   },
   "create-project": {
     "title": "Create new project",
     "name": "Project name",
     "description": "Description",
+    "organization": "Organization",
     "starting-date": "Start date",
     "ending-date": "End date",
     "cancel": "Cancel",

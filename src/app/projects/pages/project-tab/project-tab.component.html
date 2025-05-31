@@ -1,13 +1,33 @@
 <section class="project-tab">
   <div class="tab-header">
     <h2>{{ 'project-tab.title' | translate }}</h2>
-    <button mat-flat-button color="primary" (click)="openCreateDialog()">
+    <button mat-flat-button color="primary" (click)="openCreateDialog()" *ngIf="currentOrganization()">
       {{ 'project-tab.create' | translate }}
     </button>
   </div>
 
   <mat-divider></mat-divider>
 
-  <app-project-list [projects]="projects()"/>
+  <!-- Mostrar información de la organización actual -->
+  <div *ngIf="currentOrganization()" class="organization-info">
+    <h3>{{ currentOrganization()?.commercialName || currentOrganization()?.legalName }}</h3>
+    <p>{{ 'organization-card.ruc' | translate }}: {{ currentOrganization()?.ruc }}</p>
+  </div>
 
+  <!-- Mensaje de carga -->
+  <div *ngIf="loading()" class="loading-message">
+    <p>{{ 'project-tab.loading' | translate }}</p>
+  </div>
+
+  <!-- Mensaje de error si no se encuentra la organización -->
+  <div *ngIf="!loading() && !currentOrganization()" class="error-message">
+    <p>{{ 'project-tab.no-organization' | translate }}</p>
+  </div>
+
+  <!-- Lista de proyectos de la organización -->
+  <div class="organization-projects" *ngIf="currentOrganization()">
+    <h3 *ngIf="projects().length > 0">{{ 'project-tab.organization-projects' | translate }}</h3>
+    <p *ngIf="!loading() && projects().length === 0">{{ 'project-tab.no-projects' | translate }}</p>
+    <app-project-list [projects]="projects()"/>
+  </div>
 </section>

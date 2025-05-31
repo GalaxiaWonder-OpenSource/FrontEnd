@@ -1,35 +1,54 @@
-<h2 mat-dialog-title>{{ 'create-organization.title' | translate }}</h2>
+<h2 mat-dialog-title>{{ 'create-project.title' | translate }}</h2>
 
 <div mat-dialog-content class="form-container">
+  <!-- Información de la organización preseleccionada -->
+  <div *ngIf="!showOrgSelection && selectedOrganizationName" class="selected-org-info">
+    <p><strong>{{ 'create-project.organization' | translate }}:</strong> {{ selectedOrganizationName }}</p>
+  </div>
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-project.name' | translate }}</mat-label>
-    <input matInput [(ngModel)]="name" required />
+    <input matInput [(ngModel)]="name" required
+           [placeholder]="'create-project.name' | translate"
+           [title]="'create-project.name' | translate" />
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-project.description' | translate }}</mat-label>
-    <input matInput [(ngModel)]="description" />
+    <input matInput [(ngModel)]="description"
+           [placeholder]="'create-project.description' | translate"
+           [title]="'create-project.description' | translate" />
+  </mat-form-field>
+
+  <!-- Solo mostramos el selector de organización si es necesario -->
+  <mat-form-field appearance="outline" class="full-width" *ngIf="showOrgSelection">
+    <mat-label>{{ 'create-project.organization' | translate }}</mat-label>
+    <mat-select [(ngModel)]="selectedOrganization" required>
+      <mat-option *ngFor="let org of organizations" [value]="org.id.toString()">
+        {{ org.commercialName || org.legalName }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-project.starting-date' | translate }}</mat-label>
-    <input matInput [(ngModel)]="startingDate" required />
+    <input matInput type="date" [(ngModel)]="startingDate" required
+           [placeholder]="'create-project.starting-date' | translate"
+           [title]="'create-project.starting-date' | translate" />
   </mat-form-field>
+
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-project.ending-date' | translate }}</mat-label>
-    <input matInput [(ngModel)]="endingDate" required />
+    <input matInput type="date" [(ngModel)]="endingDate" required
+           [placeholder]="'create-project.ending-date' | translate"
+           [title]="'create-project.ending-date' | translate" />
   </mat-form-field>
-  <!--<mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ 'create-project.contract' | translate }}</mat-label>
-    <input matInput [(ngModel)]="contract" required />
-  </mat-form-field>-->
 </div>
 
 <div mat-dialog-actions align="end">
   <button mat-button (click)="close()">
-    {{ 'create-organization.cancel' | translate }}
+    {{ 'create-project.cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!name || !description">
-    {{ 'create-organization.submit' | translate }}
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!name || !description || !selectedOrganization">
+    {{ 'create-project.submit' | translate }}
   </button>
 </div>

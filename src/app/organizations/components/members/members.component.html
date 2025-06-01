@@ -1,1 +1,8 @@
-<button class="btn-member-jaja">Añadir miembro</button>
+<!--just to try security guards-->
+<div class="members-container">
+  <div class="member-card" *ngFor="let member of projectMembers">
+    <h3>{{ member.name }}</h3>
+    <p><strong>Rol:</strong> {{ member.role }}</p>
+    <p><strong>Correo:</strong> {{ member.email }}</p>
+  </div>
+</div>

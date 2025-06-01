@@ -132,14 +132,6 @@
   "organization-list": {
     "empty": "No se encontraron organizaciones."
   },
-  "create-organization": {
-    "title": "Crear nueva organización",
-    "legal-name": "Razón social",
-    "comercial-name": "Nombre comercial",
-    "ruc": "RUC",
-    "cancel": "Cancelar",
-    "submit": "Crear"
-  },
   "organization-tab": {
     "title": "Organizaciones",
     "create": "Nueva organización"

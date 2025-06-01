@@ -9,7 +9,7 @@
   <mat-divider></mat-divider>
 
   <!-- Mostrar información de la organización actual -->
-  <div *ngIf="currentOrganization()" class="organization-info">
+  <!--<div *ngIf="currentOrganization()" class="organization-info">
     <h3>{{ currentOrganization()?.commercialName || currentOrganization()?.legalName }}</h3>
     <p>{{ 'organization-card.ruc' | translate }}: {{ currentOrganization()?.ruc }}</p>
   </div>
@@ -26,7 +26,7 @@
 
   <!-- Lista de proyectos de la organización -->
   <div class="organization-projects" *ngIf="currentOrganization()">
-    <h3 *ngIf="projects().length > 0">{{ 'project-tab.organization-projects' | translate }}</h3>
+    <!--<h3 *ngIf="projects().length > 0">{{ 'project-tab.organization-projects' | translate }}</h3>-->
     <p *ngIf="!loading() && projects().length === 0">{{ 'project-tab.no-projects' | translate }}</p>
     <app-project-list [projects]="projects()"/>
   </div>

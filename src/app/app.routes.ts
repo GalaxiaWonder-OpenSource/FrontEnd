@@ -74,7 +74,7 @@ export const routes: Routes = [
       {
         path: 'members',
         canActivate: [OrgRoleGuard],
-        data:{ roles: [OrganizationMemberType.CONTRACTOR] },
+        data:{roles: [OrganizationMemberType.CONTRACTOR] },
         loadComponent: () => import('./organizations/components/members/members.component').then(m => m.MembersComponent)
       },
       {

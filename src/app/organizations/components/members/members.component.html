@@ -1,8 +1,9 @@
-<!--just to try security guards-->
 <div class="members-container">
-  <div class="member-card" *ngFor="let member of projectMembers">
-    <h3>{{ member.name }}</h3>
-    <p><strong>Rol:</strong> {{ member.role }}</p>
-    <p><strong>Correo:</strong> {{ member.email }}</p>
-  </div>
+  <mat-card *ngFor="let member of members()">
+    <mat-card-title>{{ member.role }}</mat-card-title>
+    <mat-card-content>
+      <p><strong>Especialidad:</strong> {{ member.specialty }}</p>
+      <p><strong>ID de persona:</strong> {{ member.personId }}</p>
+    </mat-card-content>
+  </mat-card>
 </div>

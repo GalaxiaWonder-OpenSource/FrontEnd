@@ -8,6 +8,9 @@ import { RouterModule } from '@angular/router';
 import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
+import { UserRole } from '../../../iam/model/user-role.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-toolbar-project',
@@ -19,7 +22,8 @@ import {MatIcon} from '@angular/material/icon';
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-project.component.html',
   styleUrls: ['./toolbar-project.component.css']
@@ -28,6 +32,7 @@ export class ToolbarProjectComponent {
   projectId = '';
   projectRole: string | null = null;
   organizationRole: string | null = null;
+  userType: string | null = null;
 
   constructor(
     private session: SessionService,
@@ -38,6 +43,7 @@ export class ToolbarProjectComponent {
     this.projectId = this.session.getProjectId() ?? '';
     this.projectRole = this.session.getProjectRole();
     this.organizationRole = this.session.getOrganizationRole();
+    this.userType = this.session.getUserType();
   }
 
   navigateTo(subpath: string) {
@@ -45,16 +51,21 @@ export class ToolbarProjectComponent {
   }
 
   get isContractor() {
-    return this.organizationRole === 'Contractor';
+    return (this.organizationRole === OrganizationMemberType.CONTRACTOR || 
+            this.projectRole === 'Contractor');
   }
 
   get isClient() {
-    return this.projectRole === 'Client';
+    return this.projectRole === 'Client' && this.userType === UserRole.CLIENT_USER;
+  }
+
+  get isOrganizationUser() {
+    return this.userType === UserRole.ORGANIZATION_USER;
   }
 
   goBackToOrganization() {
     const orgId = this.session.getOrganizationId();
-    if (orgId && this.isContractor) {
+    if (orgId && (this.isContractor || this.isOrganizationUser)) {
       this.router.navigate([`/organizations/${orgId}/info`]);
     }
     else{

@@ -1,8 +1,10 @@
-import {Component, Input, HostListener, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, HostListener} from '@angular/core';
 import {ProjectCardComponent} from '../project-card/project-card.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {Project} from '../../model/project.entity';
+import { UserRole } from '../../../iam/model/user-role.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
   selector: 'app-project-list',
@@ -14,6 +16,8 @@ import {Project} from '../../model/project.entity';
 export class ProjectListComponent {
   @Input() projects: Project[] = [];
   @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
+  @Input() userType?: UserRole;
+  @Input() organizationRole?: OrganizationMemberType;
 
   definirConsoleLog() {
     console.log("PROYECTOSsxd", this.projects);

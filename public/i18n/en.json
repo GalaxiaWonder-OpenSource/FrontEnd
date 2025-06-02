@@ -1,4 +1,7 @@
 {
+  "user-menu": {
+    "logout": "Logout"
+  },
   "navigation": {
     "client": {
       "title": "Client area",
@@ -31,6 +34,15 @@
       "meetings": "Meetings",
       "configuration": "Configuration"
     }
+  },
+  "project-info": {
+    "title": "Project Information",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "starting-date": "Starting Date",
+    "ending-date": "Ending Date",
+    "loading": "Loading project information..."
   },
   "footer": {
     "learn-about": {
@@ -157,7 +169,8 @@
     "success": {
       "updated": "Organization updated successfully!"
     }
-  },  "project-tab": {
+  },
+  "project-tab": {
     "title": "Projects",
     "create": "New project",
     "organization-selector": "Select an organization",

@@ -11,9 +11,7 @@
   <button mat-icon-button>
     <mat-icon>notifications</mat-icon>
   </button>
-  <button mat-icon-button>
-    <mat-icon>account_circle</mat-icon>
-  </button>
+  <app-user-menu></app-user-menu>
 
   <app-language-switcher />
 </mat-toolbar>
@@ -23,19 +21,19 @@
   <button mat-button (click)="navigateTo('information')" routerLinkActive="active">
     {{ 'navigation.project.information' | translate }}
   </button>
-  <button *ngIf="!isClient" mat-button (click)="navigateTo('technical-file')" routerLinkActive="active">
+  <button *ngIf="!isClient || isOrganizationUser" mat-button (click)="navigateTo('technical-file')" routerLinkActive="active">
     {{ 'navigation.project.technical-file' | translate }}
   </button>
-  <button *ngIf="!isClient" mat-button (click)="navigateTo('schedule')" routerLinkActive="active">
+  <button *ngIf="!isClient || isOrganizationUser" mat-button (click)="navigateTo('schedule')" routerLinkActive="active">
     {{ 'navigation.project.schedule' | translate }}
   </button>
-  <button *ngIf="!isClient" mat-button (click)="navigateTo('working-team')" routerLinkActive="active">
+  <button *ngIf="!isClient || isOrganizationUser" mat-button (click)="navigateTo('working-team')" routerLinkActive="active">
     {{ 'navigation.project.working-team' | translate }}
   </button>
-  <button mat-button (click)="navigateTo('change-management')" routerLinkActive="active">
+  <button *ngIf="isClient" mat-button (click)="navigateTo('change-management')" routerLinkActive="active">
     {{ 'navigation.project.change-management' | translate }}
   </button>
-  <button *ngIf="isContractor" mat-button (click)="navigateTo('configuration')" routerLinkActive="active">
+  <button *ngIf="isOrganizationUser && !isClient" mat-button (click)="navigateTo('configuration')" routerLinkActive="active">
     {{ 'navigation.project.configuration' | translate }}
   </button>
 </mat-toolbar>

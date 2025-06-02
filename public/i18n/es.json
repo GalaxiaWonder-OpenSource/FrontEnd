@@ -1,4 +1,7 @@
 {
+  "user-menu": {
+    "logout": "Cerrar sesión"
+  },
   "navigation": {
     "client": {
       "title": "Área de cliente",
@@ -31,6 +34,15 @@
       "meetings": "Reuniones",
       "configuration": "Configuración"
     }
+  },
+  "project-info": {
+    "title": "Información del Proyecto",
+    "name": "Nombre",
+    "description": "Descripción",
+    "status": "Estado",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de finalización",
+    "loading": "Cargando información del proyecto..."
   },
   "footer": {
     "learn-about": {
@@ -149,10 +161,12 @@
     "success": {
       "updated": "¡Organización actualizada correctamente!"
     }
-  },  "project-tab": {
+  },
+  "project-tab": {
     "title": "Gestión de Proyectos",
     "create": "Crear Proyecto",
-    "organization-selector": "Selecciona una organización",    "organization-projects": "Proyectos de la organización",
+    "organization-selector": "Selecciona una organización",
+    "organization-projects": "Proyectos de la organización",
     "no-organizations": "No tienes organizaciones. Primero debes crear una organización.",
     "no-projects": "Esta organización no tiene proyectos. Crea uno con el botón 'Crear Proyecto'.",
     "loading": "Cargando proyectos...",

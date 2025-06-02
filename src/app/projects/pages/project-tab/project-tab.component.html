@@ -28,6 +28,11 @@
   <div class="organization-projects" *ngIf="currentOrganization()">
     <!--<h3 *ngIf="projects().length > 0">{{ 'project-tab.organization-projects' | translate }}</h3>-->
     <p *ngIf="!loading() && projects().length === 0">{{ 'project-tab.no-projects' | translate }}</p>
-    <app-project-list [projects]="projects()" [projectRole]="'Contractor'"/>
+    <app-project-list 
+      [projects]="projects()" 
+      [projectRole]="'Contractor'" 
+      [userType]="userType" 
+      [organizationRole]="organizationRole"
+    />
   </div>
 </section>

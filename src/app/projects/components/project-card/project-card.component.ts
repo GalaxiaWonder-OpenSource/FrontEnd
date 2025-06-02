@@ -6,6 +6,8 @@ import { Project } from '../../model/project.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProjectStatus } from '../../model/project-status.vo';
 import { SessionService } from '../../../iam/services/session.service';
+import { UserRole } from '../../../iam/model/user-role.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
   selector: 'app-project-card',
@@ -17,6 +19,8 @@ import { SessionService } from '../../../iam/services/session.service';
 export class ProjectCardComponent {
   @Input() project!: Project;
   @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
+  @Input() userType?: UserRole;
+  @Input() organizationRole?: OrganizationMemberType;
   
   constructor(
     private router: Router,
@@ -25,8 +29,26 @@ export class ProjectCardComponent {
   
   navigateToProject(): void {
     if (this.project && this.project.id) {
+      // Preservar el tipo de usuario actual si no se especifica uno nuevo
+      if (!this.userType) {
+        this.userType = this.sessionService.getUserType() as UserRole;
+      }
+      
       // Establecer el ID del proyecto y su rol en la sesión
       this.sessionService.setProject(this.project.id.value, this.projectRole);
+      
+      // Asegurarnos de que el tipo de usuario también esté establecido
+      if (this.userType) {
+        this.sessionService.setUserType(this.userType);
+      }
+      
+      // Si tenemos un rol de organización, asegurémonos de establecerlo
+      if (this.organizationRole && this.sessionService.getOrganizationId()) {
+        this.sessionService.setOrganization(
+          this.sessionService.getOrganizationId()!, 
+          this.organizationRole
+        );
+      }
       
       // Navegar a la página de información del proyecto
       this.router.navigate([`/projects/${this.project.id.value}/information`]);

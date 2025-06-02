@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {SessionService} from '../../iam/services/session.service';
+import {UserRole} from '../../iam/model/user-role.vo';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectAccessGuard implements CanActivate {
@@ -9,6 +10,7 @@ export class ProjectAccessGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const currentProjectId = this.session.getProjectId();
     const urlProjectId = route.paramMap.get('projectId');
+    const userType = this.session.getUserType();
 
     // Si el projectId en la URL coincide con el de la sesión, permite el acceso
     if (currentProjectId === urlProjectId) {
@@ -19,7 +21,9 @@ export class ProjectAccessGuard implements CanActivate {
     // esto podría ser una navegación directa desde una tarjeta de proyecto,
     // así que establecemos el projectId en la sesión y permitimos el acceso
     if (urlProjectId && !currentProjectId) {
-      this.session.setProject(urlProjectId, 'Client'); // Por defecto asumimos rol de cliente
+      // Determinamos el rol basado en el tipo de usuario
+      const defaultRole = userType === UserRole.ORGANIZATION_USER ? 'Contractor' : 'Client';
+      this.session.setProject(urlProjectId, defaultRole);
       return true;
     }
 

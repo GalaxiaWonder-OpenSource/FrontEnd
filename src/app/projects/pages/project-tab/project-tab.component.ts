@@ -20,6 +20,8 @@ import {Specialty} from '../../model/specialty.vo';
 import {OrganizationId} from '../../../shared/model/organization-id.vo';
 import {OrganizationService} from '../../../organizations/services/organization.service';
 import {ActivatedRoute} from '@angular/router';
+import { UserRole } from '../../../iam/model/user-role.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
   selector: 'app-project-tab',
@@ -40,6 +42,8 @@ export class ProjectTabComponent implements OnInit {
   currentOrganization = signal<Organization | null>(null);
   loading = signal<boolean>(true);
   organizationId: string | null = null;
+  userType = UserRole.ORGANIZATION_USER;
+  organizationRole = OrganizationMemberType.CONTRACTOR;
 
   constructor(
     private projectService: ProjectService,

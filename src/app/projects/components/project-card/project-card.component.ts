@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 import { Project } from '../../model/project.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProjectStatus } from '../../model/project-status.vo';
+import { SessionService } from '../../../iam/services/session.service';
 
 @Component({
   selector: 'app-project-card',
@@ -14,6 +16,23 @@ import { ProjectStatus } from '../../model/project-status.vo';
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
+  @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
+  
+  constructor(
+    private router: Router,
+    private sessionService: SessionService
+  ) {}
+  
+  navigateToProject(): void {
+    if (this.project && this.project.id) {
+      // Establecer el ID del proyecto y su rol en la sesión
+      this.sessionService.setProject(this.project.id.value, this.projectRole);
+      
+      // Navegar a la página de información del proyecto
+      this.router.navigate([`/projects/${this.project.id.value}/information`]);
+    }
+  }
+  
   getStatusTranslation(): string {
     // Mapeamos los estados del proyecto a cadenas legibles
     const statusMap: Record<string, string> = {

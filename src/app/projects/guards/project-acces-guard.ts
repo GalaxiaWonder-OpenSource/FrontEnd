@@ -10,7 +10,16 @@ export class ProjectAccessGuard implements CanActivate {
     const currentProjectId = this.session.getProjectId();
     const urlProjectId = route.paramMap.get('projectId');
 
+    // Si el projectId en la URL coincide con el de la sesión, permite el acceso
     if (currentProjectId === urlProjectId) {
+      return true;
+    }
+
+    // Si no hay un projectId en la sesión pero viene en la URL,
+    // esto podría ser una navegación directa desde una tarjeta de proyecto,
+    // así que establecemos el projectId en la sesión y permitimos el acceso
+    if (urlProjectId && !currentProjectId) {
+      this.session.setProject(urlProjectId, 'Client'); // Por defecto asumimos rol de cliente
       return true;
     }
 

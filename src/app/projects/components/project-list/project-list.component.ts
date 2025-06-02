@@ -13,6 +13,7 @@ import {Project} from '../../model/project.entity';
 })
 export class ProjectListComponent {
   @Input() projects: Project[] = [];
+  @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
 
   definirConsoleLog() {
     console.log("PROYECTOSsxd", this.projects);

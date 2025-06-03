@@ -1,9 +1,9 @@
 <div class="members-container">
   <mat-card *ngFor="let member of members()">
-    <mat-card-title>{{ member.role }}</mat-card-title>
+    <mat-card-title>{{ member.memberType }}</mat-card-title>
     <mat-card-content>
-      <p><strong>Especialidad:</strong> {{ member.specialty }}</p>
       <p><strong>ID de persona:</strong> {{ member.personId }}</p>
+      <p><strong>Fecha de ingreso:</strong> {{ member.joinedAt }}</p>
     </mat-card-content>
   </mat-card>
 </div>

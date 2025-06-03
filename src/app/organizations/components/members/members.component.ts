@@ -1,9 +1,9 @@
 import {Component, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SessionService} from '../../../iam/services/session.service';
-import {ProjectTeamMember} from '../../../projects/model/project-team-member.entity';
-import {ProjectTeamMemberService} from '../../../projects/services/project-team-member.service';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {OrganizationMember} from '../../model/organization-member.entity';
+import {OrganizationMemberService} from '../../services/organization-member.service';
 
 @Component({
   selector: 'app-members',
@@ -14,25 +14,25 @@ import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 })
 export class MembersComponent {
 
-  members = signal<ProjectTeamMember[]>([]);
+  members = signal<OrganizationMember[]>([]);
 
   constructor(
-    private session: SessionService, private projectService: ProjectTeamMemberService
+    private session: SessionService, private organizationMemberService: OrganizationMemberService
   ){
     this.loadMembers();
   }
 
   private loadMembers() {
 
-    const projectId = this.session.getProjectId();
-    if (!projectId) {
+    const organizationId = this.session.getOrganizationId();
+    if (!organizationId) {
       console.warn('... Aborting members load.');
       return;
     }
 
-    this.projectService.getByProjectId({ projectId }).subscribe({
-      next: (members: ProjectTeamMember[]) => {
-        console.log('[MembersComponent] Members loaded:', members);
+    this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
+      next: (members: OrganizationMember[]) => {
+        console.log('Members loaded:', members);
         this.members.set(members);
       },
       error: (err: any) => {

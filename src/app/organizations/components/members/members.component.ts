@@ -17,7 +17,7 @@ import { OrganizationMemberType } from '../../model/organization-member-type.vo'
 })
 export class MembersComponent implements OnInit {
 
-  // Tipo enriquecido para vista
+  //for view
   members = signal<MemberDisplay[]>([]);
 
   constructor(
@@ -30,18 +30,14 @@ export class MembersComponent implements OnInit {
     this.loadMembers();
   }
 
-  // Cargar miembros con sus datos de persona
   private loadMembers() {
     const organizationId = this.session.getOrganizationId();
     if (!organizationId) return;
 
     this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
       next: (members: OrganizationMember[]) => {
-
-        const filtered = members.filter(m => m.organizationId.value === organizationId);
-
         Promise.all(
-          filtered.map(async (member) => {
+          members.map(async (member) => {
             try {
               const person = await this.personService.getById({}, { id: member.personId }).toPromise();
               return {
@@ -49,7 +45,7 @@ export class MembersComponent implements OnInit {
                 joinedAt: new Date(member.joinedAt),
                 fullName: `${person.firstName} ${person.lastName}`,
                 email: person.email
-              };
+            };
             } catch (error) {
               console.error(`Error loading person ${member.personId}`, error);
               return {
@@ -63,17 +59,17 @@ export class MembersComponent implements OnInit {
         ).then((enriched) => this.members.set(enriched));
       },
       error: (err: any) => {
-        console.error('Error loading organization members', err);
+        console.error('Failed:', err);
       }
     });
   }
 
-  // Computado: miembros ordenados por nombre
+  //order
   readonly sortedMembers = computed(() =>
     this.members().slice().sort((a, b) => a.fullName.localeCompare(b.fullName))
   );
 
-  // Iniciales del nombre
+  //full name
   getInitials(fullName: string): string {
     return fullName
       .split(' ')
@@ -81,36 +77,12 @@ export class MembersComponent implements OnInit {
       .join('')
       .toUpperCase();
   }
-
-  // Clase CSS según tipo de miembro
-  getMemberRoleBadgeClass(type: OrganizationMemberType): string {
-    switch (type) {
-      case OrganizationMemberType.CONTRACTOR:
-        return 'badge-contractor';
-      case OrganizationMemberType.WORKER:
-        return 'badge-worker';
-      default:
-        return 'badge-default';
-    }
-  }
-
-  // Ícono según tipo de miembro
-  getMemberIcon(type: OrganizationMemberType): string {
-    switch (type) {
-      case OrganizationMemberType.CONTRACTOR:
-        return 'engineering';
-      case OrganizationMemberType.WORKER:
-        return 'badge';
-      default:
-        return 'person';
-    }
-  }
 }
 
-// Tipo auxiliar para la vista
+//for view
 interface MemberDisplay {
   member: OrganizationMember;
-  joinedAt: Date;
   fullName: string;
   email: string;
+  joinedAt: Date;
 }

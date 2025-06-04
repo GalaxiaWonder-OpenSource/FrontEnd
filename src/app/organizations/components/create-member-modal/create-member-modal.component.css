@@ -1,0 +1,42 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 400px;
+  padding: 16px 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0 0;
+  gap: 8px;
+}
+
+mat-dialog-title {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+/* Estilos para mejor UX */
+mat-form-field {
+  font-size: 14px;
+}
+
+mat-hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Validación visual */
+mat-form-field.ng-invalid.ng-touched .mat-form-field-outline {
+  border-color: #f44336;
+}
+
+/* Botón deshabilitado */
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

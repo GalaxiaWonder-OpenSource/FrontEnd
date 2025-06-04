@@ -140,23 +140,21 @@
     "cancel": "Cancelar",
     "submit": "Crear"
   },
+  "create-member": {
+    "title": "Invitar Miembro",
+    "email": "Correo Electrónico",
+    "email-hint": "Se enviará una invitación a este correo",
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "member-type": "Tipo de Miembro",
+    "contractor": "Contratista",
+    "employee": "Empleado",
+    "cancel": "Cancelar",
+    "invite": "Enviar Invitación"
+  },
   "organization-tab": {
     "title": "Organizaciones",
     "create": "Nueva organización"
-  },
-  "organization-configuration": {
-    "title": "Editar Organización",
-    "legal-name": "Razón Social",
-    "commercial-name": "Nombre Comercial",
-    "submit": "Cambiar",
-    "errors": {
-      "empty-legal-name": "El nombre legal no puede estar vacío.",
-      "no-changes": "No se realizaron cambios.",
-      "api-failed": "Ocurrió un error al actualizar la organización."
-    },
-    "success": {
-      "updated": "¡Organización actualizada correctamente!"
-    }
   },
   "organization-configuration": {
     "title": "Editar Organización",
@@ -179,5 +177,4 @@
       "project-a": "Descripción del Proyecto A"
     }
   }
-
 }

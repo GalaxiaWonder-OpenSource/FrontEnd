@@ -1,7 +1,7 @@
 {
   "navigation": {
     "client": {
-      "title": "Client area",
+      "title": "Client Area",
       "projects": "Projects"
     },
     "worker": {
@@ -34,98 +34,98 @@
   },
   "footer": {
     "learn-about": {
-      "title": "Learn about",
+      "title": "Learn More",
       "privacy-policy": "Privacy Policy",
-      "terms-and-conditions": "Terms & Conditions"
+      "terms-and-conditions": "Terms and Conditions"
     },
     "contact-us": "Contact Us",
     "rights": "All rights reserved",
     "terms-and-conditions": {
-      "title": "Terms & Conditions",
+      "title": "Terms and Conditions",
       "introduction": {
         "title": "Introduction",
         "content": "This document establishes the terms and conditions of use for ProP GMS, developed by the Galaxia Wonder team. By accessing and using this platform, you agree to be bound by these terms."
       },
       "use-of-the-service": {
         "title": "Use of the Service",
-        "content": "The user agrees to make responsible and ethical use of the platform, respecting the features offered and avoiding misuse."
+        "content": "The user commits to making responsible and ethical use of the platform, respecting the offered functionalities and avoiding improper use."
       },
       "user-responsibility": {
-        "title": "User Responsability",
-        "content": "The user is responsible for the accuracy of the data they provide and for the proper use of the platform."
+        "title": "User Responsibility",
+        "content": "The user is responsible for the accuracy of the data they provide and the proper use of the platform."
       },
       "responsibility-of-the-development-team": {
-        "title": "Responsibility of the Development Team",
-        "content": "The team is committed to ensuring the software runs smoothly, performing ongoing maintenance, and acting professionally and ethically throughout all stages of development."
+        "title": "Development Team Responsibility",
+        "content": "The team commits to ensuring proper software operation, performing continuous maintenance, and acting with professionalism and ethics in all development stages."
       },
       "privacy-and-data-protection": {
         "title": "Privacy and Data Protection",
-        "content": "The confidentiality and security of the user's personal data is guaranteed, and it will not be shared with third parties without consent. Privacy by design principles and compliance with current regulations are adhered to."
+        "content": "We guarantee the confidentiality and security of user personal data, which will not be shared with third parties without consent. We comply with privacy-by-design principles and current regulations."
       },
       "intellectual-property": {
         "title": "Intellectual Property",
-        "content": "All design, development, and content rights belong to the development team unless otherwise stated."
+        "content": "All design, development, and content rights belong to the development team, unless otherwise indicated."
       },
       "ethical-and-professional-principles": {
         "title": "Ethical and Professional Principles",
-        "content": "Our team adheres to the ACM/IEEE Code of Professional Ethics and the College of Engineers of Peru (CIP). We promote:\nTransparency in software engineering.\nCommitment to quality, equity, and accessibility.\nRespect for the rights of users and society."
+        "content": "Our team adheres to the ACM/IEEE Professional Code of Ethics and the Engineers College of Peru (CIP). We promote:\nTransparency in software engineering.\nCommitment to quality, equity, and accessibility.\nRespect for user and society rights."
       },
       "modifications-and-contact": {
         "title": "Modifications and Contact",
-        "content": "We reserve the right to update these terms. For questions, please contact us at:"
+        "content": "We reserve the right to update these terms. For inquiries, you can contact us at:"
       }
     }
   },
   "register-page": {
-    "title": "Sign Up",
+    "title": "Register",
     "success-card": {
-      "title": "Registration Successful!",
+      "title": "Registration successful!",
       "content": "Your account has been created successfully. You can now log in with your username.",
-      "action": "Go to Login"
+      "action": "Go to login"
     },
     "form": {
       "personal-data": {
-        "title": "Personal data",
-        "names": "Name",
-        "surname": "Surname",
+        "title": "Personal Data",
+        "names": "First Names",
+        "surname": "Last Names",
         "email": "Email",
         "phone": "Phone"
       },
       "access-data": {
-        "title": "Access data",
+        "title": "Access Data",
         "username": "Username",
         "password": "Password",
         "user-type": {
-          "label": "User type",
+          "label": "User Type",
           "CLIENT_USER": "Client",
           "ORGANIZATION_USER": "Organization"
         }
       },
       "errors": {
-        "email-taken": "A user with this email already exists.",
-        "create-person": "Failed to create person.",
-        "create-account": "Failed to create user account.",
-        "check-email": "Failed to verify email."
+        "email-taken": "A user with that email already exists.",
+        "create-person": "Error creating person.",
+        "create-account": "Error creating user account.",
+        "check-email": "Error verifying email."
       },
-      "submit": "Register user"
+      "submit": "Register User"
     }
   },
   "login-page": {
-    "title": "Login",
+    "title": "Log In",
     "form": {
       "username": "Username",
       "password": "Password",
-      "submit": "Sign in",
+      "submit": "Enter",
       "no-account": "Don't have an account?",
       "register-link": "Register here"
     },
     "errors": {
       "invalid-credentials": "Incorrect username or password.",
-      "server": "Unable to connect to the server. Please try again."
+      "server": "Could not connect to server. Please try again."
     }
   },
   "organization-card": {
-    "ruc": "RUC",
+    "ruc": "Tax ID",
     "status": "Status",
     "created-at": "Created on"
   },
@@ -133,16 +133,28 @@
     "empty": "No organizations found."
   },
   "create-organization": {
-    "title": "Create new organization",
-    "legal-name": "Legal name",
-    "comercial-name": "Commercial name",
-    "ruc": "RUC",
+    "title": "Create New Organization",
+    "legal-name": "Legal Name",
+    "comercial-name": "Commercial Name",
+    "ruc": "Tax ID",
     "cancel": "Cancel",
     "submit": "Create"
   },
+  "create-member": {
+    "title": "Invite Member",
+    "email": "Email Address",
+    "email-hint": "An invitation will be sent to this email",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "member-type": "Member Type",
+    "contractor": "Contractor",
+    "employee": "Employee",
+    "cancel": "Cancel",
+    "invite": "Send Invitation"
+  },
   "organization-tab": {
     "title": "Organizations",
-    "create": "New organization"
+    "create": "New Organization"
   },
   "organization-configuration": {
     "title": "Edit Organization",
@@ -150,7 +162,7 @@
     "commercial-name": "Commercial Name",
     "submit": "Change",
     "errors": {
-      "empty-legal-name": "The legal name cannot be empty.",
+      "empty-legal-name": "Legal name cannot be empty.",
       "no-changes": "No changes were made.",
       "api-failed": "An error occurred while updating the organization."
     },
@@ -159,26 +171,10 @@
     }
   },
   "project-card": {
-    "starting-date": "Start date",
-    "ending-date": "End date",
+    "starting-date": "Start Date",
+    "ending-date": "End Date",
     "descriptions": {
-      "project-a": "Description of Project A"
-    }
-  },
-  "organization-configuration": {
-    "title": "Edit Organization",
-    "legal-name": "Legal Name",
-    "commercial-name": "Commercial Name",
-    "submit": "Change",
-    "errors": {
-      "empty-legal-name": "The legal name cannot be empty.",
-      "no-changes": "No changes were made.",
-      "api-failed": "An error occurred while updating the organization."
-    },
-    "success": {
-      "updated": "Organization updated successfully!"
+      "project-a": "Project A Description"
     }
   }
-
 }
-

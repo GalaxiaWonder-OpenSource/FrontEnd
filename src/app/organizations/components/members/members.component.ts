@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import { PersonService } from '../../../iam/services/person.service';
 import { OrganizationMember } from '../../model/organization-member.entity';
+import { CreateMemberModalComponent } from '../create-member-modal/create-member-modal.component';
+import { PersonId } from '../../../shared/model/person-id.vo';
+import { OrganizationId } from '../../../shared/model/organization-id.vo';
 
 @Component({
   selector: 'app-members',
@@ -23,7 +27,8 @@ export class MembersComponent implements OnInit {
   constructor(
     private session: SessionService,
     private organizationMemberService: OrganizationMemberService,
-    private personService: PersonService
+    private personService: PersonService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -112,15 +117,55 @@ export class MembersComponent implements OnInit {
   }
 
   openInvitationModal(): void {
-    console.log('Abrir modal de invitación 📨');
-    // aquí abrirás tu diálogo más adelante
+    console.log('Abriendo modal de invitación 📨');
+
+    const dialogRef = this.dialog.open(CreateMemberModalComponent, {
+      width: '500px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Data received successfully! Ready to create invitation component');
+        this.createMember(result)
+      } else {
+        console.log('No data received (user cancelled)')
+      }
+    });
+  }
+
+  private createMember(memberData: any): void {
+    const organizationId = this.session.getOrganizationId();
+
+    if (!organizationId) {
+      console.error('No organization ID found in session');
+      return;
+    }
+
+    try {
+      console.log('Datos del nuevo miembro:', memberData);
+
+      // Por ahora, solo mostrar los datos y recargar
+      console.log('Miembro a crear:', {
+        email: memberData.email,
+        firstName: memberData.firstName,
+        lastName: memberData.lastName,
+        memberType: memberData.memberType,
+        organizationId: organizationId
+      });
+
+      // Temporal: recargar los miembros
+      this.loadMembers();
+
+    } catch (error) {
+      console.error('Error creating member:', error);
+    }
   }
 
   removeMember(member: OrganizationMember): void {
     console.log('Eliminar miembro:', member);
-    // lógica futura para eliminar o revocar acceso
-  }
 
+  }
 }
 
 //for view

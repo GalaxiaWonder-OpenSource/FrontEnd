@@ -36,8 +36,15 @@ mat-card:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
-.delete-button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.delete-fab {
+  background-color: #c5dae8; /* 💙 celeste Material */
+  color: #0d47a1;            /* azul fuerte para el ícono */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.delete-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+

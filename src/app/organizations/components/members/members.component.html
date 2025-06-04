@@ -1,9 +1,14 @@
 <div class="members-container">
-  <mat-card *ngFor="let item of membersWithPerson()">
-    <mat-card-title>{{ item.person.firstName }} {{ item.person.lastName }}</mat-card-title>
+  <mat-card *ngFor="let member of sortedMembers()">
+    <mat-card-header>
+      <div mat-card-avatar class="member-avatar">
+        {{ getInitials(member.fullName) }}
+      </div>
+      <mat-card-title>{{ member.fullName }}</mat-card-title>
+      <mat-card-subtitle>{{ member.email }}</mat-card-subtitle>
+    </mat-card-header>
     <mat-card-content>
-      <p><strong>Email:</strong> {{ item.person.email }}</p>
-      <p><strong>Fecha de ingreso:</strong> {{ item.member.joinedAt | date }}</p>
+      <p><strong>Unido el:</strong> {{ member.joinedAt | date }}</p>
     </mat-card-content>
   </mat-card>
 </div>

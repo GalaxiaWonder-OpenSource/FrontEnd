@@ -36,8 +36,18 @@ export class MembersComponent implements OnInit {
 
     this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
       next: (members: OrganizationMember[]) => {
+
+        const currentOrgId = this.session.getOrganizationId();
+        if(!currentOrgId) {
+          console.warn('Organization is not defined')
+          return
+        }
+        const filtered =members.filter(m=>m.organizationId.value === currentOrgId);
+
+        console.log('Miembros filtrados', filtered);
+
         Promise.all(
-          members.map(async (member) => {
+          filtered.map(async (member) => {
             try {
               const person = await this.personService.getById({}, { id: member.personId }).toPromise();
               return {

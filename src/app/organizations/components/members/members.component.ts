@@ -38,11 +38,7 @@ export class MembersComponent implements OnInit {
     this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
       next: (members: OrganizationMember[]) => {
 
-        const currentOrgId = this.session.getOrganizationId();
-
-        const filtered = members.filter(m =>
-          m.organizationId.value === currentOrgId
-        );
+        const filtered = members.filter(m => m.organizationId.value === organizationId);
 
         Promise.all(
           filtered.map(async (member) => {

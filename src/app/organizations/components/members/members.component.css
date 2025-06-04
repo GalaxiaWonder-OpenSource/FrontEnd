@@ -5,6 +5,13 @@
   padding: 1rem;
 }
 
+.members-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1rem 0 1rem;
+  margin-bottom: -0.5rem;
+}
+
 .member-avatar {
   background-color: #1976d2; /* azul Material */
   color: #fff;
@@ -22,8 +29,15 @@
 
 mat-card {
   transition: box-shadow 0.3s ease;
+  position: relative; /* necesario para posicionar delete-button */
 }
 
 mat-card:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.delete-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }

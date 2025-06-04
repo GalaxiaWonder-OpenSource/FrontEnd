@@ -1,14 +1,29 @@
 <div class="members-container">
-  <mat-card *ngFor="let member of sortedMembers()">
+
+  <!-- add -->
+  <div class="members-header">
+    <button mat-raised-button color="primary" (click)="openInvitationModal()">
+      Invitar miembro
+    </button>
+  </div>
+
+  <!-- list -->
+  <mat-card *ngFor="let member of sortedMembers()" class="member-card">
     <mat-card-header>
       <div mat-card-avatar class="member-avatar">
         {{ getInitials(member.fullName) }}
       </div>
       <mat-card-title>{{ member.fullName }}</mat-card-title>
       <mat-card-subtitle>{{ member.email }}</mat-card-subtitle>
+
+      <!-- delete -->
+      <button mat-icon-button color="warn" class="delete-button" (click)="removeMember(member.member)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-card-header>
     <mat-card-content>
       <p><strong>Unido el:</strong> {{ member.joinedAt | date }}</p>
     </mat-card-content>
   </mat-card>
+
 </div>

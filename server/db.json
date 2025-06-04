@@ -47,6 +47,14 @@
       "password": "ASDFGH123",
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
+    },
+    {
+      "id": "e594e042-4dd1-439c-bbbd-2466ac1cd810",
+      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
+      "username": "pieropierito",
+      "password": "mathias",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -105,6 +113,20 @@
       "phone": "123456789",
       "firstName": "Andrea",
       "lastName": "mongo"
+    },
+    {
+      "id": "561e50eb-f37f-488a-bd46-cefbadd298bc",
+      "email": "ppp@example.com",
+      "phone": "123456789",
+      "firstName": "piero",
+      "lastName": "adolescente"
+    },
+    {
+      "id": "4940f000-0d04-4e43-ac50-34dc3be663b1",
+      "email": "okpiero@gmail.com",
+      "phone": "123456789",
+      "firstName": "piero",
+      "lastName": "adolescente"
     }
   ],
   "organizations": [
@@ -151,6 +173,28 @@
       "status": "Active",
       "members": [],
       "invitations": []
+    },
+    {
+      "id": "a4d06732-8393-4d33-9655-46f4aff3e8a7",
+      "legalName": "PARANGARI",
+      "commercialName": "CUTIRIMICUARO SAC",
+      "ruc": "10202020201",
+      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "createdAt": "2025-06-04T04:40:27.215Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
+    },
+    {
+      "id": "2c34a6bb-c126-4bfe-88db-6857a83e356a",
+      "legalName": "SOUR",
+      "commercialName": "SOUR SAC",
+      "ruc": "10773456271",
+      "createdBy": "4940f000-0d04-4e43-ac50-34dc3be663b1",
+      "createdAt": "2025-06-04T05:30:57.166Z",
+      "status": "Active",
+      "members": [],
+      "invitations": []
     }
   ],
   "organization-invitations": [],
@@ -182,6 +226,20 @@
       "organizationId": "fb0820bf-ee4e-406f-a91e-c1867b270536",
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-04T01:04:58.511Z"
+    },
+    {
+      "id": "6532393a-2d01-40e7-9792-d47251ca6a83",
+      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
+      "organizationId": "a4d06732-8393-4d33-9655-46f4aff3e8a7",
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-04T04:40:27.296Z"
+    },
+    {
+      "id": "b489e263-9386-413e-8b8b-4b290aa58943",
+      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
+      "organizationId": "2c34a6bb-c126-4bfe-88db-6857a83e356a",
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-04T05:30:57.207Z"
     }
   ],
   "projects": [

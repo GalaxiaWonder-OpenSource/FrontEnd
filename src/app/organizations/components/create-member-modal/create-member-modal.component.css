@@ -1,42 +1,53 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  min-width: 400px;
-  padding: 16px 0;
+  gap: 1.25rem;
+  min-width: 420px;
+  padding: 1.5rem 1.5rem;
 }
 
 .full-width {
   width: 100%;
 }
 
-mat-dialog-actions {
-  padding: 16px 0 0 0;
-  gap: 8px;
-}
-
 mat-dialog-title {
-  margin-bottom: 0;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: -4px;
 }
 
-/* Estilos para mejor UX */
 mat-form-field {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 mat-hint {
-  font-size: 12px;
+  font-size: 13px;
   color: rgba(0, 0, 0, 0.6);
 }
 
-/* Validación visual */
-mat-form-field.ng-invalid.ng-touched .mat-form-field-outline {
-  border-color: #f44336;
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* Botón deshabilitado */
+/* 👇 Estilo para los botones */
+.dialog-button {
+  min-width: 100px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
 button[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+mat-form-field.ng-invalid.ng-touched .mat-mdc-form-field-outline {
+  border-color: #f44336 !important;
 }

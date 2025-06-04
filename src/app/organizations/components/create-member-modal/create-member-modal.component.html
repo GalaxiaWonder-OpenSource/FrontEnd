@@ -28,10 +28,10 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button (click)="close()">
+  <button mat-button class="dialog-button" (click)="close()">
     {{ 'create-member.cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!isFormValid">
+  <button mat-raised-button color="primary" class="dialog-button" (click)="submit()" [disabled]="!isFormValid">
     {{ 'create-member.invite' | translate }}
   </button>
 </div>

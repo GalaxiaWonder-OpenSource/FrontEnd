@@ -117,8 +117,6 @@ export class MembersComponent implements OnInit {
   }
 
   openInvitationModal(): void {
-    console.log('Abriendo modal de invitación 📨');
-
     const dialogRef = this.dialog.open(CreateMemberModalComponent, {
       width: '500px',
       disableClose: true

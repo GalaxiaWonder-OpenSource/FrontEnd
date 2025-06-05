@@ -1,53 +1,47 @@
-.form-container {
+:host {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  min-width: 420px;
-  padding: 1.5rem 1.5rem;
+  padding: 22px 14px;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
 }
 
-.full-width {
-  width: 100%;
-}
-
-mat-dialog-title {
-  font-size: 20px;
+h2 {
+  margin-bottom: 32px;
+  font-size: 22px;
   font-weight: 600;
-  color: #1e1e1e;
-  margin-bottom: -4px;
+  color: rgba(0, 0, 0, 0.80);
+  text-align: center;
 }
 
 mat-form-field {
-  font-size: 15px;
+  width: 100%;
+  margin-bottom: 24px;
 }
 
-mat-hint {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-mat-dialog-actions {
+.actions {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   gap: 12px;
-  padding-top: 1rem;
-  margin-top: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 32px;
 }
 
-/* 👇 Estilo para los botones */
-.dialog-button {
-  min-width: 100px;
-  font-weight: 500;
-  font-size: 14px;
-}
+@media (max-width: 600px) {
+  :host {
+    padding: 24px 16px;
+  }
 
-button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+  h2 {
+    font-size: 20px;
+  }
 
-mat-form-field.ng-invalid.ng-touched .mat-mdc-form-field-outline {
-  border-color: #f44336 !important;
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions button {
+    width: 100%;
+  }
 }

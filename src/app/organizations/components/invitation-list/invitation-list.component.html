@@ -1,1 +1,22 @@
-<p>invitation-list works!</p>
+<div *ngIf="loading">Cargando invitaciones...</div>
+
+<table *ngIf="!loading && invitations.length > 0" class="table w-full">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Correo</th>
+    <th>Fecha de invitación</th>
+    <th>Estado</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of invitations">
+    <td>{{ item.person.firstName }} {{ item.person.lastName }}</td>
+    <td>{{ item.person.email }}</td>
+    <td>{{ formatDate(item.invitation.invitedAt) }}</td>
+    <td>{{ formatStatus(item.invitation.status) }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!loading && invitations.length === 0">No hay invitaciones.</div>

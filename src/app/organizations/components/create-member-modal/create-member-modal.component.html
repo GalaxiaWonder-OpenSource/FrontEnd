@@ -1,37 +1,31 @@
-<h2 mat-dialog-title>{{ 'create-member.title' | translate }}</h2>
+<h2>Invitar nuevo miembro</h2>
 
-<div mat-dialog-content class="form-container">
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ 'create-member.email' | translate }}</mat-label>
-    <input matInput type="email" [(ngModel)]="email" required placeholder="ejemplo@correo.com" />
-    <mat-hint>{{ 'create-member.email-hint' | translate }}</mat-hint>
-  </mat-form-field>
+<mat-form-field appearance="fill" class="w-full">
+  <mat-label>Selecciona persona</mat-label>
+  <mat-select [(ngModel)]="selectedPersonId" placeholder="Selecciona una persona">
+    <mat-option *ngFor="let person of people" [value]="person.id">
+      {{ person.fullName }} ({{ person.email }})
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ 'create-member.first-name' | translate }}</mat-label>
-    <input matInput [(ngModel)]="firstName" required />
-  </mat-form-field>
+<mat-form-field appearance="fill" class="w-full">
+  <mat-label>Tipo de miembro</mat-label>
+  <mat-select [(ngModel)]="memberType">
+    <mat-option *ngFor="let option of memberTypes" [value]="option.value">
+      {{ option.label | translate }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ 'create-member.last-name' | translate }}</mat-label>
-    <input matInput [(ngModel)]="lastName" required />
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ 'create-member.member-type' | translate }}</mat-label>
-    <mat-select [(ngModel)]="memberType" required>
-      <mat-option *ngFor="let type of memberTypes" [value]="type.value">
-        {{ type.label | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-
-<div mat-dialog-actions align="end">
-  <button mat-button class="dialog-button" (click)="close()">
-    {{ 'create-member.cancel' | translate }}
-  </button>
-  <button mat-raised-button color="primary" class="dialog-button" (click)="submit()" [disabled]="!isFormValid">
-    {{ 'create-member.invite' | translate }}
+<div class="actions mt-4">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="submit()"
+    [disabled]="!isFormValid"
+  >
+    Enviar invitación
   </button>
 </div>

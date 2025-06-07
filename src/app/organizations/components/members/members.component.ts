@@ -27,6 +27,7 @@ export class MembersComponent implements OnInit {
   members = signal<MemberDisplay[]>([]);
   isCreator = signal<boolean>(false);
   currentPersonId = signal<string | null>(null);
+
   constructor(
     private session: SessionService,
     private organizationMemberService: OrganizationMemberService,
@@ -34,6 +35,7 @@ export class MembersComponent implements OnInit {
     private personService: PersonService,
     private dialog: MatDialog
   ) {}
+
   ngOnInit(): void {
     this.loadMembers();
     this.checkCreatorStatus();
@@ -173,16 +175,16 @@ export class MembersComponent implements OnInit {
    */
   removeMember(member: OrganizationMember): void {
     // Si el usuario no es el creador o intenta eliminarse a sí mismo siendo creador, no permitirlo
-    if (!this.isCreator() || 
+    if (!this.isCreator() ||
         (member.memberType === 'CONTRACTOR' && member.personId.toString() === this.currentPersonId())) {
       console.warn('No tienes permisos para eliminar este miembro o estás intentando eliminar al creador');
       return;
     }
-    
+
     const dialogRef = this.dialog.open(DeleteMemberModalComponent, {
       width: '400px'
     });
-    
+
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.organizationMemberService.delete({}, { id: member.id }).subscribe({
@@ -203,14 +205,14 @@ export class MembersComponent implements OnInit {
   private checkCreatorStatus(): void {
     const organizationId = this.session.getOrganizationId();
     const personId = this.session.getPersonId();
-    
+
     if (!organizationId || !personId) {
       this.isCreator.set(false);
       return;
     }
-    
+
     this.currentPersonId.set(personId.toString());
-    
+
     this.organizationService.isOrganizationCreator(organizationId, personId.toString()).subscribe({
       next: (isCreator) => {
         this.isCreator.set(isCreator);

@@ -12,6 +12,7 @@ import { CreateMemberModalComponent } from '../create-member-modal/create-member
 import { OrganizationService } from '../../services/organization.service';
 import { PersonId } from '../../../shared/model/person-id.vo';
 import { OrganizationId } from '../../../shared/model/organization-id.vo';
+import { DeleteMemberModalComponent } from '../delete-member-modal/delete-member-modal.component';
 
 @Component({
   selector: 'app-members',
@@ -178,7 +179,7 @@ export class MembersComponent implements OnInit {
       return;
     }
     
-    const dialogRef = this.dialog.open(RemoveMemberConfirmationComponent, {
+    const dialogRef = this.dialog.open(DeleteMemberModalComponent, {
       width: '400px'
     });
     

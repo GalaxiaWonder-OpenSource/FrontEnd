@@ -129,7 +129,30 @@
   font-size: 1.2rem;
 }
 
-/* Responsive design */
+.custom-chip {
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.chip-accepted {
+  background-color: #e0f2f1 !important;
+  color: #00796b !important;
+  border-color: #00796b !important;
+}
+
+.chip-rejected {
+  background-color: #ffebee !important;
+  color: #c62828 !important;
+  border-color: #c62828 !important;
+}
+
+.chip-pending {
+  background-color: #fff3e0 !important;
+  color: #ef6c00 !important;
+  border-color: #ef6c00 !important;
+}
+
+
 @media (max-width: 768px) {
   .invitation-card {
     margin: 10px;
@@ -152,25 +175,4 @@
   .actions-container button {
     width: 100%;
   }
-}
-
-/* Snackbar styles */
-::ng-deep .snackbar-success {
-  background-color: #4caf50 !important;
-  color: white !important;
-}
-
-::ng-deep .snackbar-error {
-  background-color: #f44336 !important;
-  color: white !important;
-}
-
-::ng-deep .snackbar-info {
-  background-color: #2196f3 !important;
-  color: white !important;
-}
-
-::ng-deep .snackbar-warn {
-  background-color: #ff9800 !important;
-  color: white !important;
 }

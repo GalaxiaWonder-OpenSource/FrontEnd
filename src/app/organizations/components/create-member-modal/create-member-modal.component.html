@@ -1,31 +1,44 @@
-<h2>Invitar nuevo miembro</h2>
+<div class="modal-container">
+  <h2>{{ 'create-member.title' | translate }}</h2>
 
-<mat-form-field appearance="fill" class="w-full">
-  <mat-label>Selecciona persona</mat-label>
-  <mat-select [(ngModel)]="selectedPersonId" placeholder="Selecciona una persona">
-    <mat-option *ngFor="let person of people" [value]="person.id">
-      {{ person.fullName }} ({{ person.email }})
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <form (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'create-member.select-person' | translate }}</mat-label>
+      <mat-select [(value)]="selectedPersonId" required>
+        <mat-option
+          *ngFor="let person of people"
+          [value]="person.id">
+          {{ person.fullName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<mat-form-field appearance="fill" class="w-full">
-  <mat-label>Tipo de miembro</mat-label>
-  <mat-select [(ngModel)]="memberType">
-    <mat-option *ngFor="let option of memberTypes" [value]="option.value">
-      {{ option.label | translate }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'create-member.member-type' | translate }}</mat-label>
+      <mat-select [(value)]="memberType" required>
+        <mat-option
+          *ngFor="let type of memberTypes"
+          [value]="type.value">
+          {{ type.label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<div class="actions mt-4">
-  <button mat-button (click)="close()">Cancelar</button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="submit()"
-    [disabled]="!isFormValid"
-  >
-    Enviar invitación
-  </button>
+    <div class="actions">
+      <button
+        type="button"
+        mat-button
+        (click)="close()">
+        {{ 'common.cancel' | translate }}
+      </button>
+
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!isFormValid">
+        {{ 'common.create' | translate }}
+      </button>
+    </div>
+  </form>
 </div>

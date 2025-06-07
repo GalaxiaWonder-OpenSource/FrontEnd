@@ -147,6 +147,7 @@
     "first-name": "First Name",
     "last-name": "Last Name",
     "member-type": "Member Type",
+    "select-person": "Select Person",
     "contractor": "Contractor",
     "worker": "Collaborator",
     "cancel": "Cancel",
@@ -193,6 +194,33 @@
   "common": {
     "actions": "Actions",
     "confirm": "Confirm",
+    "create": "Create",
     "cancel": "Cancel"
+  },
+
+  "invitation": {
+    "title": "My Invitations",
+    "pending": "pending",
+    "loading": "Loading invitations...",
+    "empty-title": "No invitations",
+    "empty-description": "When you receive organization invitations, they will appear here.",
+    "table": {
+      "organization": "Organization",
+      "invitedBy": "Invited by",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    },
+    "action": {
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "processed": "Already processed"
   }
+
 }

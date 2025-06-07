@@ -11,8 +11,12 @@ import { PersonService } from '../../../iam/services/person.service';
 import { UserAccountService } from '../../../iam/services/user-account.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import { SessionService } from '../../../iam/services/session.service';
-import { Person } from '../../../iam/model/person.entity';
 
+/**
+ * Component that displays a modal to invite a new member to the organization.
+ * It allows the user to select a person and assign them a member type
+ * (e.g., WORKER), filtering out those already in the organization.
+ */
 @Component({
   selector: 'app-create-member-modal',
   standalone: true,
@@ -29,103 +33,52 @@ import { Person } from '../../../iam/model/person.entity';
   styleUrl: './create-member-modal.component.css'
 })
 export class CreateMemberModalComponent implements OnInit {
-  // Lista de personas elegibles (usuarios con rol ORGANIZATION_USER que no son miembros aún)
+  /** List of people eligible to be invited */
   people: { id: string; fullName: string; email: string }[] = [];
-  selectedPersonId: string | null = null;
-  memberType: OrganizationMemberType = OrganizationMemberType.WORKER; // Por defecto WORKER
 
-  // Solo permitir WORKER para nuevos miembros (CONTRACTOR es solo para el creador)
-  memberTypes = [
+  /** Selected person's ID */
+  selectedPersonId: string | null = null;
+
+  /** Selected member type, defaults to WORKER */
+  memberType: OrganizationMemberType = OrganizationMemberType.WORKER;
+
+  /** Options for available member types */
+  readonly memberTypes = [
     { value: OrganizationMemberType.WORKER, label: 'create-member.worker' }
   ];
+
   constructor(
     private dialogRef: MatDialogRef<CreateMemberModalComponent>,
     private personService: PersonService,
     private userAccountService: UserAccountService,
     private organizationMemberService: OrganizationMemberService,
     private session: SessionService
-  ) {}  ngOnInit(): void {
+  ) {}
+
+  /**
+   * Angular lifecycle hook: runs when the component is initialized.
+   * Closes the modal if no organization ID is available.
+   */
+  ngOnInit(): void {
     const organizationId = this.session.getOrganizationId();
-    
+
     if (!organizationId) {
-      console.error('No se encontró ID de organización en la sesión');
+      console.error('No organization ID found in the session');
       this.dialogRef.close();
       return;
     }
-    
-    // Enfoque simplificado: cargar todas las personas, después filtraremos
+
     this.loadEligiblePeople(organizationId);
   }
-  
-  /**
-   * Carga las personas elegibles para ser añadidas como miembros
-   * (usuarios con rol ORGANIZATION_USER que no son ya miembros)
-   */
-  private loadEligiblePeople(organizationId: string): void {
-    // Cargar todas las personas
-    this.personService.getAll().subscribe({
-      next: (people: any[]) => {
-        if (!people || !Array.isArray(people)) {
-          return;
-        }
-        
-        // Obtener miembros actuales para filtrar
-        this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
-          next: (members: any[]) => {
-            // IDs de personas que ya son miembros
-            const memberPersonIds = members.map(m => m.personId.toString());
-            
-            // Cargar cuentas de usuario para filtrar por rol
-            this.userAccountService.getAll().subscribe({
-              next: (accounts: any[]) => {
-                // Filtrar cuentas con rol ORGANIZATION_USER
-                const orgUserAccounts = accounts.filter(account => 
-                  account && account.role === 'ORGANIZATION_USER'
-                );
-                
-                // IDs de personas que son usuarios de organización
-                const orgUserIds = orgUserAccounts.map(account => account.personId);
-                
-                // Filtrar personas que:
-                // 1. Son usuarios de organización
-                // 2. No son ya miembros de esta organización
-                const eligiblePeople = people
-                  .filter(person => 
-                    person && 
-                    person.id && 
-                    orgUserIds.includes(person.id) && 
-                    !memberPersonIds.includes(person.id)
-                  )
-                  .map(person => ({
-                    id: person.id.toString(),
-                    fullName: person.firstName && person.lastName 
-                      ? `${person.firstName} ${person.lastName}` 
-                      : 'Nombre no disponible',
-                    email: person.email || 'Email no disponible'
-                  }));
-                
-                this.people = eligiblePeople;
-              },
-              error: (err: unknown) => {
-                console.error('Error al cargar cuentas de usuario:', err);
-              }
-            });
-          },
-          error: (err: unknown) => {
-            console.error('Error al cargar miembros:', err);
-          }
-        });
-      },
-      error: (err: unknown) => {
-        console.error('Error al cargar personas:', err);
-      }
-    });
-  }
 
+  /** Closes the modal without saving any changes */
   close(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Closes the modal and returns selected member info if the form is valid.
+   */
   submit(): void {
     if (this.isFormValid) {
       this.dialogRef.close({
@@ -135,9 +88,67 @@ export class CreateMemberModalComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if the form is complete and valid.
+   * @returns true if both person and member type are selected
+   */
   get isFormValid(): boolean {
-    return this.selectedPersonId !== null &&
-      this.selectedPersonId !== '' &&
-      !!this.memberType;
+    return !!this.selectedPersonId && !!this.memberType;
+  }
+
+  /**
+   * Loads people who:
+   * - Have an active ORGANIZATION_USER account
+   * - Are NOT already members of the current organization
+   * @param organizationId The ID of the organization to check membership against
+   */
+  private loadEligiblePeople(organizationId: string): void {
+    this.personService.getAll().subscribe({
+      next: (people: any[]) => {
+        this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
+          next: (members: any[]) => {
+            const memberPersonIds = members
+              .filter(m => m.organizationId === organizationId)
+              .map(m => m.personId);
+
+            this.userAccountService.getAll().subscribe({
+              next: (accounts: any[]) => {
+                const orgUserAccounts = accounts.filter(account =>
+                  account?.role === 'ORGANIZATION_USER'
+                );
+
+                const orgUserPersonIds = orgUserAccounts.map(account => account.personId);
+
+                // Filter out people who are already members
+                const eligiblePeople = people
+                  .filter(person =>
+                    person?.id &&
+                    orgUserPersonIds.includes(person.id) &&
+                    !memberPersonIds.includes(person.id)
+                  )
+                  .map(person => ({
+                    id: person.id,
+                    fullName: person.firstName && person.lastName
+                      ? `${person.firstName} ${person.lastName}`
+                      : 'Name not available',
+                    email: person.email
+                  }));
+
+                this.people = eligiblePeople;
+              },
+              error: (err: any) => {
+                console.error('Failed to load user accounts:', err);
+              }
+            });
+          },
+          error: (err: any) => {
+            console.error('Failed to load organization members:', err);
+          }
+        });
+      },
+      error: (err: any) => {
+        console.error('Failed to load people:', err);
+      }
+    });
   }
 }

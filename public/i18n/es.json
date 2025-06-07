@@ -141,18 +141,19 @@
     "submit": "Crear"
   },
   "create-member": {
-    "title": "Invitar Miembro",
-    "email": "Correo Electrónico",
-    "email-hint": "Se enviará una invitación a este correo",
-    "first-name": "Nombre",
-    "last-name": "Apellido",
-    "member-type": "Tipo de Miembro",
-    "contractor": "Contratista",
-    "worker": "Colaborador",
-    "cancel": "Cancelar",
-    "invite": "Enviar Invitación"
-  },
-  "organization-tab": {
+  "title": "Invitar miembro",
+  "email": "Correo electrónico",
+  "email-hint": "Se enviará una invitación a este correo",
+  "first-name": "Nombre",
+  "last-name": "Apellido",
+  "member-type": "Tipo de miembro",
+  "select-person": "Selecciona persona",
+  "contractor": "Contratista",
+  "worker": "Colaborador",
+  "cancel": "Cancelar",
+  "invite": "Enviar invitación"
+},
+"organization-tab": {
     "title": "Organizaciones",
     "create": "Nueva organización"
   },
@@ -191,10 +192,37 @@
       "worker": "Colaborador"
     }
   },
-  
+
   "common": {
     "actions": "Acciones",
     "confirm": "Confirmar",
+    "create": "Crear",
     "cancel": "Cancelar"
+  },
+
+  "invitation": {
+    "title": "Mis Invitaciones",
+    "pending": "pendientes",
+    "loading": "Cargando invitaciones...",
+    "empty-title": "No tienes invitaciones",
+    "empty-description": "Cuando recibas invitaciones a organizaciones aparecerán aquí.",
+    "table": {
+      "organization": "Organización",
+      "invitedBy": "Invitado por",
+      "date": "Fecha",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "accepted": "Aceptada",
+      "rejected": "Rechazada",
+      "pending": "Pendiente"
+    },
+    "action": {
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    },
+    "processed": "Ya procesada"
   }
+
 }

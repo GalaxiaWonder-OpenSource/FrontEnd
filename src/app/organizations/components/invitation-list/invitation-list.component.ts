@@ -12,6 +12,7 @@ import { InvitationStatus } from '../../model/invitation-status.vo';
 import { OrganizationInvitationService } from '../../services/organization-invitation.service';
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invitation-list',
@@ -24,7 +25,8 @@ import { OrganizationMemberService } from '../../services/organization-member.se
     MatCardModule,
     MatChipsModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslatePipe
   ],
   templateUrl: './invitation-list.component.html',
   styleUrls: ['./invitation-list.component.css']
@@ -43,7 +45,8 @@ export class InvitationListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private sessionService: SessionService,
     private organizationMemberService: OrganizationMemberService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadInvitations();
@@ -53,7 +56,6 @@ export class InvitationListComponent implements OnInit {
     this.loading.set(true);
     try {
       const currentPersonId = this.getCurrentPersonId();
-      console.log('Loading invitations for person:', currentPersonId);
 
       if (!currentPersonId) {
         console.warn('No person ID found in session');
@@ -65,7 +67,6 @@ export class InvitationListComponent implements OnInit {
       // Obtener invitaciones desde el servicio
       this.invitationService.getAll().subscribe({
         next: (allInvitations: any[]) => {
-          console.log('All invitations from API:', allInvitations);
 
           if (!Array.isArray(allInvitations)) {
             console.warn('API response is not an array:', allInvitations);
@@ -80,14 +81,11 @@ export class InvitationListComponent implements OnInit {
             return invPersonId === currentPersonId;
           });
 
-          console.log('Filtered invitations:', filteredInvitations);
-
           // Mapear a entidades
           const mappedInvitations = filteredInvitations
             .map(data => this.mapToInvitation(data))
             .filter(inv => inv !== null); // Filtrar invitaciones que no se pudieron mapear
 
-          console.log('Final mapped invitations:', mappedInvitations);
           this.invitations.set(mappedInvitations);
         },
         error: (error: any) => {
@@ -113,8 +111,8 @@ export class InvitationListComponent implements OnInit {
     this.processingInvitation.set(id);
     try {
       await this.invitationService.update(
-        { status: 'ACCEPTED', acceptedAt: new Date().toISOString() },
-        { id }
+        {status: 'ACCEPTED', acceptedAt: new Date().toISOString()},
+        {id}
       ).toPromise();
 
       // Crear el miembro en la organización
@@ -125,7 +123,7 @@ export class InvitationListComponent implements OnInit {
         joinedAt: new Date() // Guardar como Date, no string
       }).toPromise();
 
-      
+
       invitation.accept();
       this.showSnackBar('¡Invitación aceptada!', 'success');
       await this.loadInvitations();
@@ -142,12 +140,12 @@ export class InvitationListComponent implements OnInit {
     this.processingInvitation.set(id);
     try {
       await this.invitationService.update(
-        { status: 'REJECTED' },
-        { id }
+        {status: 'REJECTED'},
+        {id}
       ).toPromise();
 
       // Eliminar la invitación rechazada
-      await this.invitationService.delete({}, { id }).toPromise();
+      await this.invitationService.delete({}, {id}).toPromise();
 
       invitation.reject();
       this.showSnackBar('Invitación rechazada', 'info');
@@ -157,32 +155,6 @@ export class InvitationListComponent implements OnInit {
       this.showSnackBar('Error al rechazar la invitación', 'error');
     } finally {
       this.processingInvitation.set(null);
-    }
-  }
-
-  getStatusText(status: InvitationStatus): string {
-    switch (status) {
-      case InvitationStatus.PENDING:
-        return 'Pendiente';
-      case InvitationStatus.ACCEPTED:
-        return 'Aceptada';
-      case InvitationStatus.REJECTED:
-        return 'Rechazada';
-      default:
-        return 'Desconocido';
-    }
-  }
-
-  getStatusColor(status: InvitationStatus): string {
-    switch (status) {
-      case InvitationStatus.PENDING:
-        return 'accent';
-      case InvitationStatus.ACCEPTED:
-        return 'primary';
-      case InvitationStatus.REJECTED:
-        return 'warn';
-      default:
-        return '';
     }
   }
 
@@ -196,17 +168,13 @@ export class InvitationListComponent implements OnInit {
   private getCurrentPersonId(): string | null {
     try {
       const personId = this.sessionService.getPersonId();
-      console.log('Person ID from session:', personId);
 
-      // Manejar diferentes formatos de PersonId
       if (!personId) return null;
 
-      // Si es un objeto con propiedad value
       if (typeof personId === 'object' && personId.value) {
         return personId.value;
       }
 
-      // Si es un string directamente
       if (typeof personId === 'string') {
         return personId;
       }
@@ -221,9 +189,7 @@ export class InvitationListComponent implements OnInit {
 
   private mapToInvitation(data: any): OrganizationInvitation | null {
     try {
-      console.log('Mapping invitation data:', data);
 
-      // Permitir 'id' como 'invitationId' para compatibilidad con json-server
       const invitationId = data.invitationId || data.id;
       if (!invitationId || !data.organizationId || !data.personId) {
         console.warn('Missing required fields in invitation data:', data);

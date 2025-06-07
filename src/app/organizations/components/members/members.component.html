@@ -1,7 +1,7 @@
 <div class="members-container">
 
-  <!-- add -->
-  <div class="members-header">
+  <!-- add - mostrar solo si es creador -->
+  <div class="members-header" *ngIf="isCreator()">
     <button mat-raised-button color="primary" (click)="openInvitationModal()">
       Invitar miembro
     </button>
@@ -16,13 +16,18 @@
       <mat-card-title>{{ member.fullName }}</mat-card-title>
       <mat-card-subtitle>{{ member.email }}</mat-card-subtitle>
 
-      <!-- delete -->
-      <button mat-mini-fab class="delete-fab" (click)="removeMember(member.member)">
+      <!-- delete - mostrar botón solo si es creador y no intenta eliminar al creador siendo él mismo -->
+      <button 
+        *ngIf="isCreator() && !(member.member.memberType === 'CONTRACTOR' && member.member.personId.toString() === currentPersonId())"
+        mat-mini-fab 
+        class="delete-fab" 
+        (click)="removeMember(member.member)">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-card-header>
     <mat-card-content>
       <p><strong>Unido el:</strong> {{ member.joinedAt | date }}</p>
+      <p><strong>Rol:</strong> {{ member.member.memberType === 'CONTRACTOR' ? 'Contratista (Creador)' : 'Colaborador' }}</p>
     </mat-card-content>
   </mat-card>
 

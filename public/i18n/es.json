@@ -148,7 +148,7 @@
     "last-name": "Apellido",
     "member-type": "Tipo de Miembro",
     "contractor": "Contratista",
-    "employee": "Empleado",
+    "worker": "Colaborador",
     "cancel": "Cancelar",
     "invite": "Enviar Invitación"
   },
@@ -176,5 +176,25 @@
     "descriptions": {
       "project-a": "Descripción del Proyecto A"
     }
+  },
+  "members": {
+    "title": "Miembros de la Organización",
+    "invite": "Invitar miembro",
+    "remove": "Eliminar miembro",
+    "joined-on": "Unido el",
+    "role": "Rol",
+    "no-members": "No hay miembros en esta organización",
+    "confirm-delete-title": "Eliminar miembro",
+    "confirm-delete": "¿Está seguro que desea eliminar este miembro de la organización?",
+    "member-types": {
+      "contractor": "Contratista (Creador)",
+      "worker": "Colaborador"
+    }
+  },
+  
+  "common": {
+    "actions": "Acciones",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   }
 }

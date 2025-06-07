@@ -70,12 +70,11 @@ export const routes: Routes = [
       {
         path: 'projects',
         loadComponent: () => import('./organizations/components/projects/projects.component').then(m => m.ProjectsComponent)
-      },
-      {
+      },      {
         path: 'members',
         canActivate: [OrgRoleGuard],
         data:{roles: [OrganizationMemberType.CONTRACTOR] },
-        loadComponent: () => import('./organizations/components/members/members.component').then(m => m.MembersComponent)
+        loadComponent: () => import('./organizations/pages/member-tab/member-tab.component').then(m => m.MemberTabComponent)
       },
       {
         path: 'settings',

@@ -1,19 +1,43 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {SessionService} from '../../iam/services/session.service';
+import {OrganizationService} from '../services/organization.service';
+import {Observable, map, of} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class OrganizationMemberGuard implements CanActivate {
-  constructor(private session: SessionService, private router: Router) {}
+  constructor(
+    private session: SessionService, 
+    private router: Router,
+    private organizationService: OrganizationService
+  ) {}
 
-  canActivate(): boolean {
-    const orgId = this.session.getOrganizationId();
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    const organizationId = this.session.getOrganizationId();
+    
+    if (!organizationId) {
+      this.router.navigate(['/unauthorized']);
+      return of(false);
+    }    // Verificar si la ruta requiere que el usuario sea creador
+    if (route.data && route.data['requiresCreator']) {
+      const personId = this.session.getPersonId();
+      
+      if (!personId) {
+        this.router.navigate(['/unauthorized']);
+        return of(false);
+      }
 
-    if (orgId) {
-      return true;
+      return this.organizationService.isOrganizationCreator(organizationId, personId.toString()).pipe(
+        map(isCreator => {
+          if (!isCreator) {
+            this.router.navigate(['/organizations', organizationId]);
+          }
+          return isCreator;
+        })
+      );
     }
-
-    this.router.navigate(['/unauthorized']);
-    return false;
+    
+    // Si no requiere ser creador, solo verificamos que sea miembro
+    return of(true);
   }
 }

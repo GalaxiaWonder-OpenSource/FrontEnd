@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ 'members.confirm-delete-title' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ 'members.confirm-delete' | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">
+    {{ 'common.confirm' | translate }}
+  </button>
+</mat-dialog-actions>

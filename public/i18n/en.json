@@ -148,7 +148,7 @@
     "last-name": "Last Name",
     "member-type": "Member Type",
     "contractor": "Contractor",
-    "employee": "Employee",
+    "worker": "Collaborator",
     "cancel": "Cancel",
     "invite": "Send Invitation"
   },
@@ -176,5 +176,23 @@
     "descriptions": {
       "project-a": "Project A Description"
     }
+  },
+  "members": {
+    "title": "Organization Members",
+    "add-member": "Add Member",
+    "name": "Name",
+    "email": "Email",
+    "type": "Type",
+    "member-types": {
+      "contractor": "Contractor (Creator)",
+      "worker": "Collaborator"
+    },
+    "confirm-delete-title": "Remove Member",
+    "confirm-delete": "Are you sure you want to remove this member from the organization?"
+  },
+  "common": {
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

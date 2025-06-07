@@ -3,6 +3,7 @@ import { createDynamicService } from '../../shared/services/create-dynamic-servi
 import { createEndpointConfig } from '../../shared/model/endpoint-config.vo';
 import { HttpMethod } from '../../shared/model/http-method.vo';
 import { Organization } from '../model/organization.entity';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +26,17 @@ export class OrganizationService {
   update = this.service['update'];
   delete = this.service['delete'];
   deactivate = this.service['deactivate'];
+  /**
+   * Verifica si un usuario es el creador de una organización
+   * @param organizationId ID de la organización
+   * @param personId ID de la persona a verificar
+   * @returns Observable<boolean> true si la persona es creadora
+   */
+  isOrganizationCreator(organizationId: string, personId: string): Observable<boolean> {
+    return this.getById({}, { id: organizationId }).pipe(
+      map((organization: any) => {
+        return organization && organization.createdBy === personId;
+      })
+    );
+  }
 }

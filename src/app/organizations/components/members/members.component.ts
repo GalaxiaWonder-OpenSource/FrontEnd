@@ -9,7 +9,6 @@ import { OrganizationMemberService } from '../../services/organization-member.se
 import { PersonService } from '../../../iam/services/person.service';
 import { OrganizationMember } from '../../model/organization-member.entity';
 import { CreateMemberModalComponent } from '../create-member-modal/create-member-modal.component';
-import { RemoveMemberConfirmationComponent } from '../remove-member-confirmation/remove-member-confirmation.component';
 import { OrganizationService } from '../../services/organization.service';
 import { PersonId } from '../../../shared/model/person-id.vo';
 import { OrganizationId } from '../../../shared/model/organization-id.vo';

@@ -18,7 +18,7 @@ export class MemberCardComponent {
     joinedAt: Date;
     fullName: string;
     email: string;
-    member: OrganizationMember; // para compatibilidad con el método actual
+    member: OrganizationMember;
   };
 
   @Input() isCreator: boolean = false;
@@ -26,9 +26,6 @@ export class MemberCardComponent {
 
   @Output() removeMember = new EventEmitter<OrganizationMember>();
 
-  /**
-   * Obtiene las iniciales del nombre completo
-   */
   getInitials(fullName: string): string {
     return fullName
       .split(' ')
@@ -38,16 +35,18 @@ export class MemberCardComponent {
   }
 
   /**
-   * Verifica si el miembro puede ser eliminado
+   * Determines if the current member can be removed.
+   * The creator cannot remove themselves if they are a CONTRACTOR.
+   * @returns {boolean} Whether the member is eligible for removal.
    */
   canBeRemoved(): boolean {
-    return this.isCreator && 
-           !(this.member.memberType === 'CONTRACTOR' && 
+    return this.isCreator &&
+           !(this.member.memberType === 'CONTRACTOR' &&
              this.member.member.personId.toString() === this.currentPersonId);
   }
 
   /**
-   * Emite evento para eliminar miembro
+   * Emits the removeMember event with the current OrganizationMember.
    */
   onRemoveMember(): void {
     this.removeMember.emit(this.member.member);

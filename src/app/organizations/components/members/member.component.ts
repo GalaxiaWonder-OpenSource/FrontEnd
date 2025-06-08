@@ -3,20 +3,18 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import { PersonService } from '../../../iam/services/person.service';
 import { OrganizationService } from '../../services/organization.service';
 import { OrganizationInvitationService } from '../../services/organization-invitation.service';
-
 import { OrganizationMember } from '../../model/organization-member.entity';
 import { CreateMemberModalComponent } from '../create-member-modal/create-member-modal.component';
 import { DeleteMemberModalComponent } from '../delete-member-modal/delete-member-modal.component';
 import { MemberCardComponent } from '../member-card/member-card.component';
 
 @Component({
-  selector: 'app-member-list',
+  selector: 'app-member',
   standalone: true,
   imports: [
     CommonModule,
@@ -24,10 +22,10 @@ import { MemberCardComponent } from '../member-card/member-card.component';
     MatDialogModule,
     MemberCardComponent
   ],
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.css']
+  templateUrl: './member.component.html',
+  styleUrls: ['./member.component.css']
 })
-export class MemberListComponent implements OnInit {
+export class MemberComponent implements OnInit {
   members = signal<MemberDisplay[]>([]);
   isCreator = signal<boolean>(false);
   currentPersonId = signal<string | null>(null);
@@ -63,7 +61,7 @@ export class MemberListComponent implements OnInit {
         this.isCreator.set(isCreator);
       },
       error: (err: unknown) => {
-        console.error('Error al verificar si es creador:', err);
+        console.error('Error checking if user is creator:', err);
         this.isCreator.set(false);
       }
     });
@@ -167,11 +165,11 @@ export class MemberListComponent implements OnInit {
 
     this.organizationInvitationService.create(invitation).subscribe({
       next: () => {
-        this.snackBar.open('Invitación enviada con éxito', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
+        this.snackBar.open('Invitation sent successfully', 'Close', { duration: 3000, panelClass: ['snackbar-success'] });
       },
       error: (err: unknown) => {
-        this.snackBar.open('Error al enviar invitación', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
-        console.error('Error al enviar invitación:', err);
+        this.snackBar.open('Error sending invitation', 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
+        console.error('Error sending invitation:', err);
       }
     });
   }
@@ -179,7 +177,7 @@ export class MemberListComponent implements OnInit {
   removeMember(member: OrganizationMember): void {
     if (!this.isCreator() ||
       (member.memberType === 'CONTRACTOR' && member.personId.toString() === this.currentPersonId())) {
-      console.warn('No tienes permisos para eliminar este miembro o estás intentando eliminar al creador');
+      console.warn('You do not have permission to remove this member or you are trying to remove the creator');
       return;
     }
 
@@ -200,7 +198,7 @@ export class MemberListComponent implements OnInit {
             this.loadMembers();
           },
           error: (err: unknown) => {
-            console.error('Error al eliminar miembro:', err);
+            console.error('Error removing member:', err);
           }
         });
       }
@@ -208,7 +206,7 @@ export class MemberListComponent implements OnInit {
   }
 }
 
-// Tipo para mostrar en la vista
+// Type for displaying in view
 interface MemberDisplay {
   memberType: string;
   joinedAt: Date;

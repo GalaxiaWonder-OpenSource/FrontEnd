@@ -110,25 +110,6 @@
   min-width: 100px;
 }
 
-.status-message {
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.status-message.accepted {
-  color: #4caf50;
-}
-
-.status-message.rejected {
-  color: #f44336;
-}
-
-.status-message mat-icon {
-  margin-right: 5px;
-  font-size: 1.2rem;
-}
-
 .custom-chip {
   border: 1px solid transparent;
   font-weight: 600;
@@ -152,6 +133,17 @@
   border-color: #ef6c00 !important;
 }
 
+/* Opcional: Si decides mantener algo para estados no-pending */
+.no-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.muted-text {
+  color: #999;
+  font-style: italic;
+}
 
 @media (max-width: 768px) {
   .invitation-card {

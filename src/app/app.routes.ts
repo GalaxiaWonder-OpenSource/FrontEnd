@@ -73,7 +73,7 @@ export const routes: Routes = [
       },      {
         path: 'members',
         canActivate: [OrgRoleGuard],
-        data:{roles: [OrganizationMemberType.CONTRACTOR] },
+        data:{roles: [OrganizationMemberType.CONTRACTOR, OrganizationMemberType.WORKER] },
         loadComponent: () => import('./organizations/pages/member-tab/member-tab.component').then(m => m.MemberTabComponent)
       },
       {

@@ -105,15 +105,8 @@
               </button>
             </div>
 
-            <div *ngIf="invitation.status !== invitationStatus.PENDING" class="status-message">
-              <span *ngIf="invitation.status === invitationStatus.ACCEPTED" class="accepted">
-                <mat-icon>check_circle</mat-icon>
-                {{ 'invitation.processed' | translate }}
-              </span>
-              <span *ngIf="invitation.status === invitationStatus.REJECTED" class="rejected">
-                <mat-icon>cancel</mat-icon>
-                {{ 'invitation.processed' | translate }}
-              </span>
+            <div *ngIf="invitation.status !== invitationStatus.PENDING" class="no-actions">
+              <span class="muted-text">{{ 'invitation.no-actions' | translate }}</span>
             </div>
           </td>
         </ng-container>

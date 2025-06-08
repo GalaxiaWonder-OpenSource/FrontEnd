@@ -1,5 +1,5 @@
 .member-avatar {
-  background-color: #1976d2; /* azul Material */
+  background-color: #1976d2;
   color: #fff;
   font-weight: 600;
   font-size: 1rem;
@@ -15,7 +15,7 @@
 
 mat-card {
   transition: box-shadow 0.3s ease;
-  position: relative; /* necesario para posicionar delete-button */
+  position: relative;
 }
 
 mat-card:hover {
@@ -23,8 +23,8 @@ mat-card:hover {
 }
 
 .delete-fab {
-  background-color: #c5dae8; /* 💙 celeste Material */
-  color: #0d47a1;            /* azul fuerte para el ícono */
+  background-color: #c5dae8;
+  color: #0d47a1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }

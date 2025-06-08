@@ -6,11 +6,10 @@
     <mat-card-title>{{ member.fullName }}</mat-card-title>
     <mat-card-subtitle>{{ member.email }}</mat-card-subtitle>
 
-    <!-- Botón de eliminar, solo visible para el creador y no para el propio creador -->
-    <button 
+    <button
       *ngIf="canBeRemoved()"
-      mat-mini-fab 
-      class="delete-fab" 
+      mat-mini-fab
+      class="delete-fab"
       (click)="onRemoveMember()">
       <mat-icon>delete</mat-icon>
     </button>

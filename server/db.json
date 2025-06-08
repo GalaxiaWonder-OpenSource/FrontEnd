@@ -206,7 +206,7 @@
     },
     {
       "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
-      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
+      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
       "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "id": 2
     }
@@ -253,6 +253,13 @@
       "organizationId": "2c34a6bb-c126-4bfe-88db-6857a83e356a",
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-04T05:30:57.207Z"
+    },
+    {
+      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
+      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
+      "memberType": "WORKER",
+      "joinedAt": "2025-06-08T01:13:26.623Z",
+      "id": "BWrRG0m"
     }
   ],
   "projects": [],

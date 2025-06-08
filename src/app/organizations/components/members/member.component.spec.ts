@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberListComponent } from './member-list.component';
+import { MemberComponent } from './member.component';
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import { OrganizationService } from '../../services/organization.service';
@@ -14,12 +14,12 @@ class PersonServiceMock {}
 class MatDialogMock {}
 
 describe('MemberListComponent', () => {
-  let component: MemberListComponent;
-  let fixture: ComponentFixture<MemberListComponent>;
+  let component: MemberComponent;
+  let fixture: ComponentFixture<MemberComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MemberListComponent],
+      imports: [MemberComponent],
       providers: [
         { provide: SessionService, useClass: SessionServiceMock },
         { provide: OrganizationMemberService, useClass: OrganizationMemberServiceMock },
@@ -29,7 +29,7 @@ describe('MemberListComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MemberListComponent);
+    fixture = TestBed.createComponent(MemberComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

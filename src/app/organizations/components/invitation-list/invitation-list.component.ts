@@ -13,6 +13,8 @@ import { OrganizationInvitationService } from '../../services/organization-invit
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {OrganizationService} from '../../services/organization.service';
+import {PersonService} from '../../../iam/services/person.service';
 
 @Component({
   selector: 'app-invitation-list',
@@ -32,19 +34,26 @@ import {TranslatePipe} from '@ngx-translate/core';
   styleUrls: ['./invitation-list.component.css']
 })
 export class InvitationListComponent implements OnInit {
-  // Usar signals para mejor performance
+
   invitations = signal<OrganizationInvitation[]>([]);
   loading = signal<boolean>(false);
   processingInvitation = signal<string | null>(null);
+  organizationNames = signal<Record<string, string>>({});
+  personNames = signal<Record<string, string>>({});
+
 
   invitationStatus = InvitationStatus;
   displayedColumns: string[] = ['organization', 'invitedBy', 'invitedAt', 'status', 'actions'];
+
 
   constructor(
     private invitationService: OrganizationInvitationService,
     private snackBar: MatSnackBar,
     private sessionService: SessionService,
-    private organizationMemberService: OrganizationMemberService
+    private organizationMemberService: OrganizationMemberService,
+    private organizationService: OrganizationService,
+    private personService: PersonService
+
   ) {
   }
 
@@ -52,7 +61,7 @@ export class InvitationListComponent implements OnInit {
     this.loadInvitations();
   }
 
-  private async loadInvitations(): Promise<void> {
+  private async loadInvitations() {
     this.loading.set(true);
     try {
       const currentPersonId = this.getCurrentPersonId();
@@ -60,11 +69,10 @@ export class InvitationListComponent implements OnInit {
       if (!currentPersonId) {
         console.warn('No person ID found in session');
         this.invitations.set([]);
-        this.showSnackBar('No se pudo obtener la información del usuario', 'error');
+        this.showSnackBar('\n' + 'Could not get user information', 'error');
         return;
       }
 
-      // Obtener invitaciones desde el servicio
       this.invitationService.getAll().subscribe({
         next: (allInvitations: any[]) => {
 
@@ -74,14 +82,12 @@ export class InvitationListComponent implements OnInit {
             return;
           }
 
-          // Filtrar invitaciones por personId
           const filteredInvitations = allInvitations.filter((inv: any) => {
-            // Comparar tanto como string como objeto
+
             const invPersonId = typeof inv.personId === 'string' ? inv.personId : inv.personId?.value;
             return invPersonId === currentPersonId;
           });
 
-          // Mapear a entidades
           const mappedInvitations = filteredInvitations
             .map(data => this.mapToInvitation(data))
             .filter(inv => inv !== null); // Filtrar invitaciones que no se pudieron mapear
@@ -90,7 +96,7 @@ export class InvitationListComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Error loading invitations:', error);
-          this.showSnackBar('Error al cargar las invitaciones', 'error');
+          this.showSnackBar('Error loading Invitations', 'error');
           this.invitations.set([]);
         },
         complete: () => {
@@ -99,8 +105,8 @@ export class InvitationListComponent implements OnInit {
       });
 
     } catch (error) {
-      console.error('Error in loadInvitations:', error);
-      this.showSnackBar('Error al cargar las invitaciones', 'error');
+      console.error('Error loading Invitations:', error);
+      this.showSnackBar('Error loading Invitations', 'error');
       this.invitations.set([]);
       this.loading.set(false);
     }
@@ -110,26 +116,22 @@ export class InvitationListComponent implements OnInit {
     const id = (invitation.invitationId.value || invitation.invitationId).toString();
     this.processingInvitation.set(id);
     try {
-      await this.invitationService.update(
-        {status: 'ACCEPTED', acceptedAt: new Date().toISOString()},
-        {id}
-      ).toPromise();
 
-      // Crear el miembro en la organización
       await this.organizationMemberService.create({
         personId: invitation.personId,
         organizationId: invitation.organizationId,
         memberType: 'WORKER',
-        joinedAt: new Date() // Guardar como Date, no string
+        joinedAt: new Date()
       }).toPromise();
 
+      await this.invitationService.delete({}, {id}).toPromise();
 
       invitation.accept();
-      this.showSnackBar('¡Invitación aceptada!', 'success');
+      this.showSnackBar('¡Accepted invitation!', 'success');
       await this.loadInvitations();
     } catch (error) {
       console.error('Error accepting invitation:', error);
-      this.showSnackBar('Error al aceptar la invitación', 'error');
+      this.showSnackBar('Error accepting Invitations', 'error');
     } finally {
       this.processingInvitation.set(null);
     }
@@ -144,15 +146,14 @@ export class InvitationListComponent implements OnInit {
         {id}
       ).toPromise();
 
-      // Eliminar la invitación rechazada
       await this.invitationService.delete({}, {id}).toPromise();
 
       invitation.reject();
-      this.showSnackBar('Invitación rechazada', 'info');
+      this.showSnackBar('Rejected invitation', 'info');
       await this.loadInvitations();
     } catch (error) {
       console.error('Error rejecting invitation:', error);
-      this.showSnackBar('Error al rechazar la invitación', 'error');
+      this.showSnackBar('Error rejecting invitation', 'error');
     } finally {
       this.processingInvitation.set(null);
     }
@@ -189,6 +190,7 @@ export class InvitationListComponent implements OnInit {
 
   private mapToInvitation(data: any): OrganizationInvitation | null {
     try {
+      console.log('Mapping invitation data:', data);
 
       const invitationId = data.invitationId || data.id;
       if (!invitationId || !data.organizationId || !data.personId) {
@@ -200,7 +202,7 @@ export class InvitationListComponent implements OnInit {
         invitationId: invitationId,
         organizationId: data.organizationId,
         personId: data.personId,
-        invitedBy: data.invitedBy || 'Sistema',
+        invitedBy: data.invitedBy,
         invitedAt: data.invitedAt ? new Date(data.invitedAt) : new Date(),
         acceptedAt: data.acceptedAt ? new Date(data.acceptedAt) : undefined,
         status: data.status || InvitationStatus.PENDING
@@ -211,26 +213,43 @@ export class InvitationListComponent implements OnInit {
     }
   }
 
-  getOrganizationName(organizationId: string): string {
-    if (!organizationId) return 'Organización desconocida';
+  getOrganizationName(id: string): string {
+    if (!id) return 'Organización desconocida';
 
-    // Si organizationId es un objeto, extraer el valor
-    const id = typeof organizationId === 'object' && organizationId
-      ? organizationId
-      : organizationId;
+    const cachedName = this.organizationNames()[id];
+    if (cachedName) return cachedName;
 
-    return `Organización ${id.toString().substring(0, 8)}...`;
+    this.organizationService.getById({}, { id }).subscribe({
+      next: (org: any) => {
+        const updatedMap = { ...this.organizationNames(), [id]: org.legalName };
+        this.organizationNames.set(updatedMap);
+      },
+    });
+    return `Cargando...`;
   }
 
-  getPersonName(personId: string): string {
-    if (!personId) return 'Usuario desconocido';
+  getPersonName(personId: any): string {
+    if (!personId) return 'Unknown user';
 
-    // Si personId es un objeto, extraer el valor
-    const id = typeof personId === 'object' && personId
-      ? personId
+    const id = typeof personId === 'object' && 'value' in personId
+      ? personId.value
       : personId;
 
-    return `Usuario ${id.toString().substring(0, 8)}...`;
+    const cachedName = this.personNames()[id];
+    if (cachedName) return cachedName;
+
+    this.personService.getById({}, { id }).subscribe({
+      next: (person: any) => {
+        const fullName = person?.fullName || `${person?.firstName || ''} ${person?.lastName || ''}`.trim();
+        const updatedMap = { ...this.personNames(), [id]: fullName || `Usuario ${id}` };
+        this.personNames.set(updatedMap);
+      },
+      error: () => {
+        const updatedMap = { ...this.personNames(), [id]: `Usuario ${id}` };
+        this.personNames.set(updatedMap);
+      }
+    });
+    return `Cargando...`;
   }
 
   get pendingInvitationsCount(): number {

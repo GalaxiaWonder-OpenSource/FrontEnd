@@ -2,7 +2,6 @@ import { ProjectId } from '../../shared/model/project-id.vo';
 import {ProjectTeamMember} from './project-team-member.entity';
 import {ProjectTeamMemberId} from '../../shared/model/project-team-member-id.vo';
 import {OrganizationId} from '../../shared/model/organization-id.vo';
-import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
 import {PersonId} from '../../shared/model/person-id.vo';
 
 
@@ -20,7 +19,7 @@ export class Project {
   public readonly team: ProjectTeamMember[] = [];
 
   public readonly organizationId: OrganizationId;
-  public readonly contractor: OrganizationMemberId;
+  public readonly contractor: number;
   public readonly contractingEntityId: PersonId;
   //public readonly activeChangeProcessId: ChangeProcessId;
 
@@ -67,7 +66,7 @@ export class Project {
     endingDate: Date;
     team?: ProjectTeamMember[];
     organizationId: OrganizationId;
-    contractor: OrganizationMemberId;
+    contractor: number;
     contractingEntityId: PersonId;
     //activeChangeProcessId: ChangeProcessId;
   }) {
@@ -155,7 +154,7 @@ export class Project {
       endingDate: this.endingDate.toISOString(),
       team: this.team.map((m) => m.toJSON()),
       organizationId: this.organizationId.value,
-      contractor: this.contractor.value,
+      contractor: this.contractor,
       contractingEntityId: this.contractingEntityId.value,
       //activeChangeProcessId: this.activeChangeProcessId.value
     };

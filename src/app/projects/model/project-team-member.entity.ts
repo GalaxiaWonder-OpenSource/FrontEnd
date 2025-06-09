@@ -1,4 +1,3 @@
-import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
 import {ProjectTeamMemberId} from '../../shared/model/project-team-member-id.vo';
 import {ProjectRole} from './project-role.vo';
 import {Specialty} from './specialty.vo';
@@ -18,7 +17,7 @@ export class ProjectTeamMember {
 
   public specialty: Specialty;
 
-  public readonly memberId: OrganizationMemberId;
+  public readonly memberId: number;
 
   public readonly personId: PersonId;
 
@@ -46,7 +45,7 @@ export class ProjectTeamMember {
     id?: ProjectTeamMemberId;
     role: ProjectRole;
     specialty: Specialty;
-    memberId: OrganizationMemberId;
+    memberId: number;
     personId?: PersonId;
     projectId?: ProjectId;
   }) {

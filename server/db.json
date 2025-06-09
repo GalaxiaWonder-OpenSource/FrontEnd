@@ -131,135 +131,38 @@
   ],
   "organizations": [
     {
-      "id": "214f8331-2c30-4577-a967-96eaa5680691",
-      "legalName": "Legalname A",
-      "commercialName": "",
-      "ruc": "10164090588",
+      "id": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "legalName": "RAMONASAC",
+      "commercialName": "RAMONA",
+      "ruc": "10771768171",
       "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "createdAt": "2025-05-15T03:14:53.701Z",
-      "status": "Active",
-      "members": [],
-      "invitations": []
-    },
-    {
-      "id": "1476faaf-f628-446b-b9a7-af23a12ef0ec",
-      "legalName": "Trying",
-      "commercialName": "Trying SAC",
-      "ruc": "10545454541",
-      "createdBy": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "createdAt": "2025-06-04T00:43:02.708Z",
-      "status": "Active",
-      "members": [],
-      "invitations": []
-    },
-    {
-      "id": "7b14abb9-1f5c-4bb3-b344-6779b749efa7",
-      "legalName": "SIR",
-      "commercialName": "SIR CIRL",
-      "ruc": "10222333451",
-      "createdBy": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "createdAt": "2025-06-04T00:58:38.566Z",
-      "status": "Active",
-      "members": [],
-      "invitations": []
-    },
-    {
-      "id": "fb0820bf-ee4e-406f-a91e-c1867b270536",
-      "legalName": "SHALL",
-      "commercialName": "SHALL IRL",
-      "ruc": "10202020202",
-      "createdBy": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "createdAt": "2025-06-04T01:04:58.475Z",
-      "status": "Active",
-      "members": [],
-      "invitations": []
-    },
-    {
-      "id": "a4d06732-8393-4d33-9655-46f4aff3e8a7",
-      "legalName": "PARANGARI",
-      "commercialName": "CUTIRIMICUARO SAC",
-      "ruc": "10202020201",
-      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "createdAt": "2025-06-04T04:40:27.215Z",
-      "status": "Active",
-      "members": [],
-      "invitations": []
-    },
-    {
-      "id": "2c34a6bb-c126-4bfe-88db-6857a83e356a",
-      "legalName": "SOUR",
-      "commercialName": "SOUR SAC",
-      "ruc": "10773456271",
-      "createdBy": "4940f000-0d04-4e43-ac50-34dc3be663b1",
-      "createdAt": "2025-06-04T05:30:57.166Z",
-      "status": "Active",
+      "createdAt": "2025-06-08T17:10:09.076Z",
+      "status": "ACTIVE",
       "members": [],
       "invitations": []
     }
   ],
   "organization-invitations": [
     {
-      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
-      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
+      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
       "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "id": 1
     },
     {
-      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
-      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
+      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
       "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "id": 2
     }
   ],
   "organization-members": [
     {
-      "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
+      "id": 1,
       "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
+      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
       "memberType": "CONTRACTOR",
-      "joinedAt": "2025-05-15T03:14:53.711Z"
-    },
-    {
-      "id": "0d066a11-8bed-4fab-959d-a2f0b57416ad",
-      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "organizationId": "1476faaf-f628-446b-b9a7-af23a12ef0ec",
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-04T00:43:02.771Z"
-    },
-    {
-      "id": "029c2c96-fae9-4ea8-9c9e-ce7780a8720a",
-      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "organizationId": "7b14abb9-1f5c-4bb3-b344-6779b749efa7",
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-04T00:58:38.604Z"
-    },
-    {
-      "id": "97e5bc45-c34c-4f32-8668-67b9e0fc0dd8",
-      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "organizationId": "fb0820bf-ee4e-406f-a91e-c1867b270536",
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-04T01:04:58.511Z"
-    },
-    {
-      "id": "6532393a-2d01-40e7-9792-d47251ca6a83",
-      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "organizationId": "a4d06732-8393-4d33-9655-46f4aff3e8a7",
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-04T04:40:27.296Z"
-    },
-    {
-      "id": "b489e263-9386-413e-8b8b-4b290aa58943",
-      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
-      "organizationId": "2c34a6bb-c126-4bfe-88db-6857a83e356a",
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-04T05:30:57.207Z"
-    },
-    {
-      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
-      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
-      "memberType": "WORKER",
-      "joinedAt": "2025-06-08T01:13:26.623Z",
-      "id": "BWrRG0m"
+      "joinedAt": "2025-06-08T17:10:09.315Z"
     }
   ],
   "projects": [],

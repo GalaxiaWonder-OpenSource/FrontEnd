@@ -1,4 +1,3 @@
-import { RegistrationRequestId } from '../../shared/model/registration-request-id.vo';
 import { EmailAddress } from '../../shared/model/email-adress.vo';
 
 /**
@@ -7,7 +6,7 @@ import { EmailAddress } from '../../shared/model/email-adress.vo';
  */
 export class RegistrationRequest {
   /** Unique identifier of the registration request. */
-  public readonly id: RegistrationRequestId;
+  public readonly id: number | undefined;
 
   /** Email address provided by the user. */
   public readonly email: EmailAddress;
@@ -37,14 +36,14 @@ export class RegistrationRequest {
    * @throws Error if validation fails.
    */
   constructor({
-                id = new RegistrationRequestId(),
+                id,
                 email,
                 password,
                 fullName,
                 requestedAt = new Date(),
                 expiresAt
               }: {
-    id?: RegistrationRequestId;
+    id?: number;
     email: EmailAddress;
     password: string;
     fullName: string;
@@ -78,7 +77,7 @@ export class RegistrationRequest {
    */
   toJSON() {
     return {
-      id: this.id.value,
+      id: this.id,
       email: this.email.value,
       password: this.password,
       fullName: this.fullName,

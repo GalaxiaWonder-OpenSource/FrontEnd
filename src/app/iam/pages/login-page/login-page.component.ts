@@ -54,6 +54,8 @@ export class LoginPageComponent {
 
         this.personService.getById({}, { id: user.personId }).subscribe({
           next: (person: any) => {
+            console.log('xd');
+            console.log(person);
             this.session.setPersonId(person.id);
             this.session.setUserType(user.role);
 

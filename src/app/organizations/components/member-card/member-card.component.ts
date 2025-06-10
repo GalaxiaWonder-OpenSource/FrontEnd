@@ -40,9 +40,11 @@ export class MemberCardComponent {
    * @returns {boolean} Whether the member is eligible for removal.
    */
   canBeRemoved(): boolean {
+    const personId = this.member.member.personId;
+
     return this.isCreator &&
            !(this.member.memberType === 'CONTRACTOR' &&
-             this.member.member.personId.toString() === this.currentPersonId);
+             personId != null && personId.toString() === this.currentPersonId);
   }
 
   /**

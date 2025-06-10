@@ -1,5 +1,3 @@
-import { OrganizationId } from '../../shared/model/organization-id.vo';
-import { PersonId } from '../../shared/model/person-id.vo';
 import { OrganizationStatus } from './organization-status.vo';
 import { Ruc } from './ruc.vo';
 import { OrganizationMember } from './organization-member.entity';
@@ -9,11 +7,11 @@ import { OrganizationInvitation } from './organization-invitation.entity';
  * Aggregate root representing an Organization entity.
  */
 export class Organization {
-  public readonly id: OrganizationId;
+  public readonly id: number|undefined;
   public legalName: string;
   public commercialName?: string;
   public readonly ruc: Ruc;
-  public readonly createdBy: PersonId;
+  public readonly createdBy: number|undefined;
   public readonly createdAt: Date;
   public status: OrganizationStatus;
 
@@ -34,7 +32,7 @@ export class Organization {
    * @param invitations - Optional existing invitations.
    */
   constructor({
-                id = new OrganizationId(),
+                id,
                 legalName,
                 commercialName,
                 ruc,
@@ -44,11 +42,11 @@ export class Organization {
                 members = [],
                 invitations = []
               }: {
-    id?: OrganizationId;
+    id?: number;
     legalName: string;
     commercialName?: string;
     ruc: Ruc;
-    createdBy: PersonId;
+    createdBy?: number;
     createdAt?: Date;
     status: OrganizationStatus;
     members?: OrganizationMember[];
@@ -97,11 +95,11 @@ export class Organization {
    */
   toJSON() {
     return {
-      organizationId: this.id.value,
+      organizationId: this.id,
       legalName: this.legalName,
       commercialName: this.commercialName,
       ruc: this.ruc.value,
-      createdBy: this.createdBy.value,
+      createdBy: this.createdBy,
       createdAt: this.createdAt.toISOString(),
       status: this.status,
       members: this.members.map(m => m.toJSON()),

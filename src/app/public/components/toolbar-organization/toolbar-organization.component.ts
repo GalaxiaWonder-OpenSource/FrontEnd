@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router, RouterModule} from '@angular/router';
-import {SessionService} from '../../../iam/services/session.service';
+import {OrgRole, SessionService} from '../../../iam/services/session.service';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,20 +25,17 @@ import {OrganizationMemberType} from '../../../organizations/model/organization-
   styleUrls: ['./toolbar-organization.component.css']
 })
 export class ToolbarOrganizationComponent {
-  orgId = '';
-  organizationRole: string | null = null;
+  orgId: string = '';
+  organizationRole: OrgRole | undefined = undefined;
 
   constructor(
     private session: SessionService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.organizationRole = this.session.getOrganizationRole();
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.orgId = this.session.getOrganizationId() ?? '';
+    this.orgId = this.session.getOrganizationId()?.toString() ?? '';
     this.organizationRole = this.session.getOrganizationRole();
   }
 

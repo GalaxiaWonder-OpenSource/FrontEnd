@@ -12,7 +12,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import {SessionService} from '../../../iam/services/session.service';
 import {Ruc} from '../../model/ruc.vo';
 import {OrganizationStatus} from '../../model/organization-status.vo';
-import {PersonId} from '../../../shared/model/person-id.vo';
 import {OrganizationMember} from '../../model/organization-member.entity';
 import {OrganizationMemberType} from '../../model/organization-member-type.vo';
 import {OrganizationMemberService} from '../../services/organization-member.service';
@@ -55,7 +54,7 @@ export class OrganizationTabComponent {
     this.organizationMemberService.getAll().subscribe({
       next: (memberships: OrganizationMember[]) => {
         const myMemberships = memberships.filter(m =>
-          m.personId.toString() === personId.toString()
+          m.personId != undefined ? m.personId.toString() === personId.toString() : false
         );
 
         const orgIds = myMemberships.map(m => m.organizationId);
@@ -88,7 +87,7 @@ export class OrganizationTabComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         try {
-          const creatorId = new PersonId(this.session.getPersonId()?.toString());
+          const creatorId = this.session.getPersonId();
           const newOrg = new Organization({
             legalName: result.legalName,
             commercialName: result.commercialName,

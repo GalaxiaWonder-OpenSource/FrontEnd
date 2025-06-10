@@ -1,5 +1,3 @@
-import { PersonId } from '../../shared/model/person-id.vo';
-import { OrganizationId } from '../../shared/model/organization-id.vo';
 import { OrganizationMemberType } from './organization-member-type.vo';
 
 /**
@@ -7,13 +5,13 @@ import { OrganizationMemberType } from './organization-member-type.vo';
  */
 export class OrganizationMember {
   /** Unique identifier of the membership. */
-  public readonly id: number;
+  public readonly id: number|undefined;
 
   /** ID of the associated person. */
-  public readonly personId: PersonId;
+  public readonly personId: number|undefined;
 
   /** ID of the organization to which the person belongs. */
-  public readonly organizationId: OrganizationId;
+  public readonly organizationId: number|undefined;
 
   /** Role/type of the member within the organization. */
   public memberType: OrganizationMemberType;
@@ -38,8 +36,8 @@ export class OrganizationMember {
                 joinedAt = new Date()
               }: {
     id?: number;
-    personId: PersonId;
-    organizationId: OrganizationId;
+    personId?: number;
+    organizationId?: number;
     memberType: OrganizationMemberType;
     joinedAt?: Date;
   }) {
@@ -47,7 +45,7 @@ export class OrganizationMember {
       throw new Error('Missing required fields in OrganizationMember.');
     }
 
-    this.id = 0;
+    this.id = id;
     this.personId = personId;
     this.organizationId = organizationId;
     this.memberType = memberType;
@@ -60,8 +58,8 @@ export class OrganizationMember {
   toJSON() {
     return {
       id: this.id,
-      personId: this.personId.value,
-      organizationId: this.organizationId.value,
+      personId: this.personId,
+      organizationId: this.organizationId,
       memberType: this.memberType,
       joinedAt: this.joinedAt.toISOString()
     };

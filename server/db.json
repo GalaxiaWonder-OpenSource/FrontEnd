@@ -148,12 +148,6 @@
       "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
       "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "id": 1
-    },
-    {
-      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
-      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
-      "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "id": 2
     }
   ],
   "organization-members": [
@@ -163,6 +157,20 @@
       "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-08T17:10:09.315Z"
+    },
+    {
+      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
+      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "memberType": "WORKER",
+      "joinedAt": "2025-06-09T18:34:31.073Z",
+      "id": 2
+    },
+    {
+      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
+      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "memberType": "WORKER",
+      "joinedAt": "2025-06-09T18:38:04.794Z",
+      "id": 3
     }
   ],
   "projects": [],

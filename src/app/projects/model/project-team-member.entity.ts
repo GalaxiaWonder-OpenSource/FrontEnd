@@ -1,8 +1,5 @@
-import {ProjectTeamMemberId} from '../../shared/model/project-team-member-id.vo';
 import {ProjectRole} from './project-role.vo';
 import {Specialty} from './specialty.vo';
-import {PersonId} from '../../shared/model/person-id.vo';
-import {ProjectId} from '../../shared/model/project-id.vo';
 
 /**
  * Entity representing a member of a team project.
@@ -10,7 +7,7 @@ import {ProjectId} from '../../shared/model/project-id.vo';
 
 export class ProjectTeamMember {
 
-  public readonly id: ProjectTeamMemberId;
+  public readonly id: number;
 
 
   public role: ProjectRole;
@@ -19,9 +16,9 @@ export class ProjectTeamMember {
 
   public readonly memberId: number;
 
-  public readonly personId: PersonId;
+  public readonly personId: number;
 
-  public readonly projectId: ProjectId;
+  public readonly projectId: number;
 
   /**
    * Constructs a new ProjectTeamMember instance.
@@ -35,19 +32,19 @@ export class ProjectTeamMember {
    */
 
   constructor({
-                id = new ProjectTeamMemberId(),
+                id,
                 role,
                 specialty,
                 memberId,
-                personId = new PersonId(),
-                projectId = new ProjectId()
+                personId,
+                projectId
               }: {
-    id?: ProjectTeamMemberId;
+    id: number;
     role: ProjectRole;
     specialty: Specialty;
     memberId: number;
-    personId?: PersonId;
-    projectId?: ProjectId;
+    personId: number;
+    projectId: number;
   }) {
     if (!role || !specialty || !memberId) {
       throw new Error('Missing required fields in ProjectTeamMember.');

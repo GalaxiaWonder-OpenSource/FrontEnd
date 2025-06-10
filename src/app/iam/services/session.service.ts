@@ -1,22 +1,21 @@
 import { Injectable, signal, effect } from '@angular/core';
 import {UserRole} from '../model/user-role.vo';
-import {PersonId} from '../../shared/model/person-id.vo';
 import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
 
-type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER ;
-type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
-type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null;
+export type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER;
+export type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
+export type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | undefined;
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   // SIGNALS
-  private personId = signal<PersonId | null>(this.loadFromStorage('personId'));
-  private userType = signal<UserType | null>(this.loadFromStorage('userType'));
-  private organizationId = signal<string | null>(this.loadFromStorage('organizationId'));
-  private organizationRole = signal<OrgRole | null>(this.loadFromStorage('organizationRole'));
-  private projectId = signal<string | null>(this.loadFromStorage('projectId'));
+  private personId = signal<number | undefined>(this.loadFromStorage('personId'));
+  private userType = signal<UserType | undefined>(this.loadFromStorage('userType'));
+  private organizationId = signal<number | undefined>(this.loadFromStorage('organizationId'));
+  private organizationRole = signal<OrgRole | undefined>(this.loadFromStorage('organizationRole'));
+  private projectId = signal<string | undefined>(this.loadFromStorage('projectId'));
   private projectRole = signal<ProjectRole>(this.loadFromStorage('projectRole'));
-  private milestoneId = signal<string | null>(this.loadFromStorage('milestoneId'));
+  private milestoneId = signal<string | undefined>(this.loadFromStorage('milestoneId'));
 
   constructor() {
     // Persistencia reactiva automática
@@ -31,7 +30,7 @@ export class SessionService {
   }
 
   // Setters
-  setPersonId(id: PersonId) {
+  setPersonId(id: number) {
     this.personId.set(id);
   }
 
@@ -39,7 +38,7 @@ export class SessionService {
     this.userType.set(type);
   }
 
-  setOrganization(id: string, role: OrgRole) {
+  setOrganization(id: number | undefined, role: OrgRole) {
     this.organizationId.set(id);
     this.organizationRole.set(role);
   }
@@ -56,50 +55,50 @@ export class SessionService {
 
   // Limpieza
   clearIdentity() {
-    this.personId.set(null);
-    this.userType.set(null);
+    this.personId.set(undefined);
+    this.userType.set(undefined);
   }
 
   clearOrganization() {
-    this.organizationId.set(null);
-    this.organizationRole.set(null);
+    this.organizationId.set(undefined);
+    this.organizationRole.set(undefined);
   }
 
   clearProject() {
-    this.projectId.set(null);
-    this.projectRole.set(null);
+    this.projectId.set(undefined);
+    this.projectRole.set(undefined);
   }
 
   clearMilestone() {
-    this.milestoneId.set(null);
-    this.saveToStorage('milestoneId', null);
+    this.milestoneId.set(undefined);
+    this.saveToStorage('milestoneId', undefined);
   }
 
   clearAll() {
-    this.userType.set(null);
+    this.userType.set(undefined);
     this.clearOrganization();
     this.clearProject();
     this.clearMilestone();
   }
 
   // Getters
-  getPersonId(): PersonId | null {
+  getPersonId(): number | undefined {
     return this.personId();
   }
 
-  getUserType(): UserType | null {
+  getUserType(): UserType | undefined {
     return this.userType();
   }
 
-  getOrganizationId(): string | null {
+  getOrganizationId(): number | undefined {
     return this.organizationId();
   }
 
-  getOrganizationRole(): OrgRole | null {
+  getOrganizationRole(): OrgRole | undefined {
     return this.organizationRole();
   }
 
-  getProjectId(): string | null {
+  getProjectId(): string | undefined {
     return this.projectId();
   }
 
@@ -107,13 +106,13 @@ export class SessionService {
     return this.projectRole();
   }
 
-  getMilestoneId(): string | null {
+  getMilestoneId(): string | undefined {
     return this.milestoneId();
   }
 
   // Helpers de persistencia
   private saveToStorage(key: string, value: any) {
-    if (value !== null && value !== undefined) {
+    if (value !== undefined && value !== undefined) {
       localStorage.setItem(key, JSON.stringify(value));
     } else {
       localStorage.removeItem(key);
@@ -123,9 +122,9 @@ export class SessionService {
   private loadFromStorage(key: string): any {
     const val = localStorage.getItem(key);
     try {
-      return val ? JSON.parse(val) : null;
+      return val ? JSON.parse(val) : undefined;
     } catch {
-      return null;
+      return undefined;
     }
   }
 }

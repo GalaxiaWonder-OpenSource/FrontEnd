@@ -56,7 +56,7 @@ export class MemberComponent implements OnInit {
 
     this.currentPersonId.set(personId.toString());
 
-    this.organizationService.isOrganizationCreator(organizationId, personId.toString()).subscribe({
+    this.organizationService.isOrganizationCreator(organizationId.toString(), personId.toString()).subscribe({
       next: (isCreator) => {
         this.isCreator.set(isCreator);
       },
@@ -77,13 +77,14 @@ export class MemberComponent implements OnInit {
 
     this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
       next: (allMembers: OrganizationMember[]) => {
+        console.log(allMembers);
         const myOrganizationMembers = allMembers.filter(m =>
-          m.organizationId.toString() === organizationId.toString()
+          m.organizationId != undefined ? m.organizationId.toString() === organizationId.toString() : false
         );
 
         const uniqueMembers = myOrganizationMembers.filter((member, index) => {
-          const personIdStr = member.personId.toString();
-          const firstIndex = myOrganizationMembers.findIndex(m => m.personId.toString() === personIdStr);
+          const personIdStr = member.personId?.toString();
+          const firstIndex = myOrganizationMembers.findIndex(m => m.personId?.toString() === personIdStr);
           return firstIndex === index;
         });
 
@@ -176,7 +177,7 @@ export class MemberComponent implements OnInit {
 
   removeMember(member: OrganizationMember): void {
     if (!this.isCreator() ||
-      (member.memberType === 'CONTRACTOR' && member.personId.toString() === this.currentPersonId())) {
+      (member.memberType === 'CONTRACTOR' && member.personId?.toString() === this.currentPersonId())) {
       console.warn('You do not have permission to remove this member or you are trying to remove the creator');
       return;
     }

@@ -180,8 +180,20 @@
     "starting-date": "Fecha de inicio",
     "ending-date": "Fecha de fin",
     "status": "Estado",
+    "team-members": "Miembros del equipo",
+    "role": "Tu rol",
+    "view-details": "Ver detalles",
     "descriptions": {
       "project-a": "Descripción del Proyecto A"
+    },
+    "status-types": {
+      "BASIC_STUDIES": "Estudios Básicos",
+      "DESIGN_IN_PROCESS": "Diseño en Proceso",
+      "UNDER_REVIEW": "En Revisión",
+      "CHANGE_REQUEST": "Solicitud de Cambio",
+      "CHANGE_PENDING": "Cambio Pendiente",
+      "REJECT": "Rechazado",
+      "APPROVED": "Aprobado"
     }
   },
   "create-project": {

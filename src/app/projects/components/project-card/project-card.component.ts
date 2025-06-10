@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Project } from '../../model/project.entity';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -12,7 +14,7 @@ import { OrganizationMemberType } from '../../../organizations/model/organizatio
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule, TranslatePipe],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe],
   templateUrl: './project-card.component.html',
   styleUrl: './project-card.component.css'
 })
@@ -34,8 +36,15 @@ export class ProjectCardComponent {
         this.userType = this.sessionService.getUserType() as UserRole;
       }
       
+      // Convertir projectRole string al tipo ProjectRole esperado por setProject
+      const typedRole = this.projectRole as 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null;
+      
       // Establecer el ID del proyecto y su rol en la sesión
-      this.sessionService.setProject(this.project.id.value, this.projectRole);
+      const projectIdValue = typeof this.project.id === 'string' ? 
+                            this.project.id : 
+                            (this.project.id.value || this.project.id.toString());
+                            
+      this.sessionService.setProject(projectIdValue, typedRole);
       
       // Asegurarnos de que el tipo de usuario también esté establecido
       if (this.userType) {
@@ -46,27 +55,36 @@ export class ProjectCardComponent {
       if (this.organizationRole && this.sessionService.getOrganizationId()) {
         this.sessionService.setOrganization(
           this.sessionService.getOrganizationId()!, 
-          this.organizationRole
+          this.organizationRole as OrganizationMemberType
         );
       }
       
       // Navegar a la página de información del proyecto
-      this.router.navigate([`/projects/${this.project.id.value}/information`]);
+      this.router.navigate([`/projects/${projectIdValue}/information`]);
     }
   }
   
   getStatusTranslation(): string {
-    // Mapeamos los estados del proyecto a cadenas legibles
-    const statusMap: Record<string, string> = {
-      [ProjectStatus.BASIC_STUDIES]: 'Estudios Básicos',
-      [ProjectStatus.DESIGN_IN_PROCESS]: 'Diseño en Proceso',
-      [ProjectStatus.UNDER_REVIEW]: 'En Revisión',
-      [ProjectStatus.CHANGE_REQUEST]: 'Solicitud de Cambio',
-      [ProjectStatus.CHANGE_PENDING]: 'Cambio Pendiente',
-      [ProjectStatus.REJECT]: 'Rechazado',
-      [ProjectStatus.APPROVED]: 'Aprobado'
+    // Usamos el sistema de traducción i18n mediante interpolación de la ruta completa
+    // La clave será por ejemplo: "project-card.status-types.BASIC_STUDIES"
+    const translationKey = `project-card.status-types.${this.project.status}`;
+    
+    // La traducción se aplica en el HTML a través del pipe 'translate'
+    return translationKey;
+  }
+  
+  getStatusClass(): string {
+    // Asignar clases CSS según el estado del proyecto
+    const statusClassMap: Record<string, string> = {
+      [ProjectStatus.BASIC_STUDIES]: 'status-planning',
+      [ProjectStatus.DESIGN_IN_PROCESS]: 'status-in-progress',
+      [ProjectStatus.UNDER_REVIEW]: 'status-review',
+      [ProjectStatus.CHANGE_REQUEST]: 'status-changes',
+      [ProjectStatus.CHANGE_PENDING]: 'status-pending',
+      [ProjectStatus.REJECT]: 'status-rejected',
+      [ProjectStatus.APPROVED]: 'status-approved'
     };
 
-    return statusMap[this.project.status] || this.project.status;
+    return statusClassMap[this.project.status] || 'status-default';
   }
 }

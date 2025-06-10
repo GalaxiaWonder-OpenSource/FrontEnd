@@ -191,8 +191,21 @@
   "project-card": {
     "starting-date": "Start date",
     "ending-date": "End date",
+    "status": "Status",
+    "team-members": "Team members",
+    "role": "Your role",
+    "view-details": "View details",
     "descriptions": {
       "project-a": "Description of Project A"
+    },
+    "status-types": {
+      "BASIC_STUDIES": "Basic Studies",
+      "DESIGN_IN_PROCESS": "Design in Process",
+      "UNDER_REVIEW": "Under Review",
+      "CHANGE_REQUEST": "Change Request",
+      "CHANGE_PENDING": "Change Pending",
+      "REJECT": "Rejected",
+      "APPROVED": "Approved"
     }
   }
 }

@@ -30,7 +30,7 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
 })
 export class ToolbarProjectComponent {
   projectId = '';
-  projectRole: string | null = null;
+  projectRole: 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | null = null;
   organizationRole: string | null = null;
   userType: string | null = null;
 
@@ -44,6 +44,17 @@ export class ToolbarProjectComponent {
     this.projectRole = this.session.getProjectRole();
     this.organizationRole = this.session.getOrganizationRole();
     this.userType = this.session.getUserType();
+    console.log('Toolbar loaded with projectId:', this.projectId);
+    
+    // Si la URL contiene un projectId pero no está en la sesión, lo extraemos y guardamos
+    if (!this.projectId) {
+      const currentUrl = window.location.pathname;
+      const projectMatch = currentUrl.match(/\/projects\/([^\/]+)/);
+      if (projectMatch && projectMatch[1]) {
+        this.projectId = projectMatch[1];
+        console.log('Extracted project ID from URL:', this.projectId);
+      }
+    }
   }
 
   navigateTo(subpath: string) {

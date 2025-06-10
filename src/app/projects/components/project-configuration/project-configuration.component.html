@@ -1,1 +1,85 @@
-<p>project-configuration works!</p>
+<mat-card class="configuration-card">
+  <mat-card-header>
+    <mat-card-title>Configuración del Proyecto</mat-card-title>
+    <mat-card-subtitle *ngIf="project">ID: {{project.id.value}}</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div *ngIf="loading" class="loading-indicator">
+      <p>Cargando información del proyecto...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+      <button mat-button color="primary" (click)="loadProject()">Intentar nuevamente</button>
+    </div>
+    
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!loading && !error">
+      <!-- Nombre del Proyecto -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre del Proyecto</mat-label>
+        <input matInput formControlName="name" placeholder="Ingrese el nombre del proyecto">
+        <mat-hint>El nombre debe ser descriptivo y único</mat-hint>
+        <mat-error *ngIf="projectForm.get('name')?.hasError('required')">
+          El nombre del proyecto es obligatorio
+        </mat-error>
+        <mat-error *ngIf="projectForm.get('name')?.hasError('minlength')">
+          El nombre debe tener al menos 3 caracteres
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Descripción del Proyecto -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descripción del Proyecto</mat-label>
+        <textarea matInput formControlName="description" placeholder="Ingrese una descripción del proyecto" rows="3"></textarea>
+        <mat-hint>Proporcione una breve descripción del proyecto</mat-hint>
+      </mat-form-field>
+      
+      <!-- Estado del Proyecto -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Estado del Proyecto</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of projectStatuses" [value]="status">
+            {{ getStatusTranslation(status) }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Seleccione el estado actual del proyecto</mat-hint>
+        <mat-error *ngIf="projectForm.get('status')?.hasError('required')">
+          El estado del proyecto es obligatorio
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Fecha de Finalización -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Fecha de Finalización</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endingDate">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+        <mat-error *ngIf="projectForm.get('endingDate')?.hasError('required')">
+          La fecha de finalización es obligatoria
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  
+  <mat-card-actions align="end" *ngIf="!loading && !error">
+    <button mat-button type="button" color="warn" (click)="deleteProject()">Eliminar Proyecto</button>
+    <span class="spacer"></span>
+    <button mat-button type="button" [disabled]="projectForm.pristine" (click)="loadProject()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="projectForm.invalid || projectForm.pristine" (click)="onSubmit()">Guardar Cambios</button>
+  </mat-card-actions>
+</mat-card>
+
+<!-- Diálogo de confirmación para eliminar proyecto -->
+<ng-template #deleteConfirmDialog>
+  <h2 mat-dialog-title>Confirmar eliminación</h2>
+  <mat-dialog-content>
+    <p>¿Está seguro de que desea eliminar el proyecto <strong>{{project?.name}}</strong>?</p>
+    <p class="warning-text">Esta acción no se puede deshacer.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Eliminar</button>
+  </mat-dialog-actions>
+</ng-template>

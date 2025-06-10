@@ -1,25 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslateModule } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from '../../model/project.entity';
-import { ProjectStatus } from '../../model/project-status.vo';
 import { ProjectService } from '../../services/project.service';
 import { SessionService } from '../../../iam/services/session.service';
+import { ProjectStatus } from '../../model/project-status.vo';
+import { ProjectId } from '../../../shared/model/project-id.vo';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-project-configuration',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -27,165 +29,249 @@ import { SessionService } from '../../../iam/services/session.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
-    TranslateModule
+    MatDialogModule
   ],
+  standalone: true,
   templateUrl: './project-configuration.component.html',
   styleUrl: './project-configuration.component.css'
 })
-export class ProjectConfigurationComponent implements OnInit {
+export class ProjectConfigurationComponent implements OnInit, OnDestroy {
+  @ViewChild('deleteConfirmDialog') deleteConfirmDialog!: TemplateRef<any>;
   projectForm: FormGroup;
   project: Project | null = null;
+  projectStatuses = Object.values(ProjectStatus);
   loading = true;
-  projectStatus = Object.values(ProjectStatus);
-  today = new Date();
-  
+  error: string | null = null;
+  private routeSubscription: Subscription | null = null;
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
     private sessionService: SessionService,
+    private route: ActivatedRoute,
+    private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private http: HttpClient,
+    private dialog: MatDialog
   ) {
-    // Inicializar el formulario vacío
     this.projectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
+      description: [''],
       status: ['', Validators.required],
-      endingDate: ['', Validators.required]
+      endingDate: [new Date(), Validators.required]
     });
   }
 
   ngOnInit(): void {
-    console.log('ProjectConfigurationComponent initialized');
-    
-    // Intentar cargar el proyecto utilizando la ruta
     this.loadProject();
     
-    // También escuchar cambios en los parámetros de la ruta
-    this.route.parent?.paramMap.subscribe(params => {
-      console.log('Route parameters changed:', params);
+    const routeSub = this.route.parent?.paramMap.subscribe(params => {
       const projectId = params.get('projectId');
       if (projectId) {
-        console.log('Project ID from route subscription:', projectId);
         this.loadProjectById(projectId);
       }
     });
+    
+    if (routeSub) {
+      this.routeSubscription = routeSub;
+    }
   }
-
-  loadProject(): void {
-    console.log('Loading project...');
-    
-    // Intentar obtener el ID del proyecto desde varias fuentes
-    let projectId: string | null = null;
-    
-    // 1. Primero intentar desde la ruta padre (más probable)
-    if (this.route.parent?.snapshot.paramMap.has('projectId')) {
-      projectId = this.route.parent?.snapshot.paramMap.get('projectId');
-      console.log('Project ID from parent route:', projectId);
-    }
-    
-    // 2. Si no está en la ruta padre, buscar en la sesión
-    if (!projectId) {
-      projectId = this.sessionService.getProjectId();
-      console.log('Project ID from session:', projectId);
-    }
-    
-    // Si encontramos un ID, cargar el proyecto
-    if (projectId) {
-      this.loadProjectById(projectId);
-    } else {
-      console.error('No project ID found in routes or session');
-      this.snackBar.open('No se encontró el ID del proyecto', 'Cerrar', { duration: 3000 });
-      this.loading = false;
+  
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
   
   loadProjectById(projectId: string): void {
     this.loading = true;
-    console.log('Loading project with ID:', projectId);
+    this.error = null;
     
     this.projectService.getById(null, { id: projectId }).subscribe({
       next: (project: Project) => {
-        console.log('Project loaded successfully:', project);
         this.project = project;
-        this.updateForm();
+        this.updateForm(project);
         this.loading = false;
       },
       error: (error: any) => {
         console.error('Error loading project:', error);
-        this.snackBar.open('Error al cargar el proyecto', 'Cerrar', { duration: 3000 });
+        this.error = 'Error al cargar el proyecto';
         this.loading = false;
       }
     });
   }
 
-  updateForm(): void {
-    if (this.project) {
-      console.log('Updating form with project data:', this.project);
-      this.projectForm.patchValue({
-        name: this.project.name,
-        status: this.project.status,
-        endingDate: this.project.endingDate ? new Date(this.project.endingDate) : null
-      });
-    }
-  }
-
-  getStatusTranslation(status: string): string {
-    return `project-card.status-types.${status}`;
-  }
-
-  onSubmit(): void {
-    if (this.projectForm.invalid || !this.project) {
-      console.warn('Form is invalid or project is null');
-      return;
-    }
-
-    console.log('Submitting form with values:', this.projectForm.value);
+  loadProject(): void {
+    const projectId = this.sessionService.getProjectId();
     
-    // Obtener el ID del proyecto desde la ruta o la sesión
-    const projectId = this.route.parent?.snapshot.paramMap.get('projectId') || 
-                      this.sessionService.getProjectId();
-    
-    if (!projectId) {
-      console.error('No project ID found for update');
-      this.snackBar.open('ID del proyecto no encontrado para actualizar', 'Cerrar', { duration: 3000 });
-      return;
-    }
-    
-    try {
-      // Asegurar que el estado sea del tipo correcto
-      const status = this.projectForm.value.status as ProjectStatus;
-      
-      // Crear una copia del proyecto actual con los datos actualizados
-      const updatedProject = new Project({
-        ...this.project,
-        name: this.projectForm.value.name,
-        status: status,
-        endingDate: this.projectForm.value.endingDate
-      });
-      
-      console.log('Update request will be sent with project:', updatedProject);
-      
-      // Actualizar el proyecto
-      this.projectService.update(updatedProject, { id: projectId }).subscribe({
-        next: (result: Project) => {
-          console.log('Project updated successfully:', result);
-          this.snackBar.open('Proyecto actualizado con éxito', 'Cerrar', { duration: 3000 });
-          // Recargar el proyecto para asegurarse de tener la última versión
-          this.loadProjectById(projectId);
+    if (projectId) {
+      this.projectService.getById(null, { id: projectId }).subscribe({
+        next: (project: Project) => {
+          this.project = project;
+          this.updateForm(project);
+          this.loading = false;
         },
-        error: (error: any) => {
-          console.error('Error updating project:', error);
-          this.snackBar.open('Error al actualizar el proyecto', 'Cerrar', { duration: 3000 });
+        error: (error: Error) => {
+          console.error('Error loading project:', error);
+          this.loading = false;
+          this.error = 'Error al cargar el proyecto';
         }
       });
-    } catch (error) {
-      console.error('Error creating updated project object:', error);
-      this.snackBar.open('Error al crear el objeto del proyecto actualizado', 'Cerrar', { duration: 3000 });
+    } else {
+      console.error('No project ID found in session');
+      this.loading = false;
+      this.error = 'No se encontró ID del proyecto en la sesión';
     }
+  }
+  
+  updateForm(project: Project): void {
+    this.projectForm.patchValue({
+      name: project.name,
+      description: project.description,
+      status: project.status,
+      endingDate: new Date(project.endingDate)
+    });
+  }
+  
+  getStatusTranslation(status: string): string {
+    const statusMap: Record<string, string> = {
+      [ProjectStatus.BASIC_STUDIES]: 'Estudios Básicos',
+      [ProjectStatus.DESIGN_IN_PROCESS]: 'Diseño en Proceso',
+      [ProjectStatus.UNDER_REVIEW]: 'En Revisión',
+      [ProjectStatus.CHANGE_REQUEST]: 'Solicitud de Cambio',
+      [ProjectStatus.CHANGE_PENDING]: 'Cambio Pendiente',
+      [ProjectStatus.REJECT]: 'Rechazado',
+      [ProjectStatus.APPROVED]: 'Aprobado'
+    };
+
+    return statusMap[status] || status;
+  }
+  
+  onSubmit(): void {
+    if (this.projectForm.invalid || !this.project) {
+      return;
+    }
+    
+    const formValues = this.projectForm.value;
+    
+    // Crear un objeto con los datos actualizados en el formato que el JSON server espera
+    const projectData = {
+      id: this.project.id.value,
+      name: formValues.name,
+      description: formValues.description || '',
+      status: formValues.status,
+      startingDate: this.project.startingDate.toISOString(),
+      endingDate: new Date(formValues.endingDate).toISOString(),
+      team: this.project.team,
+      organizationId: this.project.organizationId.value,
+      contractor: this.project.contractor.value,
+      contractingEntityId: this.project.contractingEntityId.value
+    };
+    
+    console.log('Enviando datos actualizados:', projectData);
+    
+    // Usando directamente HttpClient para más control
+    const apiUrl = `${environment.propgmsApiBaseUrl}/projects/${this.project.id.value}`;
+    console.log('URL de actualización:', apiUrl);
+    
+    // Configuración de cabeceras explícita para asegurarnos que estamos enviando JSON
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    this.http.put(apiUrl, JSON.stringify(projectData), httpOptions).subscribe({
+      next: (response: any) => {
+        console.log('Proyecto actualizado exitosamente:', response);
+        this.snackBar.open('Proyecto actualizado correctamente', 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+        
+        // Actualizar el objeto local con los datos actualizados
+        if (this.project) {
+          this.project.name = formValues.name;
+          this.project.description = formValues.description || '';
+          this.project.updateStatus(formValues.status);
+        }
+        
+        // Recargar el proyecto para mostrar los datos actualizados
+        this.loadProjectById(this.project!.id.value);
+      },
+      error: (error: any) => {
+        console.error('Error updating project:', error);
+        this.snackBar.open(`Error al actualizar el proyecto: ${error.message || 'Error desconocido'}`, 'Cerrar', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
+    });
+  }
+  
+  /**
+   * Abre el diálogo de confirmación para eliminar el proyecto
+   */
+  deleteProject(): void {
+    if (!this.project) {
+      return;
+    }
+    
+    const dialogRef = this.dialog.open(this.deleteConfirmDialog);
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.confirmDeleteProject();
+      }
+    });
+  }
+  
+  /**
+   * Realiza la eliminación del proyecto después de la confirmación
+   */
+  confirmDeleteProject(): void {
+    if (!this.project) {
+      return;
+    }
+    
+    const projectId = this.project.id.value;
+    const apiUrl = `${environment.propgmsApiBaseUrl}/projects/${projectId}`;
+    
+    this.http.delete(apiUrl).subscribe({
+      next: () => {
+        this.snackBar.open('Proyecto eliminado correctamente', 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+        
+        // Limpiar sesión y navegar de regreso 
+        this.sessionService.clearProject();
+        
+        // Si el usuario es de una organización, volvemos a la lista de proyectos de la organización
+        const orgId = this.sessionService.getOrganizationId();
+        if (orgId) {
+          this.router.navigate([`/organizations/${orgId}/projects`]);
+        } else {
+          // Si es un cliente, vamos a su lista de proyectos
+          this.router.navigate(['/projects']);
+        }
+      },
+      error: (error: any) => {
+        console.error('Error deleting project:', error);
+        this.snackBar.open(`Error al eliminar el proyecto: ${error.message || 'Error desconocido'}`, 'Cerrar', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
+    });
   }
 }

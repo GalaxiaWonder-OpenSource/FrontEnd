@@ -169,17 +169,6 @@
   ],
   "projects": [
     {
-      "id": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
-      "name": "Project A",
-      "description": "project-card.descriptions.project-a",
-      "startingDate": "2025-05-12T23:57:00.082Z",
-      "endingDate": "2025-10-12T23:57:00.082Z",
-      "team": [],
-      "organizationId": "42ab1195-8521-4d70-9e65-319fc923e9ae",
-      "contractor": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "contractingEntityId": "396e2e75-395e-4339-b5fc-1608027b3cbe"
-    },
-    {
       "id": "7a3d177c-d088-476d-8f0d-b7e689758d0c",
       "name": "hola",
       "description": "sisi",
@@ -375,22 +364,6 @@
       "personId": "396e2e75-395e-4339-b5fc-1608027b3cbe",
       "projectId": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
       "role": "Client"
-    },
-    {
-      "id": "11f790fe-f49a-4530-8ed2-be7795009a24",
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "personId": "a7ae44c8-fbd7-4c99-8d2c-bd5b0d24a90c",
-      "projectId": "035269f0-d079-4f99-bbca-08503c4e4b9f"
-    },
-    {
-      "id": "6c31095c-12c0-43db-ac04-790950d2491b",
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "personId": "304e4f7a-a87f-46f9-bb50-c6f7ce467627",
-      "projectId": "acee86da-985c-49ea-b780-1d50fc40f651"
     },
     {
       "id": "311ac6d8-8893-4e4a-bfdc-d6d13bddcd2c",

@@ -4,7 +4,7 @@
 export class Ruc {
   public readonly value: string;
 
-  constructor(value: string) {
+  constructor(value: string = '') {
     const trimmed = value.trim();
 
     if (!Ruc.isValid(trimmed)) {

@@ -68,7 +68,7 @@ export class CreateMemberModalComponent implements OnInit {
       return;
     }
 
-    this.loadEligiblePeople(organizationId);
+    this.loadEligiblePeople(organizationId.toString());
   }
 
   /** Closes the modal without saving any changes */

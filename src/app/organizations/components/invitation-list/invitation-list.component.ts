@@ -113,7 +113,7 @@ export class InvitationListComponent implements OnInit {
   }
 
   async acceptInvitation(invitation: OrganizationInvitation): Promise<void> {
-    const id = (invitation.invitationId.value || invitation.invitationId).toString();
+    const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
     try {
 
@@ -138,7 +138,7 @@ export class InvitationListComponent implements OnInit {
   }
 
   async rejectInvitation(invitation: OrganizationInvitation): Promise<void> {
-    const id = (invitation.invitationId.value || invitation.invitationId).toString();
+    const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
     try {
       await this.invitationService.update(
@@ -172,8 +172,8 @@ export class InvitationListComponent implements OnInit {
 
       if (!personId) return null;
 
-      if (typeof personId === 'object' && personId.value) {
-        return personId.value;
+      if (typeof personId === 'object' && personId) {
+        return personId;
       }
 
       if (typeof personId === 'string') {

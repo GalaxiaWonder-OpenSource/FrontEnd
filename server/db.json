@@ -1,178 +1,79 @@
 {
   "user-accounts": [
     {
-      "id": "60b264a9-e3a0-4e4b-a5d5-e51095d17cd7",
-      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "username": "contractora",
-      "password": "ASDFGH123",
-      "role": "ORGANIZATION_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "f60826b3-61e9-44de-855b-3c3d6f0c8860",
-      "personId": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "username": "contractorb",
-      "password": "ASDFGH123",
-      "role": "ORGANIZATION_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "10e7985b-9cc5-4b87-918c-c6d92bb79bae",
-      "personId": "396e2e75-395e-4339-b5fc-1608027b3cbe",
-      "username": "clienta",
-      "password": "ASDFGH123",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "58b7d8dd-a9f4-4c1a-9ded-6ab477c785b3",
-      "personId": "bc8993f5-2cd1-42fe-bf1e-6fd8d2ca0848",
-      "username": "clientb",
-      "password": "ASDFGH123",
-      "role": "CLIENT_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "73bf37a5-39a8-4655-affd-0db81a784c07",
-      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
-      "username": "specialista",
-      "password": "ASDFGH123",
-      "role": "ORGANIZATION_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "e99d082c-9f4f-429c-af29-e68fd3402cc9",
-      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
-      "username": "specialistb",
-      "password": "ASDFGH123",
-      "role": "ORGANIZATION_USER",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "e594e042-4dd1-439c-bbbd-2466ac1cd810",
-      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
-      "username": "pieropierito",
-      "password": "mathias",
+      "id": 101,
+      "username": "luna",
+      "password": "LunaPass2025",
+      "personId": 201,
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
     }
   ],
   "persons": [
     {
-      "id": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "email": "contractora@example.com",
-      "phone": "123456789",
-      "firstName": "Contractor",
-      "lastName": "A"
+      "id": 201,
+      "firstName": "Luna",
+      "lastName": "Estelar",
+      "email": "luna@galaxia.com"
     },
     {
-      "id": "6b09996c-9dec-41c6-8a90-2e10c3706963",
-      "email": "contractob@example.com",
-      "phone": "123456789",
-      "firstName": "Contractor",
-      "lastName": "B"
-    },
-    {
-      "id": "396e2e75-395e-4339-b5fc-1608027b3cbe",
-      "email": "clienta@example.com",
-      "phone": "123456789",
-      "firstName": "Client",
-      "lastName": "A"
-    },
-    {
-      "id": "bc8993f5-2cd1-42fe-bf1e-6fd8d2ca0848",
-      "email": "clientb@example.com",
-      "phone": "123456789",
-      "firstName": "Client",
-      "lastName": "B"
-    },
-    {
-      "id": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
-      "email": "specialista@example.com",
-      "phone": "123456789",
-      "firstName": "Specialist",
-      "lastName": "A"
-    },
-    {
-      "id": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
-      "email": "specialistb@example.com",
-      "phone": "123456789",
-      "firstName": "Specialist",
-      "lastName": "B"
-    },
-    {
-      "id": "3acfbc3d-8ef2-4cd5-8f5d-46f82f552692",
-      "email": "mongo@example.com",
-      "phone": "123456789",
-      "firstName": "Andrea",
-      "lastName": "mongo"
-    },
-    {
-      "id": "8c5e1c7d-a39e-4131-9495-90eb58a5f328",
-      "email": "andrea@example.com",
-      "phone": "123456789",
-      "firstName": "Andrea",
-      "lastName": "mongo"
-    },
-    {
-      "id": "561e50eb-f37f-488a-bd46-cefbadd298bc",
-      "email": "ppp@example.com",
-      "phone": "123456789",
-      "firstName": "piero",
-      "lastName": "adolescente"
-    },
-    {
-      "id": "4940f000-0d04-4e43-ac50-34dc3be663b1",
-      "email": "okpiero@gmail.com",
-      "phone": "123456789",
-      "firstName": "piero",
-      "lastName": "adolescente"
+      "id": 202,
+      "firstName": "Sol",
+      "lastName": "Radiante",
+      "email": "sol@galaxia.com"
     }
   ],
   "organizations": [
     {
-      "id": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
-      "legalName": "RAMONASAC",
-      "commercialName": "RAMONA",
-      "ruc": "10771768171",
-      "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "createdAt": "2025-06-08T17:10:09.076Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": []
+      "id": 301,
+      "legalName": "Nebulosa Creativa S.A.",
+      "commercialName": "Nebulosa",
+      "ruc": "20198765432",
+      "createdBy": 201
     }
   ],
   "organization-invitations": [
     {
-      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
-      "personId": "4940f000-0d04-4e43-ac50-34dc3be663b1",
-      "invitedBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "id": 1
+      "id": 401,
+      "organizationId": 301,
+      "personId": 202,
+      "invitedBy": 201,
+      "invitedAt": "2025-06-09T15:00:00Z",
+      "status": "PENDING"
     }
   ],
   "organization-members": [
     {
-      "id": 1,
-      "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
+      "id": 501,
+      "organizationId": 301,
+      "personId": 201,
       "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-08T17:10:09.315Z"
-    },
-    {
-      "personId": "9a1c6f17-c6c6-4908-b06c-4760b73186c1",
-      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
-      "memberType": "WORKER",
-      "joinedAt": "2025-06-09T18:34:31.073Z",
-      "id": 2
-    },
-    {
-      "personId": "1d1b8716-4b23-476c-b7d0-9ebe8a8f6d77",
-      "organizationId": "0ee2d496-2638-422f-98c4-b92d7e0fab91",
-      "memberType": "WORKER",
-      "joinedAt": "2025-06-09T18:38:04.794Z",
-      "id": 3
+      "joinedAt": "2025-06-01T09:00:00Z"
     }
   ],
-  "projects": [],
-  "project-team-members": []
+  "projects": [
+    {
+      "id": 601,
+      "name": "Constelación UX",
+      "description": "Diseño de interfaz para sistema interplanetario",
+      "organizationId": 301,
+      "status": "ACTIVE",
+      "startingDate": "2025-06-10",
+      "endingDate": "2025-12-31"
+    }
+  ],
+  "project-team-members": [
+    {
+      "id": 701,
+      "projectId": 601,
+      "personId": 201,
+      "role": "Coordinator"
+    },
+    {
+      "id": 702,
+      "projectId": 601,
+      "personId": 202,
+      "role": "Specialist"
+    }
+  ]
 }

@@ -1,5 +1,6 @@
 <div class="member-list-container">
   <!-- Botón para añadir miembros, solo visible para el creador -->
+  <div>Debug: isCreator = {{ isCreator() }}</div>
   <div class="members-header" *ngIf="isCreator()">
     <button mat-raised-button color="primary" (click)="openInvitationModal()">
       Invitar miembro

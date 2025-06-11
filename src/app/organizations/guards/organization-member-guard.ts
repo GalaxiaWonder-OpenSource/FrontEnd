@@ -27,7 +27,7 @@ export class OrganizationMemberGuard implements CanActivate {
         return of(false);
       }
 
-      return this.organizationService.isOrganizationCreator(organizationId.toString(), personId.toString()).pipe(
+      return this.organizationService.isOrganizationCreator(organizationId, personId).pipe(
         map(isCreator => {
           if (!isCreator) {
             this.router.navigate(['/organizations', organizationId]);

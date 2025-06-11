@@ -49,19 +49,24 @@ export class MemberComponent implements OnInit {
     const organizationId = this.session.getOrganizationId();
     const personId = this.session.getPersonId();
 
+    console.log('🔍 organizationId:', organizationId, typeof organizationId);
+    console.log('🔍 personId:', personId, typeof personId);
+
     if (!organizationId || !personId) {
+      console.log('❌ No organizationId or personId');
       this.isCreator.set(false);
       return;
     }
 
-    this.currentPersonId.set(personId.toString());
+    console.log('🔍 Calling isOrganizationCreator with:', organizationId.toString(), personId.toString());
 
-    this.organizationService.isOrganizationCreator(organizationId.toString(), personId.toString()).subscribe({
+    this.organizationService.isOrganizationCreator(organizationId, personId).subscribe({
       next: (isCreator) => {
+        console.log('✅ isCreator result:', isCreator);
         this.isCreator.set(isCreator);
       },
       error: (err: unknown) => {
-        console.error('Error checking if user is creator:', err);
+        console.error('❌ Error checking if user is creator:', err);
         this.isCreator.set(false);
       }
     });

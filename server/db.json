@@ -7,6 +7,14 @@
       "personId": 201,
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
+    },
+    {
+      "personId": 203,
+      "username": "bebebe",
+      "password": "ASDFGH123",
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE",
+      "id": 102
     }
   ],
   "persons": [
@@ -21,6 +29,13 @@
       "firstName": "Sol",
       "lastName": "Radiante",
       "email": "sol@galaxia.com"
+    },
+    {
+      "email": "shh@example.com",
+      "phone": "900900800",
+      "firstName": "shhhh",
+      "lastName": "shhxd",
+      "id": 203
     }
   ],
   "organizations": [
@@ -30,6 +45,17 @@
       "commercialName": "Nebulosa",
       "ruc": "20198765432",
       "createdBy": 201
+    },
+    {
+      "legalName": "JEJE",
+      "commercialName": "JAJA",
+      "ruc": "10738890871",
+      "createdBy": 203,
+      "createdAt": "2025-06-10T22:39:26.440Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 302
     }
   ],
   "organization-invitations": [
@@ -49,6 +75,13 @@
       "personId": 201,
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-01T09:00:00Z"
+    },
+    {
+      "personId": 203,
+      "organizationId": 302,
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-10T22:39:26.484Z",
+      "id": 502
     }
   ],
   "projects": [

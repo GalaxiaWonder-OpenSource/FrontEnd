@@ -32,8 +32,8 @@ export class OrganizationService {
    * @param personId ID de la persona a verificar
    * @returns Observable<boolean> true si la persona es creadora
    */
-  isOrganizationCreator(organizationId: string, personId: string): Observable<boolean> {
-    return this.getById({}, { id: organizationId }).pipe(
+  isOrganizationCreator(organizationId: number, personId: number): Observable<boolean> {
+    return this.getById({}, { id: organizationId.toString() }).pipe(
       map((organization: any) => {
         return organization && organization.createdBy === personId;
       })

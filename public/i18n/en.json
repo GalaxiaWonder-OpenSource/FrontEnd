@@ -97,8 +97,8 @@
         "password": "Password",
         "user-type": {
           "label": "User Type",
-          "CLIENT_USER": "Client",
-          "ORGANIZATION_USER": "Organization"
+          "TYPE_CLIENT": "Client",
+          "TYPE_WORKER": "Organization"
         }
       },
       "errors": {

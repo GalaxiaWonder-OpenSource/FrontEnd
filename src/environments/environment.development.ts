@@ -2,5 +2,5 @@ export const environment = {
   production: false,
   propgmsApiBaseUrl: 'http://localhost:3000/api/v1',
   authenticationUser: 'user',
-  authenticationPassword: 'aff656f5-860f-4a99-9633-a66d1666847f'
+  authenticationPassword: 'ac336883-211a-4eea-a7e8-97228a00d1de'
 };

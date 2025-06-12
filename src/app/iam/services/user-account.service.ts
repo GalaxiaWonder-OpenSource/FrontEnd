@@ -3,6 +3,9 @@ import { createDynamicService } from '../../shared/services/create-dynamic-servi
 import { createEndpointConfig } from '../../shared/model/endpoint-config.vo';
 import { HttpMethod } from '../../shared/model/http-method.vo';
 import { UserAccount } from '../model/user-account.entity';
+import { environment } from '../../../environments/environment';
+
+const auth = `${environment.authenticationUser}:${environment.authenticationPassword}`;
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,8 @@ export class UserAccountService {
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'user-accounts', '/:id'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'user-accounts', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id')
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id'),
+    createEndpointConfig({ name: 'signIn', method: HttpMethod.POST }, 'http://localhost:8080/api/v1/', 'auth/signin', '', auth)
   ]);
 
   getAll = this.service['getAll'];
@@ -23,4 +27,5 @@ export class UserAccountService {
   create = this.service['create'];
   update = this.service['update'];
   delete = this.service['delete'];
+  signIn = this.service['signIn'];
 }

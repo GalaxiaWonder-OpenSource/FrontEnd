@@ -42,7 +42,7 @@ export class UserAccount {
                 id,
                 username,
                 password,
-                role = UserRole.CLIENT_USER,
+                role = UserRole.TYPE_CLIENT,
                 status = AccountStatus.ACTIVE,
                 personId
               }: {

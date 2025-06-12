@@ -8,10 +8,10 @@ export enum UserRole {
   /**
    * Role assigned to a standard end-user or client.
    */
-  CLIENT_USER = 'CLIENT_USER',
+  TYPE_CLIENT = 'TYPE_CLIENT',
 
   /**
    * Role assigned to a member of an organization with administrative or collaborative privileges.
    */
-  ORGANIZATION_USER = 'ORGANIZATION_USER'
+  TYPE_WORKER = 'TYPE_WORKER'
 }

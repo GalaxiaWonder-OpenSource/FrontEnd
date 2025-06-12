@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.ORGANIZATION_USER },
+    data: { expectedUserType: UserRole.TYPE_WORKER },
     component: WorkerLayoutComponent,
     children: [
       {
@@ -46,7 +46,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.CLIENT_USER },
+    data: { expectedUserType: UserRole.TYPE_CLIENT },
     component: ClientLayoutComponent,
     children: [
       {

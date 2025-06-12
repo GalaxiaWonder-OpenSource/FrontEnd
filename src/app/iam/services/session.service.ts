@@ -2,7 +2,7 @@ import { Injectable, signal, effect } from '@angular/core';
 import {UserRole} from '../model/user-role.vo';
 import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
 
-export type UserType = UserRole.ORGANIZATION_USER | UserRole.CLIENT_USER;
+export type UserType = UserRole.TYPE_WORKER | UserRole.TYPE_CLIENT;
 export type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
 export type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | undefined;
 

@@ -156,39 +156,49 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     if (this.projectForm.invalid || !this.project) {
       return;
     }
+     const formValues = this.projectForm.value;
     
-    const formValues = this.projectForm.value;
+    // Nos aseguramos que el projectId sea un string simple
+    const projectId = typeof this.project.id === 'object' && this.project.id.value 
+      ? this.project.id.value 
+      : String(this.project.id);
     
-    // Crear un objeto con los datos actualizados en el formato que el JSON server espera
+    // Preparar los datos para actualizar como un objeto plano para JSON
     const projectData = {
-      id: this.project.id.value,
+      id: projectId, // Usamos el ID como string simple
       name: formValues.name,
       description: formValues.description || '',
       status: formValues.status,
-      startingDate: this.project.startingDate.toISOString(),
+      startingDate: this.project.startingDate,
       endingDate: new Date(formValues.endingDate).toISOString(),
-      team: this.project.team,
-      organizationId: this.project.organizationId.value,
-      contractor: this.project.contractor.value,
-      contractingEntityId: this.project.contractingEntityId.value
+      team: this.project.team || [],
+      organizationId: this.project.organizationId ? 
+        (typeof this.project.organizationId === 'object' ? this.project.organizationId.value : this.project.organizationId) : 
+        null,
+      contractor: this.project.contractor ?
+        (typeof this.project.contractor === 'object' ? this.project.contractor.value : this.project.contractor) :
+        null,
+      contractingEntityId: this.project.contractingEntityId ?
+        (typeof this.project.contractingEntityId === 'object' ? this.project.contractingEntityId.value : this.project.contractingEntityId) :
+        null
     };
     
     console.log('Enviando datos actualizados:', projectData);
     
-    // Usando directamente HttpClient para más control
-    const apiUrl = `${environment.propgmsApiBaseUrl}/projects/${this.project.id.value}`;
-    console.log('URL de actualización:', apiUrl);
+    // Usar el servicio de proyectos para actualizar
+    this.loading = true;
+      
+    // Usar HttpClient directamente con la ruta correcta
+    // La ruta en el servidor es /projects/:id (sin /api/v1)
+    const url = `${environment.propgmsApiBaseUrl}/projects/${projectId}`;
+    console.log(`Enviando PUT a URL: ${url}`);
     
-    // Configuración de cabeceras explícita para asegurarnos que estamos enviando JSON
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    
-    this.http.put(apiUrl, JSON.stringify(projectData), httpOptions).subscribe({
-      next: (response: any) => {
-        console.log('Proyecto actualizado exitosamente:', response);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    this.http.put<Project>(url, projectData, { headers }).subscribe({
+      next: (updatedProject: Project) => {
+        console.log('Proyecto actualizado exitosamente:', updatedProject);
+        this.loading = false;
+        
         this.snackBar.open('Proyecto actualizado correctamente', 'Cerrar', {
           duration: 3000,
           horizontalPosition: 'center',
@@ -196,18 +206,13 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
         });
         
         // Actualizar el objeto local con los datos actualizados
-        if (this.project) {
-          this.project.name = formValues.name;
-          this.project.description = formValues.description || '';
-          this.project.updateStatus(formValues.status);
-        }
-        
-        // Recargar el proyecto para mostrar los datos actualizados
-        this.loadProjectById(this.project!.id.value);
+        this.project = updatedProject;
+        this.updateForm(updatedProject);
       },
-      error: (error: any) => {
-        console.error('Error updating project:', error);
-        this.snackBar.open(`Error al actualizar el proyecto: ${error.message || 'Error desconocido'}`, 'Cerrar', {
+      error: (err: any) => {
+        this.loading = false;
+        console.error('Error updating project:', err);
+        this.snackBar.open(`Error al actualizar el proyecto: ${err.message || 'Error desconocido'}`, 'Cerrar', {
           duration: 5000,
           horizontalPosition: 'center',
           verticalPosition: 'bottom'
@@ -241,11 +246,18 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       return;
     }
     
-    const projectId = this.project.id.value;
-    const apiUrl = `${environment.propgmsApiBaseUrl}/projects/${projectId}`;
+    // Nos aseguramos que el projectId sea un string simple
+    const projectId = typeof this.project.id === 'object' && this.project.id.value 
+      ? this.project.id.value 
+      : String(this.project.id);
+      
+    console.log('Eliminando proyecto con ID:', projectId);
+    this.loading = true;
     
-    this.http.delete(apiUrl).subscribe({
+    // Pasamos el ID como un simple string en el objeto params
+    this.projectService.delete(null, { id: projectId }).subscribe({
       next: () => {
+        this.loading = false;
         this.snackBar.open('Proyecto eliminado correctamente', 'Cerrar', {
           duration: 3000,
           horizontalPosition: 'center',
@@ -264,9 +276,10 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
           this.router.navigate(['/projects']);
         }
       },
-      error: (error: any) => {
-        console.error('Error deleting project:', error);
-        this.snackBar.open(`Error al eliminar el proyecto: ${error.message || 'Error desconocido'}`, 'Cerrar', {
+      error: (err: any) => {
+        this.loading = false;
+        console.error('Error deleting project:', err);
+        this.snackBar.open(`Error al eliminar el proyecto: ${err.message || 'Error desconocido'}`, 'Cerrar', {
           duration: 5000,
           horizontalPosition: 'center',
           verticalPosition: 'bottom'

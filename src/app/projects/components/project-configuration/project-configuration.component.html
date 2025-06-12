@@ -14,7 +14,7 @@
       <button mat-button color="primary" (click)="loadProject()">Intentar nuevamente</button>
     </div>
     
-    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!loading && !error">
+    <form [formGroup]="projectForm" *ngIf="!loading && !error">
       <!-- Nombre del Proyecto -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre del Proyecto</mat-label>
@@ -67,7 +67,7 @@
     <button mat-button type="button" color="warn" (click)="deleteProject()">Eliminar Proyecto</button>
     <span class="spacer"></span>
     <button mat-button type="button" [disabled]="projectForm.pristine" (click)="loadProject()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="projectForm.invalid || projectForm.pristine" (click)="onSubmit()">Guardar Cambios</button>
+    <button mat-raised-button color="primary" [disabled]="projectForm.invalid || projectForm.pristine" (click)="onSubmit()">Guardar Cambios</button>
   </mat-card-actions>
 </mat-card>
 

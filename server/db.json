@@ -112,7 +112,7 @@
     {
       "id": "214f8331-2c30-4577-a967-96eaa5680691",
       "legalName": "Legalname A",
-      "commercialName": "",
+      "commercialName": "ga",
       "ruc": "10164090588",
       "createdBy": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "createdAt": "2025-05-15T03:14:53.701Z",
@@ -170,14 +170,15 @@
   "projects": [
     {
       "id": "7a3d177c-d088-476d-8f0d-b7e689758d0c",
-      "name": "hola",
-      "description": "sisi",
-      "status": "BASIC_STUDIES",
+      "name": "gaaaaa",
+      "description": "Descripción actualizada",
+      "status": "REJECT",
       "startingDate": "2025-05-29T04:02:09.686Z",
-      "endingDate": "2025-05-29T04:02:09.686Z",
+      "endingDate": "2025-06-30T04:02:09.686Z",
       "team": [],
-      "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
-      "contractor": "9ad6f536-6982-4200-b393-5e2af357b69e"
+      "organizationId": null,
+      "contractor": null,
+      "contractingEntityId": null
     },
     {
       "id": "2c5ef17a-a92f-4231-9b1b-fc238a4bdcfd",
@@ -311,11 +312,11 @@
     },
     {
       "id": "415104b3-adc7-4bda-9479-dba8b6e80f8a",
-      "name": "Testeo103",
-      "description": "Testeo103",
-      "status": "BASIC_STUDIES",
+      "name": "Testeo777",
+      "description": "Testeo3213",
+      "status": "APPROVED",
       "startingDate": "2025-05-31T00:00:00.000Z",
-      "endingDate": "2025-12-18T00:00:00.000Z",
+      "endingDate": "2026-01-02T05:00:00.000Z",
       "team": [],
       "organizationId": "b3db5c9d-239b-4b66-9d18-dcd74ce3132d",
       "contractor": "0edff2e1-a429-4984-81e3-bc44540ce121",
@@ -346,12 +347,12 @@
       "contractingEntityId": "0edff2e1-a429-4984-81e3-bc44540ce121"
     },
     {
-      "id": "fbabcda5-47c3-4530-9ba0-03a75b7b311f",
-      "name": "Hola101",
-      "description": "Hola101",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2025-05-31T00:00:00.000Z",
-      "endingDate": "2026-12-12T00:00:00.000Z",
+      "id": "e3bcde0b-4d0f-4d41-b8b5-24c648ff8c84",
+      "name": "holasa",
+      "description": "holas",
+      "status": "CHANGE_PENDING",
+      "startingDate": "2025-12-12T00:00:00.000Z",
+      "endingDate": "2025-12-19T05:00:00.000Z",
       "team": [],
       "organizationId": "214f8331-2c30-4577-a967-96eaa5680691",
       "contractor": "0edff2e1-a429-4984-81e3-bc44540ce121",
@@ -359,12 +360,6 @@
     }
   ],
   "project-team-members": [
-    {
-      "id": "28f3bdd8-37a3-44b7-983b-cd21182b6ed4",
-      "personId": "396e2e75-395e-4339-b5fc-1608027b3cbe",
-      "projectId": "a5c3ad19-c2ed-48c1-a425-a33ac89502a8",
-      "role": "Client"
-    },
     {
       "id": "311ac6d8-8893-4e4a-bfdc-d6d13bddcd2c",
       "role": "COORDINATOR",
@@ -390,12 +385,12 @@
       "projectId": "d9bc2399-1439-49bd-9623-617dd21b93b0"
     },
     {
-      "id": "bf56bc68-6c77-44c1-ac6d-ade6bc73642a",
+      "id": "e643101a-d437-4652-9f13-c8f7509aaa08",
       "role": "COORDINATOR",
       "specialty": "ARCHITECTURE",
       "memberId": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
-      "projectId": "fbabcda5-47c3-4530-9ba0-03a75b7b311f"
+      "projectId": "e3bcde0b-4d0f-4d41-b8b5-24c648ff8c84"
     }
   ]
 }

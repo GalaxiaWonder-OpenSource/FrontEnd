@@ -16,6 +16,7 @@ export class SessionService {
   private projectId = signal<string | undefined>(this.loadFromStorage('projectId'));
   private projectRole = signal<ProjectRole>(this.loadFromStorage('projectRole'));
   private milestoneId = signal<string | undefined>(this.loadFromStorage('milestoneId'));
+  private token = signal<string | undefined>(this.loadFromStorage('token'));
 
   constructor() {
     // Persistencia reactiva automática
@@ -26,6 +27,8 @@ export class SessionService {
       this.saveToStorage('organizationRole', this.organizationRole());
       this.saveToStorage('projectId', this.projectId());
       this.saveToStorage('projectRole', this.projectRole());
+      this.saveToStorage('milestoneId', this.milestoneId());
+      this.saveToStorage('token', this.token());
     });
   }
 
@@ -53,6 +56,11 @@ export class SessionService {
     this.saveToStorage('milestoneId', id);
   }
 
+  setToken(token: string) {
+    this.token.set(token);
+    this.saveToStorage('token', token);
+  }
+
   // Limpieza
   clearIdentity() {
     this.personId.set(undefined);
@@ -74,11 +82,17 @@ export class SessionService {
     this.saveToStorage('milestoneId', undefined);
   }
 
+  clearToken() {
+    this.token.set(undefined);
+    this.saveToStorage('token', undefined);
+  }
+
   clearAll() {
     this.userType.set(undefined);
     this.clearOrganization();
     this.clearProject();
     this.clearMilestone();
+    this.clearToken();
   }
 
   // Getters
@@ -108,6 +122,10 @@ export class SessionService {
 
   getMilestoneId(): string | undefined {
     return this.milestoneId();
+  }
+
+  getToken(): string | undefined {
+    return this.token();
   }
 
   // Helpers de persistencia

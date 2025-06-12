@@ -96,9 +96,6 @@ export class ProjectInfoComponent implements OnInit, OnDestroy {
     const statusMap: Record<string, string> = {
       [ProjectStatus.BASIC_STUDIES]: 'Estudios Básicos',
       [ProjectStatus.DESIGN_IN_PROCESS]: 'Diseño en Proceso',
-      [ProjectStatus.UNDER_REVIEW]: 'En Revisión',
-      [ProjectStatus.CHANGE_REQUEST]: 'Solicitud de Cambio',
-      [ProjectStatus.CHANGE_PENDING]: 'Cambio Pendiente',
       [ProjectStatus.REJECT]: 'Rechazado',
       [ProjectStatus.APPROVED]: 'Aprobado'
     };

@@ -44,6 +44,60 @@
     "ending-date": "Ending Date",
     "loading": "Loading project information..."
   },
+  "project-configuration": {
+    "title": "Project Configuration",
+    "id": "ID",
+    "loading": "Loading project information...",
+    "try-again": "Try again",
+    "name": {
+      "label": "Project Name",
+      "placeholder": "Enter project name",
+      "hint": "Name should be descriptive and unique",
+      "required": "Project name is required",
+      "minLength": "Name must be at least 3 characters long"
+    },
+    "description": {
+      "label": "Project Description",
+      "placeholder": "Enter project description",
+      "hint": "Provide a brief description of the project"
+    },
+    "status": {
+      "label": "Project Status",
+      "hint": "Select the current project status",
+      "required": "Project status is required"
+    },
+    "endingDate": {
+      "label": "End Date",
+      "hint": "MM/DD/YYYY",
+      "required": "End date is required"
+    },
+    "deleteProject": "Delete Project",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes",
+    "deleteConfirmation": {
+      "title": "Confirm Deletion",
+      "message": "Are you sure you want to delete the project",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "messages": {
+      "update-success": "Project updated successfully",
+      "update-error": "Error updating project:",
+      "delete-success": "Project deleted successfully",
+      "delete-error": "Error deleting project:",
+      "load-error": "Error loading project",
+      "no-project-id": "No project ID found in session",
+      "unknown-error": "Unknown error",
+      "close": "Close"
+    },
+    "statuses": {
+      "BASIC_STUDIES": "Basic Studies",
+      "DESIGN_IN_PROCESS": "Design in Process",
+      "REJECT": "Rejected",
+      "APPROVED": "Approved"
+    }
+  },
   "footer": {
     "learn-about": {
       "title": "Learn about",

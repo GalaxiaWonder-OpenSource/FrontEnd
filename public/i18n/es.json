@@ -44,6 +44,60 @@
     "ending-date": "Fecha de finalización",
     "loading": "Cargando información del proyecto..."
   },
+  "project-configuration": {
+    "title": "Configuración del Proyecto",
+    "id": "ID",
+    "loading": "Cargando información del proyecto...",
+    "try-again": "Intentar nuevamente",
+    "name": {
+      "label": "Nombre del Proyecto",
+      "placeholder": "Ingrese el nombre del proyecto",
+      "hint": "El nombre debe ser descriptivo y único",
+      "required": "El nombre del proyecto es obligatorio",
+      "minLength": "El nombre debe tener al menos 3 caracteres"
+    },
+    "description": {
+      "label": "Descripción del Proyecto",
+      "placeholder": "Ingrese una descripción del proyecto",
+      "hint": "Proporcione una breve descripción del proyecto"
+    },
+    "status": {
+      "label": "Estado del Proyecto",
+      "hint": "Seleccione el estado actual del proyecto",
+      "required": "El estado del proyecto es obligatorio"
+    },
+    "endingDate": {
+      "label": "Fecha de Finalización",
+      "hint": "DD/MM/YYYY",
+      "required": "La fecha de finalización es obligatoria"
+    },
+    "deleteProject": "Eliminar Proyecto",
+    "cancel": "Cancelar",
+    "saveChanges": "Guardar Cambios",
+    "deleteConfirmation": {
+      "title": "Confirmar eliminación",
+      "message": "¿Está seguro de que desea eliminar el proyecto",
+      "warning": "Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar"
+    },
+    "messages": {
+      "update-success": "Proyecto actualizado correctamente",
+      "update-error": "Error al actualizar el proyecto:",
+      "delete-success": "Proyecto eliminado correctamente",
+      "delete-error": "Error al eliminar el proyecto:",
+      "load-error": "Error al cargar el proyecto",
+      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "unknown-error": "Error desconocido",
+      "close": "Cerrar"
+    },
+    "statuses": {
+      "BASIC_STUDIES": "Estudios Básicos",
+      "DESIGN_IN_PROCESS": "Diseño en Proceso",
+      "REJECT": "Rechazado",
+      "APPROVED": "Aprobado"
+    }
+  },
   "footer": {
     "learn-about": {
       "title": "Conocer más",

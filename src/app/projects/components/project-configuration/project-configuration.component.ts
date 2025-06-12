@@ -13,6 +13,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Project } from '../../model/project.entity';
 import { ProjectService } from '../../services/project.service';
 import { SessionService } from '../../../iam/services/session.service';
@@ -34,7 +35,8 @@ import { environment } from '../../../../environments/environment';
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule
   ],
   standalone: true,
   templateUrl: './project-configuration.component.html',
@@ -57,7 +59,8 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: MatSnackBar,
     private http: HttpClient,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {
     this.projectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -100,7 +103,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       },
       error: (error: any) => {
         console.error('Error loading project:', error);
-        this.error = 'Error al cargar el proyecto';
+        this.error = this.translate.instant('project-configuration.messages.load-error');
         this.loading = false;
       }
     });
@@ -139,17 +142,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
   }
   
   getStatusTranslation(status: string): string {
-    const statusMap: Record<string, string> = {
-      [ProjectStatus.BASIC_STUDIES]: 'Estudios Básicos',
-      [ProjectStatus.DESIGN_IN_PROCESS]: 'Diseño en Proceso',
-      [ProjectStatus.UNDER_REVIEW]: 'En Revisión',
-      [ProjectStatus.CHANGE_REQUEST]: 'Solicitud de Cambio',
-      [ProjectStatus.CHANGE_PENDING]: 'Cambio Pendiente',
-      [ProjectStatus.REJECT]: 'Rechazado',
-      [ProjectStatus.APPROVED]: 'Aprobado'
-    };
-
-    return statusMap[status] || status;
+    return `project-configuration.statuses.${status}`;
   }
   
   onSubmit(): void {

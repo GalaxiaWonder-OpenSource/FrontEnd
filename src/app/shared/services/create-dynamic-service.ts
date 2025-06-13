@@ -95,15 +95,33 @@ function serializeData(data: any): any {
  *
  * userService.getById({}, { id: 'abc123' }).subscribe(user => console.log(user));
  */
-export function createDynamicService<T>(configs: EndpointConfig[]): Record<string, Function> {
+export function createDynamicService<T>(
+  configs: EndpointConfig[]
+): Record<string, Function> {
   const http = inject(HttpClient);
-  const httpOptions = { headers: { 'Content-Type': 'application/json' } };
+  const defaultHeaders = {
+    'Content-Type': 'application/json'
+  };
   const service: Record<string, Function> = {};
 
   for (const cfg of configs) {
     service[cfg.name] = (data: any = {}, params: any = {}): Observable<T> => {
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
+
+      var headers = cfg.auth ? {
+        ...defaultHeaders,
+        "Authorization": `Basic ${btoa(cfg.auth)}`
+      } : {
+        ...defaultHeaders,
+      }
+
+      if (cfg.auth != null) {
+        console.log(`Basic ${btoa(cfg.auth)}`);
+      }
+
+      const httpOptions = { headers };
+
       switch (cfg.method) {
         case HttpMethod.GET:
           const queryParams = new URLSearchParams(serializeData(params)).toString();

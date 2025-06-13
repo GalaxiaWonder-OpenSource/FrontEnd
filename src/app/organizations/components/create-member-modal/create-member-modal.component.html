@@ -1,0 +1,63 @@
+<div class="modal-container">
+  <h2>{{ 'create-member.title' | translate }}</h2>
+  <form (ngSubmit)="submit()">
+    <!-- Email Input Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'create-member.enter-email' | translate }}</mat-label>
+      <input
+        matInput
+        type="email"
+        [(ngModel)]="emailInput"
+        name="emailInput"
+        (input)="onEmailChange()"
+        placeholder="{{ 'create-member.email-placeholder' | translate }}"
+        required>
+
+      <!-- Loading spinner -->
+      <mat-progress-spinner
+        *ngIf="isSearching"
+        matSuffix
+        mode="indeterminate"
+        diameter="20">
+      </mat-progress-spinner>
+
+      <!-- Search icon when not searching -->
+      <mat-icon
+        *ngIf="!isSearching && emailInput"
+        matSuffix>
+        search
+      </mat-icon>
+
+      <!-- Error messages -->
+      <mat-error *ngIf="searchError">
+        {{ searchError | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Found Person Display -->
+    <div *ngIf="foundPerson" class="found-person">
+      <mat-icon color="primary">check_circle</mat-icon>
+      <div class="person-info">
+        <strong>{{ foundPerson.fullName }}</strong><br>
+        <span class="email">{{ foundPerson.email }}</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button
+        type="button"
+        mat-button
+        (click)="close()">
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!isFormValid">
+        {{ 'common.create' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

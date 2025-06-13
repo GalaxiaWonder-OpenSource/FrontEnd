@@ -7,11 +7,13 @@ import {OrganizationService} from '../../services/organization.service';
 import {Organization} from '../../model/organization.entity';
 import {PersonService} from '../../../iam/services/person.service';
 import {Person} from '../../../iam/model/person.entity';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-organization-information-tab',
   imports: [
-    OrganizationInformationCardComponent
+    OrganizationInformationCardComponent,
+    NgIf
   ],
   templateUrl: './organization-information-tab.component.html',
   styleUrl: './organization-information-tab.component.css'

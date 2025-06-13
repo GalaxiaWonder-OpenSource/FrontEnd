@@ -1,1 +1,5 @@
-<app-organization-information-card [organization]="organization" [contractor]="contractor" />
+<app-organization-information-card
+  *ngIf="organization && contractor"
+  [organization]="organization"
+  [contractor]="contractor"
+/>

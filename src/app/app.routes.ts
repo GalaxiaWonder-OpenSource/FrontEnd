@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.ORGANIZATION_USER },
+    data: { expectedUserType: UserRole.TYPE_WORKER },
     component: WorkerLayoutComponent,
     children: [
       {
@@ -46,7 +46,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.CLIENT_USER },
+    data: { expectedUserType: UserRole.TYPE_CLIENT },
     component: ClientLayoutComponent,
     children: [
       {
@@ -70,10 +70,11 @@ export const routes: Routes = [
       {
         path: 'projects',
         loadComponent: () => import('./organizations/components/projects/projects.component').then(m => m.ProjectsComponent)
-      },
-      {
+      },      {
         path: 'members',
-        loadComponent: () => import('./organizations/components/members/members.component').then(m => m.MembersComponent)
+        canActivate: [OrgRoleGuard],
+        data:{roles: [OrganizationMemberType.CONTRACTOR, OrganizationMemberType.WORKER] },
+        loadComponent: () => import('./organizations/pages/member-tab/member-tab.component').then(m => m.MemberTabComponent)
       },
       {
         path: 'settings',

@@ -1,4 +1,3 @@
-import { PersonId } from '../../shared/model/person-id.vo';
 import { EmailAddress } from '../../shared/model/email-adress.vo';
 import { PhoneNumber } from './phone-number.vo';
 import { ProfessionalId } from './professional-id.vo';
@@ -9,7 +8,7 @@ import { ProfessionalId } from './professional-id.vo';
  */
 export class Person {
   /** Unique identifier of the person. */
-  public readonly id: PersonId;
+  public readonly id: number | undefined;
 
   /** Person's primary email address. */
   public readonly email: EmailAddress;
@@ -43,7 +42,7 @@ export class Person {
    * @throws Error if first or last name is empty.
    */
   constructor({
-                id = new PersonId(),
+                id,
                 email,
                 phone,
                 firstName,
@@ -51,7 +50,7 @@ export class Person {
                 professionalId,
                 profession
               }: {
-    id?: PersonId;
+    id?: number;
     email: EmailAddress;
     phone: PhoneNumber;
     firstName: string;
@@ -87,7 +86,7 @@ export class Person {
    */
   toJSON() {
     return {
-      id: this.id.value,
+      id: this.id,
       email: this.email.value,
       phone: this.phone.value,
       firstName: this.firstName,

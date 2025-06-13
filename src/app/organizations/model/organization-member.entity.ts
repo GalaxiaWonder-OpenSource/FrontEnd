@@ -1,6 +1,3 @@
-import { OrganizationMemberId } from '../../shared/model/organization-member-id.vo';
-import { PersonId } from '../../shared/model/person-id.vo';
-import { OrganizationId } from '../../shared/model/organization-id.vo';
 import { OrganizationMemberType } from './organization-member-type.vo';
 
 /**
@@ -8,13 +5,18 @@ import { OrganizationMemberType } from './organization-member-type.vo';
  */
 export class OrganizationMember {
   /** Unique identifier of the membership. */
-  public readonly id: OrganizationMemberId;
+  public readonly id: number|undefined;
 
   /** ID of the associated person. */
-  public readonly personId: PersonId;
+  public readonly personId: number|undefined;
+
+  /** Optional personal info used for display (retrieved from person or enriched API). */
+  public readonly name?: string;
+  public readonly lastName?: string;
+  public readonly email?: string;
 
   /** ID of the organization to which the person belongs. */
-  public readonly organizationId: OrganizationId;
+  public readonly organizationId: number|undefined;
 
   /** Role/type of the member within the organization. */
   public memberType: OrganizationMemberType;
@@ -32,15 +34,21 @@ export class OrganizationMember {
    * @param joinedAt - Optional joined date (default: now).
    */
   constructor({
-                id = new OrganizationMemberId(),
+                id,
+                name,
+                lastName,
+                email,
                 personId,
                 organizationId,
                 memberType,
                 joinedAt = new Date()
               }: {
-    id?: OrganizationMemberId;
-    personId: PersonId;
-    organizationId: OrganizationId;
+    id?: number;
+    name?: string;
+    lastName?: string;
+    email?: string;
+    personId?: number;
+    organizationId?: number;
     memberType: OrganizationMemberType;
     joinedAt?: Date;
   }) {
@@ -49,6 +57,9 @@ export class OrganizationMember {
     }
 
     this.id = id;
+    this.name = name;
+    this.lastName = lastName;
+    this.email = email;
     this.personId = personId;
     this.organizationId = organizationId;
     this.memberType = memberType;
@@ -60,9 +71,12 @@ export class OrganizationMember {
    */
   toJSON() {
     return {
-      id: this.id.value,
-      personId: this.personId.value,
-      organizationId: this.organizationId.value,
+      id: this.id,
+      name: this.name,
+      lastName: this.lastName,
+      email: this.email,
+      personId: this.personId,
+      organizationId: this.organizationId,
       memberType: this.memberType,
       joinedAt: this.joinedAt.toISOString()
     };

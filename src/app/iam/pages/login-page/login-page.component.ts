@@ -41,35 +41,41 @@ export class LoginPageComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const username = new Username(formData.username);
-    const password = new Password(formData.password);
+    const request = {
+      userName: formData.username.toLowerCase(),
+      password: formData.password
+    };
 
-    this.userAccountService.getByUsername({}, { username: username.value }).subscribe({
-      next: (accounts: any[]) => {
-        const user = accounts[0];
-        if (!user || user.password !== password.value) {
-          this.setError('login-page.errors.invalid-credentials');
-          return;
+    this.userAccountService.signIn(request).subscribe({
+      next: (response: {
+        user: {
+          userName: string;
+          userType: string;
+          personId: number;
+        },
+        token: string
+      }) => {
+        const { user, token } = response;
+
+        // ✅ Guardamos en sesión lo necesario
+        this.session.setPersonId(user.personId);
+        this.session.setUserType(UserRole[user.userType as keyof typeof UserRole]);
+
+        // ✅ Opcional: guardar el token si lo necesitas
+        //this.session.setToken?.(token);
+
+        // ✅ Redirección según tipo de usuario
+        if (user.userType === 'TYPE_WORKER') {
+          this.router.navigate(['/organizations']);
+        } else {
+          this.router.navigate(['/projects']);
         }
-
-        this.personService.getById({}, { id: user.personId }).subscribe({
-          next: (person: any) => {
-            this.session.setPersonId(person.id);
-            this.session.setUserType(user.role);
-
-            if (user.role === UserRole.ORGANIZATION_USER) {
-              this.router.navigate(['/organizations']);
-            } else {
-              this.router.navigate(['/projects']);
-            }
-          },
-          error: () => {
-            this.setError('login-page.errors.server');
-          }
-        });
       },
       error: () => {
-        this.setError('login-page.errors.server');
+        this.setError('login-page.errors.invalid-credentials');
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
   }

@@ -19,14 +19,14 @@ import {TranslatePipe} from '@ngx-translate/core';
   styleUrl: './register-form.component.css'
 })
 export class RegisterFormComponent {
-  roles = Object.values(UserRole); // ['CLIENT_USER', 'ORGANIZATION_USER', ...]
+  roles = Object.values(UserRole); // ['TYPE_CLIENT', 'ORGANIZATION_USER', ...]
   firstName = '';
   lastName = '';
   email = '';
   phone = '';
   username = '';
   password = '';
-  role: UserRole = UserRole.CLIENT_USER;
+  role: UserRole = UserRole.TYPE_CLIENT;
   status: AccountStatus = AccountStatus.ACTIVE;
 
   @Output() submitted = new EventEmitter<{

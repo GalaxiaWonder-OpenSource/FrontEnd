@@ -1,7 +1,5 @@
 import { UserRole } from './user-role.vo';
 import { AccountStatus } from './account-status.vo';
-import { UserAccountId } from '../../shared/model/user-account-id.vo';
-import { PersonId } from '../../shared/model/person-id.vo';
 import { Username } from './username.vo';
 import { Password } from './password.vo';
 
@@ -11,10 +9,10 @@ import { Password } from './password.vo';
  */
 export class UserAccount {
   /** Unique identifier for the user account. */
-  public readonly id: UserAccountId;
+  public readonly id: number | undefined;
 
   /** Optional reference to the person this account belongs to. */
-  public readonly personId?: PersonId;
+  public readonly personId: number | undefined;
 
   /** Username used for login and identification. */
   public username: Username;
@@ -41,19 +39,19 @@ export class UserAccount {
    * @throws Error if required fields are missing or contain invalid values.
    */
   constructor({
-                id = new UserAccountId(),
+                id,
                 username,
                 password,
-                role = UserRole.CLIENT_USER,
+                role = UserRole.TYPE_CLIENT,
                 status = AccountStatus.ACTIVE,
                 personId
               }: {
-    id?: UserAccountId;
+    id?: number;
     username: Username;
     password: Password;
     role?: UserRole;
     status?: AccountStatus;
-    personId?: PersonId;
+    personId?: number;
   }) {
     if (!username) {
       throw new Error('Username is required.');
@@ -109,12 +107,12 @@ export class UserAccount {
    */
   toJSON() {
     return {
-      id: this.id.value,
+      id: this.id,
       username: this.username.value,
       password: this.password.value,
       role: this.role,
       status: this.status,
-      personId: this.personId?.value ?? null
+      personId: this.personId ?? null
     };
   }
 }

@@ -23,7 +23,7 @@ export class OrganizationCardComponent {
 
   onCardClick(){
     const role = this.isContractorOn() ? OrganizationMemberType.CONTRACTOR : OrganizationMemberType.WORKER;
-    const orgId = this.organization.id.toString()
+    const orgId = this.organization.id
     this.sessionService.setOrganization(orgId, role)
     this.router.navigate([`/organizations/${orgId}`]);
   }

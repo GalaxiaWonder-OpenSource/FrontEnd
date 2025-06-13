@@ -1,0 +1,137 @@
+.team-container {
+  padding: 20px;
+}
+
+.team-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.loading-container, .error-container, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.error-container {
+  color: #f44336;
+}
+
+.empty-state {
+  color: #666;
+}
+
+.empty-state button {
+  margin-top: 16px;
+}
+
+/* Tabla de miembros del equipo */
+.team-table {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* Estilo para badges de estado */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-ACTIVE {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-PENDING {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.status-INACTIVE {
+  background-color: #f5f5f5;
+  color: #616161;
+}
+
+/* Estilos para el diálogo */
+.search-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.org-members-table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.org-members-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.org-members-table th, 
+.org-members-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.org-members-table th {
+  background-color: #f5f5f5;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.org-members-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.no-results {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+}
+
+/* Formulario oculto (solo para validación) */
+.hidden-form {
+  display: none;
+}
+
+/* Estilos para los diálogos de edición y eliminación */
+.member-info {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.member-info h3 {
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.member-info p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.warning-text {
+  color: #f44336;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}

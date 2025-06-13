@@ -1,1 +1,204 @@
-<p>team works!</p>
+<div class="team-container">
+  <mat-card class="team-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'team.title' | translate }}</mat-card-title>
+      <mat-card-subtitle *ngIf="project">{{ project.name }}</mat-card-subtitle>
+      <div class="spacer"></div>
+      <button mat-raised-button color="primary" (click)="openAddMembersDialog()" [disabled]="loading">
+        <mat-icon>person_add</mat-icon>
+        {{ 'team.actions.add-members' | translate }}
+      </button>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="40"></mat-spinner>
+        <p>{{ 'team.loading' | translate }}</p>
+      </div>
+      
+      <div *ngIf="error" class="error-container">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-button color="primary" (click)="loadProjectData()">
+          {{ 'team.actions.try-again' | translate }}
+        </button>
+      </div>
+      
+      <div *ngIf="!loading && !error">
+        <div *ngIf="teamMembers.length === 0" class="empty-state">
+          <p>{{ 'team.empty-state' | translate }}</p>
+          <button mat-raised-button color="primary" (click)="openAddMembersDialog()">
+            <mat-icon>person_add</mat-icon>
+            {{ 'team.actions.add-members' | translate }}
+          </button>
+        </div>
+        
+        <table mat-table *ngIf="teamMembers.length > 0" [dataSource]="teamMembers" class="mat-elevation-z2 team-table">
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.name' | translate }}</th>
+            <td mat-cell *matCellDef="let member">{{ member.name }}</td>
+          </ng-container>
+
+          <!-- Columna Rol -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.role' | translate }}</th>
+            <td mat-cell *matCellDef="let member">{{ getProjectRoleTranslation(member.role) }}</td>
+          </ng-container>
+
+          <!-- Columna Especialidad -->
+          <ng-container matColumnDef="specialty">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.specialty' | translate }}</th>
+            <td mat-cell *matCellDef="let member">{{ getSpecialtyTranslation(member.specialty) }}</td>
+          </ng-container>
+          
+          <!-- Columna Email -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.email' | translate }}</th>
+            <td mat-cell *matCellDef="let member">{{ member.email }}</td>
+          </ng-container>
+          
+          <!-- Columna Estado -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.status' | translate }}</th>
+            <td mat-cell *matCellDef="let member">
+              <span class="status-badge status-{{ member.status }}">
+                {{ 'team.statuses.' + member.status | translate }}
+              </span>
+            </td>
+          </ng-container>
+          
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'team.table.actions' | translate }}</th>
+            <td mat-cell *matCellDef="let member">
+              <button mat-icon-button color="warn" [matTooltip]="'team.actions.remove-member' | translate" (click)="openRemoveMemberDialog(member)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Dialog para agregar miembros -->
+<ng-template #addMembersDialog>
+  <h2 mat-dialog-title>{{ 'team.dialogs.add-members.title' | translate }}</h2>
+  <div mat-dialog-content>
+    <!-- Buscador -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label>{{ 'team.dialogs.add-members.search' | translate }}</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (keyup)="searchMembers()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    
+    <!-- Mensaje de no resultados -->
+    <div *ngIf="filteredOrgMembers.length === 0 && !loading" class="no-results">
+      <p>{{ 'team.dialogs.add-members.no-results' | translate }}</p>
+    </div>
+    
+    <!-- Tabla de miembros de la organización -->
+    <div class="org-members-table-container">
+      <table class="org-members-table" *ngIf="filteredOrgMembers.length > 0">
+        <thead>
+          <tr>
+            <th>{{ 'team.dialogs.add-members.select' | translate }}</th>
+            <th>{{ 'team.dialogs.add-members.name' | translate }}</th>
+            <th>{{ 'team.dialogs.add-members.email' | translate }}</th>
+            <th>{{ 'team.dialogs.add-members.role' | translate }}</th>
+            <th>{{ 'team.dialogs.add-members.specialty' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let member of filteredOrgMembers">
+            <td>
+              <mat-checkbox
+                [(ngModel)]="member.selected"
+                (change)="toggleMemberSelection(member)">
+              </mat-checkbox>
+            </td>
+            <td>{{ member.name }}</td>
+            <td>{{ member.email }}</td>
+            <td>
+              <mat-form-field *ngIf="member.selected" appearance="outline">
+                <mat-select 
+                  [(ngModel)]="member.role" 
+                  (selectionChange)="updateMemberRole(member, $event.value)"
+                  placeholder="{{ 'team.dialogs.add-members.select-role' | translate }}"
+                  required>
+                  <mat-option *ngFor="let role of projectRoles" [value]="role">
+                    {{ getProjectRoleTranslation(role) }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field *ngIf="member.selected && member.role === 'SPECIALIST'" appearance="outline">
+                <mat-select 
+                  [(ngModel)]="member.specialty" 
+                  (selectionChange)="updateMemberSpecialty(member, $event.value)"
+                  placeholder="{{ 'team.dialogs.add-members.select-specialty' | translate }}"
+                  required>
+                  <mat-option *ngFor="let specialty of specialties" [value]="specialty">
+                    {{ getSpecialtyTranslation(specialty) }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Formulario (invisible, solo para validación) -->
+    <form [formGroup]="memberForm" class="hidden-form">
+      <div formArrayName="members">
+        <!-- Los controles se agregan dinámicamente -->
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+      {{ 'team.actions.cancel' | translate }}
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [disabled]="loading || memberForm.invalid || memberForm.get('members')?.value.length === 0" 
+      (click)="submitAddMembers()">
+      {{ 'team.actions.add' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<!-- Los diálogos de edición de miembros han sido eliminados -->
+
+<!-- Dialog para eliminar miembro -->
+<ng-template #removeMemberDialog>
+  <h2 mat-dialog-title>{{ 'team.dialogs.remove-member.title' | translate }}</h2>
+  <div mat-dialog-content>
+    <p>{{ 'team.dialogs.remove-member.confirmation' | translate }}</p>
+    <div class="member-info">
+      <h3>{{ selectedMember?.name }}</h3>
+      <p>{{ selectedMember?.email }}</p>
+    </div>
+    <p class="warning-text">{{ 'team.dialogs.remove-member.warning' | translate }}</p>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+      {{ 'team.actions.cancel' | translate }}
+    </button>
+    <button 
+      mat-raised-button 
+      color="warn" 
+      [disabled]="loading" 
+      (click)="submitRemoveMember()">
+      {{ 'team.actions.confirm' | translate }}
+    </button>
+  </div>
+</ng-template>

@@ -498,6 +498,83 @@
       "actions": "Actions"
     },
     "confirm-delete": "Are you sure you want to delete this milestone?"
+  },
+  "team": {
+    "title": "Project Team",
+    "loading": "Loading team members...",
+    "empty-state": "There are no members in this project team yet. Click 'Add Members' to get started.",
+    
+    "table": {
+      "name": "Name",
+      "role": "Role",
+      "specialty": "Specialty",
+      "email": "Email",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    
+    "statuses": {
+      "ACTIVE": "Active",
+      "PENDING": "Pending Confirmation",
+      "INACTIVE": "Inactive"
+    },
+    
+    "roles": {
+      "COORDINATOR": "Coordinator",
+      "SPECIALIST": "Specialist"
+    },
+    
+    "specialties": {
+      "ARCHITECTURE": "Architecture",
+      "STRUCTURES": "Structures",
+      "HSA": "Health & Safety",
+      "TOPOGRAPHY": "Topography",
+      "SANITATION": "Sanitation",
+      "ELECTRICITY": "Electricity",
+      "COMMUNICATIONS": "Communications"
+    },
+    
+    "actions": {
+      "add-members": "Add Members",
+      "view-details": "View Details",
+      "edit-member": "Edit Member",
+      "remove-member": "Remove Member",
+      "cancel": "Cancel",
+      "add": "Add",
+      "close": "Close",
+      "try-again": "Try Again"
+    },
+    
+    "dialogs": {
+      "add-members": {
+        "title": "Add Team Members",
+        "search": "Search by name or email",
+        "no-results": "No members found matching your search criteria.",
+        "select": "Select",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "specialty": "Specialty",
+        "select-role": "Select role",
+        "select-specialty": "Select specialty"
+      }
+    },
+    
+    "errors": {
+      "no-project-id": "No project ID found in session",
+      "load-project": "Error loading project information",
+      "load-members": "Error loading team members",
+      "load-org-members": "Error loading organization members",
+      "invalid-form": "Please complete all required fields",
+      "no-members-selected": "Please select at least one member to add",
+      "specialists-need-specialty": "Specialist members must have a specialty assigned",
+      "add-members": "Error adding team members",
+      "member-exists": "Member already exists in this team"
+    },
+    
+    "success": {
+      "members-added": "Team members added successfully"
+    }
   }
 }
 

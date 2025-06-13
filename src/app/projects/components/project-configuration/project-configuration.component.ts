@@ -142,7 +142,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
   }
   
   getStatusTranslation(status: string): string {
-    return `project-configuration.statuses.${status}`;
+    return this.translate.instant(`project-configuration.statuses.${status}`);
   }
   
   onSubmit(): void {

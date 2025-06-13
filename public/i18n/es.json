@@ -267,5 +267,242 @@
     "ruc": "RUC",
     "cancel": "Cancelar",
     "submit": "Crear"
+  },
+  "schedule": {
+    "title": "Cronograma del Proyecto",
+    "loading": "Cargando cronograma...",
+    "empty-state": "No se han añadido hitos todavía. Haz clic en 'Añadir Hito' para comenzar.",
+    "empty-tasks-state": "No se han añadido tareas a este hito todavía.",
+    "no-matching-tasks": "No hay tareas que coincidan con los filtros actuales.",
+    "task-list-title": "Tareas",
+    "task-specialty": "Especialidad",
+    "task-status": "Estado",
+    "task-responsible": "Responsable",
+    "confirm-delete": "¿Está seguro de que desea eliminar este hito? Todas las tareas asociadas serán eliminadas.",
+    "confirm-delete-task": "¿Está seguro de que desea eliminar esta tarea?",
+    "actions": {
+      "add-milestone": "Añadir Hito",
+      "edit-milestone": "Editar Hito",
+      "delete-milestone": "Eliminar Hito",
+      "add-task": "Añadir Tarea",
+      "edit-task": "Editar Tarea",
+      "delete-task": "Eliminar Tarea",
+      "assign-responsible": "Asignar Responsable",
+      "assign": "Asignar",
+      "close": "Cerrar",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "update": "Actualizar",
+      "try-again": "Intentar de nuevo"
+    },
+    "filter": {
+      "title": "Filtrar Tareas",
+      "by-specialty": "Filtrar por Especialidad",
+      "by-status": "Filtrar por Estado",
+      "all-specialties": "Todas las Especialidades",
+      "all-statuses": "Todos los Estados",
+      "clear": "Limpiar Filtros"
+    },
+    "warnings": {
+      "adjusted-dates": "La fecha de finalización se ha ajustado automáticamente para coincidir con la fecha de inicio",
+      "dates-adjusted-to-project": "Las fechas se han ajustado para encajar dentro del período del proyecto",
+      "task-adjusted-dates": "La fecha de vencimiento se ha ajustado automáticamente para coincidir con la fecha de inicio",
+      "dates-adjusted-to-milestone": "Las fechas se han ajustado para encajar dentro del período del hito"
+    },
+    "dialogs": {
+      "add-milestone": {
+        "title": "Añadir Nuevo Hito",
+        "name": {
+          "label": "Nombre del Hito",
+          "placeholder": "Ingrese el nombre del hito",
+          "hint": "Proporcione un nombre descriptivo para este hito",
+          "required": "El nombre del hito es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza este hito?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "endingDate": {
+          "label": "Fecha de Finalización",
+          "hint": "¿Cuándo debe completarse este hito?",
+          "required": "La fecha de finalización es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre este hito"
+        }
+      },
+      "edit-milestone": {
+        "title": "Editar Hito",
+        "name": {
+          "label": "Nombre del Hito",
+          "placeholder": "Ingrese el nombre del hito",
+          "hint": "Proporcione un nombre descriptivo para este hito",
+          "required": "El nombre del hito es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza este hito?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "endingDate": {
+          "label": "Fecha de Finalización",
+          "hint": "¿Cuándo debe completarse este hito?",
+          "required": "La fecha de finalización es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre este hito"
+        }
+      },
+      "add-task": {
+        "title": "Añadir Nueva Tarea",
+        "name": {
+          "label": "Nombre de la Tarea",
+          "placeholder": "Introduce el nombre de la tarea",
+          "hint": "Proporciona un nombre descriptivo para esta tarea",
+          "required": "El nombre de la tarea es obligatorio"
+        },
+        "specialty": {
+          "label": "Especialidad Requerida",
+          "hint": "Selecciona la especialidad requerida para esta tarea",
+          "required": "La especialidad es obligatoria"
+        },
+        "status": {
+          "label": "Estado de la Tarea",
+          "hint": "Selecciona el estado actual de esta tarea",
+          "required": "El estado es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza esta tarea?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "dueDate": {
+          "label": "Fecha de Vencimiento",
+          "hint": "¿Cuándo debe completarse esta tarea?",
+          "required": "La fecha de vencimiento es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre esta tarea"
+        }
+      },
+      "edit-task": {
+        "title": "Editar Tarea",
+        "name": {
+          "label": "Nombre de la Tarea",
+          "placeholder": "Introduce el nombre de la tarea",
+          "hint": "Proporciona un nombre descriptivo para esta tarea",
+          "required": "El nombre de la tarea es obligatorio"
+        },
+        "specialty": {
+          "label": "Especialidad Requerida",
+          "hint": "Selecciona la especialidad requerida para esta tarea",
+          "required": "La especialidad es obligatoria"
+        },
+        "status": {
+          "label": "Estado de la Tarea",
+          "hint": "Selecciona el estado actual de esta tarea",
+          "required": "El estado es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza esta tarea?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "dueDate": {
+          "label": "Fecha de Vencimiento",
+          "hint": "¿Cuándo debe completarse esta tarea?",
+          "required": "La fecha de vencimiento es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre esta tarea"
+        }
+      },
+      "assign-responsible": {
+        "title": "Asignar Responsable",
+        "responsible": {
+          "label": "Elegir Responsable",
+          "hint": "Seleccione un miembro del equipo con la especialidad requerida",
+          "required": "Se requiere un responsable"
+        }
+      }
+    },
+    "success": {
+      "milestone-created": "Hito creado exitosamente",
+      "milestone-updated": "Hito actualizado exitosamente",
+      "milestone-deleted": "Hito eliminado exitosamente",
+      "task-created": "Tarea creada exitosamente",
+      "task-updated": "Tarea actualizada exitosamente",
+      "task-deleted": "Tarea eliminada exitosamente",
+      "task-assigned": "Responsable asignado exitosamente"
+    },
+    "errors": {
+      "load-project": "Error al cargar el proyecto",
+      "load-milestones": "Error al cargar los hitos",
+      "no-project-id": "No se encontró ID del proyecto",
+      "create-milestone": "Error al crear el hito",
+      "update-milestone": "Error al actualizar el hito",
+      "delete-milestone": "Error al eliminar el hito",
+      "create-task": "Error al crear la tarea",
+      "update-task": "Error al actualizar la tarea",
+      "delete-task": "Error al eliminar la tarea",
+      "assign-task": "Error al asignar responsable",
+      "no-responsible": "Debe seleccionar un responsable",
+      "no-compatible-members": "No hay miembros disponibles con la especialidad requerida",
+      "loading-person-name": "Cargando..."
+    },
+    "specialties": {
+      "ARCHITECTURE": "Arquitectura",
+      "STRUCTURES": "Estructuras",
+      "HSA": "Seguridad y Salud",
+      "TOPOGRAPHY": "Topografía",
+      "SANITATION": "Saneamiento",
+      "ELECTRICITY": "Electricidad",
+      "COMMUNICATIONS": "Comunicaciones"
+    },
+    "task-statuses": {
+      "DRAFT": "Borrador",
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completada",
+      "CANCELED": "Cancelada"
+    }
+  },
+  "milestone-configuration": {
+    "title": "Configuración de Hitos",
+    "loading": "Cargando hitos...",
+    "empty-state": "No hay hitos definidos para este proyecto.",
+    "actions": {
+      "add-milestone": "Añadir hito",
+      "go-to-schedule": "Ir al cronograma",
+      "try-again": "Intentar nuevamente",
+      "delete-milestone": "Eliminar hito",
+      "close": "Cerrar"
+    },
+    "errors": {
+      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "load-project": "Error al cargar la información del proyecto",
+      "load-milestones": "Error al cargar los hitos del proyecto",
+      "delete-milestone": "Error al eliminar el hito"
+    },
+    "success": {
+      "milestone-deleted": "Hito eliminado correctamente"
+    },
+    "table": {
+      "name": "Nombre",
+      "startingDate": "Fecha de inicio",
+      "endingDate": "Fecha de finalización",
+      "description": "Descripción",
+      "actions": "Acciones"
+    },
+    "confirm-delete": "¿Está seguro de que desea eliminar este hito?"
   }
 }

@@ -55,6 +55,14 @@
       "password": "you123",
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
+    },
+    {
+      "id": "98bbfc3a-9b16-47c2-ab3f-775405f985f5",
+      "personId": "35a14010-8b7a-41f9-af4c-e56ab71ba1ad",
+      "username": "mario",
+      "password": "ASDFGH123",
+      "role": "CLIENT_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -106,6 +114,13 @@
       "phone": "123456789",
       "firstName": "db",
       "lastName": "mONGO"
+    },
+    {
+      "id": "35a14010-8b7a-41f9-af4c-e56ab71ba1ad",
+      "email": "mariojoaquin06@gmail.com",
+      "phone": "986286385",
+      "firstName": "marko",
+      "lastName": "mario"
     }
   ],
   "organizations": [
@@ -391,6 +406,72 @@
       "memberId": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "personId": "0edff2e1-a429-4984-81e3-bc44540ce121",
       "projectId": "e3bcde0b-4d0f-4d41-b8b5-24c648ff8c84"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "0c4f1be8-42cc-4eb6-9e75-6f8e4b0b8371",
+      "name": "armendariz",
+      "startingDate": "2025-06-18T05:00:00.000Z",
+      "endingDate": "2025-06-30T05:00:00.000Z",
+      "projectId": "289051cb-3afd-49a5-80af-96ee8687947e",
+      "description": "chuipetin gaaa"
+    },
+    {
+      "id": "a6b5a53c-fc79-4c81-b1a4-ad85c93b8fa4",
+      "name": "pruebaaa",
+      "startingDate": "2025-06-12T22:26:13.027Z",
+      "endingDate": "2025-08-29T05:00:00.000Z",
+      "projectId": "415104b3-adc7-4bda-9479-dba8b6e80f8a",
+      "description": "holi"
+    },
+    {
+      "id": "8273d21d-47c3-48f4-bdaf-a0fe87a43521",
+      "name": "testeo",
+      "startingDate": "2025-06-12T23:15:03.863Z",
+      "endingDate": "2025-06-30T05:00:00.000Z",
+      "projectId": "415104b3-adc7-4bda-9479-dba8b6e80f8a",
+      "description": "asdada"
+    },
+    {
+      "id": "7f7b40f3-d00c-4c5c-bd31-9222cfc78d4c",
+      "name": "dsad",
+      "startingDate": "2025-06-13T02:09:17.683Z",
+      "endingDate": "2025-06-26T05:00:00.000Z",
+      "projectId": "289051cb-3afd-49a5-80af-96ee8687947e",
+      "description": "dsadsada"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "dc7b25cd-5183-4971-9c9a-8099efed311a",
+      "name": "dsadas",
+      "specialty": "STRUCTURES",
+      "startingDate": "2025-06-12T22:26:13.027Z",
+      "dueDate": "2025-08-26T05:00:00.000Z",
+      "milestoneId": "a6b5a53c-fc79-4c81-b1a4-ad85c93b8fa4",
+      "status": "DRAFT",
+      "description": "dsadsa"
+    },
+    {
+      "id": "37a5cd54-0429-4f5a-afd4-338bdb908588",
+      "name": "dhsaud",
+      "specialty": "STRUCTURES",
+      "startingDate": "2025-06-18T05:00:00.000Z",
+      "dueDate": "2025-06-30T05:00:00.000Z",
+      "milestoneId": "0c4f1be8-42cc-4eb6-9e75-6f8e4b0b8371",
+      "status": "DRAFT",
+      "description": "dasdasdsa"
+    },
+    {
+      "id": "cd87eb4c-8a9e-4c3e-a860-1d160aa46c28",
+      "name": "werewfew",
+      "specialty": "SANITATION",
+      "startingDate": "2025-06-18T05:00:00.000Z",
+      "dueDate": "2025-06-30T05:00:00.000Z",
+      "milestoneId": "0c4f1be8-42cc-4eb6-9e75-6f8e4b0b8371",
+      "status": "DRAFT",
+      "description": "eqwewq"
     }
   ]
 }

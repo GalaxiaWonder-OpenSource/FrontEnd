@@ -261,6 +261,243 @@
       "REJECT": "Rejected",
       "APPROVED": "Approved"
     }
+  },
+  "schedule": {
+    "title": "Project Schedule",
+    "loading": "Loading schedule...",
+    "empty-state": "No milestones have been added yet. Click 'Add Milestone' to get started.",
+    "empty-tasks-state": "No tasks have been added to this milestone yet.",
+    "no-matching-tasks": "No tasks match the current filters.",
+    "task-list-title": "Tasks",
+    "task-specialty": "Specialty",
+    "task-status": "Status",
+    "task-responsible": "Responsible",
+    "confirm-delete": "Are you sure you want to delete this milestone? All associated tasks will be deleted.",
+    "confirm-delete-task": "Are you sure you want to delete this task?",
+    "actions": {
+      "add-milestone": "Add Milestone",
+      "edit-milestone": "Edit Milestone",
+      "delete-milestone": "Delete Milestone",
+      "add-task": "Add Task",
+      "edit-task": "Edit Task",
+      "delete-task": "Delete Task",
+      "assign-responsible": "Assign Responsible",
+      "assign": "Assign",
+      "close": "Close",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "try-again": "Try Again"
+    },
+    "filter": {
+      "title": "Filter Tasks",
+      "by-specialty": "Filter by Specialty",
+      "by-status": "Filter by Status",
+      "all-specialties": "All Specialties",
+      "all-statuses": "All Statuses",
+      "clear": "Clear Filters"
+    },
+    "warnings": {
+      "adjusted-dates": "End date has been automatically adjusted to match start date",
+      "dates-adjusted-to-project": "Dates have been adjusted to fit within project timeframe",
+      "task-adjusted-dates": "Due date has been automatically adjusted to match start date",
+      "dates-adjusted-to-milestone": "Dates have been adjusted to fit within milestone timeframe"
+    },
+    "dialogs": {
+      "add-milestone": {
+        "title": "Add New Milestone",
+        "name": {
+          "label": "Milestone Name",
+          "placeholder": "Enter milestone name",
+          "hint": "Provide a descriptive name for this milestone",
+          "required": "Milestone name is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this milestone begin",
+          "required": "Starting date is required"
+        },
+        "endingDate": {
+          "label": "Ending Date",
+          "hint": "When should this milestone be completed",
+          "required": "Ending date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this milestone"
+        }
+      },
+      "edit-milestone": {
+        "title": "Edit Milestone",
+        "name": {
+          "label": "Milestone Name",
+          "placeholder": "Enter milestone name",
+          "hint": "Provide a descriptive name for this milestone",
+          "required": "Milestone name is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this milestone begin",
+          "required": "Starting date is required"
+        },
+        "endingDate": {
+          "label": "Ending Date",
+          "hint": "When should this milestone be completed",
+          "required": "Ending date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this milestone"
+        }
+      },
+      "add-task": {
+        "title": "Add New Task",
+        "name": {
+          "label": "Task Name",
+          "placeholder": "Enter task name",
+          "hint": "Provide a descriptive name for this task",
+          "required": "Task name is required"
+        },
+        "specialty": {
+          "label": "Required Specialty",
+          "hint": "Select the specialty required for this task",
+          "required": "Specialty is required"
+        },
+        "status": {
+          "label": "Task Status",
+          "hint": "Select the current status of this task",
+          "required": "Status is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this task begin",
+          "required": "Starting date is required"
+        },
+        "dueDate": {
+          "label": "Due Date",
+          "hint": "When should this task be completed",
+          "required": "Due date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this task"
+        }
+      },
+      "edit-task": {
+        "title": "Edit Task",
+        "name": {
+          "label": "Task Name",
+          "placeholder": "Enter task name",
+          "hint": "Provide a descriptive name for this task",
+          "required": "Task name is required"
+        },
+        "specialty": {
+          "label": "Required Specialty",
+          "hint": "Select the specialty required for this task",
+          "required": "Specialty is required"
+        },
+        "status": {
+          "label": "Task Status",
+          "hint": "Select the current status of this task",
+          "required": "Status is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this task begin",
+          "required": "Starting date is required"
+        },
+        "dueDate": {
+          "label": "Due Date",
+          "hint": "When should this task be completed",
+          "required": "Due date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this task"
+        }
+      },
+      "assign-responsible": {
+        "title": "Assign Responsible Person",
+        "responsible": {
+          "label": "Choose Responsible",
+          "hint": "Select a team member with the required specialty",
+          "required": "A responsible person is required"
+        }
+      }
+    },
+    "success": {
+      "milestone-created": "Milestone created successfully",
+      "milestone-updated": "Milestone updated successfully",
+      "milestone-deleted": "Milestone deleted successfully",
+      "task-created": "Task created successfully",
+      "task-updated": "Task updated successfully",
+      "task-deleted": "Task deleted successfully",
+      "task-assigned": "Responsible person assigned successfully"
+    },
+    "errors": {
+      "load-project": "Failed to load project",
+      "load-milestones": "Failed to load milestones",
+      "no-project-id": "No project ID found",
+      "create-milestone": "Error creating milestone",
+      "update-milestone": "Error updating milestone",
+      "delete-milestone": "Error deleting milestone",
+      "create-task": "Error creating task",
+      "update-task": "Error updating task",
+      "delete-task": "Error deleting task",
+      "assign-task": "Error assigning responsible person",
+      "no-responsible": "You must select a responsible person",
+      "no-compatible-members": "No members with the required specialty are available",
+      "loading-person-name": "Loading..."
+    },
+    "specialties": {
+      "ARCHITECTURE": "Architecture",
+      "STRUCTURES": "Structures",
+      "HSA": "Health & Safety",
+      "TOPOGRAPHY": "Topography",
+      "SANITATION": "Sanitation",
+      "ELECTRICITY": "Electricity",
+      "COMMUNICATIONS": "Communications"
+    },
+    "task-statuses": {
+      "DRAFT": "Draft",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELED": "Canceled"
+    }
+  },
+  "milestone-configuration": {
+    "title": "Milestone Configuration",
+    "loading": "Loading milestones...",
+    "empty-state": "No milestones defined for this project.",
+    "actions": {
+      "add-milestone": "Add Milestone",
+      "go-to-schedule": "Go to Schedule",
+      "try-again": "Try Again",
+      "delete-milestone": "Delete Milestone",
+      "close": "Close"
+    },
+    "errors": {
+      "no-project-id": "No project ID found in session",
+      "load-project": "Error loading project information",
+      "load-milestones": "Error loading project milestones",
+      "delete-milestone": "Error deleting milestone"
+    },
+    "success": {
+      "milestone-deleted": "Milestone deleted successfully"
+    },
+    "table": {
+      "name": "Name",
+      "startingDate": "Start Date",
+      "endingDate": "End Date",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "confirm-delete": "Are you sure you want to delete this milestone?"
   }
 }
 

@@ -104,7 +104,7 @@
                       <div class="task-status">
                         <strong>{{ 'schedule.task-status' | translate }}:</strong> 
                         <span class="task-status-{{ task.status }}">
-                          {{ 'schedule.task-statuses.' + task.status | translate }}
+                          {{ getStatusTranslation(task.status) | translate }}
                         </span>
                       </div>
                       <div class="task-responsible">
@@ -288,7 +288,7 @@
         <mat-label>{{ 'schedule.dialogs.add-task.status.label' | translate }}</mat-label>
         <mat-select formControlName="status" required>
           <mat-option *ngFor="let status of taskStatuses" [value]="status">
-            {{ 'schedule.task-statuses.' + status | translate }}
+            {{ getStatusTranslation(status) | translate }}
           </mat-option>
         </mat-select>
         <mat-hint>{{ 'schedule.dialogs.add-task.status.hint' | translate }}</mat-hint>
@@ -375,7 +375,7 @@
         <mat-label>{{ 'schedule.dialogs.edit-task.status.label' | translate }}</mat-label>
         <mat-select formControlName="status" required>
           <mat-option *ngFor="let status of taskStatuses" [value]="status">
-            {{ 'schedule.task-statuses.' + status | translate }}
+            {{ getStatusTranslation(status) | translate }}
           </mat-option>
         </mat-select>
         <mat-hint>{{ 'schedule.dialogs.edit-task.status.hint' | translate }}</mat-hint>

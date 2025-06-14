@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Specialty } from '../../model/specialty.vo';
+import { TaskStatus } from '../../model/task-status.vo';
 
 @Component({
   selector: 'app-schedule',
@@ -38,7 +40,7 @@ export class ScheduleComponent implements OnInit {
   taskForm!: FormGroup;
   responsibleForm!: FormGroup;
   milestoneForm!: FormGroup;
-  taskStatuses: string[] = ['pending', 'in-progress', 'completed', 'delayed'];
+  taskStatuses = Object.values(TaskStatus);
   filteredTeamMembers: any[] = [];
   
   // Properties referenced in the template
@@ -46,7 +48,10 @@ export class ScheduleComponent implements OnInit {
   loading: boolean = false;
   error: string | null = null;
   milestones: any[] = [];
-  specialties: string[] = ['frontend', 'backend', 'design', 'devops', 'qa', 'ui', 'architecture']; 
+  // Exponiendo los enums al template
+  Specialty = Specialty; 
+  TaskStatus = TaskStatus;
+  specialties = Object.values(Specialty); // Array de valores del enum para el template
 
   constructor(private fb: FormBuilder) {}
 
@@ -61,8 +66,8 @@ export class ScheduleComponent implements OnInit {
   initTaskForm(): void {
     this.taskForm = this.fb.group({
       name: ['', Validators.required],
-      specialty: ['', Validators.required],
-      status: ['pending', Validators.required],
+      specialty: [Specialty.ARCHITECTURE, Validators.required],
+      status: [TaskStatus.PENDING, Validators.required],
       startingDate: [new Date(), Validators.required],
       dueDate: [new Date(), Validators.required],
       description: ['']
@@ -87,9 +92,9 @@ export class ScheduleComponent implements OnInit {
   loadTeamMembers(): void {
     // In a real application, this would be loaded from a service
     this.filteredTeamMembers = [
-      { personId: 1, name: 'John Doe', role: 'Developer', specialty: 'frontend' },
-      { personId: 2, name: 'Jane Smith', role: 'Designer', specialty: 'ui' },
-      { personId: 3, name: 'Bob Johnson', role: 'Architect', specialty: 'backend' }
+      { personId: 1, name: 'John Doe', role: 'Developer', specialty: Specialty.ARCHITECTURE },
+      { personId: 2, name: 'Jane Smith', role: 'Designer', specialty: Specialty.COMMUNICATIONS },
+      { personId: 3, name: 'Bob Johnson', role: 'Architect', specialty: Specialty.STRUCTURES }
     ];
   }
 
@@ -118,9 +123,14 @@ export class ScheduleComponent implements OnInit {
     }, 1000);
   }
 
-  getSpecialtyTranslation(specialty: string): string {
-    // In a real application, this would use the translation service
-    return specialty;
+  getSpecialtyTranslation(specialty: Specialty): string {
+    // En una aplicación real, esto usaría el servicio de traducción
+    return `specialties.${specialty}`;
+  }
+  
+  getStatusTranslation(status: TaskStatus): string {
+    // En una aplicación real, esto usaría el servicio de traducción
+    return `task-statuses.${status}`;
   }
 
   onTaskSubmit(): void {
@@ -157,8 +167,8 @@ export class ScheduleComponent implements OnInit {
       {
         id: '1',
         name: 'Create wireframes',
-        specialty: 'design',
-        status: 'in-progress',
+        specialty: Specialty.ARCHITECTURE,
+        status: TaskStatus.IN_PROGRESS,
         startingDate: new Date(),
         dueDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         description: 'Create wireframes for the main UI components',

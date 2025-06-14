@@ -573,8 +573,79 @@
     },
     
     "success": {
-      "members-added": "Team members added successfully"
+      "members-added": "Team members added successfully",
+      "member-updated": "Team member updated successfully",
+      "member-removed": "Member removed from team successfully"
     }
+  },
+  
+  "tasks": {
+    "title": "Tasks",
+    "add": "Add Task",
+    "noTasks": "No tasks available",
+    "viewDetails": "View Details",
+    "newTask": "New Task",
+    "editTask": "Edit Task",
+    "created": "Task created successfully",
+    "updated": "Task updated successfully",
+    "errors": {
+      "load": "Error loading tasks",
+      "save": "Error saving task",
+      "noMilestone": "No milestone selected"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELED": "Canceled"
+    },
+    "form": {
+      "name": "Name",
+      "specialty": "Specialty",
+      "status": "Status",
+      "startingDate": "Starting Date",
+      "dueDate": "Due Date",
+      "responsible": "Responsible",
+      "description": "Description",
+      "unassigned": "Unassigned",
+      "errors": {
+        "nameRequired": "Name is required",
+        "nameTooLong": "Name is too long",
+        "specialtyRequired": "Specialty is required",
+        "statusRequired": "Status is required",
+        "startingDateRequired": "Starting date is required",
+        "dueDateRequired": "Due date is required"
+      }
+    },
+    "dashboard": {
+      "title": "Task Management",
+      "createNew": "Create New Task",
+      "allTasks": "All Tasks",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed"
+    }
+  },
+  
+  "specialties": {
+    "ARCHITECTURE": "Architecture",
+    "SOFTWARE_DEVELOPMENT": "Software Development",
+    "DATA_ENGINEERING": "Data Engineering",
+    "QUALITY_ASSURANCE": "Quality Assurance",
+    "UX_DESIGN": "UX Design",
+    "PROJECT_MANAGEMENT": "Project Management",
+    "CYBERSECURITY": "Cybersecurity"
+  },
+  
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "back": "Back"
   }
 }
 

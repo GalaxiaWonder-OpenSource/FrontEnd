@@ -599,5 +599,74 @@
       "member-updated": "Miembro del equipo actualizado exitosamente",
       "member-removed": "Miembro eliminado del equipo exitosamente"
     }
+  },
+  
+  "tasks": {
+    "title": "Tareas",
+    "add": "Añadir tarea",
+    "noTasks": "No hay tareas disponibles",
+    "viewDetails": "Ver detalles",
+    "newTask": "Nueva Tarea",
+    "editTask": "Editar Tarea",
+    "created": "Tarea creada exitosamente",
+    "updated": "Tarea actualizada exitosamente",
+    "errors": {
+      "load": "Error al cargar las tareas",
+      "save": "Error al guardar la tarea",
+      "noMilestone": "No se ha seleccionado un hito"
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completada",
+      "CANCELED": "Cancelada"
+    },
+    "form": {
+      "name": "Nombre",
+      "specialty": "Especialidad",
+      "status": "Estado",
+      "startingDate": "Fecha de inicio",
+      "dueDate": "Fecha de entrega",
+      "responsible": "Responsable",
+      "description": "Descripción",
+      "unassigned": "Sin asignar",
+      "errors": {
+        "nameRequired": "El nombre es obligatorio",
+        "nameTooLong": "El nombre es demasiado largo",
+        "specialtyRequired": "La especialidad es obligatoria",
+        "statusRequired": "El estado es obligatorio",
+        "startingDateRequired": "La fecha de inicio es obligatoria",
+        "dueDateRequired": "La fecha de entrega es obligatoria"
+      }
+    },
+    "dashboard": {
+      "title": "Gestión de Tareas",
+      "createNew": "Crear Nueva Tarea",
+      "allTasks": "Todas las Tareas",
+      "pending": "Pendientes",
+      "inProgress": "En Progreso",
+      "completed": "Completadas"
+    }
+  },
+  
+  "specialties": {
+    "ARCHITECTURE": "Arquitectura",
+    "SOFTWARE_DEVELOPMENT": "Desarrollo de Software",
+    "DATA_ENGINEERING": "Ingeniería de Datos",
+    "QUALITY_ASSURANCE": "Control de Calidad",
+    "UX_DESIGN": "Diseño UX",
+    "PROJECT_MANAGEMENT": "Gestión de Proyectos",
+    "CYBERSECURITY": "Ciberseguridad"
+  },
+  
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "back": "Volver"
   }
 }

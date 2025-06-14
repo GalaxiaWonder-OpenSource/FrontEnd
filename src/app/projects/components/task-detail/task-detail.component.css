@@ -1,0 +1,53 @@
+.task-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.form-field-full {
+  grid-column: span 2;
+}
+
+mat-card-header {
+  margin-bottom: 16px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #f44336;
+  margin: 16px 0;
+  padding: 8px;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+
+.error-message mat-icon {
+  margin-right: 8px;
+}
+
+mat-card-actions {
+  padding: 16px !important;
+}
+
+button mat-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+  .task-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-field-full {
+    grid-column: span 1;
+  }
+}

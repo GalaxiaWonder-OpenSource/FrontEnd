@@ -36,6 +36,7 @@ import { SessionService } from '../../../iam/services/session.service';
     RouterModule,
     TranslateModule
   ],
+  providers: [MilestoneService],
   standalone: true,
   templateUrl: './milestone-configuration.component.html',
   styleUrl: './milestone-configuration.component.css'

@@ -1,1 +1,97 @@
-<p>task-list works!</p>
+<div class="task-list-container">
+  <div class="header">
+    <h2>{{ 'tasks.title' | translate }}</h2>
+    <button mat-mini-fab color="primary" matTooltip="{{ 'tasks.add' | translate }}" (click)="createTask()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  
+  <mat-tab-group (selectedTabChange)="filterTasksByStatus($event)">
+    <mat-tab label="all">
+      <ng-template matTabLabel>
+        <span>{{ 'tasks.dashboard.allTasks' | translate }}</span>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="pending">
+      <ng-template matTabLabel>
+        <span>{{ 'tasks.dashboard.pending' | translate }}</span>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="inProgress">
+      <ng-template matTabLabel>
+        <span>{{ 'tasks.dashboard.inProgress' | translate }}</span>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="completed">
+      <ng-template matTabLabel>
+        <span>{{ 'tasks.dashboard.completed' | translate }}</span>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  
+  <div *ngIf="error" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+  </div>
+  
+  <div *ngIf="!loading && !error && tasks.length === 0" class="empty-container">
+    <mat-icon>list</mat-icon>
+    <p>{{ 'tasks.noTasks' | translate }}</p>
+  </div>
+  
+  <div *ngIf="!loading && tasks.length > 0" class="tasks-grid">
+    <mat-card *ngFor="let task of tasks" class="task-card" (click)="selectTask(task)">
+      <mat-card-header>
+        <mat-card-title>{{ task.name }}</mat-card-title>
+        <mat-card-subtitle>
+          <span class="specialty-chip">{{ task.specialty }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p *ngIf="task.description" class="task-description">{{ task.description }}</p>
+        
+        <div class="task-dates">
+          <div class="date-item">
+            <mat-icon>today</mat-icon>
+            <span>{{ task.startingDate | date:'shortDate' }}</span>
+          </div>
+          <div class="date-item">
+            <mat-icon>event</mat-icon>
+            <span>{{ task.dueDate | date:'shortDate' }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <div class="status-chip" [ngClass]="getStatusClass(task.status)">
+          {{ 'tasks.status.' + task.status | translate }}
+        </div>
+        
+        <button mat-icon-button [matTooltip]="'tasks.viewDetails' | translate">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+  <!-- Task Detail Dialog Template -->
+  <ng-template #taskDetailDialog>
+    <h2 mat-dialog-title>
+      {{ isNewTask ? ('tasks.newTask' | translate) : ('tasks.editTask' | translate) }}
+    </h2>
+    <mat-dialog-content>
+      <div class="task-detail-placeholder">
+        <!-- Task detail component would be here, now simplified -->
+        <p>{{ 'tasks.detailsPlaceholder' | translate }}</p>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeTaskDetail()">{{ 'common.close' | translate }}</button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>

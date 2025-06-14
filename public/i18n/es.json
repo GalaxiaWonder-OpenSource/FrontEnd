@@ -1,4 +1,7 @@
 {
+  "user-menu": {
+    "logout": "Cerrar sesión"
+  },
   "navigation": {
     "client": {
       "title": "Área de cliente",
@@ -30,6 +33,69 @@
       "tasks": "Tareas",
       "meetings": "Reuniones",
       "configuration": "Configuración"
+    }
+  },
+  "project-info": {
+    "title": "Información del Proyecto",
+    "name": "Nombre",
+    "description": "Descripción",
+    "status": "Estado",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de finalización",
+    "loading": "Cargando información del proyecto..."
+  },
+  "project-configuration": {
+    "title": "Configuración del Proyecto",
+    "id": "ID",
+    "loading": "Cargando información del proyecto...",
+    "try-again": "Intentar nuevamente",
+    "name": {
+      "label": "Nombre del Proyecto",
+      "placeholder": "Ingrese el nombre del proyecto",
+      "hint": "El nombre debe ser descriptivo y único",
+      "required": "El nombre del proyecto es obligatorio",
+      "minLength": "El nombre debe tener al menos 3 caracteres"
+    },
+    "description": {
+      "label": "Descripción del Proyecto",
+      "placeholder": "Ingrese una descripción del proyecto",
+      "hint": "Proporcione una breve descripción del proyecto"
+    },
+    "status": {
+      "label": "Estado del Proyecto",
+      "hint": "Seleccione el estado actual del proyecto",
+      "required": "El estado del proyecto es obligatorio"
+    },
+    "endingDate": {
+      "label": "Fecha de Finalización",
+      "hint": "DD/MM/YYYY",
+      "required": "La fecha de finalización es obligatoria"
+    },
+    "deleteProject": "Eliminar Proyecto",
+    "cancel": "Cancelar",
+    "saveChanges": "Guardar Cambios",
+    "deleteConfirmation": {
+      "title": "Confirmar eliminación",
+      "message": "¿Está seguro de que desea eliminar el proyecto",
+      "warning": "Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar"
+    },
+    "messages": {
+      "update-success": "Proyecto actualizado correctamente",
+      "update-error": "Error al actualizar el proyecto:",
+      "delete-success": "Proyecto eliminado correctamente",
+      "delete-error": "Error al eliminar el proyecto:",
+      "load-error": "Error al cargar el proyecto",
+      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "unknown-error": "Error desconocido",
+      "close": "Cerrar"
+    },
+    "statuses": {
+      "BASIC_STUDIES": "Estudios Básicos",
+      "DESIGN_IN_PROCESS": "Diseño en Proceso",
+      "REJECT": "Rechazado",
+      "APPROVED": "Aprobado"
     }
   },
   "footer": {
@@ -132,28 +198,7 @@
   "organization-list": {
     "empty": "No se encontraron organizaciones."
   },
-  "create-organization": {
-    "title": "Crear nueva organización",
-    "legal-name": "Razón social",
-    "comercial-name": "Nombre comercial",
-    "ruc": "RUC",
-    "cancel": "Cancelar",
-    "submit": "Crear"
-  },
-  "create-member": {
-  "title": "Invitar miembro",
-  "email": "Correo electrónico",
-  "email-hint": "Se enviará una invitación a este correo",
-  "first-name": "Nombre",
-  "last-name": "Apellido",
-  "member-type": "Tipo de miembro",
-  "select-person": "Selecciona persona",
-  "contractor": "Contratista",
-  "worker": "Colaborador",
-  "cancel": "Cancelar",
-  "invite": "Enviar invitación"
-},
-"organization-tab": {
+  "organization-tab": {
     "title": "Organizaciones",
     "create": "Nueva organización"
   },
@@ -171,58 +216,388 @@
       "updated": "¡Organización actualizada correctamente!"
     }
   },
+  "project-tab": {
+    "title": "Gestión de Proyectos",
+    "create": "Crear Proyecto",
+    "organization-selector": "Selecciona una organización",
+    "organization-projects": "Proyectos de la organización",
+    "no-organizations": "No tienes organizaciones. Primero debes crear una organización.",
+    "no-projects": "Esta organización no tiene proyectos. Crea uno con el botón 'Crear Proyecto'.",
+    "loading": "Cargando proyectos...",
+    "no-golasac": "La organización GOLASAC no fue encontrada o no tienes acceso a ella.",
+    "no-organization": "La organización especificada no fue encontrada o no tienes acceso a ella."
+  },
+  "project-list": {
+    "empty": "No hay proyectos disponibles."
+  },
   "project-card": {
     "starting-date": "Fecha de inicio",
     "ending-date": "Fecha de fin",
+    "status": "Estado",
+    "team-members": "Miembros del equipo",
+    "role": "Tu rol",
+    "view-details": "Ver detalles",
     "descriptions": {
       "project-a": "Descripción del Proyecto A"
+    },
+    "status-types": {
+      "BASIC_STUDIES": "Estudios Básicos",
+      "DESIGN_IN_PROCESS": "Diseño en Proceso",
+      "UNDER_REVIEW": "En Revisión",
+      "CHANGE_REQUEST": "Solicitud de Cambio",
+      "CHANGE_PENDING": "Cambio Pendiente",
+      "REJECT": "Rechazado",
+      "APPROVED": "Aprobado"
     }
   },
-  "members": {
-    "title": "Miembros de la Organización",
-    "invite": "Invitar miembro",
-    "remove": "Eliminar miembro",
-    "joined-on": "Unido el",
-    "role": "Rol",
-    "no-members": "No hay miembros en esta organización",
-    "confirm-delete-title": "Eliminar miembro",
-    "confirm-delete": "¿Está seguro que desea eliminar este miembro de la organización?",
-    "member-types": {
-      "contractor": "Contratista (Creador)",
-      "worker": "Colaborador"
+  "create-project": {
+    "title": "Crear nuevo proyecto",
+    "name": "Nombre del proyecto",
+    "description": "Descripción",
+    "organization": "Organización",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de finalización",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
+  "create-organization": {
+    "title": "Crear nueva organización",
+    "legal-name": "Razón social",
+    "comercial-name": "Nombre comercial",
+    "ruc": "RUC",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
+  "schedule": {
+    "title": "Cronograma del Proyecto",
+    "loading": "Cargando cronograma...",
+    "empty-state": "No se han añadido hitos todavía. Haz clic en 'Añadir Hito' para comenzar.",
+    "empty-tasks-state": "No se han añadido tareas a este hito todavía.",
+    "no-matching-tasks": "No hay tareas que coincidan con los filtros actuales.",
+    "task-list-title": "Tareas",
+    "task-specialty": "Especialidad",
+    "task-status": "Estado",
+    "task-responsible": "Responsable",
+    "confirm-delete": "¿Está seguro de que desea eliminar este hito? Todas las tareas asociadas serán eliminadas.",
+    "confirm-delete-task": "¿Está seguro de que desea eliminar esta tarea?",
+    "actions": {
+      "add-milestone": "Añadir Hito",
+      "edit-milestone": "Editar Hito",
+      "delete-milestone": "Eliminar Hito",
+      "add-task": "Añadir Tarea",
+      "edit-task": "Editar Tarea",
+      "delete-task": "Eliminar Tarea",
+      "assign-responsible": "Asignar Responsable",
+      "assign": "Asignar",
+      "close": "Cerrar",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "update": "Actualizar",
+      "try-again": "Intentar de nuevo"
+    },
+    "filter": {
+      "title": "Filtrar Tareas",
+      "by-specialty": "Filtrar por Especialidad",
+      "by-status": "Filtrar por Estado",
+      "all-specialties": "Todas las Especialidades",
+      "all-statuses": "Todos los Estados",
+      "clear": "Limpiar Filtros"
+    },
+    "warnings": {
+      "adjusted-dates": "La fecha de finalización se ha ajustado automáticamente para coincidir con la fecha de inicio",
+      "dates-adjusted-to-project": "Las fechas se han ajustado para encajar dentro del período del proyecto",
+      "task-adjusted-dates": "La fecha de vencimiento se ha ajustado automáticamente para coincidir con la fecha de inicio",
+      "dates-adjusted-to-milestone": "Las fechas se han ajustado para encajar dentro del período del hito"
+    },
+    "dialogs": {
+      "add-milestone": {
+        "title": "Añadir Nuevo Hito",
+        "name": {
+          "label": "Nombre del Hito",
+          "placeholder": "Ingrese el nombre del hito",
+          "hint": "Proporcione un nombre descriptivo para este hito",
+          "required": "El nombre del hito es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza este hito?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "endingDate": {
+          "label": "Fecha de Finalización",
+          "hint": "¿Cuándo debe completarse este hito?",
+          "required": "La fecha de finalización es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre este hito"
+        }
+      },
+      "edit-milestone": {
+        "title": "Editar Hito",
+        "name": {
+          "label": "Nombre del Hito",
+          "placeholder": "Ingrese el nombre del hito",
+          "hint": "Proporcione un nombre descriptivo para este hito",
+          "required": "El nombre del hito es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza este hito?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "endingDate": {
+          "label": "Fecha de Finalización",
+          "hint": "¿Cuándo debe completarse este hito?",
+          "required": "La fecha de finalización es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre este hito"
+        }
+      },
+      "add-task": {
+        "title": "Añadir Nueva Tarea",
+        "name": {
+          "label": "Nombre de la Tarea",
+          "placeholder": "Introduce el nombre de la tarea",
+          "hint": "Proporciona un nombre descriptivo para esta tarea",
+          "required": "El nombre de la tarea es obligatorio"
+        },
+        "specialty": {
+          "label": "Especialidad Requerida",
+          "hint": "Selecciona la especialidad requerida para esta tarea",
+          "required": "La especialidad es obligatoria"
+        },
+        "status": {
+          "label": "Estado de la Tarea",
+          "hint": "Selecciona el estado actual de esta tarea",
+          "required": "El estado es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza esta tarea?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "dueDate": {
+          "label": "Fecha de Vencimiento",
+          "hint": "¿Cuándo debe completarse esta tarea?",
+          "required": "La fecha de vencimiento es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre esta tarea"
+        }
+      },
+      "edit-task": {
+        "title": "Editar Tarea",
+        "name": {
+          "label": "Nombre de la Tarea",
+          "placeholder": "Introduce el nombre de la tarea",
+          "hint": "Proporciona un nombre descriptivo para esta tarea",
+          "required": "El nombre de la tarea es obligatorio"
+        },
+        "specialty": {
+          "label": "Especialidad Requerida",
+          "hint": "Selecciona la especialidad requerida para esta tarea",
+          "required": "La especialidad es obligatoria"
+        },
+        "status": {
+          "label": "Estado de la Tarea",
+          "hint": "Selecciona el estado actual de esta tarea",
+          "required": "El estado es obligatorio"
+        },
+        "startingDate": {
+          "label": "Fecha de Inicio",
+          "hint": "¿Cuándo comienza esta tarea?",
+          "required": "La fecha de inicio es obligatoria"
+        },
+        "dueDate": {
+          "label": "Fecha de Vencimiento",
+          "hint": "¿Cuándo debe completarse esta tarea?",
+          "required": "La fecha de vencimiento es obligatoria"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Introduce descripción (opcional)",
+          "hint": "Proporciona detalles adicionales sobre esta tarea"
+        }
+      },
+      "assign-responsible": {
+        "title": "Asignar Responsable",
+        "responsible": {
+          "label": "Elegir Responsable",
+          "hint": "Seleccione un miembro del equipo con la especialidad requerida",
+          "required": "Se requiere un responsable"
+        }
+      }
+    },
+    "success": {
+      "milestone-created": "Hito creado exitosamente",
+      "milestone-updated": "Hito actualizado exitosamente",
+      "milestone-deleted": "Hito eliminado exitosamente",
+      "task-created": "Tarea creada exitosamente",
+      "task-updated": "Tarea actualizada exitosamente",
+      "task-deleted": "Tarea eliminada exitosamente",
+      "task-assigned": "Responsable asignado exitosamente"
+    },
+    "errors": {
+      "load-project": "Error al cargar el proyecto",
+      "load-milestones": "Error al cargar los hitos",
+      "no-project-id": "No se encontró ID del proyecto",
+      "create-milestone": "Error al crear el hito",
+      "update-milestone": "Error al actualizar el hito",
+      "delete-milestone": "Error al eliminar el hito",
+      "create-task": "Error al crear la tarea",
+      "update-task": "Error al actualizar la tarea",
+      "delete-task": "Error al eliminar la tarea",
+      "assign-task": "Error al asignar responsable",
+      "no-responsible": "Debe seleccionar un responsable",
+      "no-compatible-members": "No hay miembros disponibles con la especialidad requerida",
+      "loading-person-name": "Cargando..."
+    },
+    "specialties": {
+      "ARCHITECTURE": "Arquitectura",
+      "STRUCTURES": "Estructuras",
+      "HSA": "Seguridad y Salud",
+      "TOPOGRAPHY": "Topografía",
+      "SANITATION": "Saneamiento",
+      "ELECTRICITY": "Electricidad",
+      "COMMUNICATIONS": "Comunicaciones"
+    },
+    "task-statuses": {
+      "DRAFT": "Borrador",
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completada",
+      "CANCELED": "Cancelada"
     }
   },
-
-  "common": {
-    "actions": "Acciones",
-    "confirm": "Confirmar",
-    "create": "Crear",
-    "cancel": "Cancelar"
-  },
-
-  "invitation": {
-    "title": "Mis Invitaciones",
-    "pending": "pendientes",
-    "loading": "Cargando invitaciones...",
-    "empty-title": "No tienes invitaciones",
-    "empty-description": "Cuando recibas invitaciones a organizaciones aparecerán aquí.",
+  "milestone-configuration": {
+    "title": "Configuración de Hitos",
+    "loading": "Cargando hitos...",
+    "empty-state": "No hay hitos definidos para este proyecto.",
+    "actions": {
+      "add-milestone": "Añadir hito",
+      "go-to-schedule": "Ir al cronograma",
+      "try-again": "Intentar nuevamente",
+      "delete-milestone": "Eliminar hito",
+      "close": "Cerrar"
+    },
+    "errors": {
+      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "load-project": "Error al cargar la información del proyecto",
+      "load-milestones": "Error al cargar los hitos del proyecto",
+      "delete-milestone": "Error al eliminar el hito"
+    },
+    "success": {
+      "milestone-deleted": "Hito eliminado correctamente"
+    },
     "table": {
-      "organization": "Organización",
-      "invitedBy": "Invitado por",
-      "date": "Fecha",
+      "name": "Nombre",
+      "startingDate": "Fecha de inicio",
+      "endingDate": "Fecha de finalización",
+      "description": "Descripción",
+      "actions": "Acciones"
+    },
+    "confirm-delete": "¿Está seguro de que desea eliminar este hito?"
+  },
+  "team": {
+    "title": "Equipo de Trabajo",
+    "loading": "Cargando miembros del equipo...",
+    "empty-state": "No hay miembros en este equipo de proyecto todavía. Haz clic en 'Agregar Miembros' para comenzar.",
+    
+    "table": {
+      "name": "Nombre",
+      "role": "Rol",
+      "specialty": "Especialidad",
+      "email": "Correo",
       "status": "Estado",
       "actions": "Acciones"
     },
-    "status": {
-      "accepted": "Aceptada",
-      "rejected": "Rechazada",
-      "pending": "Pendiente"
+    
+    "statuses": {
+      "ACTIVE": "Activo",
+      "PENDING": "Pendiente de Confirmación",
+      "INACTIVE": "Inactivo"
     },
-    "action": {
-      "accept": "Aceptar",
-      "reject": "Rechazar"
+    
+    "roles": {
+      "COORDINATOR": "Coordinador",
+      "SPECIALIST": "Especialista"
     },
-    "processed": "Ya procesada"
+    
+    "specialties": {
+      "ARCHITECTURE": "Arquitectura",
+      "STRUCTURES": "Estructuras",
+      "HSA": "Seguridad y Salud",
+      "TOPOGRAPHY": "Topografía",
+      "SANITATION": "Saneamiento",
+      "ELECTRICITY": "Electricidad",
+      "COMMUNICATIONS": "Comunicaciones"
+    },
+    
+    "actions": {
+      "add-members": "Agregar Miembros",
+      "view-details": "Ver Detalles",
+      "edit-member": "Editar Miembro",
+      "remove-member": "Eliminar Miembro",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "save": "Guardar",
+      "close": "Cerrar",
+      "try-again": "Intentar Nuevamente",
+      "confirm": "Confirmar"
+    },
+    
+    "dialogs": {
+      "add-members": {
+        "title": "Agregar Miembros al Equipo",
+        "search": "Buscar por nombre o correo",
+        "no-results": "No se encontraron miembros que coincidan con tu criterio de búsqueda.",
+        "select": "Seleccionar",
+        "name": "Nombre",
+        "email": "Correo",
+        "role": "Rol",
+        "specialty": "Especialidad",
+        "select-role": "Seleccionar rol",
+        "select-specialty": "Seleccionar especialidad"
+      },
+      "edit-member": {
+        "title": "Editar Miembro del Equipo",
+        "role": "Rol",
+        "specialty": "Especialidad",
+        "select-role": "Seleccionar rol",
+        "select-specialty": "Seleccionar especialidad"
+      },
+      "remove-member": {
+        "title": "Eliminar Miembro del Equipo",
+        "confirmation": "¿Está seguro de que desea eliminar a este miembro del equipo?",
+        "warning": "Esta acción no se puede deshacer."
+      }
+    },
+    
+    "errors": {
+      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "load-project": "Error al cargar la información del proyecto",
+      "load-members": "Error al cargar los miembros del equipo",
+      "load-org-members": "Error al cargar los miembros de la organización",
+      "invalid-form": "Por favor complete todos los campos requeridos",
+      "no-members-selected": "Por favor seleccione al menos un miembro para agregar",
+      "specialists-need-specialty": "Los miembros especialistas deben tener una especialidad asignada",
+      "add-members": "Error al agregar miembros al equipo",
+      "update-member": "Error al actualizar el miembro del equipo",
+      "remove-member": "Error al eliminar el miembro del equipo",
+      "member-exists": "El miembro ya existe en este equipo"
+    },
+    
+    "success": {
+      "members-added": "Miembros agregados al equipo exitosamente",
+      "member-updated": "Miembro del equipo actualizado exitosamente",
+      "member-removed": "Miembro eliminado del equipo exitosamente"
+    }
   }
-
 }

@@ -20,8 +20,18 @@ function extractParamValue(val: any): any {
   if (val === null || val === undefined) return val;
 
   if (typeof val === 'object') {
-    if ('value' in val) return val.value;
-    if (typeof val.toJSON === 'function') return val.toJSON();
+    // Debug para ver qué tipo de objeto es
+    console.log(`[ParamExtract] Extracting value from:`, val);
+    
+    if ('value' in val) {
+      console.log(`[ParamExtract] Found 'value' property:`, val.value);
+      return val.value;
+    }
+    if (typeof val.toJSON === 'function') {
+      const jsonValue = val.toJSON();
+      console.log(`[ParamExtract] Using toJSON() method:`, jsonValue);
+      return jsonValue;
+    }
   }
 
   return val;
@@ -44,10 +54,31 @@ function extractParamValue(val: any): any {
  * @returns A URL with all dynamic parameters replaced
  */
 function replacePathParams(url: string, params: Record<string, any>): string {
-  return url.replace(/:([a-zA-Z]+)/g, (_, key) => {
+  console.log(`[PathReplace] Input URL: ${url}, Params:`, params);
+  
+  const result = url.replace(/:([a-zA-Z]+)/g, (match, key) => {
+    console.log(`[PathReplace] Replacing token :${key}`);
+    
+    if (!params || !(key in params)) {
+      console.warn(`[PathReplace] WARNING: No param value found for :${key}`);
+      return match; // Devolvemos el token original si no hay valor
+    }
+    
     const val = extractParamValue(params[key]);
-    return val !== undefined ? encodeURIComponent(String(val)) : `:${key}`;
+    console.log(`[PathReplace] Extracted value for ${key}:`, val);
+    
+    if (val === undefined || val === null) {
+      console.warn(`[PathReplace] WARNING: Param value for :${key} is undefined/null`);
+      return match;
+    }
+    
+    const encoded = encodeURIComponent(String(val));
+    console.log(`[PathReplace] Encoded value: ${encoded}`);
+    return encoded;
   });
+  
+  console.log(`[PathReplace] Final URL: ${result}`);
+  return result;
 }
 
 /**
@@ -95,33 +126,33 @@ function serializeData(data: any): any {
  *
  * userService.getById({}, { id: 'abc123' }).subscribe(user => console.log(user));
  */
-export function createDynamicService<T>(
-  configs: EndpointConfig[]
-): Record<string, Function> {
+export function createDynamicService<T>(configs: EndpointConfig[]): Record<string, Function> {
   const http = inject(HttpClient);
-  const defaultHeaders = {
-    'Content-Type': 'application/json'
-  };
+  const httpOptions = { headers: { 'Content-Type': 'application/json' } };
   const service: Record<string, Function> = {};
 
   for (const cfg of configs) {
     service[cfg.name] = (data: any = {}, params: any = {}): Observable<T> => {
+      // Procesamiento especial para el parámetro 'id' si existe
+      if (params && params.id) {
+        // Asegurarse de obtener el valor simple del ID en caso de que sea un objeto
+        if (typeof params.id === 'object') {
+          if (params.id.value !== undefined) {
+            params.id = params.id.value;
+          } else if (typeof params.id.toJSON === 'function') {
+            params.id = params.id.toJSON();
+          } else if (typeof params.id.toString === 'function') {
+            params.id = params.id.toString();
+          }
+        }
+      }
+      
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
-
-      var headers = cfg.auth ? {
-        ...defaultHeaders,
-        "Authorization": `Basic ${btoa(cfg.auth)}`
-      } : {
-        ...defaultHeaders,
-      }
-
-      if (cfg.auth != null) {
-        console.log(`Basic ${btoa(cfg.auth)}`);
-      }
-
-      const httpOptions = { headers };
-
+      
+      // Debug log para ver qué URL se está generando
+      console.log(`[API DEBUG] ${cfg.name} - Original URL: ${cfg.url}, Params:`, params, `Final URL: ${url}`);
+      
       switch (cfg.method) {
         case HttpMethod.GET:
           const queryParams = new URLSearchParams(serializeData(params)).toString();

@@ -1,13 +1,16 @@
-import {Component} from '@angular/core';
-import {Router, RouterModule} from '@angular/router';
-import {OrgRole, ProjectRole, SessionService} from '../../../iam/services/session.service';
-import {CommonModule} from '@angular/common';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatIcon} from '@angular/material/icon';
-import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { OrgRole, SessionService, UserType, ProjectRoleType } from '../../../iam/services/session.service';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { UserRole } from '../../../iam/model/user-role.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-toolbar-project',
@@ -19,15 +22,17 @@ import {OrganizationMemberType} from '../../../organizations/model/organization-
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-project.component.html',
   styleUrls: ['./toolbar-project.component.css']
 })
 export class ToolbarProjectComponent {
-  projectId = '';
-  projectRole: ProjectRole | undefined = undefined;
-  organizationRole: OrgRole | undefined = undefined;
+  projectId: string = '';
+  projectRole: ProjectRoleType | null = null;
+  organizationRole: OrgRole | null = null;
+  userType: UserType | null = null;
 
   constructor(
     private session: SessionService,
@@ -35,9 +40,22 @@ export class ToolbarProjectComponent {
   ) {}
 
   ngOnInit() {
-    this.projectId = this.session.getProjectId() ?? '';
-    this.projectRole = this.session.getProjectRole();
-    this.organizationRole = this.session.getOrganizationRole();
+    const projectIdValue = this.session.getProjectId();
+    this.projectId = projectIdValue !== undefined ? String(projectIdValue) : '';
+    this.projectRole = this.session.getProjectRole() || null;
+    this.organizationRole = this.session.getOrganizationRole() || null;
+    this.userType = this.session.getUserType() || null;
+    console.log('Toolbar loaded with projectId:', this.projectId);
+
+    // Si la URL contiene un projectId pero no está en la sesión, lo extraemos y guardamos
+    if (!this.projectId) {
+      const currentUrl = window.location.pathname;
+      const projectMatch = currentUrl.match(/\/projects\/([^\/]+)/);
+      if (projectMatch && projectMatch[1]) {
+        this.projectId = projectMatch[1];
+        console.log('Extracted project ID from URL:', this.projectId);
+      }
+    }
   }
 
   navigateTo(subpath: string) {
@@ -45,16 +63,22 @@ export class ToolbarProjectComponent {
   }
 
   get isContractor() {
-    return this.organizationRole === OrganizationMemberType.CONTRACTOR;
+    return (this.organizationRole === OrganizationMemberType.CONTRACTOR);
+    // ProjectRoleType doesn't have 'Contractor' value, so we removed that check
   }
 
   get isClient() {
-    return this.projectRole === 'Client';
+    // ProjectRoleType doesn't have 'Client' value, so we need to check user type only
+    return this.userType === UserRole.TYPE_CLIENT;
+  }
+
+  get isOrganizationUser() {
+    return this.userType === UserRole.TYPE_WORKER;
   }
 
   goBackToOrganization() {
     const orgId = this.session.getOrganizationId();
-    if (orgId && this.isContractor) {
+    if (orgId && (this.isContractor || this.isOrganizationUser)) {
       this.router.navigate([`/organizations/${orgId}/info`]);
     }
     else{

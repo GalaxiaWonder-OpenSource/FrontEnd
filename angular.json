@@ -106,6 +106,10 @@
     }
   },
   "cli": {
+<<<<<<< HEAD
+    "analytics": "387420d2-7d49-4653-bd7c-fe4d411bc8a2"
+=======
     "analytics": "03c7112f-7c0c-4468-936f-56acd6988686"
+>>>>>>> origin/feature/ep02
   }
 }

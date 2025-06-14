@@ -10,7 +10,7 @@ export class MilestoneAccessGuard implements CanActivate {
     const projectIdFromSession = this.session.getProjectId();
     const projectIdFromUrl = route.paramMap.get('projectId');
 
-    if (projectIdFromSession === projectIdFromUrl) {
+    if (projectIdFromSession && projectIdFromUrl && projectIdFromSession.toString() === projectIdFromUrl) {
       return true;
     }
 

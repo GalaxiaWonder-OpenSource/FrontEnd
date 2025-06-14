@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
+import {UserMenuComponent} from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-toolbar-worker',
@@ -17,7 +18,8 @@ import {MatIcon} from '@angular/material/icon';
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-worker.component.html',
   styleUrls: ['./toolbar-worker.component.css']

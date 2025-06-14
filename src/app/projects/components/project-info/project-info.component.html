@@ -1,1 +1,36 @@
-<p>project-info works!</p>
+<div class="project-info-container">
+  <mat-card class="info-card" *ngIf="project">
+    <mat-card-title>{{ 'project-info.title' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <div class="info-field">
+        <span class="label">{{ 'project-info.name' | translate }}</span>
+        <span class="value">{{ project.name }}</span>
+      </div>
+
+      <div class="info-field" *ngIf="project.description">
+        <span class="label">{{ 'project-info.description' | translate }}</span>
+        <span class="value">{{ project.description }}</span>
+      </div>
+
+      <div class="info-field">
+        <span class="label">{{ 'project-info.status' | translate }}</span>
+        <span class="value">{{ getStatusTranslation(project.status) | translate }}</span>
+      </div>
+
+      <div class="info-field">
+        <span class="label">{{ 'project-info.starting-date' | translate }}</span>
+        <span class="value">{{ project.startingDate | date }}</span>
+      </div>
+
+      <div class="info-field">
+        <span class="label">{{ 'project-info.ending-date' | translate }}</span>
+        <span class="value">{{ project.endingDate | date }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="loading" *ngIf="!project">
+    {{ 'project-info.loading' | translate }}
+  </div>
+</div>

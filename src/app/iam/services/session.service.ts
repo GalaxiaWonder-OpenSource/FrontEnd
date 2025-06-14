@@ -1,10 +1,12 @@
 import { Injectable, signal, effect } from '@angular/core';
 import {UserRole} from '../model/user-role.vo';
 import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
+import { ProjectRole } from '../../projects/model/project-role.vo';
 
 export type UserType = UserRole.TYPE_WORKER | UserRole.TYPE_CLIENT;
 export type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
-export type ProjectRole = 'Contractor' | 'Coordinator' | 'Specialist' | 'Client' | undefined;
+export type ProjectRoleType = ProjectRole.COORDINATOR | ProjectRole.SPECIALIST;
+
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -13,8 +15,8 @@ export class SessionService {
   private userType = signal<UserType | undefined>(this.loadFromStorage('userType'));
   private organizationId = signal<number | undefined>(this.loadFromStorage('organizationId'));
   private organizationRole = signal<OrgRole | undefined>(this.loadFromStorage('organizationRole'));
-  private projectId = signal<string | undefined>(this.loadFromStorage('projectId'));
-  private projectRole = signal<ProjectRole>(this.loadFromStorage('projectRole'));
+  private projectId = signal<number | undefined>(this.loadFromStorage('projectId'));
+  private projectRole = signal<ProjectRoleType | undefined>(this.loadFromStorage('projectRole'));
   private milestoneId = signal<string | undefined>(this.loadFromStorage('milestoneId'));
   private token = signal<string | undefined>(this.loadFromStorage('token'));
 
@@ -46,7 +48,7 @@ export class SessionService {
     this.organizationRole.set(role);
   }
 
-  setProject(id: string, role: ProjectRole) {
+  setProject(id: number, role: ProjectRoleType | undefined) {
     this.projectId.set(id);
     this.projectRole.set(role);
   }
@@ -112,11 +114,11 @@ export class SessionService {
     return this.organizationRole();
   }
 
-  getProjectId(): string | undefined {
+  getProjectId(): number | undefined {
     return this.projectId();
   }
 
-  getProjectRole(): ProjectRole {
+  getProjectRole(): ProjectRoleType | undefined {
     return this.projectRole();
   }
 
@@ -130,7 +132,7 @@ export class SessionService {
 
   // Helpers de persistencia
   private saveToStorage(key: string, value: any) {
-    if (value !== undefined && value !== undefined) {
+    if (value !== undefined) {
       localStorage.setItem(key, JSON.stringify(value));
     } else {
       localStorage.removeItem(key);

@@ -97,7 +97,7 @@ export class TaskService {
     );
   }
 
-  deleteTask(taskId: string | TaskId): Observable<void> {
+  deleteTask(taskId: string | number | TaskId): Observable<void> {
     const id = taskId instanceof TaskId ? taskId.value : taskId;
     return this.http.delete<void>(`${environment.propgmsApiBaseUrl}/tasks/${id}`).pipe(
       map(() => undefined), // Ensure we return void even if the server returns something

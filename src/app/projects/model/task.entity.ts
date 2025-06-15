@@ -47,12 +47,12 @@ export class Task {
     description?: string;
     responsibleId?: string;
   }) {
-    this.id = id instanceof TaskId ? id : new TaskId(id?.toString());
+    this.id = id instanceof TaskId ? id : new TaskId(id);
     this.name = name;
     this.specialty = specialty;
     this.startingDate = startingDate instanceof Date ? startingDate : new Date(startingDate);
     this.dueDate = dueDate instanceof Date ? dueDate : new Date(dueDate);
-    this.milestoneId = milestoneId instanceof MilestoneId ? milestoneId : new MilestoneId(milestoneId?.toString());
+    this.milestoneId = milestoneId instanceof MilestoneId ? milestoneId : new MilestoneId(milestoneId);
     this.status = status;
     this.description = description;
     this.responsibleId = responsibleId;

@@ -34,7 +34,7 @@ export class Milestone {
     projectId: ProjectId | string;
     description?: string;
   }) {
-    this.id = id instanceof MilestoneId ? id : new MilestoneId(id?.toString());
+    this.id = id instanceof MilestoneId ? id : new MilestoneId(id);
     this.name = name;
     this.startingDate = startingDate instanceof Date ? startingDate : new Date(startingDate);
     this.endingDate = endingDate instanceof Date ? endingDate : new Date(endingDate);

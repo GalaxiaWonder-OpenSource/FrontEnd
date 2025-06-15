@@ -116,13 +116,16 @@ export class MilestoneConfigurationComponent implements OnInit, OnDestroy {
   deleteMilestone(milestone: Milestone): void {
     if (confirm(this.translate.instant('milestone-configuration.confirm-delete'))) {
       this.loading = true;
-      const milestoneId = typeof milestone.id === 'object' ? milestone.id.value : String(milestone.id);
+      // Si es un objeto MilestoneId, obtener su value numérico, si no, mantener tal cual
+      const milestoneId = typeof milestone.id === 'object' ? milestone.id.value : milestone.id;
 
       const deleteSub = this.milestoneService.deleteMilestone(milestoneId).subscribe({
         next: () => {
-          this.milestones = this.milestones.filter(m => 
-            (typeof m.id === 'object' ? m.id.value : String(m.id)) !== milestoneId
-          );
+          this.milestones = this.milestones.filter(m => {
+            // Obtener el ID como número para ambos casos
+            const mId = typeof m.id === 'object' ? m.id.value : m.id;
+            return mId !== milestoneId;
+          });
           this.loading = false;
           this.snackBar.open(
             this.translate.instant('milestone-configuration.success.milestone-deleted'),
@@ -135,9 +138,10 @@ export class MilestoneConfigurationComponent implements OnInit, OnDestroy {
           
           // Aún así actualizamos la UI para reflejar la eliminación ya que el backend podría 
           // haber eliminado el hito a pesar del error
-          this.milestones = this.milestones.filter(m => 
-            (typeof m.id === 'object' ? m.id.value : String(m.id)) !== milestoneId
-          );
+          this.milestones = this.milestones.filter(m => {
+            const mId = typeof m.id === 'object' ? m.id.value : m.id;
+            return mId !== milestoneId;
+          });
           
           this.loading = false;
           this.snackBar.open(

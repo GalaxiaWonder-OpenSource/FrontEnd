@@ -80,7 +80,7 @@ export class MilestoneService {
     );
   }
 
-  deleteMilestone(milestoneId: string | MilestoneId): Observable<void> {
+  deleteMilestone(milestoneId: string | number | MilestoneId): Observable<void> {
     const id = milestoneId instanceof MilestoneId ? milestoneId.value : milestoneId;
     return this.http.delete<void>(`${environment.propgmsApiBaseUrl}/milestones/${id}`).pipe(
       map(() => undefined), // Asegurarse de que siempre devuelve void

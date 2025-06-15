@@ -97,10 +97,6 @@ export const routes: Routes = [
         loadComponent: () => import('./projects/components/project-info/project-info.component').then(m => m.ProjectInfoComponent)
       },
       {
-        path: 'technical-file',
-        loadComponent: () => import('./projects/components/technical-file/technical-file.component').then(m => m.TechnicalFileComponent)
-      },
-      {
         path: 'schedule',
         loadComponent: () => import('./projects/components/schedule/schedule.component').then(m => m.ScheduleComponent)
       },

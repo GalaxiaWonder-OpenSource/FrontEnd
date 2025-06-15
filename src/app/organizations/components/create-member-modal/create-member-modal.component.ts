@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
 import { PersonService } from '../../../iam/services/person.service';
 import { UserAccountService } from '../../../iam/services/user-account.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
@@ -14,7 +15,7 @@ import { SessionService } from '../../../iam/services/session.service';
 
 /**
  * Component that displays a modal to invite a new member to the organization.
- * It allows the user to select a person and assign them a member type
+ * It allows the user to enter an email to search for a person and assign them a member type
  * (e.g., WORKER), filtering out those already in the organization.
  */
 @Component({
@@ -25,27 +26,39 @@ import { SessionService } from '../../../iam/services/session.service';
     FormsModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatSelectModule,
+    MatInputModule,
     MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     TranslatePipe
   ],
   templateUrl: './create-member-modal.component.html',
   styleUrl: './create-member-modal.component.css'
 })
 export class CreateMemberModalComponent implements OnInit {
-  /** List of people eligible to be invited */
-  people: { id: string; fullName: string; email: string }[] = [];
+  /** Email input value */
+  public emailInput: string = '';
 
-  /** Selected person's ID */
-  selectedPersonId: string | null = null;
+  /** Found person based on email search */
+  public foundPerson: { id: string; fullName: string; email: string } | null = null;
 
-  /** Selected member type, defaults to WORKER */
-  memberType: OrganizationMemberType = OrganizationMemberType.WORKER;
+  /** Selected member type, fixed as 'WORKER' */
+  public memberType: string = 'WORKER';
 
-  /** Options for available member types */
-  readonly memberTypes = [
-    { value: OrganizationMemberType.WORKER, label: 'create-member.worker' }
-  ];
+  /** Loading state for email search */
+  public isSearching: boolean = false;
+
+  /** Error message for email search */
+  public searchError: string | null = null;
+
+  /** Current organization ID */
+  private organizationId: number | null = null;
+
+  /** List of existing member person IDs */
+  private existingMemberIds: string[] = [];
+
+  /** Timeout ID for debouncing */
+  private searchTimeout: any = null;
 
   constructor(
     private dialogRef: MatDialogRef<CreateMemberModalComponent>,
@@ -60,29 +73,29 @@ export class CreateMemberModalComponent implements OnInit {
    * Closes the modal if no organization ID is available.
    */
   ngOnInit(): void {
-    const organizationId = this.session.getOrganizationId();
+    this.organizationId = this.session.getOrganizationId() ?? null;
 
-    if (!organizationId) {
+    if (!this.organizationId) {
       console.error('No organization ID found in the session');
       this.dialogRef.close();
       return;
     }
 
-    this.loadEligiblePeople(organizationId.toString());
+    this.loadExistingMembers(this.organizationId.toString());
   }
 
   /** Closes the modal without saving any changes */
-  close(): void {
+  public close(): void {
     this.dialogRef.close();
   }
 
   /**
    * Closes the modal and returns selected member info if the form is valid.
    */
-  submit(): void {
+  public submit(): void {
     if (this.isFormValid) {
       this.dialogRef.close({
-        personId: this.selectedPersonId,
+        personId: this.foundPerson!.id,
         memberType: this.memberType
       });
     }
@@ -90,64 +103,146 @@ export class CreateMemberModalComponent implements OnInit {
 
   /**
    * Checks if the form is complete and valid.
-   * @returns true if both person and member type are selected
+   * @returns true if person is found
    */
-  get isFormValid(): boolean {
-    return !!this.selectedPersonId && !!this.memberType;
+  public get isFormValid(): boolean {
+    return !!this.foundPerson;
   }
 
   /**
-   * Loads people who:
-   * - Have an active ORGANIZATION_USER account
-   * - Are NOT already members of the current organization
-   * @param organizationId The ID of the organization to check membership against
+   * Handles email input changes and triggers search with debounce
    */
-  private loadEligiblePeople(organizationId: string): void {
-    this.personService.getAll().subscribe({
-      next: (people: any[]) => {
-        this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
-          next: (members: any[]) => {
-            const memberPersonIds = members
-              .filter(m => m.organizationId === organizationId)
-              .map(m => m.personId);
+  public onEmailChange(): void {
+    this.foundPerson = null;
+    this.searchError = null;
 
-            this.userAccountService.getAll().subscribe({
-              next: (accounts: any[]) => {
-                const orgUserAccounts = accounts.filter(account =>
-                  account?.role === 'ORGANIZATION_USER'
-                );
+    const trimmedEmail = this.emailInput.trim();
 
-                const orgUserPersonIds = orgUserAccounts.map(account => account.personId);
+    // Clear existing timeout
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
 
-                // Filter out people who are already members
-                const eligiblePeople = people
-                  .filter(person =>
-                    person?.id &&
-                    orgUserPersonIds.includes(person.id) &&
-                    !memberPersonIds.includes(person.id)
-                  )
-                  .map(person => ({
-                    id: person.id,
-                    fullName: person.firstName && person.lastName
-                      ? `${person.firstName} ${person.lastName}`
-                      : 'Name not available',
-                    email: person.email
-                  }));
+    // Don't search if email is empty
+    if (!trimmedEmail) {
+      this.isSearching = false;
+      return;
+    }
 
-                this.people = eligiblePeople;
-              },
-              error: (err: any) => {
-                console.error('Failed to load user accounts:', err);
-              }
-            });
-          },
-          error: (err: any) => {
-            console.error('Failed to load organization members:', err);
+    // Set up debounced search
+    this.searchTimeout = setTimeout(() => {
+      this.performEmailSearch(trimmedEmail);
+    }, 500);
+  }
+
+  /**
+   * Performs the actual email search
+   */
+  private performEmailSearch(email: string): void {
+    if (!this.isValidEmail(email)) {
+      this.searchError = 'create-member.invalid-email';
+      return;
+    }
+
+    this.isSearching = true;
+    this.searchError = null;
+
+    this.searchPersonByEmail(email).then(result => {
+      this.isSearching = false;
+      if (result) {
+        this.foundPerson = result;
+        this.searchError = null;
+      } else {
+        this.foundPerson = null;
+        if (!this.searchError) {
+          this.searchError = 'create-member.person-not-found';
+        }
+      }
+    }).catch(err => {
+      this.isSearching = false;
+      this.foundPerson = null;
+      this.searchError = 'create-member.search-error';
+      console.error('Error searching for person:', err);
+    });
+  }
+
+  /**
+   * Validates email format
+   */
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  /**
+   * Searches for a person by email
+   */
+  private searchPersonByEmail(email: string): Promise<{ id: string; fullName: string; email: string } | null> {
+    return new Promise((resolve) => {
+      this.personService.getAll().subscribe({
+        next: (people: any[]) => {
+          const person = people.find(p =>
+            p.email && p.email.toLowerCase() === email.toLowerCase()
+          );
+
+          if (!person) {
+            resolve(null);
+            return;
           }
-        });
+
+          // Check if person is already a member
+          if (this.existingMemberIds.includes(person.id)) {
+            this.searchError = 'create-member.already-member';
+            resolve(null);
+            return;
+          }
+
+          // Check if person has ORGANIZATION_USER account
+          this.userAccountService.getAll().subscribe({
+            next: (accounts: any[]) => {
+              const hasOrgAccount = accounts.some(account =>
+                account.personId === person.id &&
+                account.role === 'ORGANIZATION_USER'
+              );
+
+              if (!hasOrgAccount) {
+                this.searchError = 'create-member.not-organization-user';
+                resolve(null);
+                return;
+              }
+
+              resolve({
+                id: person.id,
+                fullName: person.firstName && person.lastName
+                  ? `${person.firstName} ${person.lastName}`
+                  : 'Name not available',
+                email: person.email
+              });
+            },
+            error: () => {
+              resolve(null);
+            }
+          });
+        },
+        error: () => {
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  /**
+   * Loads existing organization members to filter them out
+   */
+  private loadExistingMembers(organizationId: string): void {
+    this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
+      next: (members: any[]) => {
+        this.existingMemberIds = members
+          .filter(m => m.organizationId === organizationId)
+          .map(m => m.personId);
       },
       error: (err: any) => {
-        console.error('Failed to load people:', err);
+        console.error('Failed to load organization members:', err);
       }
     });
   }

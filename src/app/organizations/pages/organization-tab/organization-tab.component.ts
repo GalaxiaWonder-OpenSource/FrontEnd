@@ -11,10 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import {SessionService} from '../../../iam/services/session.service';
 import {Ruc} from '../../model/ruc.vo';
-import {OrganizationStatus} from '../../model/organization-status.vo';
 import {OrganizationMember} from '../../model/organization-member.entity';
 import {OrganizationMemberType} from '../../model/organization-member-type.vo';
-import {OrganizationMemberService} from '../../services/organization-member.service';
 
 @Component({
   selector: 'app-organization-tab',
@@ -38,7 +36,6 @@ export class OrganizationTabComponent {
     private organizationService: OrganizationService,
     private dialog: MatDialog,
     private session: SessionService,
-    private organizationMemberService: OrganizationMemberService
   ) {
     this.loadOrganizations();
   }
@@ -51,32 +48,16 @@ export class OrganizationTabComponent {
       return;
     }
 
-    this.organizationMemberService.getAll().subscribe({
-      next: (memberships: OrganizationMember[]) => {
-        const myMemberships = memberships.filter(m =>
-          m.personId != undefined ? m.personId.toString() === personId.toString() : false
-        );
-
-        const orgIds = myMemberships.map(m => m.organizationId);
-
-        const organizationRequests = orgIds.map(id =>
-          this.organizationService.getById({}, { id })
-        );
-
-        Promise.all(organizationRequests.map(obs => obs.toPromise())).then(
-          (organizations) => {
-            this.organizations.set(organizations);
-          },
-          (error) => {
-            console.error('Failed to load one or more organizations:', error);
-          }
-        );
+    this.organizationService.getByPersonId({}, { id: personId }).subscribe({
+      next: (organizations: Organization[]) => {
+        this.organizations.set(organizations);
       },
       error: (err: any) => {
         console.error('Failed to load organization memberships:', err);
       }
     });
   }
+
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateOrganizationModalComponent, {
@@ -93,7 +74,6 @@ export class OrganizationTabComponent {
             commercialName: result.commercialName,
             ruc: new Ruc(result.ruc),
             createdBy: creatorId,
-            status: OrganizationStatus.ACTIVE
           });
 
           this.organizationService.create(newOrg).subscribe({
@@ -102,11 +82,6 @@ export class OrganizationTabComponent {
                 personId: creatorId,
                 organizationId: createdOrg.id,
                 memberType: OrganizationMemberType.CONTRACTOR
-              });
-
-              this.organizationMemberService.create(member).subscribe({
-                next: () => this.loadOrganizations(),
-                error: (err: any) => console.error('Failed to create organization member:', err)
               });
             },
             error: (err: any) => console.error('Failed to create organization:', err)

@@ -15,6 +15,14 @@
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE",
       "id": 102
+    },
+    {
+      "id": 103,
+      "username": "nova",
+      "password": "ASDFGH123",
+      "personId": 205,
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE"
     }
   ],
   "persons": [
@@ -63,6 +71,17 @@
       "members": [],
       "invitations": [],
       "id": 302
+    },
+    {
+      "legalName": "TIARAS SAC",
+      "commercialName": "TIARAS",
+      "ruc": "20773747571",
+      "createdBy": 5,
+      "createdAt": "2025-06-12T17:42:30.966Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 303
     }
   ],
   "organization-invitations": [
@@ -73,29 +92,55 @@
       "invitedBy": 201,
       "invitedAt": "2025-06-09T15:00:00Z",
       "status": "PENDING"
+    },
+    {
+      "organizationId": "303",
+      "personId": "203",
+      "invitedBy": "5",
+      "id": 402
+    },
+    {
+      "organizationId": "303",
+      "personId": "203",
+      "invitedBy": "5",
+      "id": 403
+    },
+    {
+      "organizationId": "303",
+      "personId": "203",
+      "invitedBy": "5",
+      "id": 404
+    },
+    {
+      "organizationId": "303",
+      "personId": "203",
+      "invitedBy": "5",
+      "id": 405
+    },
+    {
+      "organizationId": "303",
+      "personId": "203",
+      "invitedBy": "5",
+      "id": 406
     }
   ],
   "organization-members": [
     {
-      "id": 501,
-      "organizationId": 301,
-      "personId": 201,
+      "personId": 5,
+      "organizationId": 303,
       "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-01T09:00:00Z"
-    },
-    {
-      "personId": 203,
-      "organizationId": 302,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-10T22:39:26.484Z",
-      "id": 502
+      "joinedAt": "2025-06-12T17:42:31.016Z",
+      "id": 503,
+      "firstName": "test",
+      "lastName": "test lastname",
+      "email": "test@example.com"
     }
   ],
   "projects": [
     {
       "id": 601,
-      "name": "Constelación UX",
-      "description": "Diseño de interfaz para sistema interplanetario",
+      "name": "Constelacion UX",
+      "description": "Diseno de interfaz para sistema interplanetario",
       "organizationId": 301,
       "status": "ACTIVE",
       "startingDate": "2025-06-10",

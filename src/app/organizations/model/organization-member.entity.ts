@@ -10,6 +10,11 @@ export class OrganizationMember {
   /** ID of the associated person. */
   public readonly personId: number|undefined;
 
+  /** Optional personal info used for display (retrieved from person or enriched API). */
+  public readonly name?: string;
+  public readonly lastName?: string;
+  public readonly email?: string;
+
   /** ID of the organization to which the person belongs. */
   public readonly organizationId: number|undefined;
 
@@ -30,12 +35,18 @@ export class OrganizationMember {
    */
   constructor({
                 id,
+                name,
+                lastName,
+                email,
                 personId,
                 organizationId,
                 memberType,
                 joinedAt = new Date()
               }: {
     id?: number;
+    name?: string;
+    lastName?: string;
+    email?: string;
     personId?: number;
     organizationId?: number;
     memberType: OrganizationMemberType;
@@ -46,6 +57,9 @@ export class OrganizationMember {
     }
 
     this.id = id;
+    this.name = name;
+    this.lastName = lastName;
+    this.email = email;
     this.personId = personId;
     this.organizationId = organizationId;
     this.memberType = memberType;
@@ -58,6 +72,9 @@ export class OrganizationMember {
   toJSON() {
     return {
       id: this.id,
+      name: this.name,
+      lastName: this.lastName,
+      email: this.email,
       personId: this.personId,
       organizationId: this.organizationId,
       memberType: this.memberType,

@@ -12,9 +12,9 @@ import { InvitationStatus } from '../../model/invitation-status.vo';
 import { OrganizationInvitationService } from '../../services/organization-invitation.service';
 import { SessionService } from '../../../iam/services/session.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
-import {TranslatePipe} from '@ngx-translate/core';
-import {OrganizationService} from '../../services/organization.service';
-import {PersonService} from '../../../iam/services/person.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { OrganizationService } from '../../services/organization.service';
+import { PersonService } from '../../../iam/services/person.service';
 
 @Component({
   selector: 'app-invitation-list',
@@ -41,10 +41,8 @@ export class InvitationListComponent implements OnInit {
   organizationNames = signal<Record<string, string>>({});
   personNames = signal<Record<string, string>>({});
 
-
   invitationStatus = InvitationStatus;
   displayedColumns: string[] = ['organization', 'invitedBy', 'invitedAt', 'status', 'actions'];
-
 
   constructor(
     private invitationService: OrganizationInvitationService,
@@ -53,9 +51,7 @@ export class InvitationListComponent implements OnInit {
     private organizationMemberService: OrganizationMemberService,
     private organizationService: OrganizationService,
     private personService: PersonService
-
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadInvitations();
@@ -63,34 +59,24 @@ export class InvitationListComponent implements OnInit {
 
   private async loadInvitations() {
     this.loading.set(true);
+    console.log('🚀 Starting to load invitations...');
+
     try {
-      const currentPersonId = this.getCurrentPersonId();
 
-      if (!currentPersonId) {
-        console.warn('No person ID found in session');
-        this.invitations.set([]);
-        this.showSnackBar('\n' + 'Could not get user information', 'error');
-        return;
-      }
-
-      this.invitationService.getAll().subscribe({
+      this.invitationService.getAll({}, {}).subscribe({
         next: (allInvitations: any[]) => {
-
           if (!Array.isArray(allInvitations)) {
             console.warn('API response is not an array:', allInvitations);
             this.invitations.set([]);
             return;
           }
 
-          const filteredInvitations = allInvitations.filter((inv: any) => {
-
-            const invPersonId = typeof inv.personId === 'string' ? inv.personId : inv.personId?.value;
-            return invPersonId === currentPersonId;
-          });
+          // Como el backend filtra por el usuario autenticado, no necesitamos filtrar aquí
+          const filteredInvitations = allInvitations;
 
           const mappedInvitations = filteredInvitations
             .map(data => this.mapToInvitation(data))
-            .filter(inv => inv !== null); // Filtrar invitaciones que no se pudieron mapear
+            .filter(inv => inv !== null);
 
           this.invitations.set(mappedInvitations);
         },
@@ -115,18 +101,9 @@ export class InvitationListComponent implements OnInit {
   async acceptInvitation(invitation: OrganizationInvitation): Promise<void> {
     const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
+
     try {
-
-      await this.organizationMemberService.create({
-        personId: invitation.personId,
-        organizationId: invitation.organizationId,
-        memberType: 'WORKER',
-        joinedAt: new Date()
-      }).toPromise();
-
-      await this.invitationService.delete({}, {id}).toPromise();
-
-      invitation.accept();
+      await this.invitationService.acceptInvitation({}, { id }).toPromise();
       this.showSnackBar('¡Accepted invitation!', 'success');
       await this.loadInvitations();
     } catch (error) {
@@ -140,15 +117,9 @@ export class InvitationListComponent implements OnInit {
   async rejectInvitation(invitation: OrganizationInvitation): Promise<void> {
     const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
+
     try {
-      await this.invitationService.update(
-        {status: 'REJECTED'},
-        {id}
-      ).toPromise();
-
-      await this.invitationService.delete({}, {id}).toPromise();
-
-      invitation.reject();
+      await this.invitationService.rejectInvitation({}, { id }).toPromise();
       this.showSnackBar('Rejected invitation', 'info');
       await this.loadInvitations();
     } catch (error) {
@@ -166,25 +137,25 @@ export class InvitationListComponent implements OnInit {
     });
   }
 
-  private getCurrentPersonId(): string | null {
+  private getCurrentPersonId(): number | undefined {
     try {
       const personId = this.sessionService.getPersonId();
 
-      if (!personId) return null;
+      if (!personId) return undefined;
 
       if (typeof personId === 'object' && personId) {
         return personId;
       }
 
-      if (typeof personId === 'string') {
+      if (typeof personId === 'number') {
         return personId;
       }
 
       console.warn('Unexpected personId format:', personId);
-      return null;
+      return undefined;
     } catch (error) {
       console.error('Error getting person ID:', error);
-      return null;
+      return undefined;
     }
   }
 
@@ -257,5 +228,4 @@ export class InvitationListComponent implements OnInit {
       invitation.status === InvitationStatus.PENDING
     ).length;
   }
-
 }

@@ -1,4 +1,4 @@
-import {ChangeProcessId} from '../../shared/model/change-process-id.vo';
+/*import {ChangeProcessId} from '../../shared/model/change-process-id.vo';
 import {ChangeOrigin} from './change-origin.vo';
 import {ChangeProcessStatus} from './change-process-status.vo';
 import {ChangeOrder} from './change-order.vo';
@@ -63,4 +63,4 @@ export class ChangeProcess {
       projectId: this.projectId.value,
     }
   }
-}
+}*/

@@ -14,6 +14,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Specialty } from '../../model/specialty.vo';
 import { TaskStatus } from '../../model/task-status.vo';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewChild, TemplateRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-schedule',
@@ -43,6 +46,7 @@ export class ScheduleComponent implements OnInit {
   taskStatuses = Object.values(TaskStatus);
   filteredTeamMembers: any[] = [];
   
+  
   // Properties referenced in the template
   project: any = null;
   loading: boolean = false;
@@ -52,8 +56,9 @@ export class ScheduleComponent implements OnInit {
   Specialty = Specialty; 
   TaskStatus = TaskStatus;
   specialties = Object.values(Specialty); // Array de valores del enum para el template
+ @ViewChild('addTaskDialog') addTaskDialogTemplate!: TemplateRef<any>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.initTaskForm();
@@ -193,9 +198,12 @@ export class ScheduleComponent implements OnInit {
   }
 
   openAddTaskDialog(milestone: any): void {
-    // This would open a dialog to add a new task
-    console.log('Open add task dialog for milestone', milestone);
-  }
+  console.log('Open add task dialog for milestone', milestone);
+  this.dialog.open(this.addTaskDialogTemplate, {
+    width: '600px',
+    data: milestone
+  });
+}
 
   openEditTaskDialog(task: any, milestone: any): void {
     // This would open a dialog to edit an existing task

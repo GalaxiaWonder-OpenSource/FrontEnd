@@ -4,8 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Task } from '../model/task.entity';
-import { TaskId } from '../../shared/model/task-id.vo';
-import { MilestoneId } from '../../shared/model/milestone-id.vo';
 import { Specialty } from '../model/specialty.vo';
 import { TaskStatus } from '../model/task-status.vo';
 
@@ -15,9 +13,8 @@ import { TaskStatus } from '../model/task-status.vo';
 export class TaskService {
   constructor(private http: HttpClient) {}
 
-  getTasksByMilestoneId(milestoneId: string | MilestoneId): Observable<Task[]> {
-    const id = milestoneId instanceof MilestoneId ? milestoneId.value : milestoneId;
-    const url = `${environment.propgmsApiBaseUrl}/tasks?milestoneId=${id}`;
+  getTasksByMilestoneId(milestoneId: string | number): Observable<Task[]> {
+    const url = `${environment.propgmsApiBaseUrl}/tasks?milestoneId=${milestoneId}`;
     
     return this.http.get<any[]>(url).pipe(
       map(tasks => tasks.map((task: any) => new Task({
@@ -38,12 +35,12 @@ export class TaskService {
   createTask(task: Task): Observable<Task> {
     // Prepare the data for transmission
     const taskData = {
-      id: task.id.toString(),
+      id: task.id,
       name: task.name,
       specialty: task.specialty,
       startingDate: task.startingDate.toISOString(),
       dueDate: task.dueDate.toISOString(),
-      milestoneId: task.milestoneId.toString(),
+      milestoneId: task.milestoneId,
       status: task.status,
       description: task.description || '',
       responsibleId: task.responsibleId
@@ -66,7 +63,7 @@ export class TaskService {
   }
 
   updateTask(task: Task): Observable<Task> {
-    const taskId = task.id.toString();
+    const taskId = task.id;
     
     // Prepare the data for transmission
     const taskData = {
@@ -75,7 +72,7 @@ export class TaskService {
       specialty: task.specialty,
       startingDate: task.startingDate.toISOString(),
       dueDate: task.dueDate.toISOString(),
-      milestoneId: task.milestoneId.toString(),
+      milestoneId: task.milestoneId,
       status: task.status,
       description: task.description || '',
       responsibleId: task.responsibleId
@@ -97,9 +94,8 @@ export class TaskService {
     );
   }
 
-  deleteTask(taskId: string | number | TaskId): Observable<void> {
-    const id = taskId instanceof TaskId ? taskId.value : taskId;
-    return this.http.delete<void>(`${environment.propgmsApiBaseUrl}/tasks/${id}`).pipe(
+  deleteTask(taskId: string | number): Observable<void> {
+    return this.http.delete<void>(`${environment.propgmsApiBaseUrl}/tasks/${taskId}`).pipe(
       map(() => undefined), // Ensure we return void even if the server returns something
       catchError((error: HttpErrorResponse) => {
         // If it's a 500 error but likely deleted successfully

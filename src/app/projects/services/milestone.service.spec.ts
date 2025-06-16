@@ -4,8 +4,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { MilestoneService } from './milestone.service';
 import { Milestone } from '../model/milestone.entity';
 import { environment } from '../../../environments/environment';
-import { MilestoneId } from '../../shared/model/milestone-id.vo';
-import { ProjectId } from '../../shared/model/project-id.vo';
 
 describe('MilestoneService', () => {
   let service: MilestoneService;
@@ -29,10 +27,10 @@ describe('MilestoneService', () => {
   });
 
   it('should get milestones by project ID', () => {
-    const projectId = 'test-project-id';
+    const projectId = '123';
     const mockMilestones = [
       {
-        id: 'milestone-1',
+        id: 1,
         name: 'Test Milestone 1',
         startingDate: '2025-06-15T00:00:00.000Z',
         endingDate: '2025-07-15T00:00:00.000Z',
@@ -61,9 +59,9 @@ describe('MilestoneService', () => {
   });
 
   it('should create a milestone', () => {
-    const projectId = 'test-project-id';
+    const projectId = '123';
     const milestone = new Milestone({
-      id: 'new-milestone',
+      id: 1,
       name: 'New Milestone',
       startingDate: new Date('2025-06-15'),
       endingDate: new Date('2025-07-15'),
@@ -72,7 +70,7 @@ describe('MilestoneService', () => {
     });
 
     const mockResponse = {
-      id: 'new-milestone',
+      id: 1,
       name: 'New Milestone',
       startingDate: '2025-06-15T00:00:00.000Z',
       endingDate: '2025-07-15T00:00:00.000Z',
@@ -83,7 +81,7 @@ describe('MilestoneService', () => {
     service.createMilestone(milestone).subscribe(response => {
       expect(response).toBeTruthy();
       expect(response.name).toBe('New Milestone');
-      expect(response.id.toString()).toBe('new-milestone');
+      expect(response.id).toBe(1);
     });
 
     const req = httpMock.expectOne(`${environment.propgmsApiBaseUrl}/milestones`);
@@ -92,8 +90,8 @@ describe('MilestoneService', () => {
   });
 
   it('should update a milestone', () => {
-    const milestoneId = 'milestone-1';
-    const projectId = 'test-project-id';
+    const milestoneId = 1;
+    const projectId = '123';
     const milestone = new Milestone({
       id: milestoneId,
       name: 'Updated Milestone',
@@ -124,7 +122,7 @@ describe('MilestoneService', () => {
   });
 
   it('should delete a milestone', () => {
-    const milestoneId = 'milestone-1';
+    const milestoneId = 1;
 
     service.deleteMilestone(milestoneId).subscribe(response => {
       expect(response).toBeUndefined();

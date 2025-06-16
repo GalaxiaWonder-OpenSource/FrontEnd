@@ -46,11 +46,8 @@ export class ProjectCardComponent {
       }
       
       // Establecer el ID del proyecto y su rol en la sesión
-      const projectIdValue = typeof this.project.id === 'string' ? 
-                            parseInt(this.project.id, 10) : 
-                            (typeof this.project.id.value === 'number' ? 
-                              this.project.id.value : 
-                              parseInt(this.project.id.toString(), 10));
+      // Ya que project.id es ahora directamente un número, lo usamos sin conversiones
+      const projectIdValue = this.project.id;
                             
       this.sessionService.setProject(projectIdValue, projectRoleEnum);
       

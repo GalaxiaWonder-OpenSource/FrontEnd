@@ -1,17 +1,9 @@
-// @ts-ignore
-import { ProjectId } from '../../shared/model/project-id.vo';
 import {ProjectTeamMember} from './project-team-member.entity';
-// @ts-ignore
-import {OrganizationId} from '../../shared/model/organization-id.vo';
-// @ts-ignore
-import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
-// @ts-ignore
-import {PersonId} from '../../shared/model/person-id.vo';
 import {ProjectStatus} from './project-status.vo';
 
 
 export class Project {
-  public readonly id: ProjectId;
+  public readonly id: number;
   public name: string;
   public description: string;
   //public contract: Contract;
@@ -23,9 +15,9 @@ export class Project {
   public readonly endingDate: Date;
   public readonly team: ProjectTeamMember[] = [];
 
-  public readonly organizationId: OrganizationId;
-  public readonly contractor: OrganizationMemberId;
-  public readonly contractingEntityId: PersonId;
+  public readonly organizationId: number;
+  public readonly contractor: number;
+  public readonly contractingEntityId: number;
   //public readonly activeChangeProcessId: ChangeProcessId;
 
   /**
@@ -43,7 +35,7 @@ export class Project {
    *
    */
   constructor({
-                id = new ProjectId(''),
+                id = 0,
                 name,
                 description,
                 //contract,
@@ -60,7 +52,7 @@ export class Project {
                 //activeChangeProcessId
 
               }: {
-    id?: ProjectId;
+    id?: number;
     name: string;
     description: string;
     //contract: Contract;
@@ -71,9 +63,9 @@ export class Project {
     startingDate: Date;
     endingDate: Date;
     team?: ProjectTeamMember[];
-    organizationId: OrganizationId;
-    contractor: OrganizationMemberId;
-    contractingEntityId: PersonId;
+    organizationId: number;
+    contractor: number;
+    contractingEntityId: number;
     //activeChangeProcessId: ChangeProcessId;
   }) {
     if (!name
@@ -148,7 +140,7 @@ export class Project {
    */
   toJSON(){
     return {
-      projectId: this.id.value,
+      projectId: this.id,
       name: this.name,
       description: this.description,
       //contract: this.contract.toJSON(),
@@ -159,10 +151,10 @@ export class Project {
       startingDate: this.startingDate.toISOString(),
       endingDate: this.endingDate.toISOString(),
       team: this.team.map((m) => m.toJSON()),
-      organizationId: this.organizationId.value,
-      contractor: this.contractor.value,
-      contractingEntityId: this.contractingEntityId.value,
-      //activeChangeProcessId: this.activeChangeProcessId.value
+      organizationId: this.organizationId,
+      contractor: this.contractor,
+      contractingEntityId: this.contractingEntityId,
+      //activeChangeProcessId: this.activeChangeProcessId
     };
   }
 }

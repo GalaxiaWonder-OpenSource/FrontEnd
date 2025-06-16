@@ -1,8 +1,6 @@
-import {MilestoneId} from '../../shared/model/milestone-id.vo';
-
 export class ChangeOrder {
   public readonly issuedAt: Date;
-  public readonly milestoneId: MilestoneId;
+  public readonly milestoneId: number;
   public readonly description: string;
 
   constructor({
@@ -11,7 +9,7 @@ export class ChangeOrder {
     description,
               }:{
     issuedAt: Date;
-    milestoneId: MilestoneId;
+    milestoneId: number;
     description: string;
   }) {
     if(!description.trim()) throw new Error("Description cannot be empty");
@@ -24,7 +22,7 @@ export class ChangeOrder {
   toJSON(){
     return {
       issuedAt: this.issuedAt,
-      milestoneId: this.milestoneId.value,
+      milestoneId: this.milestoneId,
       description: this.description
     }
   }

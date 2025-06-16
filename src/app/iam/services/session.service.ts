@@ -17,7 +17,7 @@ export class SessionService {
   private organizationRole = signal<OrgRole | undefined>(this.loadFromStorage('organizationRole'));
   private projectId = signal<number | undefined>(this.loadFromStorage('projectId'));
   private projectRole = signal<ProjectRoleType | undefined>(this.loadFromStorage('projectRole'));
-  private milestoneId = signal<string | undefined>(this.loadFromStorage('milestoneId'));
+  private milestoneId = signal<number | undefined>(this.loadFromStorage('milestoneId'));
   private token = signal<string | undefined>(this.loadFromStorage('token'));
 
   constructor() {
@@ -53,7 +53,7 @@ export class SessionService {
     this.projectRole.set(role);
   }
 
-  setMilestone(id: string) {
+  setMilestone(id: number) {
     this.milestoneId.set(id);
     this.saveToStorage('milestoneId', id);
   }
@@ -122,7 +122,7 @@ export class SessionService {
     return this.projectRole();
   }
 
-  getMilestoneId(): string | undefined {
+  getMilestoneId(): number | undefined {
     return this.milestoneId();
   }
 

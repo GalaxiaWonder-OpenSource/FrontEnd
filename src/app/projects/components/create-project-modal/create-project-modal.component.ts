@@ -10,10 +10,10 @@ import {CommonModule} from '@angular/common';
 import { SessionService } from '../../../iam/services/session.service';
 import { Organization } from '../../../organizations/model/organization.entity';
 import { OrganizationService } from '../../../organizations/services/organization.service';
-import { OrganizationId } from '../../../shared/model/organization-id.vo';
+// Removed OrganizationId import as we now use string type for IDs
 
 interface DialogData {
-  preselectedOrganizationId?: string;
+  preselectedOrganizationId?: number;
 }
 
 @Component({
@@ -40,7 +40,7 @@ export class CreateProjectModalComponent implements OnInit {
   startingDate=new Date();
   endingDate= '';
   organizations: Organization[] = [];
-  selectedOrganization: string = '';
+  selectedOrganization: number = 0;
   selectedOrganizationName: string = '';
   showOrgSelection: boolean = false;
 
@@ -91,10 +91,10 @@ export class CreateProjectModalComponent implements OnInit {
 
         if (golaOrg && golaOrg.id) {
           console.log("Preselecting GOLA organization:", golaOrg);
-          this.selectedOrganization = golaOrg.id.toString();
+          this.selectedOrganization = Number(golaOrg.id);
         } else if (this.organizations.length > 0 && this.organizations[0].id) {
           // Si no hay GOLA, seleccionamos la primera organización
-          this.selectedOrganization = this.organizations[0].id.toString();
+          this.selectedOrganization = Number(this.organizations[0].id);
         }
       },
       error: (err: Error) => console.error('Failed to load organizations:', err)
@@ -134,7 +134,7 @@ export class CreateProjectModalComponent implements OnInit {
         description: this.description,
         startingDate: startDate,
         endingDate: endDate,
-        organizationId: new OrganizationId(this.selectedOrganization),
+        organizationId: this.selectedOrganization,
         creator: this.session.getPersonId()
       };
 

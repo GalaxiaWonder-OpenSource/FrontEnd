@@ -27,7 +27,7 @@ import {UserMenuComponent} from '../user-menu/user-menu.component';
   styleUrls: ['./toolbar-organization.component.css']
 })
 export class ToolbarOrganizationComponent {
-  orgId: string = '';
+  orgId: number = 0;
   organizationRole: OrgRole | undefined = undefined;
 
   constructor(
@@ -37,7 +37,7 @@ export class ToolbarOrganizationComponent {
   ) {}
 
   ngOnInit() {
-    this.orgId = this.session.getOrganizationId()?.toString() ?? '';
+    this.orgId = this.session.getOrganizationId() ?? 0;
     this.organizationRole = this.session.getOrganizationRole();
   }
 

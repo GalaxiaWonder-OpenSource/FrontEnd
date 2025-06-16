@@ -1,23 +1,21 @@
-import { MilestoneId } from '../../shared/model/milestone-id.vo';
-import { TaskId } from '../../shared/model/task-id.vo';
 import { Specialty } from './specialty.vo';
 import { TaskStatus } from './task-status.vo';
 
 export class Task {
-  public readonly id: TaskId;
+  public readonly id: number;
   public name: string;
   public specialty: Specialty;
   public startingDate: Date;
   public dueDate: Date;
-  public milestoneId: MilestoneId;
+  public milestoneId: number;
   public status: TaskStatus;
   public description?: string;
-  public responsibleId?: string;
+  public responsibleId?: number;
 
   /**
    * Constructs a new Task instance.
    *
-   * @param id - Optional ID (default: new UUID).
+   * @param id - Optional ID (default: 0).
    * @param name - Task name.
    * @param specialty - Required specialty for the task.
    * @param startingDate - Task starting date.
@@ -27,7 +25,7 @@ export class Task {
    * @param description - Optional description of the task.
    */
   constructor({
-    id = new TaskId(),
+    id = 0,
     name,
     specialty,
     startingDate = new Date(),
@@ -37,24 +35,24 @@ export class Task {
     description = '',
     responsibleId = undefined
   }: {
-    id?: TaskId | string;
+    id?: number;
     name: string;
     specialty: Specialty;
     startingDate?: Date | string;
     dueDate?: Date | string;
-    milestoneId: MilestoneId | string;
+    milestoneId: number;
     status?: TaskStatus;
     description?: string;
-    responsibleId?: string;
+    responsibleId?: number;
   }) {
-    this.id = id instanceof TaskId ? id : new TaskId(id);
+    this.id = id;
     this.name = name;
     this.specialty = specialty;
     this.startingDate = startingDate instanceof Date ? startingDate : new Date(startingDate);
     this.dueDate = dueDate instanceof Date ? dueDate : new Date(dueDate);
-    this.milestoneId = milestoneId instanceof MilestoneId ? milestoneId : new MilestoneId(milestoneId);
+    this.milestoneId = milestoneId;
     this.status = status;
     this.description = description;
-    this.responsibleId = responsibleId;
+    this.responsibleId = responsibleId !== undefined && typeof responsibleId === 'string' ? Number(responsibleId) : responsibleId;
   }
 }

@@ -1,18 +1,15 @@
-import { MilestoneId } from '../../shared/model/milestone-id.vo';
-import { ProjectId } from '../../shared/model/project-id.vo';
-
 export class Milestone {
-  public readonly id: MilestoneId;
+  public readonly id: number;
   public name: string;
   public startingDate: Date;
   public endingDate: Date;
-  public projectId: ProjectId;
+  public projectId: number; // Internamente se almacena como number
   public description?: string;
 
   /**
    * Constructs a new Milestone instance.
    *
-   * @param id - Optional ID (default: new UUID).
+   * @param id - Optional ID (default: 0).
    * @param name - Milestone name.
    * @param startingDate - Milestone starting date.
    * @param endingDate - Milestone ending date.
@@ -20,25 +17,25 @@ export class Milestone {
    * @param description - Optional description of the milestone.
    */
   constructor({
-    id = new MilestoneId(),
+    id = 0,
     name,
     startingDate = new Date(),
     endingDate = new Date(),
     projectId,
     description = ''
   }: {
-    id?: MilestoneId | string;
+    id?: number;
     name: string;
     startingDate?: Date | string;
     endingDate?: Date | string;
-    projectId: ProjectId | string;
+    projectId: string | number;
     description?: string;
   }) {
-    this.id = id instanceof MilestoneId ? id : new MilestoneId(id);
+    this.id = typeof id === 'number' ? id : 0;
     this.name = name;
     this.startingDate = startingDate instanceof Date ? startingDate : new Date(startingDate);
     this.endingDate = endingDate instanceof Date ? endingDate : new Date(endingDate);
-    this.projectId = projectId instanceof ProjectId ? projectId : new ProjectId(projectId?.toString());
+    this.projectId = typeof projectId === 'string' ? Number(projectId) : projectId;
     this.description = description;
   }
 }

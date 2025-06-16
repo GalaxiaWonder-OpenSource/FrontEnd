@@ -27,8 +27,8 @@ import {UserMenuComponent} from '../user-menu/user-menu.component';
   styleUrls: ['./toolbar-milestone.component.css']
 })
 export class ToolbarMilestoneComponent {
-  projectId = '';
-  milestoneId = '';
+  projectId = 0;
+  milestoneId = 0;
   isContractor = false;
 
   constructor(
@@ -38,9 +38,9 @@ export class ToolbarMilestoneComponent {
 
   ngOnInit() {
     const projectIdVal = this.session.getProjectId();
-    this.projectId = projectIdVal !== undefined ? String(projectIdVal) : '';
+    this.projectId = projectIdVal !== undefined ? projectIdVal : 0;
     
-    this.milestoneId = this.session.getMilestoneId?.() ?? ''; // si implementas esta función
+    this.milestoneId = this.session.getMilestoneId?.() ?? 0; // si implementas esta función
     this.isContractor = this.session.getOrganizationRole() === OrganizationMemberType.CONTRACTOR;
   }
 

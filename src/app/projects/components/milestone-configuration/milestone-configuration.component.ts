@@ -94,9 +94,8 @@ export class MilestoneConfigurationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const projectId = typeof this.project.id === 'object'
-      ? this.project.id.value
-      : String(this.project.id);
+    // Ya que project.id es ahora un número primitivo, lo usamos directamente
+    const projectId = this.project.id;
 
     const milestonesSub = this.milestoneService.getMilestonesByProjectId(projectId).subscribe({
       next: (milestones: Milestone[]) => {
@@ -116,15 +115,12 @@ export class MilestoneConfigurationComponent implements OnInit, OnDestroy {
   deleteMilestone(milestone: Milestone): void {
     if (confirm(this.translate.instant('milestone-configuration.confirm-delete'))) {
       this.loading = true;
-      // Si es un objeto MilestoneId, obtener su value numérico, si no, mantener tal cual
-      const milestoneId = typeof milestone.id === 'object' ? milestone.id.value : milestone.id;
+      const milestoneId = milestone.id;
 
       const deleteSub = this.milestoneService.deleteMilestone(milestoneId).subscribe({
         next: () => {
           this.milestones = this.milestones.filter(m => {
-            // Obtener el ID como número para ambos casos
-            const mId = typeof m.id === 'object' ? m.id.value : m.id;
-            return mId !== milestoneId;
+            return m.id !== milestoneId;
           });
           this.loading = false;
           this.snackBar.open(
@@ -139,8 +135,7 @@ export class MilestoneConfigurationComponent implements OnInit, OnDestroy {
           // Aún así actualizamos la UI para reflejar la eliminación ya que el backend podría 
           // haber eliminado el hito a pesar del error
           this.milestones = this.milestones.filter(m => {
-            const mId = typeof m.id === 'object' ? m.id.value : m.id;
-            return mId !== milestoneId;
+            return m.id !== milestoneId;
           });
           
           this.loading = false;

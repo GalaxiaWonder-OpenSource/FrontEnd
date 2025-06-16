@@ -18,7 +18,6 @@ import { Project } from '../../model/project.entity';
 import { ProjectService } from '../../services/project.service';
 import { SessionService } from '../../../iam/services/session.service';
 import { ProjectStatus } from '../../model/project-status.vo';
-import { ProjectId } from '../../../shared/model/project-id.vo';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -151,29 +150,21 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     }
      const formValues = this.projectForm.value;
     
-    // Nos aseguramos que el projectId sea un string simple
-    const projectId = typeof this.project.id === 'object' && this.project.id.value 
-      ? this.project.id.value 
-      : String(this.project.id);
+    // Usamos el ID directamente como número
+    const projectId = Number(this.project.id);
     
     // Preparar los datos para actualizar como un objeto plano para JSON
     const projectData = {
-      id: projectId, // Usamos el ID como string simple
+      id: projectId, // Usamos el ID como número
       name: formValues.name,
       description: formValues.description || '',
       status: formValues.status,
       startingDate: this.project.startingDate,
       endingDate: new Date(formValues.endingDate).toISOString(),
       team: this.project.team || [],
-      organizationId: this.project.organizationId ? 
-        (typeof this.project.organizationId === 'object' ? this.project.organizationId.value : this.project.organizationId) : 
-        null,
-      contractor: this.project.contractor ?
-        (typeof this.project.contractor === 'object' ? this.project.contractor.value : this.project.contractor) :
-        null,
-      contractingEntityId: this.project.contractingEntityId ?
-        (typeof this.project.contractingEntityId === 'object' ? this.project.contractingEntityId.value : this.project.contractingEntityId) :
-        null
+      organizationId: this.project.organizationId || null,
+      contractor: this.project.contractor || null,
+      contractingEntityId: this.project.contractingEntityId || null
     };
     
     console.log('Enviando datos actualizados:', projectData);
@@ -239,10 +230,8 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       return;
     }
     
-    // Nos aseguramos que el projectId sea un string simple
-    const projectId = typeof this.project.id === 'object' && this.project.id.value 
-      ? this.project.id.value 
-      : String(this.project.id);
+    // Usamos el ID directamente como número
+    const projectId = Number(this.project.id);
       
     console.log('Eliminando proyecto con ID:', projectId);
     this.loading = true;

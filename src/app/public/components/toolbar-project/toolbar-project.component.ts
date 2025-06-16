@@ -29,7 +29,7 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
   styleUrls: ['./toolbar-project.component.css']
 })
 export class ToolbarProjectComponent {
-  projectId: string = '';
+  projectId: number = 0;
   projectRole: ProjectRoleType | null = null;
   organizationRole: OrgRole | null = null;
   userType: UserType | null = null;
@@ -41,7 +41,7 @@ export class ToolbarProjectComponent {
 
   ngOnInit() {
     const projectIdValue = this.session.getProjectId();
-    this.projectId = projectIdValue !== undefined ? String(projectIdValue) : '';
+    this.projectId = projectIdValue !== undefined ? projectIdValue : 0;
     this.projectRole = this.session.getProjectRole() || null;
     this.organizationRole = this.session.getOrganizationRole() || null;
     this.userType = this.session.getUserType() || null;
@@ -52,7 +52,7 @@ export class ToolbarProjectComponent {
       const currentUrl = window.location.pathname;
       const projectMatch = currentUrl.match(/\/projects\/([^\/]+)/);
       if (projectMatch && projectMatch[1]) {
-        this.projectId = projectMatch[1];
+        this.projectId = Number(projectMatch[1]);
         console.log('Extracted project ID from URL:', this.projectId);
       }
     }

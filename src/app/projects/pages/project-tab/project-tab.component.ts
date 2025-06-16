@@ -19,10 +19,6 @@ import {Specialty} from '../../model/specialty.vo';
 import {OrganizationService} from '../../../organizations/services/organization.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserRole} from '../../../iam/model/user-role.vo';
-import {PersonId} from '../../../shared/model/person-id.vo';
-import {OrganizationId} from '../../../shared/model/organization-id.vo';
-import {ProjectId} from '../../../shared/model/project-id.vo';
-import {OrganizationMemberId} from '../../../shared/model/organization-member-id.vo';
 import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
@@ -43,7 +39,7 @@ export class ProjectTabComponent implements OnInit {
   projects = signal<Project[]>([]);
   currentOrganization = signal<Organization | null>(null);
   loading = signal<boolean>(true);
-  organizationId: string | null = null;
+  organizationId: number | null = null;
   userType = UserRole.TYPE_WORKER; // Utilizar el valor correcto definido en el enum
   organizationRole = OrganizationMemberType.CONTRACTOR;
 
@@ -58,7 +54,7 @@ export class ProjectTabComponent implements OnInit {
   ngOnInit(): void {
     // Obtener el ID de organización de la sesión
     const orgIdFromSession = this.session.getOrganizationId();
-    const orgId = orgIdFromSession !== undefined ? String(orgIdFromSession) : null;
+    const orgId = orgIdFromSession !== undefined ? Number(orgIdFromSession) : null;
 
     if (!orgId) {
       console.error('No organization ID found in session');
@@ -82,20 +78,20 @@ export class ProjectTabComponent implements OnInit {
     });
   }
 
-  loadProjectsForOrganization(organizationId: string): void {
+  loadProjectsForOrganization(organizationId: number): void {
     this.loading.set(true);
 
     this.projectService.getAll().subscribe({
       next: (allProjects: Project[]) => {
         // Filtrar proyectos por organización
         const orgProjects = allProjects.filter(project =>
-          project.organizationId && project.organizationId.toString() === organizationId.toString()
+          project.organizationId && Number(project.organizationId) === organizationId
         );
 
         this.projects.set(orgProjects);
         this.loading.set(false);
 
-        console.log(`Loaded ${orgProjects.length} projects for organization ${organizationId.toString()}`);
+        console.log(`Loaded ${orgProjects.length} projects for organization ${organizationId}`);
       },
       error: (err: Error) => {
         console.error(`Failed to load projects for organization ${organizationId.toString()}:`, err);
@@ -112,7 +108,7 @@ export class ProjectTabComponent implements OnInit {
 
     console.log('Opening create project dialog');
     const currentOrg = this.currentOrganization();
-    const orgId = currentOrg && currentOrg.id ? String(currentOrg.id) : '';
+    const orgId = currentOrg && currentOrg.id ? Number(currentOrg.id) : 0;
                  
     const dialogRef = this.dialog.open(CreateProjectModalComponent, {
       width: '500px',
@@ -136,8 +132,8 @@ export class ProjectTabComponent implements OnInit {
             throw new Error("Organization ID is required");
           }
           
-          const orgIdStr = String(currentOrg.id);
-          const personIdStr = String(personIdVal);
+          const orgIdNum = Number(currentOrg.id);
+          const personIdNum = Number(personIdVal);
           
           const newPro = new Project({
             name: result.name,
@@ -145,9 +141,9 @@ export class ProjectTabComponent implements OnInit {
             startingDate: new Date(result.startingDate),
             endingDate: new Date(result.endingDate),
             status: ProjectStatus.BASIC_STUDIES,
-            organizationId: new OrganizationId(result.organizationId || orgIdStr),
-            contractor: new OrganizationMemberId(personIdStr),
-            contractingEntityId: new PersonId(personIdStr)
+            organizationId: result.organizationId || orgIdNum,
+            contractor: personIdNum,
+            contractingEntityId: personIdNum
           });
 
           this.projectService.create(newPro).subscribe({
@@ -159,9 +155,9 @@ export class ProjectTabComponent implements OnInit {
                 return;
               }
               
-              // Convertir ProjectId a number para ProjectTeamMember
-              const projectIdNum = parseInt(createdProject.id.toString(), 10);
-              const personIdNum = parseInt(String(personIdVal), 10);
+              // Ya no es necesario convertir los IDs ya que ya son numbers
+              const projectIdNum = createdProject.id;
+              const personIdNum = Number(personIdVal);
               
               // Crear un nuevo miembro del equipo del proyecto
               const member = new ProjectTeamMember({
@@ -180,10 +176,10 @@ export class ProjectTabComponent implements OnInit {
                   console.log('Project team member created successfully');
                   // Recargar los proyectos de la organización actual
                   if (this.currentOrganization()) {
-                    const orgIdStr = this.currentOrganization()!.id ? 
-                                    String(this.currentOrganization()!.id) : '';
-                    if (orgIdStr) {
-                      this.loadProjectsForOrganization(orgIdStr);
+                    const orgIdNum = this.currentOrganization()!.id ? 
+                                    Number(this.currentOrganization()!.id) : 0;
+                    if (orgIdNum) {
+                      this.loadProjectsForOrganization(orgIdNum);
                     }
                   }
                 },

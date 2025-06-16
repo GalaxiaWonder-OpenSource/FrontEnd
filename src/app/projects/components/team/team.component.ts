@@ -31,9 +31,6 @@ import { Person } from '../../../iam/model/person.entity';
 import { ProjectRole } from '../../model/project-role.vo';
 import { Specialty } from '../../model/specialty.vo';
 import { Project } from '../../model/project.entity';
-import { OrganizationMemberId } from '../../../shared/model/organization-member-id.vo';
-import { ProjectId } from '../../../shared/model/project-id.vo';
-import { PersonId } from '../../../shared/model/person-id.vo';
 
 interface TeamMemberDisplay {
   id: string;

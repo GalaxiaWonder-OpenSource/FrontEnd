@@ -1,6 +1,6 @@
 export class ChangeOrder {
   public readonly issuedAt: Date;
-  public readonly milestoneId: number;
+  public readonly milestoneId: number |undefined;
   public readonly description: string;
 
   constructor({

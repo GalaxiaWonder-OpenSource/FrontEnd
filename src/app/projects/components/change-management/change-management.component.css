@@ -1,0 +1,54 @@
+mat-card {
+  margin: 24px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #1c3a6d;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+button {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.success {
+  margin-top: 12px;
+  font-weight: 500;
+  color: green;
+}
+
+.error {
+  margin-top: 12px;
+  font-weight: 500;
+  color: crimson;
+}
+
+.request-card {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.request-card h3 {
+  margin: 0;
+  color: #1a237e;
+}
+
+.request-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}

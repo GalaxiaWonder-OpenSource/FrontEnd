@@ -1,41 +1,42 @@
-import {ChangeProcessId} from '../../shared/model/change-process-id.vo';
 import {ChangeOrigin} from './change-origin.vo';
 import {ChangeProcessStatus} from './change-process-status.vo';
 import {ChangeOrder} from './change-order.vo';
 import {ChangeResponse} from './change-response.vo';
-import {ProjectId} from '../../shared/model/project-id.vo';
 
 export class ChangeProcess {
-  public readonly id: ChangeProcessId
+  public readonly id: number | undefined;
   public readonly origin: ChangeOrigin;
   public readonly status: ChangeProcessStatus;
   public readonly justification: string;
+  public readonly description: string;
   public readonly approvedAt?: Date;
   public readonly approvedBy?: Date;
   public readonly changeOrder?: ChangeOrder;
   public readonly response?: ChangeResponse;
-  public readonly projectId: ProjectId;
+  public readonly projectId: number | undefined;
 
   constructor({
-    id = new ChangeProcessId,
+    id,
     origin = ChangeOrigin.CHANGE_REQUEST,
     status = ChangeProcessStatus.APPROVED,
     justification,
+    description,
     approvedAt,
     approvedBy,
     changeOrder,
     response,
     projectId,
               }:{
-    id?: ChangeProcessId,
-    origin?: ChangeOrigin,
+    id?: number,
+    origin: ChangeOrigin,
     status: ChangeProcessStatus,
     justification: string,
+    description: string,
     approvedAt?: Date,
-    approvedBy: Date,
-    changeOrder: ChangeOrder,
-    response: ChangeResponse,
-    projectId: ProjectId;
+    approvedBy?: Date,
+    changeOrder?: ChangeOrder,
+    response?: ChangeResponse,
+    projectId: number;
   }) {
     if(!justification.trim())throw new Error('Justification cannot be empty');
 
@@ -43,6 +44,7 @@ export class ChangeProcess {
     this.origin = origin;
     this.status = status;
     this.justification = justification.trim();
+    this.description = description;
     this.approvedAt = approvedAt;
     this.approvedBy = approvedBy;
     this.changeOrder = changeOrder;
@@ -52,15 +54,16 @@ export class ChangeProcess {
 
   toJSON() {
     return {
-      id: this.id.value,
+      id: this.id,
       origin: this.origin,
       status: this.status,
       justification: this.justification,
+      description: this.description,
       approvedAt: this.approvedAt,
       approvedBy: this.approvedBy,
       changeOrder: this.changeOrder,
       response: this.response,
-      projectId: this.projectId.value,
+      projectId: this.projectId,
     }
   }
 }

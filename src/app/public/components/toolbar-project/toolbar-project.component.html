@@ -27,7 +27,7 @@
   <button *ngIf="!isClient || isOrganizationUser" mat-button (click)="navigateTo('working-team')" routerLinkActive="active">
     {{ 'navigation.project.working-team' | translate }}
   </button>
-  <button *ngIf="!isClient || isOrganizationUser" mat-button (click)="navigateTo('change-management')" routerLinkActive="active">
+  <button mat-button (click)="navigateTo('change-management')" routerLinkActive="active">
     {{ 'navigation.project.change-management' | translate }}
   </button>
   <button *ngIf="isOrganizationUser && !isClient" mat-button (click)="navigateTo('configuration')" routerLinkActive="active">

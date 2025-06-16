@@ -37,7 +37,7 @@ export class MilestoneService {
       projectId: milestone.projectId,
       description: milestone.description || ''
     };
-    
+
     return this.http.post<any>(`${environment.propgmsApiBaseUrl}/milestones`, milestoneData).pipe(
       map((response: any) => new Milestone({
         id: response.id,
@@ -63,7 +63,7 @@ export class MilestoneService {
       projectId: milestone.projectId,
       description: milestone.description || ''
     };
-    
+
     return this.http.put<any>(`${environment.propgmsApiBaseUrl}/milestones/${milestoneId}`, milestoneData).pipe(
       map((response: any) => new Milestone({
         id: response.id,
@@ -94,7 +94,7 @@ export class MilestoneService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
@@ -102,7 +102,7 @@ export class MilestoneService {
       // Server-side error
       errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
     }
-    
+
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }

@@ -143,8 +143,8 @@
     {
       "id": 602,
       "name": "Dress to impress",
-      "description": "father´s day",
-      "status": "BASIC_STUDIES",
+      "description": "shape of my heart",
+      "status": "APPROVED",
       "startingDate": "2025-06-15T00:00:00.000Z",
       "endingDate": "2025-09-20T00:00:00.000Z",
       "team": [],
@@ -173,6 +173,28 @@
       "memberId": 5,
       "personId": 5,
       "projectId": 602
+    }
+  ],
+  "changeProcess": [
+    {
+      "projectId": 602,
+      "origin": "CHANGE_REQUEST",
+      "status": "PENDING",
+      "justification": "kskdkasld",
+      "description": "sabrina carpenter",
+      "approvedAt": null,
+      "approvedBy": null,
+      "id": 1
+    },
+    {
+      "projectId": 602,
+      "origin": "CHANGE_REQUEST",
+      "status": "PENDING",
+      "justification": "ASHDJASDJASDJKASDJKASD",
+      "description": "DINA BOLUARTE MIAUUUUU",
+      "approvedAt": null,
+      "approvedBy": null,
+      "id": 2
     }
   ]
 }

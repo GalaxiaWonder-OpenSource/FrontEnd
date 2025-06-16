@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ChangeProcess } from '../../../changes/model/change-process.entity';
-import { ChangeOrigin } from '../../../changes/model/change-origin.vo';
-import { ChangeProcessStatus } from '../../../changes/model/change-process-status.vo';
-import { ChangeProcessService } from '../../../changes/services/change-process.service';
-import { SessionService } from '../../../iam/services/session.service';
-import { UserRole } from '../../../iam/model/user-role.vo';
-import {MatCard, MatCardTitle} from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import {Component, OnInit, signal} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ChangeProcess} from '../../../changes/model/change-process.entity';
+import {ChangeProcessStatus} from '../../../changes/model/change-process-status.vo';
+import {ChangeProcessService} from '../../../changes/services/change-process.service';
+import {SessionService} from '../../../iam/services/session.service';
+import {UserRole} from '../../../iam/model/user-role.vo';
+import {
+  MatCard,
+  MatCardModule,
+  MatCardTitle
+} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {ChangeOrigin} from '../../../changes/model/change-origin.vo';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-management',
@@ -28,10 +33,16 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     NgIf,
     NgForOf,
     MatButton,
-    MatProgressSpinner
+    MatProgressSpinner,
+    NgClass,
+    TranslatePipe,
+    DatePipe,
+    MatCardModule
   ],
 })
-export class ChangeManagementComponent implements OnInit {
+export class ChangeManagementComponent{
+  changeProcess = signal<ChangeProcess[]>([]);
+
   changeRequest: any = {title: '', description: ''};
   changeRequests: ChangeProcess[] = [];
   loading = false;
@@ -52,10 +63,18 @@ export class ChangeManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectId = Number(this.route.snapshot.paramMap.get('projectId'));
+    console.log('🛠️ Proyecto actual (contractor):', this.projectId);
+
     this.resetForm();
     this.loadUserRole();
 
+    console.log('🧑‍🔧 Rol detectado:', {
+      isClient: this.isClient,
+      isContractor: this.isContractor
+    });
+
     if (this.isContractor) {
+      console.log('🔄 Cargando solicitudes de cambio...');
       this.loadChangeRequests();
     }
   }
@@ -67,16 +86,36 @@ export class ChangeManagementComponent implements OnInit {
   }
 
   private async loadChangeRequests(): Promise<void> {
+    const projectId = this.sessionService.getProjectId();
+
+    if (!projectId) {
+      console.warn('No project ID found in session. Aborting load.');
+      return;
+    }
+
     try {
       this.loading = true;
+      console.log('📥 GET cambios para projectId:', projectId);
 
-      // Asegúrate de que el service acepte `params` o ajusta según tu implementación
-      this.changeRequests = await this.changeProcessService.getByProject({
-        params: {projectId: this.projectId}
+      this.changeProcessService.getAll().subscribe({
+        next: (requests: ChangeProcess[]) => {
+          console.log('🔍 Todos los cambios recibidos:', requests);
+
+          const myRequests = requests.filter(r =>
+            r.projectId?.toString() === projectId.toString()
+          );
+
+          this.changeProcess.set(myRequests); // ✅ Aquí haces el set al signal
+
+          console.log('📄 Cambios filtrados por proyecto:', myRequests);
+        },
+        error: (err: any) => {
+          console.error('❌ Error al cargar cambios:', err);
+          this.error = 'Error al cargar las solicitudes de cambio.';
+        }
       });
-
     } catch (error) {
-      this.error = 'Error al cargar las solicitudes de cambio: ' + (error as Error).message;
+      this.error = 'Error inesperado al cargar solicitudes de cambio.';
     } finally {
       this.loading = false;
     }
@@ -102,27 +141,45 @@ export class ChangeManagementComponent implements OnInit {
     this.success = false;
 
     try {
-      const changeProcess = new ChangeProcess({
+      const projectId = this.sessionService.getProjectId();
+
+      if (!projectId) {
+        console.warn('❌ No se encontró el projectId en la sesión.');
+        this.error = 'No se puede enviar el cambio porque no hay proyecto activo.';
+        this.loading = false;
+        return;
+      }
+
+      const newChangeProcess = {
+        projectId,
         origin: ChangeOrigin.CHANGE_REQUEST,
         status: ChangeProcessStatus.PENDING,
         justification: this.changeRequest.title,
-        approvedBy: new Date(),
-        changeOrder: {
-          issuedAt: new Date(),
-          milestoneId: 0,
-          description: this.changeRequest.description
-        } as any,
-        response: undefined as any,
-        projectId: this.projectId
+        description: this.changeRequest.description,
+        approvedAt: null,
+        approvedBy: null
+      };
+
+      console.log('📤 Enviando nuevo cambio a json-server:', newChangeProcess);
+
+      this.changeProcessService.create(newChangeProcess).subscribe({
+        next: (createdChange: ChangeProcess) => {
+          console.log('✅ Cambio creado exitosamente:', createdChange);
+
+          this.success = true;
+          this.resetForm();
+          this.showForm = false;
+          this.loadChangeRequests();
+        },
+        error: (err: any) => {
+          console.error('❌ Error al crear el change request:', err);
+          this.error = 'Ocurrió un error al crear la solicitud de cambio.';
+        }
       });
 
-      await this.changeProcessService.create(changeProcess);
-      this.success = true;
-      this.resetForm();
-      this.showForm = false;
-      this.loadChangeRequests();
     } catch (error) {
-      this.error = 'Error al crear el change request.';
+      console.error('❌ Error inesperado:', error);
+      this.error = 'Error inesperado al procesar el cambio.';
     } finally {
       this.loading = false;
     }
@@ -144,11 +201,11 @@ export class ChangeManagementComponent implements OnInit {
       this.loading = true;
       const updated = {
         ...request,
-        status: ChangeProcessStatus.APPROVED,
-        approvedAt: new Date(),
-        approvedBy: new Date()
+        status: 'APPROVED',
+        approvedAt: new Date().toISOString(),
+        approvedBy: 'Contractor'
       };
-      await this.changeProcessService.update(updated);
+      await this.changeProcessService.update(updated); // PUT hacia /change-processes/:id
       await this.loadChangeRequests();
     } catch {
       this.error = 'Error al aprobar solicitud.';
@@ -162,9 +219,9 @@ export class ChangeManagementComponent implements OnInit {
       this.loading = true;
       const updated = {
         ...request,
-        status: ChangeProcessStatus.REJECTED,
-        approvedAt: new Date(),
-        approvedBy: new Date()
+        status: 'REJECTED',
+        approvedAt: new Date().toISOString(),
+        approvedBy: 'Contractor'
       };
       await this.changeProcessService.update(updated);
       await this.loadChangeRequests();

@@ -8,6 +8,7 @@ export class ChangeProcess {
   public readonly origin: ChangeOrigin;
   public readonly status: ChangeProcessStatus;
   public readonly justification: string;
+  public readonly description: string;
   public readonly approvedAt?: Date;
   public readonly approvedBy?: Date;
   public readonly changeOrder?: ChangeOrder;
@@ -19,6 +20,7 @@ export class ChangeProcess {
     origin = ChangeOrigin.CHANGE_REQUEST,
     status = ChangeProcessStatus.APPROVED,
     justification,
+    description,
     approvedAt,
     approvedBy,
     changeOrder,
@@ -26,13 +28,14 @@ export class ChangeProcess {
     projectId,
               }:{
     id?: number,
-    origin?: ChangeOrigin,
+    origin: ChangeOrigin,
     status: ChangeProcessStatus,
     justification: string,
+    description: string,
     approvedAt?: Date,
-    approvedBy: Date,
-    changeOrder: ChangeOrder,
-    response: ChangeResponse,
+    approvedBy?: Date,
+    changeOrder?: ChangeOrder,
+    response?: ChangeResponse,
     projectId: number;
   }) {
     if(!justification.trim())throw new Error('Justification cannot be empty');
@@ -41,6 +44,7 @@ export class ChangeProcess {
     this.origin = origin;
     this.status = status;
     this.justification = justification.trim();
+    this.description = description;
     this.approvedAt = approvedAt;
     this.approvedBy = approvedBy;
     this.changeOrder = changeOrder;
@@ -54,6 +58,7 @@ export class ChangeProcess {
       origin: this.origin,
       status: this.status,
       justification: this.justification,
+      description: this.description,
       approvedAt: this.approvedAt,
       approvedBy: this.approvedBy,
       changeOrder: this.changeOrder,

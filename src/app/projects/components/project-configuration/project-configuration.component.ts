@@ -18,7 +18,6 @@ import { Project } from '../../model/project.entity';
 import { ProjectService } from '../../services/project.service';
 import { SessionService } from '../../../iam/services/session.service';
 import { ProjectStatus } from '../../model/project-status.vo';
-import { ProjectId } from '../../../shared/model/project-id.vo';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -72,29 +71,29 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadProject();
-    
+
     const routeSub = this.route.parent?.paramMap.subscribe(params => {
       const projectId = params.get('projectId');
       if (projectId) {
         this.loadProjectById(projectId);
       }
     });
-    
+
     if (routeSub) {
       this.routeSubscription = routeSub;
     }
   }
-  
+
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
   }
-  
+
   loadProjectById(projectId: string): void {
     this.loading = true;
     this.error = null;
-    
+
     this.projectService.getById(null, { id: projectId }).subscribe({
       next: (project: Project) => {
         this.project = project;
@@ -111,7 +110,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
 
   loadProject(): void {
     const projectId = this.sessionService.getProjectId();
-    
+
     if (projectId) {
       this.projectService.getById(null, { id: projectId }).subscribe({
         next: (project: Project) => {
@@ -131,7 +130,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       this.error = 'No se encontró ID del proyecto en la sesión';
     }
   }
-  
+
   updateForm(project: Project): void {
     this.projectForm.patchValue({
       name: project.name,
@@ -140,22 +139,22 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       endingDate: new Date(project.endingDate)
     });
   }
-  
+
   getStatusTranslation(status: string): string {
     return this.translate.instant(`project-configuration.statuses.${status}`);
   }
-  
+
   onSubmit(): void {
     if (this.projectForm.invalid || !this.project) {
       return;
     }
      const formValues = this.projectForm.value;
-    
+
     // Nos aseguramos que el projectId sea un string simple
-    const projectId = typeof this.project.id === 'object' && this.project.id.value 
-      ? this.project.id.value 
+    const projectId = typeof this.project.id === 'object' && this.project.id.value
+      ? this.project.id.value
       : String(this.project.id);
-    
+
     // Preparar los datos para actualizar como un objeto plano para JSON
     const projectData = {
       id: projectId, // Usamos el ID como string simple
@@ -165,8 +164,8 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       startingDate: this.project.startingDate,
       endingDate: new Date(formValues.endingDate).toISOString(),
       team: this.project.team || [],
-      organizationId: this.project.organizationId ? 
-        (typeof this.project.organizationId === 'object' ? this.project.organizationId.value : this.project.organizationId) : 
+      organizationId: this.project.organizationId ?
+        (typeof this.project.organizationId === 'object' ? this.project.organizationId.value : this.project.organizationId) :
         null,
       contractor: this.project.contractor ?
         (typeof this.project.contractor === 'object' ? this.project.contractor.value : this.project.contractor) :
@@ -175,29 +174,29 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
         (typeof this.project.contractingEntityId === 'object' ? this.project.contractingEntityId.value : this.project.contractingEntityId) :
         null
     };
-    
+
     console.log('Enviando datos actualizados:', projectData);
-    
+
     // Usar el servicio de proyectos para actualizar
     this.loading = true;
-      
+
     // Usar HttpClient directamente con la ruta correcta
     // La ruta en el servidor es /projects/:id (sin /api/v1)
     const url = `${environment.propgmsApiBaseUrl}/projects/${projectId}`;
     console.log(`Enviando PUT a URL: ${url}`);
-    
+
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http.put<Project>(url, projectData, { headers }).subscribe({
       next: (updatedProject: Project) => {
         console.log('Proyecto actualizado exitosamente:', updatedProject);
         this.loading = false;
-        
+
         this.snackBar.open('Proyecto actualizado correctamente', 'Cerrar', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'bottom'
         });
-        
+
         // Actualizar el objeto local con los datos actualizados
         this.project = updatedProject;
         this.updateForm(updatedProject);
@@ -213,7 +212,7 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
   /**
    * Abre el diálogo de confirmación para eliminar el proyecto
    */
@@ -221,16 +220,16 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     if (!this.project) {
       return;
     }
-    
+
     const dialogRef = this.dialog.open(this.deleteConfirmDialog);
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.confirmDeleteProject();
       }
     });
   }
-  
+
   /**
    * Realiza la eliminación del proyecto después de la confirmación
    */
@@ -238,15 +237,15 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     if (!this.project) {
       return;
     }
-    
+
     // Nos aseguramos que el projectId sea un string simple
-    const projectId = typeof this.project.id === 'object' && this.project.id.value 
-      ? this.project.id.value 
+    const projectId = typeof this.project.id === 'object' && this.project.id.value
+      ? this.project.id.value
       : String(this.project.id);
-      
+
     console.log('Eliminando proyecto con ID:', projectId);
     this.loading = true;
-    
+
     // Pasamos el ID como un simple string en el objeto params
     this.projectService.delete(null, { id: projectId }).subscribe({
       next: () => {
@@ -256,10 +255,10 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
           horizontalPosition: 'center',
           verticalPosition: 'bottom'
         });
-        
-        // Limpiar sesión y navegar de regreso 
+
+        // Limpiar sesión y navegar de regreso
         this.sessionService.clearProject();
-        
+
         // Si el usuario es de una organización, volvemos a la lista de proyectos de la organización
         const orgId = this.sessionService.getOrganizationId();
         if (orgId) {

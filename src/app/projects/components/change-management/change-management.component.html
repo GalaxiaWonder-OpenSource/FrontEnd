@@ -1,1 +1,57 @@
-<p>change-management works!</p>
+<mat-card>
+  <mat-card-title>Gestión de Cambios</mat-card-title>
+
+  <!-- Cliente crea solicitudes -->
+  <div *ngIf="isClient">
+    <!-- Mostrar formulario -->
+    <div *ngIf="showForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput [(ngModel)]="changeRequest.title" name="title" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput [(ngModel)]="changeRequest.description" name="description" required></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isFormValid() || loading">
+        Enviar
+      </button>
+      <button mat-button (click)="onCancel()">Cancelar</button>
+    </div>
+
+    <!-- Mostrar botón para iniciar nueva solicitud -->
+    <div *ngIf="!showForm">
+      <button mat-raised-button color="primary" (click)="startNewChangeRequest()">
+        Nueva solicitud de cambio
+      </button>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <p *ngIf="success" style="color: green;">¡Solicitud enviada correctamente!</p>
+  </div>
+
+  <!-- Contractor ve y gestiona solicitudes -->
+  <div *ngIf="isContractor">
+    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+
+    <div *ngIf="!loading && changeRequests.length === 0">
+      <p>No hay solicitudes registradas.</p>
+    </div>
+
+    <mat-card *ngFor="let request of changeRequests" class="request-card">
+      <h3>{{ request.justification }}</h3>
+      <p>{{ request.changeOrder?.description }}</p>
+      <p>Estado: {{ request.status }}</p>
+
+      <div *ngIf="request.status === 'PENDING'">
+        <button mat-button color="primary" (click)="approveChangeRequest(request)">Aprobar</button>
+        <button mat-button color="warn" (click)="rejectChangeRequest(request)">Rechazar</button>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Errores -->
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+</mat-card>

@@ -16,7 +16,7 @@ export class MilestoneService {
   getMilestonesByProjectId(projectId: string | ProjectId): Observable<Milestone[]> {
     const id = projectId instanceof ProjectId ? projectId.value : projectId;
     const url = `${environment.propgmsApiBaseUrl}/milestones?projectId=${id}`;
-    
+
     return this.http.get<any[]>(url).pipe(
       map(milestones => milestones.map((milestone: any) => new Milestone({
         id: milestone.id,
@@ -40,7 +40,7 @@ export class MilestoneService {
       projectId: milestone.projectId.toString(),
       description: milestone.description || ''
     };
-    
+
     return this.http.post<any>(`${environment.propgmsApiBaseUrl}/milestones`, milestoneData).pipe(
       map((response: any) => new Milestone({
         id: response.id,
@@ -56,7 +56,7 @@ export class MilestoneService {
 
   updateMilestone(milestone: Milestone): Observable<Milestone> {
     const milestoneId = milestone.id.toString();
-    
+
     // Prepare the data for transmission
     const milestoneData = {
       id: milestoneId,
@@ -66,7 +66,7 @@ export class MilestoneService {
       projectId: milestone.projectId.toString(),
       description: milestone.description || ''
     };
-    
+
     return this.http.put<any>(`${environment.propgmsApiBaseUrl}/milestones/${milestoneId}`, milestoneData).pipe(
       map((response: any) => new Milestone({
         id: response.id,
@@ -98,7 +98,7 @@ export class MilestoneService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
@@ -106,7 +106,7 @@ export class MilestoneService {
       // Server-side error
       errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
     }
-    
+
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }

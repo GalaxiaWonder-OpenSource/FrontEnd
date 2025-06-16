@@ -18,6 +18,7 @@ import {MatButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {ChangeOrigin} from '../../../changes/model/change-origin.vo';
 import {TranslatePipe} from '@ngx-translate/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-change-management',
@@ -57,27 +58,22 @@ export class ChangeManagementComponent{
   constructor(
     private route: ActivatedRoute,
     private changeProcessService: ChangeProcessService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
     this.projectId = Number(this.route.snapshot.paramMap.get('projectId'));
-    console.log('🛠️ Proyecto actual (contractor):', this.projectId);
 
     this.resetForm();
     this.loadUserRole();
 
-    console.log('🧑‍🔧 Rol detectado:', {
-      isClient: this.isClient,
-      isContractor: this.isContractor
-    });
-
     if (this.isContractor) {
-      console.log('🔄 Cargando solicitudes de cambio...');
       this.loadChangeRequests();
     }
   }
+
 
   private loadUserRole(): void {
     const userType = this.sessionService.getUserType();
@@ -95,19 +91,15 @@ export class ChangeManagementComponent{
 
     try {
       this.loading = true;
-      console.log('📥 GET cambios para projectId:', projectId);
 
       this.changeProcessService.getAll().subscribe({
         next: (requests: ChangeProcess[]) => {
-          console.log('🔍 Todos los cambios recibidos:', requests);
 
           const myRequests = requests.filter(r =>
             r.projectId?.toString() === projectId.toString()
           );
+          this.changeProcess.set(myRequests);
 
-          this.changeProcess.set(myRequests); // ✅ Aquí haces el set al signal
-
-          console.log('📄 Cambios filtrados por proyecto:', myRequests);
         },
         error: (err: any) => {
           console.error('❌ Error al cargar cambios:', err);
@@ -142,45 +134,53 @@ export class ChangeManagementComponent{
 
     try {
       const projectId = this.sessionService.getProjectId();
-
       if (!projectId) {
-        console.warn('❌ No se encontró el projectId en la sesión.');
         this.error = 'No se puede enviar el cambio porque no hay proyecto activo.';
         this.loading = false;
         return;
       }
 
-      const newChangeProcess = {
-        projectId,
-        origin: ChangeOrigin.CHANGE_REQUEST,
-        status: ChangeProcessStatus.PENDING,
-        justification: this.changeRequest.title,
-        description: this.changeRequest.description,
-        approvedAt: null,
-        approvedBy: null
-      };
+      this.changeProcessService.getAll().subscribe({
+        next: (allChanges: ChangeProcess[]) => {
+          const alreadyPending = allChanges.find(
+            (c) => c.projectId === projectId && c.status === ChangeProcessStatus.PENDING
+          );
 
-      console.log('📤 Enviando nuevo cambio a json-server:', newChangeProcess);
+          if (alreadyPending) {
+            this.error = 'Ya existe una solicitud pendiente. Debe resolverse antes de crear una nueva.';
+            this.loading = false;
+            return;
+          }
 
-      this.changeProcessService.create(newChangeProcess).subscribe({
-        next: (createdChange: ChangeProcess) => {
-          console.log('✅ Cambio creado exitosamente:', createdChange);
+          const newChangeProcess = {
+            projectId,
+            origin: ChangeOrigin.CHANGE_REQUEST,
+            status: ChangeProcessStatus.PENDING,
+            justification: this.changeRequest.title,
+            description: this.changeRequest.description,
+            approvedAt: null,
+            approvedBy: null
+          };
 
-          this.success = true;
-          this.resetForm();
-          this.showForm = false;
-          this.loadChangeRequests();
+          this.changeProcessService.create(newChangeProcess).subscribe({
+            next: () => {
+              this.success = true;
+              this.resetForm();
+              this.showForm = false;
+              this.loadChangeRequests();
+            },
+            error: () => {
+              this.error = 'Ocurrió un error al crear la solicitud de cambio.';
+            }
+          });
         },
-        error: (err: any) => {
-          console.error('❌ Error al crear el change request:', err);
-          this.error = 'Ocurrió un error al crear la solicitud de cambio.';
+        error: () => {
+          this.error = 'Error al verificar si ya existe una solicitud pendiente.';
+          this.loading = false;
         }
       });
-
-    } catch (error) {
-      console.error('❌ Error inesperado:', error);
+    } catch {
       this.error = 'Error inesperado al procesar el cambio.';
-    } finally {
       this.loading = false;
     }
   }
@@ -196,19 +196,32 @@ export class ChangeManagementComponent{
       this.changeRequest.description.trim().length >= 10;
   }
 
+  private showSnackBar(message: string, type: 'success' | 'error' | 'info' | 'warn'): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      panelClass: [`snackbar-${type}`]
+    });
+  }
+
   async approveChangeRequest(request: ChangeProcess): Promise<void> {
     try {
       this.loading = true;
+
       const updated = {
         ...request,
-        status: 'APPROVED',
+        status: ChangeProcessStatus.APPROVED,
         approvedAt: new Date().toISOString(),
         approvedBy: 'Contractor'
       };
-      await this.changeProcessService.update(updated); // PUT hacia /change-processes/:id
-      await this.loadChangeRequests();
-    } catch {
-      this.error = 'Error al aprobar solicitud.';
+
+      await this.changeProcessService.update(updated); // Actualizar estado
+      await this.changeProcessService.delete({}, { id: request.id }).toPromise(); // Eliminar del json-server
+
+      this.showSnackBar('✅ Cambio aprobado y eliminado', 'success');
+      await this.loadChangeRequests(); // Refrescar lista
+    } catch (error) {
+      console.error('❌ Error al aprobar y eliminar cambio:', error);
+      this.showSnackBar('Error al aprobar solicitud', 'error');
     } finally {
       this.loading = false;
     }
@@ -217,16 +230,22 @@ export class ChangeManagementComponent{
   async rejectChangeRequest(request: ChangeProcess): Promise<void> {
     try {
       this.loading = true;
+
       const updated = {
         ...request,
-        status: 'REJECTED',
+        status: ChangeProcessStatus.REJECTED,
         approvedAt: new Date().toISOString(),
         approvedBy: 'Contractor'
       };
+
       await this.changeProcessService.update(updated);
+      await this.changeProcessService.delete({}, { id: request.id }).toPromise();
+
+      this.showSnackBar('❌ Cambio rechazado y eliminado', 'info');
       await this.loadChangeRequests();
-    } catch {
-      this.error = 'Error al rechazar solicitud.';
+    } catch (error) {
+      console.error('❌ Error al rechazar y eliminar cambio:', error);
+      this.showSnackBar('Error al rechazar solicitud', 'error');
     } finally {
       this.loading = false;
     }

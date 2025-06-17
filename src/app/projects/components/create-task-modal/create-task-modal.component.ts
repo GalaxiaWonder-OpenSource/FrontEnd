@@ -57,7 +57,24 @@ export class CreateTaskModalComponent {
 
   private loadTeamMembers() {
     this.teamService.getAll().subscribe({
-      next: (members: any) => (this.teamMembers = members),
+      next: (members: any) => {
+        console.log('Loaded team members:', members);
+        
+        // Process the members to ensure they have the required properties
+        this.teamMembers = members.map((member: any) => {
+          // If team member is missing fullName property, construct it from firstName and lastName
+          if (!member.fullName && (member.firstName || member.lastName)) {
+            member.fullName = `${member.firstName || ''} ${member.lastName || ''}`.trim();
+          }
+          
+          // If no name is available, use a placeholder
+          if (!member.fullName) {
+            member.fullName = `Member #${member.id}`;
+          }
+          
+          return member;
+        });
+      },
       error: (err: any) => console.error('Error loading team members:', err)
     });
   }

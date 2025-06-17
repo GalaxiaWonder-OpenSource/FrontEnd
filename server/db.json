@@ -104,6 +104,17 @@
       "members": [],
       "invitations": [],
       "id": 305
+    },
+    {
+      "legalName": "ddasdasd",
+      "commercialName": "dasdas",
+      "ruc": "20538856674",
+      "createdBy": 201,
+      "createdAt": "2025-06-17T19:45:29.889Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 306
     }
   ],
   "organization-invitations": [
@@ -164,6 +175,13 @@
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-17T01:37:10.239Z",
       "id": 505
+    },
+    {
+      "personId": 201,
+      "organizationId": 306,
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-17T19:45:29.904Z",
+      "id": 506
     }
   ],
   "projects": [
@@ -199,6 +217,18 @@
       "organizationId": 304,
       "contractor": 2,
       "contractingEntityId": 2
+    },
+    {
+      "id": 604,
+      "name": "dasdsad",
+      "description": "asdsadasd",
+      "status": "BASIC_STUDIES",
+      "startingDate": "2025-12-12T00:00:00.000Z",
+      "endingDate": "2026-12-12T00:00:00.000Z",
+      "team": [],
+      "organizationId": 306,
+      "contractor": 201,
+      "contractingEntityId": 201
     }
   ],
   "project-team-members": [
@@ -229,6 +259,14 @@
       "memberId": 2,
       "personId": 2,
       "projectId": 603
+    },
+    {
+      "id": 705,
+      "role": "COORDINATOR",
+      "specialty": "ARCHITECTURE",
+      "memberId": 201,
+      "personId": 201,
+      "projectId": 604
     }
   ],
   "changeProcess": [],
@@ -244,14 +282,18 @@
   ],
   "tasks": [
     {
-      "name": "asddas",
-      "description": "dasdas",
+      "id": 1,
+      "name": "asdas",
+      "description": "dasdsa",
       "specialty": "STRUCTURES",
-      "startingDate": "2025-12-12T05:00:00.000Z",
-      "dueDate": "2025-12-12T05:00:00.000Z",
+      "startingDate": "1970-01-01T05:00:00.000Z",
+      "dueDate": "1970-01-01T05:00:00.000Z",
       "status": "PENDING",
-      "milestoneId": 1,
-      "id": 1
+      "responsibleId": 702,
+      "milestoneId": 1
     }
+  ],
+  "register": [
+    
   ]
 }

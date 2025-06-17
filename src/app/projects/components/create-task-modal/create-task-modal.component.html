@@ -3,21 +3,21 @@
 <div mat-dialog-content class="form-container">
   <!-- Nombre -->
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ data.task ? 'schedule.dialogs.edit-task.name.label' : 'schedule.dialogs.add-task.name.label' | translate }}</mat-label>
+    <mat-label>{{ 'schedule.dialogs.add-task.name.label' | translate }}</mat-label>
     <input matInput [(ngModel)]="name" required
-           [placeholder]="data.task ? 'schedule.dialogs.edit-task.name.placeholder' : 'schedule.dialogs.add-task.name.placeholder' | translate" />
+           [placeholder]="'schedule.dialogs.add-task.name.placeholder' | translate" />
   </mat-form-field>
 
   <!-- Descripción -->
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ data.task ? 'schedule.dialogs.edit-task.description.label' : 'schedule.dialogs.add-task.description.label' | translate }}</mat-label>
+    <mat-label>{{ 'schedule.dialogs.add-task.description.label' | translate }}</mat-label>
     <textarea matInput rows="3" [(ngModel)]="description"
-              [placeholder]="data.task ? 'schedule.dialogs.edit-task.description.placeholder' : 'schedule.dialogs.add-task.description.placeholder' | translate"></textarea>
+              [placeholder]="'schedule.dialogs.add-task.description.placeholder' | translate"></textarea>
   </mat-form-field>
 
   <!-- Especialidad -->
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ data.task ? 'schedule.dialogs.edit-task.specialty.label' : 'schedule.dialogs.add-task.specialty.label' | translate }}</mat-label>
+    <mat-label>{{ 'schedule.dialogs.add-task.specialty.label' | translate }}</mat-label>
     <mat-select [(ngModel)]="specialty" required>
       <mat-option *ngFor="let value of specialtyValues" [value]="value">
         {{ ('schedule.specialties.' + value) | translate }}
@@ -27,7 +27,7 @@
 
   <!-- Estado -->
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>{{ data.task ? 'schedule.dialogs.edit-task.status.label' : 'schedule.dialogs.add-task.status.label' | translate }}</mat-label>
+    <mat-label>{{ 'schedule.dialogs.add-task.status.label' | translate }}</mat-label>
     <mat-select [(ngModel)]="status">
       <mat-option *ngFor="let value of taskStatusValues" [value]="value">
         {{ ('schedule.task-statuses.' + value) | translate }}

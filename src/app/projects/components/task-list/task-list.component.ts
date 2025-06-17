@@ -38,55 +38,53 @@ import { SessionService } from '../../../iam/services/session.service';
 })
 export class TaskListComponent implements OnInit {
   @ViewChild('taskDetailDialog') taskDetailDialog!: TemplateRef<any>;
-  
+
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   loading = false;
   error: string | null = null;
   selectedTask: Task | null = null;
   isNewTask = false;
-  
+
   // Expose TaskStatus enum to template
   TaskStatus = TaskStatus;
-  
+
   constructor(
     private taskService: TaskService,
     private sessionService: SessionService,
     private dialog: MatDialog
   ) {}
-  
+
   ngOnInit(): void {
     this.loadTasks();
   }
-  
+
   loadTasks(): void {
     const milestoneId = this.sessionService.getMilestoneId();
-    
     if (!milestoneId) {
       this.error = 'No milestone selected';
       return;
     }
-    
+
     this.loading = true;
-    
-    this.taskService.getTasksByMilestoneId(milestoneId)
+    this.taskService.getByMilestoneId(undefined, { milestoneId: String(milestoneId) })
       .subscribe({
-        next: (tasks) => {
+        next: (tasks: any) => {
           this.tasks = tasks;
           this.filteredTasks = tasks;
           this.loading = false;
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error loading tasks:', err);
           this.error = 'Failed to load tasks';
           this.loading = false;
         }
       });
   }
-  
+
   filterTasksByStatus(event: MatTabChangeEvent): void {
     let status: TaskStatus | undefined;
-    
+
     // Determine status based on tab label
     const tabLabel = event.tab.textLabel;
     if (tabLabel === 'pending') {
@@ -96,16 +94,16 @@ export class TaskListComponent implements OnInit {
     } else if (tabLabel === 'completed') {
       status = TaskStatus.COMPLETED;
     }
-    
+
     // Filter tasks based on selected status
     if (!status) {
       this.filteredTasks = this.tasks;
       return;
     }
-    
+
     this.filteredTasks = this.tasks.filter(task => task.status === status);
   }
-  
+
   getStatusClass(status: TaskStatus): string {
     switch (status) {
       case TaskStatus.COMPLETED: return 'status-completed';
@@ -116,19 +114,19 @@ export class TaskListComponent implements OnInit {
       default: return '';
     }
   }
-  
+
   selectTask(task: Task): void {
     this.selectedTask = task;
     this.isNewTask = false;
     this.openTaskDialog();
   }
-  
+
   createTask(): void {
     this.selectedTask = null;
     this.isNewTask = true;
     this.openTaskDialog();
   }
-  
+
   openTaskDialog(): void {
     this.dialog.open(this.taskDetailDialog, {
       width: '800px',
@@ -136,11 +134,11 @@ export class TaskListComponent implements OnInit {
       panelClass: 'no-padding-dialog'
     });
   }
-  
+
   closeTaskDetail(): void {
     this.dialog.closeAll();
   }
-  
+
   onTaskSaved(task: Task): void {
     this.dialog.closeAll();
     this.loadTasks();

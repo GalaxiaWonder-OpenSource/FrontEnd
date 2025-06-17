@@ -2,15 +2,15 @@ import { Specialty } from './specialty.vo';
 import { TaskStatus } from './task-status.vo';
 
 export class Task {
-  public readonly id: number;
+  public readonly id: number | undefined;
   public name: string;
   public specialty: Specialty;
   public startingDate: Date;
   public dueDate: Date;
-  public milestoneId: number;
+  public milestoneId: number | undefined;
   public status: TaskStatus;
   public description?: string;
-  public responsibleId?: number;
+  public responsibleId?: number | undefined;
 
   /**
    * Constructs a new Task instance.
@@ -25,7 +25,7 @@ export class Task {
    * @param description - Optional description of the task.
    */
   constructor({
-    id = 0,
+    id,
     name,
     specialty,
     startingDate = new Date(),
@@ -33,13 +33,13 @@ export class Task {
     milestoneId,
     status = TaskStatus.DRAFT,
     description = '',
-    responsibleId = undefined
+    responsibleId,
   }: {
     id?: number;
     name: string;
     specialty: Specialty;
-    startingDate?: Date | string;
-    dueDate?: Date | string;
+    startingDate?: Date;
+    dueDate?: Date;
     milestoneId: number;
     status?: TaskStatus;
     description?: string;
@@ -48,11 +48,24 @@ export class Task {
     this.id = id;
     this.name = name;
     this.specialty = specialty;
-    this.startingDate = startingDate instanceof Date ? startingDate : new Date(startingDate);
-    this.dueDate = dueDate instanceof Date ? dueDate : new Date(dueDate);
+    this.startingDate = new Date(startingDate);
+    this.dueDate = new Date(dueDate);
     this.milestoneId = milestoneId;
     this.status = status;
     this.description = description;
-    this.responsibleId = responsibleId !== undefined && typeof responsibleId === 'string' ? Number(responsibleId) : responsibleId;
+    this.responsibleId = responsibleId;
+  }
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      specialty: this.specialty,
+      startingDate: this.startingDate.toISOString(),
+      dueDate: this.dueDate.toISOString(),
+      milestoneId: this.milestoneId,
+      status: this.status,
+      description: this.description,
+      responsibleId: this.responsibleId,
+    };
   }
 }

@@ -53,6 +53,8 @@ export class OrganizationInformationTabComponent {
 
     if (!contractorId) {
       console.warn('No hay ID de contratista disponible');
+      // Si no hay ID de contratista, usamos datos predeterminados
+      this.createDefaultContractor();
       return;
     }
 
@@ -63,20 +65,23 @@ export class OrganizationInformationTabComponent {
       },
       error: (err: any) => {
         console.error('Error al obtener el contractor', err);
-        
-        try {
-          // En caso de error, mostramos la tarjeta de información con datos predeterminados
-          this.contractor = new Person({
-            id: 0,
-            email: new EmailAddress('no.disponible@example.com'),
-            phone: new PhoneNumber('0000000000'),
-            firstName: 'Información',
-            lastName: 'No disponible'
-          });
-        } catch (e) {
-          console.error('Error al crear persona por defecto', e);
-        }
+        this.createDefaultContractor();
       }
     });
+  }
+
+  private createDefaultContractor(): void {
+    try {
+      // Creamos un contratista con datos predeterminados
+      this.contractor = new Person({
+        id: 0,
+        email: new EmailAddress('no.disponible@example.com'),
+        phone: new PhoneNumber('0000000000'),
+        firstName: 'Información',
+        lastName: 'No disponible'
+      });
+    } catch (e) {
+      console.error('Error al crear persona por defecto', e);
+    }
   }
 }

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ 'create-milestone.title' | translate }}</h2>
+<h2 mat-dialog-title>{{ data.milestone ? 'schedule.dialogs.edit-milestone.title' : 'create-milestone.title' | translate }}</h2>
 
 <div mat-dialog-content class="form-container">
   <mat-form-field appearance="outline" class="full-width">
@@ -15,13 +15,13 @@
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-milestone.starting-date' | translate }}</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="startingDate" required
+    <input matInput type="date" [(ngModel)]="startingDate" required
            [placeholder]="'create-milestone.starting-date' | translate" />
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>{{ 'create-milestone.ending-date' | translate }}</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="endingDate" required
+    <input matInput type="date" [(ngModel)]="endingDate" required
            [placeholder]="'create-milestone.ending-date' | translate" />
   </mat-form-field>
 </div>
@@ -32,6 +32,6 @@
   </button>
   <button mat-raised-button color="primary" (click)="submit()"
           [disabled]="!name || !startingDate || !endingDate">
-    {{ 'create-milestone.submit' | translate }}
+    {{ data.milestone ? 'schedule.actions.update' : 'create-milestone.submit' | translate }}
   </button>
 </div>

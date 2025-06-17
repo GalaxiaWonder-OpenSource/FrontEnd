@@ -38,8 +38,29 @@ export class CreateMilestoneModalComponent {
 
   constructor(
     private dialogRef: MatDialogRef<CreateMilestoneModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { projectId: number }
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: { projectId?: number, milestone?: any }
+  ) {
+    // Inicializar campos si se está editando un milestone existente
+    if (this.data.milestone) {
+      this.name = this.data.milestone.name || '';
+      this.description = this.data.milestone.description || '';
+      
+      // Formatear fechas para los campos datetime-local
+      if (this.data.milestone.startingDate) {
+        const startDate = new Date(this.data.milestone.startingDate);
+        this.startingDate = this.formatDateForInput(startDate);
+      }
+      
+      if (this.data.milestone.endingDate) {
+        const endDate = new Date(this.data.milestone.endingDate);
+        this.endingDate = this.formatDateForInput(endDate);
+      }
+    }
+  }
+  
+  private formatDateForInput(date: Date): string {
+    return date.toISOString().slice(0, 10); // Only keep YYYY-MM-DD part
+  }
 
   close(): void {
     this.dialogRef.close();
@@ -50,13 +71,25 @@ export class CreateMilestoneModalComponent {
 
     this.isLoading = true;
 
-    const formData = {
+    const formData: { 
+      name: string; 
+      description: string; 
+      startingDate: Date; 
+      endingDate: Date; 
+      projectId: any;
+      id?: number;  // Added optional id property
+    } = {
       name: this.name,
       description: this.description,
-      startingDate: new Date(this.startingDate),
-      endingDate: new Date(this.endingDate),
-      projectId: this.data.projectId
+      startingDate: new Date(this.startingDate + 'T00:00:00'), // Add time portion set to midnight
+      endingDate: new Date(this.endingDate + 'T00:00:00'),     // Add time portion set to midnight
+      projectId: this.data.projectId || (this.data.milestone ? this.data.milestone.projectId : null)
     };
+
+    // Mantener el ID si estamos editando
+    if (this.data.milestone && this.data.milestone.id) {
+      formData.id = this.data.milestone.id;
+    }
 
     this.dialogRef.close(formData); // Entrega los datos al componente padre
   }

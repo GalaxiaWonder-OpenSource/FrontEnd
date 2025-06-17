@@ -232,9 +232,25 @@
     }
   ],
   "changeProcess": [],
-  "milestones": [],
+  "milestones": [
+    {
+      "name": "mario",
+      "startingDate": "2025-12-12T05:00:00.000Z",
+      "endingDate": "2025-12-12T05:00:00.000Z",
+      "projectId": null,
+      "description": "asd",
+      "id": 1
+    }
+  ],
   "tasks": [
     {
+      "name": "asddas",
+      "description": "dasdas",
+      "specialty": "STRUCTURES",
+      "startingDate": "2025-12-12T05:00:00.000Z",
+      "dueDate": "2025-12-12T05:00:00.000Z",
+      "status": "PENDING",
+      "milestoneId": 1,
       "id": 1
     }
   ]

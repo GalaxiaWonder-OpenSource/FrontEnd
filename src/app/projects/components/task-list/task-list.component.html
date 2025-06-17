@@ -1,7 +1,7 @@
 <div class="task-cards-container">
   <mat-card *ngFor="let task of tasks" class="task-item">
     <mat-card-header>
-      <mat-card-title>{{ task.name }}</mat-card-title>
+      <mat-card-title>{{ getTaskName(task) }}</mat-card-title>
       <mat-card-subtitle>{{ task.startingDate | date }} - {{ task.dueDate | date }}</mat-card-subtitle>
       <div class="spacer"></div>
       <div class="task-actions">

@@ -1,4 +1,13 @@
 {
+  "create-milestone": {
+    "title": "Create Milestone",
+    "name": "Name",
+    "description": "Description",
+    "starting-date": "Starting Date",
+    "ending-date": "Ending Date",
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
   "user-menu": {
     "logout": "Logout"
   },
@@ -268,6 +277,11 @@
     "empty-state": "No milestones have been added yet. Click 'Add Milestone' to get started.",
     "empty-tasks-state": "No tasks have been added to this milestone yet.",
     "no-matching-tasks": "No tasks match the current filters.",
+    "create-milestone": "Create Milestone",
+    "no-milestones": "No Milestones",
+    "no-milestones-description": "You haven't added any milestones to this project yet. Add your first milestone to start planning your project.",
+    "tasks": "Tasks",
+    "add-task": "Add Task",
     "task-list-title": "Tasks",
     "task-specialty": "Specialty",
     "task-status": "Status",

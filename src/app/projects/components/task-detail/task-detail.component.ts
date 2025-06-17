@@ -27,6 +27,7 @@ import { TaskStatus } from '../../model/task-status.vo';
     MatButtonModule,
     TranslatePipe
   ],
+  providers: [TranslatePipe],  // Add TranslatePipe to providers
   templateUrl: './task-detail.component.html',
   styleUrl: './task-detail.component.css'
 })
@@ -44,7 +45,7 @@ export class TaskDetailComponent implements OnInit {
   statuses: TaskStatus[] = Object.values(TaskStatus) as TaskStatus[];
 
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private translatePipe: TranslatePipe) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -80,10 +81,10 @@ export class TaskDetailComponent implements OnInit {
   }
 
   getSpecialtyTranslation(specialty: Specialty): string {
-    return `schedule.specialties.${specialty}`;
+    return this.translatePipe.transform(`schedule.specialties.${specialty}`);
   }
 
   getStatusTranslation(status: TaskStatus): string {
-    return `schedule.task-statuses.${status}`;
+    return this.translatePipe.transform(`schedule.task-statuses.${status}`);
   }
 }

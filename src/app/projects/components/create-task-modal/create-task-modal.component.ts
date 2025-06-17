@@ -12,6 +12,7 @@ import { Specialty } from '../../model/specialty.vo';
 import { TaskStatus } from '../../model/task-status.vo';
 import { ProjectTeamMember } from '../../model/project-team-member.entity';
 import { ProjectTeamMemberService } from '../../services/project-team-member.service';
+import { Task } from '../../model/task.entity';
 
 @Component({
   selector: 'app-create-task-modal',
@@ -28,6 +29,7 @@ import { ProjectTeamMemberService } from '../../services/project-team-member.ser
     MatDialogActions,
     TranslatePipe
   ],
+  providers: [TranslatePipe],  // Add TranslatePipe as a provider
   templateUrl: './create-task-modal.component.html',
   styleUrl: './create-task-modal.component.css'
 })
@@ -46,10 +48,11 @@ export class CreateTaskModalComponent {
 
   constructor(
     private dialogRef: MatDialogRef<CreateTaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { milestoneId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { milestoneId?: number, task?: Task },
     private teamService: ProjectTeamMemberService
   ) {
     this.loadTeamMembers();
+    this.initializeFromTask();
   }
 
   private loadTeamMembers() {
@@ -67,14 +70,41 @@ export class CreateTaskModalComponent {
     if (!this.name.trim() || !this.specialty || !this.startDate || !this.endDate) return;
 
     this.dialogRef.close({
+      id: this.data.task?.id, // Preserve the ID if editing an existing task
       name: this.name.trim(),
       description: this.description.trim(),
       specialty: this.specialty as Specialty,
-      startingDate: new Date(this.startDate),
-      dueDate: new Date(this.endDate),
+      startingDate: new Date(this.startDate + 'T00:00:00'), // Add time portion set to midnight
+      dueDate: new Date(this.endDate + 'T00:00:00'),        // Add time portion set to midnight
       status: this.status,
       responsibleId: this.responsibleId,
-      milestoneId: this.data.milestoneId
+      milestoneId: this.data.task?.milestoneId || this.data.milestoneId // Use existing milestone ID if available
     });
+  }
+
+  private initializeFromTask() {
+    if (this.data.task) {
+      const task = this.data.task;
+      this.name = task.name;
+      this.description = task.description || '';
+      this.specialty = task.specialty;
+      this.status = task.status;
+      this.responsibleId = task.responsibleId;
+      
+      // Format dates for datetime-local input
+      if (task.startingDate) {
+        const startDate = new Date(task.startingDate);
+        this.startDate = this.formatDateForInput(startDate);
+      }
+      
+      if (task.dueDate) {
+        const dueDate = new Date(task.dueDate);
+        this.endDate = this.formatDateForInput(dueDate);
+      }
+    }
+  }
+  
+  private formatDateForInput(date: Date): string {
+    return date.toISOString().slice(0, 10); // Only keep YYYY-MM-DD part
   }
 }

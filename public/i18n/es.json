@@ -1,4 +1,13 @@
 {
+  "create-milestone": {
+    "title": "Crear Hito",
+    "name": "Nombre",
+    "description": "Descripción",
+    "starting-date": "Fecha de inicio",
+    "ending-date": "Fecha de finalización",
+    "cancel": "Cancelar",
+    "submit": "Crear"
+  },
   "user-menu": {
     "logout": "Cerrar sesión"
   },
@@ -274,6 +283,11 @@
     "empty-state": "No se han añadido hitos todavía. Haz clic en 'Añadir Hito' para comenzar.",
     "empty-tasks-state": "No se han añadido tareas a este hito todavía.",
     "no-matching-tasks": "No hay tareas que coincidan con los filtros actuales.",
+    "create-milestone": "Crear Hito",
+    "no-milestones": "Sin Hitos",
+    "no-milestones-description": "Aún no has añadido ningún hito a este proyecto. Añade tu primer hito para comenzar a planificar tu proyecto.",
+    "tasks": "Tareas",
+    "add-task": "Añadir Tarea",
     "task-list-title": "Tareas",
     "task-specialty": "Especialidad",
     "task-status": "Estado",

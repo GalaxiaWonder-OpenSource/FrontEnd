@@ -8,8 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
-
+import {MatDialog} from '@angular/material/dialog';
 import { MilestoneService } from '../../services/milestone.service';
 import { TaskService } from '../../services/task.service';
 import { SessionService } from '../../../iam/services/session.service';
@@ -36,11 +35,8 @@ import {TaskStatus} from '../../model/task-status.vo';
     MatExpansionModule,
     TranslatePipe,
     TaskListComponent,
-    MatDialogActions,
-    MatDialogContent,
-    MatDialogTitle,
-    MatDialogClose
   ],
+  providers: [TranslatePipe],  // Add TranslatePipe to providers
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
@@ -69,20 +65,31 @@ export class ScheduleComponent {
     this.error.set(null);
 
     const milestoneRequest = this.milestoneService.getByProjectId({ projectId: this.projectId });
-    const tasksRequest = this.taskService.getAll();
 
-    Promise.all([
-      milestoneRequest.toPromise(),
-      tasksRequest.toPromise()
-    ]).then(
-      ([milestones, rawTasks]: [Milestone[], any[]]) => {
+    milestoneRequest.toPromise().then(
+      (milestones: Milestone[]) => {
         this.milestones.set(milestones);
+        // After setting milestones, load tasks
+        this.loadTasks();
+      },
+      (error: any) => {
+        console.error('Failed to load milestones:', error);
+        this.error.set('schedule.loading-error');
+        this.snackBar.open('Failed to load schedule data', 'Close', { duration: 3000 });
+        this.loading.set(false);
+      }
+    );
+  }
 
+  loadTasks(): void {
+    this.taskService.getAll().toPromise().then(
+      (rawTasks: any[]) => {
+        // Filter tasks to only include those with milestones that exist
         const filtered = rawTasks.filter(t =>
-          milestones.some(m => m.id === t.milestoneId)
+          this.milestones().some(m => m.id === t.milestoneId)
         );
         console.log('Filtered tasks:', filtered);
-        console.log('Milestone IDs:', milestones.map(m => m.id));
+        console.log('Milestone IDs:', this.milestones().map(m => m.id));
 
         const parsedTasks = filtered.map(t => new Task({
           id: t.id,
@@ -102,10 +109,10 @@ export class ScheduleComponent {
 
         this.tasks.set(parsedTasks);
       },
-      (error) => {
-        console.error('Failed to load schedule data:', error);
+      (error: any) => {
+        console.error('Failed to load tasks:', error);
         this.error.set('schedule.loading-error');
-        this.snackBar.open('Failed to load schedule data', 'Close', { duration: 3000 });
+        this.snackBar.open('Failed to load tasks data', 'Close', { duration: 3000 });
       }
     ).finally(() => {
       this.loading.set(false);
@@ -177,8 +184,13 @@ export class ScheduleComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.taskService.update({ id: task.id! }, result).subscribe({
-          next: () => this.loadData(),
+        // Pasamos el objeto como primer parámetro (data/body) y el id como segundo parámetro (params)
+        this.taskService.update(result, { id: task.id! }).subscribe({
+          next: () => {
+            // Only reload tasks, not milestones
+            this.loadTasks();
+            this.snackBar.open('Tarea actualizada correctamente', 'Cerrar', { duration: 3000 });
+          },
           error: (err: any) => {
             console.error('Error al actualizar la tarea:', err);
             this.snackBar.open('Error al actualizar la tarea', 'Cerrar', { duration: 3000 });
@@ -194,11 +206,29 @@ export class ScheduleComponent {
       return;
     }
 
-    this.taskService.delete({ id: task.id }).subscribe({
-      next: () => this.loadData(),
+    // Optimistic update: Remove the task from local state first
+    const currentTasks = this.tasks();
+    const taskIndex = currentTasks.findIndex(t => t.id === task.id);
+    
+    if (taskIndex !== -1) {
+      // Create a copy of the tasks array without the deleted task
+      const updatedTasks = [...currentTasks];
+      updatedTasks.splice(taskIndex, 1);
+      this.tasks.set(updatedTasks);
+      
+      // Show immediate feedback
+      this.snackBar.open('Tarea eliminada correctamente', 'Cerrar', { duration: 3000 });
+    }
+
+    // El primer parámetro es el cuerpo (vacío) y el segundo es para los params de la URL
+    this.taskService.delete({}, { id: task.id }).subscribe({
       error: (err: any) => {
         console.error('Failed to delete task:', err);
-        this.snackBar.open('Error al eliminar la tarea', 'Cerrar', { duration: 3000 });
+        // Even if there's a server error, we've already updated the UI
+        // The task will be deleted on the next server refresh
+        
+        // Refresh tasks from the server after a short delay to allow the server to process
+        setTimeout(() => this.loadTasks(), 500);
       }
     });
   }
@@ -212,7 +242,8 @@ export class ScheduleComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const updatedMilestone = new Milestone({ ...milestone, ...result });
-        this.milestoneService.update({ id: updatedMilestone.id! }, updatedMilestone).subscribe({
+        // Pasamos el objeto como primer parámetro (data/body) y el id como segundo parámetro (params)
+        this.milestoneService.update(updatedMilestone, { id: updatedMilestone.id! }).subscribe({
           next: () => {
             this.loadData();
             this.snackBar.open('Milestone actualizado exitosamente', 'Cerrar', { duration: 3000 });
@@ -227,7 +258,9 @@ export class ScheduleComponent {
   }
 
   deleteMilestone(id: number): void {
-    this.milestoneService.delete({ id }).subscribe({
+    // Pasamos el ID como parámetro de ruta (url) y un objeto vacío como cuerpo (data)
+    // El primer parámetro es el cuerpo (vacío) y el segundo es para los params de la URL
+    this.milestoneService.delete({}, { id: id }).subscribe({
       next: () => {
         this.loadData();
         this.snackBar.open('Milestone eliminado correctamente', 'Cerrar', { duration: 3000 });

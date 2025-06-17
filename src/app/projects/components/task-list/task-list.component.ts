@@ -21,6 +21,7 @@ import { TaskStatus } from '../../model/task-status.vo';
     MatButtonModule,
     TranslatePipe
   ],
+  providers: [TranslatePipe],  // Add TranslatePipe to providers
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -34,19 +35,24 @@ export class TaskListComponent {
 
   constructor(
     private dialog: MatDialog,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private translatePipe: TranslatePipe
   ) {}
 
   getSpecialtyTranslation(specialty: Specialty): string {
-    return `schedule.specialties.${specialty}`;
+    return this.translatePipe.transform(`schedule.specialties.${specialty}`);
   }
 
   getStatusTranslation(status: TaskStatus): string {
-    return `schedule.task-statuses.${status}`;
+    return this.translatePipe.transform(`schedule.task-statuses.${status}`);
   }
 
   getResponsibleName(responsibleId?: number): string {
     return responsibleId ? `#${responsibleId}` : '-';
+  }
+  
+  getTaskName(task: Task): string {
+    return task.name;
   }
 
   onEdit(task: Task) {

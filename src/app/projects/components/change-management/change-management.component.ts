@@ -74,7 +74,6 @@ export class ChangeManagementComponent{
     }
   }
 
-
   private loadUserRole(): void {
     const userType = this.sessionService.getUserType();
     this.isClient = userType === UserRole.TYPE_CLIENT;
@@ -102,7 +101,7 @@ export class ChangeManagementComponent{
 
         },
         error: (err: any) => {
-          console.error('❌ Error al cargar cambios:', err);
+          console.error('Error al cargar cambios:', err);
           this.error = 'Error al cargar las solicitudes de cambio.';
         }
       });
@@ -217,10 +216,10 @@ export class ChangeManagementComponent{
       await this.changeProcessService.update(updated); // Actualizar estado
       await this.changeProcessService.delete({}, { id: request.id }).toPromise(); // Eliminar del json-server
 
-      this.showSnackBar('✅ Cambio aprobado y eliminado', 'success');
+      this.showSnackBar('Cambio aprobado y eliminado', 'success');
       await this.loadChangeRequests(); // Refrescar lista
     } catch (error) {
-      console.error('❌ Error al aprobar y eliminar cambio:', error);
+      console.error('Error al aprobar y eliminar cambio:', error);
       this.showSnackBar('Error al aprobar solicitud', 'error');
     } finally {
       this.loading = false;
@@ -241,10 +240,10 @@ export class ChangeManagementComponent{
       await this.changeProcessService.update(updated);
       await this.changeProcessService.delete({}, { id: request.id }).toPromise();
 
-      this.showSnackBar('❌ Cambio rechazado y eliminado', 'info');
+      this.showSnackBar('Cambio rechazado y eliminado', 'info');
       await this.loadChangeRequests();
     } catch (error) {
-      console.error('❌ Error al rechazar y eliminar cambio:', error);
+      console.error('Error al rechazar y eliminar cambio:', error);
       this.showSnackBar('Error al rechazar solicitud', 'error');
     } finally {
       this.loading = false;

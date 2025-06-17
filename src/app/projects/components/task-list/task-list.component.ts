@@ -1,21 +1,15 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import { NgClass, NgIf, NgFor } from '@angular/common';
-
-import { TaskDetailComponent } from '../task-detail/task-detail.component';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from '../../services/task.service';
+import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { Task } from '../../model/task.entity';
+import { Specialty } from '../../model/specialty.vo';
 import { TaskStatus } from '../../model/task-status.vo';
-import { SessionService } from '../../../iam/services/session.service';
 
 @Component({
   selector: 'app-task-list',
@@ -23,124 +17,65 @@ import { SessionService } from '../../../iam/services/session.service';
   imports: [
     CommonModule,
     MatCardModule,
-    MatButtonModule,
     MatIconModule,
-    MatTabsModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    TranslateModule,
-    DatePipe
+    MatButtonModule,
+    TranslatePipe
   ],
-  providers: [TaskService],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
-export class TaskListComponent implements OnInit {
-  @ViewChild('taskDetailDialog') taskDetailDialog!: TemplateRef<any>;
+export class TaskListComponent {
+  @Input() tasks: Task[] = [];
+  @Input() milestoneId!: string;
 
-  tasks: Task[] = [];
-  filteredTasks: Task[] = [];
-  loading = false;
-  error: string | null = null;
-  selectedTask: Task | null = null;
-  isNewTask = false;
-
-  // Expose TaskStatus enum to template
-  TaskStatus = TaskStatus;
+  @Output() editTask = new EventEmitter<Task>();
+  @Output() deleteTask = new EventEmitter<Task>();
+  @Output() assignResponsible = new EventEmitter<Task>();
 
   constructor(
-    private taskService: TaskService,
-    private sessionService: SessionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private taskService: TaskService
   ) {}
 
-  ngOnInit(): void {
-    this.loadTasks();
+  getSpecialtyTranslation(specialty: Specialty): string {
+    return `schedule.specialties.${specialty}`;
   }
 
-  loadTasks(): void {
-    const milestoneId = this.sessionService.getMilestoneId();
-    if (!milestoneId) {
-      this.error = 'No milestone selected';
-      return;
-    }
-
-    this.loading = true;
-    this.taskService.getByMilestoneId(undefined, { milestoneId: String(milestoneId) })
-      .subscribe({
-        next: (tasks: any) => {
-          this.tasks = tasks;
-          this.filteredTasks = tasks;
-          this.loading = false;
-        },
-        error: (err: any) => {
-          console.error('Error loading tasks:', err);
-          this.error = 'Failed to load tasks';
-          this.loading = false;
-        }
-      });
+  getStatusTranslation(status: TaskStatus): string {
+    return `schedule.task-statuses.${status}`;
   }
 
-  filterTasksByStatus(event: MatTabChangeEvent): void {
-    let status: TaskStatus | undefined;
-
-    // Determine status based on tab label
-    const tabLabel = event.tab.textLabel;
-    if (tabLabel === 'pending') {
-      status = TaskStatus.PENDING;
-    } else if (tabLabel === 'inProgress') {
-      status = TaskStatus.IN_PROGRESS;
-    } else if (tabLabel === 'completed') {
-      status = TaskStatus.COMPLETED;
-    }
-
-    // Filter tasks based on selected status
-    if (!status) {
-      this.filteredTasks = this.tasks;
-      return;
-    }
-
-    this.filteredTasks = this.tasks.filter(task => task.status === status);
+  getResponsibleName(responsibleId?: number): string {
+    return responsibleId ? `#${responsibleId}` : '-';
   }
 
-  getStatusClass(status: TaskStatus): string {
-    switch (status) {
-      case TaskStatus.COMPLETED: return 'status-completed';
-      case TaskStatus.IN_PROGRESS: return 'status-in-progress';
-      case TaskStatus.PENDING: return 'status-pending';
-      case TaskStatus.DRAFT: return 'status-draft';
-      case TaskStatus.CANCELED: return 'status-canceled';
-      default: return '';
-    }
+  onEdit(task: Task) {
+    this.editTask.emit(task);
   }
 
-  selectTask(task: Task): void {
-    this.selectedTask = task;
-    this.isNewTask = false;
-    this.openTaskDialog();
+  onDelete(task: Task) {
+    this.deleteTask.emit(task);
   }
 
-  createTask(): void {
-    this.selectedTask = null;
-    this.isNewTask = true;
-    this.openTaskDialog();
+  onAssign(task: Task) {
+    this.assignResponsible.emit(task);
   }
 
-  openTaskDialog(): void {
-    this.dialog.open(this.taskDetailDialog, {
-      width: '800px',
-      maxHeight: '90vh',
-      panelClass: 'no-padding-dialog'
+  onCreate(): void {
+    const dialogRef = this.dialog.open(CreateTaskModalComponent, {
+      data: { milestoneId: this.milestoneId },
+      width: '500px'
     });
-  }
 
-  closeTaskDetail(): void {
-    this.dialog.closeAll();
-  }
-
-  onTaskSaved(task: Task): void {
-    this.dialog.closeAll();
-    this.loadTasks();
+    dialogRef.afterClosed().subscribe((createdTask: Task | undefined) => {
+      if (createdTask) {
+        this.taskService.create({}, createdTask).subscribe({
+          next: () => {
+            // ⚠️ Aquí deberías usar una función como reloadTasks() o emitir un evento
+            this.tasks = [...this.tasks, createdTask];
+          }
+        });
+      }
+    });
   }
 }

@@ -1,5 +1,5 @@
 export class Milestone {
-  public readonly id?: number;
+  public readonly id?: number | undefined;
   public name: string;
   public startingDate: Date;
   public endingDate: Date;

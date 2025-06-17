@@ -1,55 +1,103 @@
 .schedule-container {
+  padding: 24px;
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container,
+.empty-state {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.loading-text {
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.error-icon,
+.empty-icon {
+  font-size: 48px;
+  color: #c62828;
+  margin-bottom: 8px;
+}
+
+/* Empty State */
+.empty-state h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Milestone Header */
+.milestone-header {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
-.milestone-card {
-  padding: 0.5rem;
-  position: relative;
+/* Accordion Panel Styling */
+.milestone-panel {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.task-divider {
-  margin: 0.75rem 0;
+/* Milestone Description */
+.milestone-info {
+  padding: 0 24px 12px;
 }
 
-.task-heading {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.task-name {
-  font-weight: 500;
-}
-
-.task-status {
-  font-size: 0.875rem;
+.milestone-description-text {
+  font-style: italic;
   color: #555;
 }
 
-.task-dates {
-  font-size: 0.8rem;
-  color: #777;
-}
-
-.no-task-msg, .empty-msg p {
-  font-style: italic;
-  color: gray;
-}
-
-.loading-box {
+/* Actions: Edit/Delete */
+.milestone-actions {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+/* Task Section */
+.tasks-section {
+  padding: 0 16px 16px;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
-  gap: 0.5rem;
+  margin: 12px 0;
+}
+
+.task-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Add Task Button */
+.add-task-btn {
+  width: 40px;
+  height: 40px;
+  box-shadow: none;
+}
+
+/* Task Count in Header */
+.task-count {
+  margin-left: 12px;
+  font-weight: 500;
+  color: #666;
+  display: inline-block;
 }

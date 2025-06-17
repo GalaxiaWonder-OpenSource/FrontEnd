@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{ 'create-milestone.title' | translate }}</h2>
+
+<div mat-dialog-content class="form-container">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-milestone.name' | translate }}</mat-label>
+    <input matInput [(ngModel)]="name" required
+           [placeholder]="'create-milestone.name' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-milestone.description' | translate }}</mat-label>
+    <textarea matInput rows="3" [(ngModel)]="description"
+              [placeholder]="'create-milestone.description' | translate"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-milestone.starting-date' | translate }}</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="startingDate" required
+           [placeholder]="'create-milestone.starting-date' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-milestone.ending-date' | translate }}</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="endingDate" required
+           [placeholder]="'create-milestone.ending-date' | translate" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">
+    {{ 'create-milestone.cancel' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="submit()"
+          [disabled]="!name || !startingDate || !endingDate">
+    {{ 'create-milestone.submit' | translate }}
+  </button>
+</div>

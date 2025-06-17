@@ -1,171 +1,115 @@
-.task-list-container {
-  padding: 16px;
-}
+/* Styles for task-list.component.css */
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.tasks-grid {
+.task-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
+  margin-top: 16px;
 }
 
-.task-card {
-  cursor: pointer;
+.task-item {
+  border-left: 4px solid #ff4081;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.task-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-specialty,
+.task-status,
+.task-responsible {
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .task-description {
+  color: #666;
   font-size: 14px;
-  color: #666;
   margin-top: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: pre-line;
 }
 
-.task-dates {
+.task-actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-  font-size: 12px;
+  justify-content: flex-end;
 }
 
-.date-item {
+.task-status-DRAFT { color: #ff9800; }
+.task-status-PENDING { color: #673ab7; }
+.task-status-IN_PROGRESS { color: #2196f3; }
+.task-status-COMPLETED { color: #4caf50; }
+.task-status-CANCELED { color: #f44336; }
+
+.assign-responsible-container {
+  margin-top: 12px;
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
-.date-item mat-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-  margin-right: 4px;
-  color: #666;
+.assign-responsible-container button {
+  width: 100%;
 }
 
-.status-chip {
+.task-responsible {
+  margin-bottom: 8px;
+  font-size: 14px;
+  border-top: 1px dashed #e0e0e0;
+  padding-top: 8px;
+}
+
+.specialty-badge {
   padding: 4px 8px;
   border-radius: 16px;
   font-size: 12px;
   font-weight: 500;
-  width: fit-content;
-}
-
-.specialty-chip {
+  display: inline-block;
+  margin-right: 4px;
   background-color: #e0e0e0;
-  padding: 2px 6px;
-  border-radius: 12px;
-  font-size: 12px;
 }
 
-mat-card-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
+.specialty-ARCHITECTURE {
+  background-color: #bbdefb;
+  color: #0d47a1;
 }
 
-/* Status colors */
-.status-completed {
-  background-color: #4caf50;
-  color: white;
+.specialty-STRUCTURES {
+  background-color: #c8e6c9;
+  color: #1b5e20;
 }
 
-.status-in-progress {
-  background-color: #2196f3;
-  color: white;
+.specialty-HSA {
+  background-color: #ffcdd2;
+  color: #b71c1c;
 }
 
-.status-pending {
-  background-color: #ff9800;
-  color: white;
+.specialty-TOPOGRAPHY {
+  background-color: #fff9c4;
+  color: #f57f17;
 }
 
-.status-draft {
-  background-color: #9e9e9e;
-  color: white;
+.specialty-SANITATION {
+  background-color: #b2dfdb;
+  color: #004d40;
 }
 
-.status-canceled {
-  background-color: #f44336;
-  color: white;
+.specialty-ELECTRICITY {
+  background-color: #ffccbc;
+  color: #bf360c;
 }
 
-.loading-container, .error-container, .empty-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 0;
+.specialty-COMMUNICATIONS {
+  background-color: #e1bee7;
+  color: #4a148c;
+}
+
+.empty-tasks-state {
+  padding: 20px;
+  text-align: center;
   color: #666;
-}
-
-.error-container mat-icon, .empty-container mat-icon {
-  font-size: 48px;
-  height: 48px;
-  width: 48px;
-  margin-bottom: 16px;
-}
-
-.error-container {
-  color: #f44336;
-}
-
-/* Styles for task detail dialog */
-:host ::ng-deep .mat-mdc-dialog-container {
-  padding: 0;
-}
-
-:host ::ng-deep .mat-mdc-dialog-content {
-  margin: 0;
-  padding: 0;
-}
-
-/* Tab styles */
-:host ::ng-deep .mat-mdc-tab-header {
-  margin-bottom: 20px;
-}
-
-.task-detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.task-detail-modal {
-  background-color: white;
+  font-style: italic;
+  background-color: #f9f9f9;
   border-radius: 4px;
-  width: 80%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  padding: 24px;
-}
-
-.close-button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
+  margin-top: 16px;
 }

@@ -79,33 +79,33 @@ interface OrganizationMemberDisplay {
 export class TeamComponent implements OnInit, OnDestroy {
   @ViewChild('addMembersDialog') addMembersDialog!: TemplateRef<any>;
   @ViewChild('removeMemberDialog') removeMemberDialog!: TemplateRef<any>;
-  
+
   // Propiedades para la tabla de miembros del equipo
   teamMembers: TeamMemberDisplay[] = [];
   displayedColumns: string[] = ['name', 'role', 'specialty', 'email', 'status', 'actions'];
-  
+
   // Propiedades para la tabla de miembros de la organización
   orgMembers: OrganizationMemberDisplay[] = [];
   filteredOrgMembers: OrganizationMemberDisplay[] = [];
   searchQuery: string = '';
-  
+
   // Propiedades para el formulario de asignación de roles
   memberForm: FormGroup;
-  
+
   // Propiedad para miembro seleccionado (utilizado en eliminación)
   selectedMember: TeamMemberDisplay | null = null;
-  
+
   // Valores para los selectores
   projectRoles = [ProjectRole.COORDINATOR, ProjectRole.SPECIALIST];
   specialties = Object.values(Specialty);
-  
+
   // Propiedades de control
   loading = true;
   error: string | null = null;
   project: Project | null = null;
   projectId: string = '';
   orgId: string = '';
-  
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -127,16 +127,16 @@ export class TeamComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const projectIdVal = this.sessionService.getProjectId();
     this.projectId = projectIdVal !== undefined ? String(projectIdVal) : '';
-    
+
     const orgIdVal = this.sessionService.getOrganizationId();
     this.orgId = orgIdVal !== undefined ? String(orgIdVal) : '';
-    
+
     if (!this.projectId) {
       this.error = this.translate.instant('team.errors.no-project-id');
       this.loading = false;
       return;
     }
-    
+
     this.loadProjectData();
   }
 
@@ -157,7 +157,7 @@ export class TeamComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       });
-      
+
     this.subscriptions.push(projectSub);
   }
 
@@ -170,13 +170,13 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.loading = false;
             return [];
           }
-          
+
           // Obtenemos los IDs de las personas para cargar sus datos
           const personIds = members.map((member: ProjectTeamMember) => member.personId.toString());
-          const personRequests = personIds.map((id: string) => 
+          const personRequests = personIds.map((id: string) =>
             this.personService.getById(null, { id })
           );
-          
+
           return forkJoin(personRequests).pipe(
             map((persons: Person[]) => {
               return members.map((member: ProjectTeamMember, index: number) => {
@@ -205,19 +205,19 @@ export class TeamComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       });
-      
+
     this.subscriptions.push(teamSub);
   }
 
   openAddMembersDialog(): void {
     this.loading = true;
-    
+
     // Resetear formulario y búsqueda
     this.searchQuery = '';
     this.memberForm = this.fb.group({
       members: this.fb.array([])
     });
-    
+
     // Cargar miembros de la organización que no están en el proyecto
     this.loadOrganizationMembers()
       .then(() => {
@@ -242,7 +242,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     return new Promise<void>((resolve, reject) => {
       // Obtener los miembros actuales del equipo para excluirlos
       const currentTeamMemberIds = this.teamMembers.map(m => m.id);
-      
+
       const orgSub = this.orgMemberService.getByOrganizationId({ organizationId: this.orgId })
         .pipe(
           switchMap((members: any) => {
@@ -250,14 +250,14 @@ export class TeamComponent implements OnInit, OnDestroy {
               this.orgMembers = [];
               return [];
             }
-            
-            const personIds = members ? members.map((member: any) => 
+
+            const personIds = members ? members.map((member: any) =>
               member && member.personId ? member.personId.toString() : ''
             ) : [];
-            const personRequests = personIds.map((id: string) => 
+            const personRequests = personIds.map((id: string) =>
               this.personService.getById(null, { id })
             );
-            
+
             // Add explicit cast to fix type compatibility issue
             return forkJoin(personRequests).pipe(
               map((persons: unknown) => {
@@ -266,14 +266,14 @@ export class TeamComponent implements OnInit, OnDestroy {
                   .map((member: OrganizationMember, index: number) => {
                     const person = typedPersons[index];
                     // Verificar si ya es miembro del equipo
-                    const isTeamMember = this.teamMembers.some(tm => 
+                    const isTeamMember = this.teamMembers.some(tm =>
                       tm.email === person.email.toString()
                     );
-                    
+
                     if (isTeamMember) {
                       return null; // Excluir miembros existentes
                     }
-                    
+
                     return {
                       id: member && member.id ? member.id.toString() : '',
                       name: `${person.firstName} ${person.lastName}`,
@@ -299,7 +299,7 @@ export class TeamComponent implements OnInit, OnDestroy {
             reject(error);
           }
         });
-        
+
       this.subscriptions.push(orgSub);
     });
   }
@@ -310,10 +310,10 @@ export class TeamComponent implements OnInit, OnDestroy {
       this.filteredOrgMembers = [...this.orgMembers];
       return;
     }
-    
+
     const query = this.searchQuery.toLowerCase().trim();
-    this.filteredOrgMembers = this.orgMembers.filter(member => 
-      member.name.toLowerCase().includes(query) || 
+    this.filteredOrgMembers = this.orgMembers.filter(member =>
+      member.name.toLowerCase().includes(query) ||
       member.email.toLowerCase().includes(query)
     );
   }
@@ -321,9 +321,9 @@ export class TeamComponent implements OnInit, OnDestroy {
   // Métodos para el formulario dinámico
   toggleMemberSelection(member: OrganizationMemberDisplay): void {
     member.selected = !member.selected;
-    
+
     const membersArray = this.memberForm.get('members') as FormArray;
-    
+
     if (member.selected) {
       // Añadir al formulario
       membersArray.push(
@@ -339,7 +339,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       if (index !== -1) {
         membersArray.removeAt(index);
       }
-      
+
       // Resetear valores
       member.role = null;
       member.specialty = null;
@@ -347,7 +347,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   getFormArrayIndex(formArray: FormArray, memberId: string): number {
-    return formArray.controls.findIndex(control => 
+    return formArray.controls.findIndex(control =>
       control.get('id')?.value === memberId
     );
   }
@@ -361,9 +361,9 @@ export class TeamComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    
+
     const membersArray = this.memberForm.get('members') as FormArray;
-    
+
     if (membersArray.length === 0) {
       this.snackBar.open(
         this.translate.instant('team.errors.no-members-selected'),
@@ -372,14 +372,14 @@ export class TeamComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    
+
     // Validar que los especialistas tengan especialidad asignada
     const invalidMembers = membersArray.controls.filter(control => {
       const roleValue = control.get('role')?.value;
       const specialtyValue = control.get('specialty')?.value;
       return roleValue === ProjectRole.SPECIALIST && !specialtyValue;
     });
-    
+
     if (invalidMembers.length > 0) {
       this.snackBar.open(
         this.translate.instant('team.errors.specialists-need-specialty'),
@@ -388,38 +388,40 @@ export class TeamComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    
+
     this.loading = true;
-    
+
     // Crear array de observables para cada nuevo miembro
     const addMemberRequests = membersArray.controls.map(control => {
       const memberId = control.get('id')?.value;
       const role = control.get('role')?.value;
       const specialty = control.get('specialty')?.value || Specialty.ARCHITECTURE; // Valor por defecto si no es especialista
-      
+
       // Encontrar el miembro de la organización correspondiente
       const orgMember = this.orgMembers.find(m => m.id === memberId);
-      
+
       if (!orgMember) {
         throw new Error(`Organization member with ID ${memberId} not found`);
       }
-      
+
       // Obtener el personId usando el método existente
       const personId = this.getPersonIdFromOrgMember(orgMember);
-      
+
       // Crear el nuevo miembro del equipo
       const newTeamMember = new ProjectTeamMember({
         id: 0, // Valor temporal
+        name: '',
+        lastName: '',
         role: role || ProjectRole.COORDINATOR,
         specialty: specialty || Specialty.ARCHITECTURE,
         memberId: Number(orgMember.id ? orgMember.id.toString() : 0),
         projectId: Number(this.projectId ? this.projectId.toString() : 0),
         personId: Number(personId)
       });
-      
+
       return this.teamMemberService.create(newTeamMember);
     });
-    
+
     // Procesar todas las solicitudes
     if (addMemberRequests.length > 0) {
       forkJoin(addMemberRequests)
@@ -427,20 +429,20 @@ export class TeamComponent implements OnInit, OnDestroy {
           next: () => {
             this.dialog.closeAll();
             this.loading = false;
-            
+
             this.snackBar.open(
               this.translate.instant('team.success.members-added'),
               this.translate.instant('team.actions.close'),
               { duration: 3000 }
             );
-            
+
             // Recargar los miembros del equipo
             this.loadTeamMembers();
           },
           error: (error) => {
             console.error('Error adding team members:', error);
             this.loading = false;
-            
+
             this.snackBar.open(
               this.translate.instant('team.errors.add-members'),
               this.translate.instant('team.actions.close'),
@@ -465,22 +467,22 @@ export class TeamComponent implements OnInit, OnDestroy {
   getProjectRoleTranslation(role: ProjectRoleType): string {
     return this.translate.instant(`team.roles.${role}`);
   }
-  
+
   getSpecialtyTranslation(specialty: string): string {
     return this.translate.instant(`team.specialties.${specialty}`);
   }
-  
+
   // Métodos para actualizar roles y especialidades durante la adición de miembros
   updateMemberRole(member: OrganizationMemberDisplay, role: ProjectRoleType): void {
     member.role = role;
-    
+
     const membersArray = this.memberForm.get('members') as FormArray;
     const index = this.getFormArrayIndex(membersArray, member.id);
-    
+
     if (index !== -1) {
       const memberGroup = membersArray.at(index) as FormGroup;
       memberGroup.patchValue({ role });
-      
+
       // Si el rol no es especialista, eliminamos la especialidad
       if (role !== ProjectRole.SPECIALIST) {
         memberGroup.patchValue({ specialty: null });
@@ -495,16 +497,16 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   updateMemberSpecialty(member: OrganizationMemberDisplay, specialty: Specialty): void {
     member.specialty = specialty;
-    
+
     const membersArray = this.memberForm.get('members') as FormArray;
     const index = this.getFormArrayIndex(membersArray, member.id);
-    
+
     if (index !== -1) {
       const memberGroup = membersArray.at(index) as FormGroup;
       memberGroup.patchValue({ specialty });
     }
   }
-  
+
   // Métodos para eliminar miembros
   openRemoveMemberDialog(member: TeamMemberDisplay): void {
     this.selectedMember = member;
@@ -512,28 +514,28 @@ export class TeamComponent implements OnInit, OnDestroy {
       width: '500px'
     });
   }
-  
+
   submitRemoveMember(): void {
     if (!this.selectedMember) {
       return;
     }
-    
+
     this.loading = true;
-    
+
     // Obtener el ID del miembro seleccionado y ejecutar un GET primero para obtener el objeto completo
     const memberId = this.selectedMember.id;
     console.log('ID a eliminar (raw):', memberId);
-    
+
     // Crear un objeto ProjectTeamMemberId para el ID
     // import { ProjectTeamMemberId } from '../../../shared/model/project-team-member-id.vo';
     // const idObject = new ProjectTeamMemberId(memberId);
-    
+
     // Primero hacemos un getById para obtener el objeto completo
     this.teamMemberService.getById(null, { id: memberId })
       .subscribe({
         next: (memberData: ProjectTeamMember) => {
           console.log('Datos del miembro a eliminar:', memberData);
-          
+
           // Ahora que tenemos el objeto completo, procedemos a eliminarlo
           this.teamMemberService.delete(null, { id: memberData.id.toString() })
             .subscribe({
@@ -541,13 +543,13 @@ export class TeamComponent implements OnInit, OnDestroy {
                 console.log('Respuesta exitosa al eliminar miembro:', response);
                 this.dialog.closeAll();
                 this.loading = false;
-                
+
                 this.snackBar.open(
                   this.translate.instant('team.success.member-removed'),
                   this.translate.instant('team.actions.close'),
                   { duration: 3000 }
                 );
-                
+
                 // Recargar los miembros del equipo
                 this.loadTeamMembers();
               },
@@ -560,7 +562,7 @@ export class TeamComponent implements OnInit, OnDestroy {
                   console.error('Error del servidor:', error.error);
                 }
                 this.loading = false;
-                
+
                 this.snackBar.open(
                   this.translate.instant('team.errors.remove-member'),
                   this.translate.instant('team.actions.close'),
@@ -572,7 +574,7 @@ export class TeamComponent implements OnInit, OnDestroy {
         error: (error: any) => {
           console.error('Error al obtener el miembro del equipo para eliminarlo:', error);
           this.loading = false;
-          
+
           this.snackBar.open(
             this.translate.instant('team.errors.remove-member'),
             this.translate.instant('team.actions.close'),

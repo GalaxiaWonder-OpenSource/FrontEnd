@@ -2,7 +2,7 @@ import { Specialty } from './specialty.vo';
 import { TaskStatus } from './task-status.vo';
 
 export class Task {
-  public readonly id: number | undefined;
+  public readonly id?: number | undefined;
   public name: string;
   public specialty: Specialty;
   public startingDate: Date;

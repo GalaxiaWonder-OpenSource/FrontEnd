@@ -9,13 +9,13 @@
         {{ 'milestone-configuration.actions.go-to-schedule' | translate }}
       </button>
     </mat-card-header>
-    
+
     <mat-card-content>
       <div *ngIf="loading" class="loading-container">
         <mat-spinner [diameter]="40"></mat-spinner>
         <p>{{ 'milestone-configuration.loading' | translate }}</p>
       </div>
-      
+
       <div *ngIf="error" class="error-container">
         <mat-icon color="warn">error</mat-icon>
         <p>{{ error }}</p>
@@ -23,7 +23,7 @@
           {{ 'milestone-configuration.actions.try-again' | translate }}
         </button>
       </div>
-      
+
       <div *ngIf="!loading && !error">
         <div *ngIf="milestones.length === 0" class="empty-state">
           <p>{{ 'milestone-configuration.empty-state' | translate }}</p>
@@ -32,7 +32,7 @@
             {{ 'milestone-configuration.actions.add-milestone' | translate }}
           </button>
         </div>
-        
+
         <div *ngIf="milestones.length > 0" class="milestone-table-container">
           <table mat-table [dataSource]="milestones" class="milestone-table">
             <!-- Nombre Column -->
@@ -40,40 +40,40 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'milestone-configuration.table.name' | translate }}</th>
               <td mat-cell *matCellDef="let milestone">{{ milestone.name }}</td>
             </ng-container>
-            
+
             <!-- Fecha de Inicio Column -->
             <ng-container matColumnDef="startingDate">
               <th mat-header-cell *matHeaderCellDef>{{ 'milestone-configuration.table.startingDate' | translate }}</th>
               <td mat-cell *matCellDef="let milestone">{{ milestone.startingDate | date }}</td>
             </ng-container>
-            
+
             <!-- Fecha de Finalización Column -->
             <ng-container matColumnDef="endingDate">
               <th mat-header-cell *matHeaderCellDef>{{ 'milestone-configuration.table.endingDate' | translate }}</th>
               <td mat-cell *matCellDef="let milestone">{{ milestone.endingDate | date }}</td>
             </ng-container>
-            
+
             <!-- Descripción Column -->
             <ng-container matColumnDef="description">
               <th mat-header-cell *matHeaderCellDef>{{ 'milestone-configuration.table.description' | translate }}</th>
               <td mat-cell *matCellDef="let milestone">{{ milestone.description }}</td>
             </ng-container>
-            
+
             <!-- Acciones Column -->
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>{{ 'milestone-configuration.table.actions' | translate }}</th>
               <td mat-cell *matCellDef="let milestone">
-                <button mat-icon-button color="warn" (click)="deleteMilestone(milestone)" 
+                <button mat-icon-button color="warn" (click)="deleteMilestone(milestone)"
                         [title]="'milestone-configuration.actions.delete-milestone' | translate">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
             </ng-container>
-            
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          
+
           <div class="actions-footer">
             <button mat-raised-button color="primary" [routerLink]="['../schedule']">
               <mat-icon>add</mat-icon>

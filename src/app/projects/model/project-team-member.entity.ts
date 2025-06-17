@@ -9,6 +9,9 @@ export class ProjectTeamMember {
 
   public readonly id: number;
 
+  public readonly name?: string;
+
+  public readonly lastName?: string;
 
   public role: ProjectRole;
 
@@ -33,6 +36,8 @@ export class ProjectTeamMember {
 
   constructor({
                 id,
+                name,
+                lastName,
                 role,
                 specialty,
                 memberId,
@@ -40,6 +45,8 @@ export class ProjectTeamMember {
                 projectId
               }: {
     id: number;
+    name?: string;
+    lastName?: string;
     role: ProjectRole;
     specialty: Specialty;
     memberId: number;
@@ -51,6 +58,8 @@ export class ProjectTeamMember {
     }
 
     this.id = id;
+    this.name = name;
+    this.lastName = lastName;
     this.role = role;
     this.specialty = specialty;
     this.memberId = memberId;
@@ -64,11 +73,17 @@ export class ProjectTeamMember {
   toJSON(): object {
     return {
       id: this.id.toString(),
+      firstName: this.name,
+      lastName: this.lastName,
       role: this.role,
       specialty: this.specialty,
       memberId: this.memberId.toString(),
       personId: this.personId.toString(),
       projectId: this.projectId.toString()
     };
+  }
+
+  get fullName(): string {
+    return `${this.name} ${this.lastName}`;
   }
 }

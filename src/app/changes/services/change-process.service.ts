@@ -13,9 +13,11 @@ export class ChangeProcessService {
     createEndpointConfig({ name: 'getByProject', method: HttpMethod.GET }, undefined, 'changeProcess'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'changeProcess'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'changeProcess', '/:id'),
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'changeProcess','/:id'),
   ]);
   getAll = this.service['getAll'];
   getByProject = this.service['getByProject'];
   create = this.service['create'];
   update = this.service['update'];
+  delete = this.service['delete'];
 }

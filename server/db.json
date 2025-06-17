@@ -213,52 +213,5 @@
       "projectId": 603
     }
   ],
-  "changeProcess": [
-    {
-      "projectId": 602,
-      "origin": "CHANGE_REQUEST",
-      "status": "PENDING",
-      "justification": "kskdkasld",
-      "description": "sabrina carpenter",
-      "approvedAt": null,
-      "approvedBy": null,
-      "id": 1
-    },
-    {
-      "projectId": 602,
-      "origin": "CHANGE_REQUEST",
-      "status": "PENDING",
-      "justification": "ASHDJASDJASDJKASDJKASD",
-      "description": "DINA BOLUARTE MIAUUUUU",
-      "approvedAt": null,
-      "approvedBy": null,
-      "id": 2
-    },
-    {
-      "projectId": 602,
-      "origin": "CHANGE_REQUEST",
-      "status": "PENDING",
-      "justification": "wqeqwewqewqeqeqw",
-      "description": "eqwewqeqwewqeqe",
-      "approvedAt": null,
-      "approvedBy": null,
-      "id": 3
-    },
-    {
-      "projectId": 602,
-      "origin": "CHANGE_REQUEST",
-      "status": "PENDING",
-      "justification": "ewqewqewqewqeqweqwe",
-      "description": "ewqewqewqewqewqe",
-      "approvedAt": null,
-      "approvedBy": null,
-      "id": 4
-    }
-  ],
-  "milestones": [
-    {}
-  ],
-  "tasks": [
-    {}
-  ]
+  "changeProcess": []
 }

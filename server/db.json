@@ -23,6 +23,22 @@
       "personId": 205,
       "role": "ORGANIZATION_USER",
       "status": "ACTIVE"
+    },
+    {
+      "username": "pedro",
+      "password": "ASDFGH123",
+      "personId": 205,
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE",
+      "id": 104
+    },
+    {
+      "username": "sahur",
+      "password": "ASDFGH123",
+      "personId": 206,
+      "role": "ORGANIZATION_USER",
+      "status": "ACTIVE",
+      "id": 105
     }
   ],
   "persons": [
@@ -51,6 +67,20 @@
       "firstName": "test",
       "lastName": "test lastname",
       "id": 204
+    },
+    {
+      "email": "dsadasaa@gmail.com",
+      "phone": "+51989898987",
+      "firstName": "pedro",
+      "lastName": "jeje",
+      "id": 205
+    },
+    {
+      "email": "brosaa@gmail.com",
+      "phone": "+51989898987",
+      "firstName": "sahur",
+      "lastName": "kitty",
+      "id": 206
     }
   ],
   "organizations": [
@@ -115,6 +145,28 @@
       "members": [],
       "invitations": [],
       "id": 306
+    },
+    {
+      "legalName": "hola",
+      "commercialName": "holas",
+      "ruc": "20538856674",
+      "createdBy": 205,
+      "createdAt": "2025-06-17T21:39:15.663Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 307
+    },
+    {
+      "legalName": "mario",
+      "commercialName": "marids",
+      "ruc": "20538856674",
+      "createdBy": 206,
+      "createdAt": "2025-06-17T21:58:45.675Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 308
     }
   ],
   "organization-invitations": [
@@ -182,6 +234,20 @@
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-17T19:45:29.904Z",
       "id": 506
+    },
+    {
+      "personId": 205,
+      "organizationId": 307,
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-17T21:39:15.670Z",
+      "id": 507
+    },
+    {
+      "personId": 206,
+      "organizationId": 308,
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-17T21:58:45.684Z",
+      "id": 508
     }
   ],
   "projects": [
@@ -229,6 +295,30 @@
       "organizationId": 306,
       "contractor": 201,
       "contractingEntityId": 201
+    },
+    {
+      "id": 605,
+      "name": "test",
+      "description": "fasd",
+      "status": "BASIC_STUDIES",
+      "startingDate": "2025-12-12T00:00:00.000Z",
+      "endingDate": "2026-12-12T00:00:00.000Z",
+      "team": [],
+      "organizationId": 307,
+      "contractor": 205,
+      "contractingEntityId": 205
+    },
+    {
+      "id": 606,
+      "name": "sdsadsa",
+      "description": "dasdsad",
+      "status": "BASIC_STUDIES",
+      "startingDate": "+022121-11-12T05:00:00.000Z",
+      "endingDate": "+012121-02-21T05:00:00.000Z",
+      "team": [],
+      "organizationId": 308,
+      "contractor": 206,
+      "contractingEntityId": 206
     }
   ],
   "project-team-members": [
@@ -267,6 +357,14 @@
       "memberId": 201,
       "personId": 201,
       "projectId": 604
+    },
+    {
+      "id": 706,
+      "role": "COORDINATOR",
+      "specialty": "ARCHITECTURE",
+      "memberId": 206,
+      "personId": 206,
+      "projectId": 606
     }
   ],
   "changeProcess": [],
@@ -293,7 +391,5 @@
       "milestoneId": 1
     }
   ],
-  "register": [
-    
-  ]
+  "register": []
 }

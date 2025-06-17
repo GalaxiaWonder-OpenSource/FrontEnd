@@ -171,22 +171,34 @@ export class TeamComponent implements OnInit, OnDestroy {
             return [];
           }
 
-          // Obtenemos los IDs de las personas para cargar sus datos
-          const personIds = members.map((member: ProjectTeamMember) => member.personId.toString());
-          const personRequests = personIds.map((id: string) =>
-            this.personService.getById(null, { id })
-          );
-
-          return forkJoin(personRequests).pipe(
-            map((persons: Person[]) => {
-              return members.map((member: ProjectTeamMember, index: number) => {
-                const person = persons[index];
+          // Obtenemos todos los miembros de una sola vez para evitar peticiones individuales que pueden fallar
+          return this.personService.getAll().pipe(
+            map((allPersons: Person[]) => {
+              const personMap = new Map<number, Person>();
+              allPersons.forEach(person => {
+                if (person && person.id !== undefined) {
+                  personMap.set(person.id, person);
+                }
+              });
+              
+              return members.map((member: ProjectTeamMember) => {
+                // Buscar la persona en nuestro mapa de personas
+                const personId = typeof member.personId === 'object' ? String(member.personId) : member.personId;
+                const person = personMap.get(Number(personId));
+                
+                // Si no encontramos la persona, creamos una representación genérica
+                const firstName = person?.firstName || 'Unknown';
+                const lastName = person?.lastName || 'User';
+                const email = person?.email ? 
+                  (typeof person.email === 'string' ? person.email : person.email.toString()) : 
+                  'no-email@example.com';
+                
                 return {
                   id: member.id.toString(),
-                  name: `${person.firstName} ${person.lastName}`,
+                  name: `${firstName} ${lastName}`,
                   role: member.role,
                   specialty: member.specialty,
-                  email: person.email.toString(),
+                  email: email,
                   status: 'ACTIVE' // Asumimos estado activo, esto puede cambiar según tu modelo
                 };
               });
@@ -250,47 +262,77 @@ export class TeamComponent implements OnInit, OnDestroy {
               this.orgMembers = [];
               return [];
             }
-
-            const personIds = members ? members.map((member: any) =>
-              member && member.personId ? member.personId.toString() : ''
-            ) : [];
-            const personRequests = personIds.map((id: string) =>
-              this.personService.getById(null, { id })
-            );
-
-            // Add explicit cast to fix type compatibility issue
-            return forkJoin(personRequests).pipe(
-              map((persons: unknown) => {
-                const typedPersons = persons as Person[];
-                return members
-                  .map((member: OrganizationMember, index: number) => {
-                    const person = typedPersons[index];
-                    // Verificar si ya es miembro del equipo
-                    const isTeamMember = this.teamMembers.some(tm =>
-                      tm.email === person.email.toString()
-                    );
-
-                    if (isTeamMember) {
-                      return null; // Excluir miembros existentes
-                    }
-
-                    return {
-                      id: member && member.id ? member.id.toString() : '',
-                      name: `${person.firstName} ${person.lastName}`,
-                      email: person.email.toString(),
-                      selected: false,
-                      role: null,
-                      specialty: null
-                    };
-                  })
-                  .filter((member: OrganizationMemberDisplay | null) => member !== null) as OrganizationMemberDisplay[];
+            
+            // Instead of making individual requests, get all persons at once
+            return this.personService.getAll().pipe(
+              map((allPersons: Person[]) => {
+                // Create a map for quick person lookup by ID
+                const personMap = new Map<number, Person>();
+                allPersons.forEach(person => {
+                  if (person && person.id !== undefined) {
+                    personMap.set(person.id, person);
+                  }
+                });
+                
+                const displayMembers: OrganizationMemberDisplay[] = [];
+                
+                for (const member of members) {
+                  if (!member || !member.personId) {
+                    continue;
+                  }
+                  
+                  // Convert personId to number safely
+                  const personIdRaw = member.personId;
+                  const personIdNum = typeof personIdRaw === 'object' 
+                    ? parseInt(personIdRaw.toString(), 10) 
+                    : typeof personIdRaw === 'string' 
+                      ? parseInt(personIdRaw, 10) 
+                      : personIdRaw;
+                  
+                  if (isNaN(personIdNum)) {
+                    console.warn('Invalid person ID:', personIdRaw);
+                    continue;
+                  }
+                  
+                  // Get person from our map
+                  const person = personMap.get(personIdNum);
+                  
+                  if (!person) {
+                    console.warn(`Person with ID ${personIdNum} not found in database`);
+                    continue;
+                  }
+                  
+                  // Safe email handling
+                  let email = 'no-email@example.com';
+                  if (person.email) {
+                    email = typeof person.email === 'string' ? person.email : String(person.email);
+                  }
+                  
+                  // Check if already a team member
+                  const isTeamMember = this.teamMembers.some(tm => tm.email === email);
+                  if (isTeamMember) {
+                    continue; // Skip if already a team member
+                  }
+                  
+                  // Add to display members
+                  displayMembers.push({
+                    id: member.id ? member.id.toString() : '',
+                    name: `${person.firstName || ''} ${person.lastName || ''}`,
+                    email: email,
+                    selected: false,
+                    role: null,
+                    specialty: null
+                  });
+                }
+                
+                return displayMembers;
               })
             );
           })
         )
         .subscribe({
           next: (displayMembers: OrganizationMemberDisplay[]) => {
-            this.orgMembers = displayMembers;
+            this.orgMembers = displayMembers || [];
             this.filteredOrgMembers = [...this.orgMembers];
             resolve();
           },
@@ -312,7 +354,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     }
 
     const query = this.searchQuery.toLowerCase().trim();
-    this.filteredOrgMembers = this.orgMembers.filter(member =>
+    this.filteredOrgMembers = this.orgMembers.filter((member: OrganizationMemberDisplay) =>
       member.name.toLowerCase().includes(query) ||
       member.email.toLowerCase().includes(query)
     );

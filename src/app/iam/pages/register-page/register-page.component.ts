@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserAccountService } from '../../services/user-account.service';
+import { PersonService } from '../../services/person.service';
 import { UserRole } from '../../model/user-role.vo';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import {MatButton} from '@angular/material/button';
@@ -23,6 +24,7 @@ export class RegisterPageComponent {
 
   constructor(
     private userAccountService: UserAccountService,
+    private personService: PersonService,
     private translate: TranslateService,
     private router: Router
   ) {}
@@ -82,55 +84,38 @@ export class RegisterPageComponent {
         };
 
         // Create the person using the Angular service
-        fetch('/api/v1/persons', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(personData)
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to create person');
-          }
-          return response.json();
-        })
-        .then(person => {
-          console.log('Person created:', person);
-          
-          // Step 2: Create a user account with a reference to the person
-          const userAccountData = {
-            username: formData.username.toLowerCase(),
-            password: formData.password,
-            personId: person.id,
-            role: 'ORGANIZATION_USER', // Mapped from UserRole to match db.json structure
-            status: 'ACTIVE'
-          };
+        this.personService.create(personData).subscribe({
+          next: (person: any) => {
+            console.log('Person created:', person);
+            
+            // Step 2: Create a user account with a reference to the person
+            const userAccountData = {
+              username: formData.username.toLowerCase(),
+              password: formData.password,
+              personId: person.id,
+              role: 'ORGANIZATION_USER', // Mapped from UserRole to match db.json structure
+              status: 'ACTIVE'
+            };
 
-          // Create the user account
-          return fetch('/api/v1/user-accounts', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userAccountData)
-          });
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to create user account');
+            // Create the user account using Angular service
+            this.userAccountService.create(userAccountData).subscribe({
+              next: (userAccount: any) => {
+                console.log('User account created:', userAccount);
+                this.isRegistered = true;
+                this.isLoading = false;
+              },
+              error: (error: any) => {
+                console.error('Error creating user account:', error);
+                this.setError('register-page.errors.create-account', 'Failed to create user account');
+                this.isLoading = false;
+              }
+            });
+          },
+          error: (error: any) => {
+            console.error('Error creating person:', error);
+            this.setError('register-page.errors.create-account', 'Failed to create person');
+            this.isLoading = false;
           }
-          return response.json();
-        })
-        .then(userAccount => {
-          console.log('User account created:', userAccount);
-          this.isRegistered = true;
-          this.isLoading = false;
-        })
-        .catch(error => {
-          console.error('Registration error:', error);
-          this.setError('register-page.errors.create-account', error.message);
-          this.isLoading = false;
         });
       },
       error: (err: any) => {

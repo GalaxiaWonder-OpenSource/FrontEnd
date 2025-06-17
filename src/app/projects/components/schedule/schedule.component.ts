@@ -14,7 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Specialty } from '../../model/specialty.vo';
 import { TaskStatus } from '../../model/task-status.vo';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ViewChild, TemplateRef } from '@angular/core';
 
 
@@ -33,7 +33,8 @@ import { ViewChild, TemplateRef } from '@angular/core';
     MatIconModule,
     MatCardModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   standalone: true,
   templateUrl: './schedule.component.html',
@@ -57,6 +58,13 @@ export class ScheduleComponent implements OnInit {
   TaskStatus = TaskStatus;
   specialties = Object.values(Specialty); // Array de valores del enum para el template
  @ViewChild('addTaskDialog') addTaskDialogTemplate!: TemplateRef<any>;
+ @ViewChild('addMilestoneDialog') addMilestoneDialogTemplate!: TemplateRef<any>;
+ @ViewChild('editMilestoneDialog') editMilestoneDialogTemplate!: TemplateRef<any>;
+ @ViewChild('editTaskDialog') editTaskDialogTemplate!: TemplateRef<any>;
+ @ViewChild('assignResponsibleDialog') assignResponsibleDialogTemplate!: TemplateRef<any>;
+ 
+ private currentMilestone: any;
+ private currentTask: any;
 
   constructor(private fb: FormBuilder, private dialog: MatDialog) {}
 
@@ -139,30 +147,84 @@ export class ScheduleComponent implements OnInit {
   }
 
   onTaskSubmit(): void {
-    if (this.taskForm.valid) {
+    if (this.taskForm.valid && this.currentMilestone) {
       console.log('Task submitted:', this.taskForm.value);
-      // Handle task submission
+      
+      // Create a new task object with form values and milestone ID
+      const newTask = {
+        id: Math.floor(Math.random() * 1000).toString(), // Generate a temporary ID
+        name: this.taskForm.value.name,
+        specialty: this.taskForm.value.specialty,
+        status: this.taskForm.value.status,
+        startingDate: this.taskForm.value.startingDate,
+        dueDate: this.taskForm.value.dueDate,
+        description: this.taskForm.value.description,
+        milestoneId: this.currentMilestone.id,
+        responsibleId: null
+      };
+      
+      // In a real application, you would call a service to save the task
+      console.log('New task to be saved:', newTask);
+      
+      // Close the dialog
+      this.dialog.closeAll();
     }
   }
 
   onTaskUpdateSubmit(): void {
-    if (this.taskForm.valid) {
+    if (this.taskForm.valid && this.currentTask) {
       console.log('Task updated:', this.taskForm.value);
-      // Handle task update
+      
+      // Update the task with new values
+      Object.assign(this.currentTask, {
+        name: this.taskForm.value.name,
+        specialty: this.taskForm.value.specialty,
+        status: this.taskForm.value.status,
+        startingDate: this.taskForm.value.startingDate,
+        dueDate: this.taskForm.value.dueDate,
+        description: this.taskForm.value.description
+      });
+      
+      // In a real application, you would call a service to update the task
+      console.log('Updated task to be saved:', this.currentTask);
+      
+      // Close the dialog
+      this.dialog.closeAll();
     }
   }
 
   onAssignResponsibleSubmit(): void {
-    if (this.responsibleForm.valid) {
+    if (this.responsibleForm.valid && this.currentTask) {
       console.log('Responsible assigned:', this.responsibleForm.value);
-      // Handle responsible assignment
+      
+      // Update the task with the new responsible
+      this.currentTask.responsibleId = this.responsibleForm.value.responsibleId;
+      
+      // In a real application, you would call a service to update the task
+      console.log('Task with new responsible to be saved:', this.currentTask);
+      
+      // Close the dialog
+      this.dialog.closeAll();
     }
   }
 
   onUpdateSubmit(): void {
-    if (this.milestoneForm.valid) {
+    if (this.milestoneForm.valid && this.currentMilestone) {
       console.log('Milestone updated:', this.milestoneForm.value);
-      // Handle milestone update
+      
+      // Update the milestone with new values
+      Object.assign(this.currentMilestone, {
+        name: this.milestoneForm.value.name,
+        startingDate: this.milestoneForm.value.startingDate,
+        endingDate: this.milestoneForm.value.endingDate,
+        description: this.milestoneForm.value.description
+      });
+      
+      // In a real application, you would call a service to update the milestone
+      console.log('Updated milestone to be saved:', this.currentMilestone);
+      
+      // Close the dialog
+      this.dialog.closeAll();
     }
   }
 
@@ -183,41 +245,105 @@ export class ScheduleComponent implements OnInit {
   }
 
   openAddMilestoneDialog(): void {
-    // This would open a dialog to add a new milestone
-    console.log('Open add milestone dialog');
+    console.log('Opening add milestone dialog');
+    this.milestoneForm.reset({
+      name: '',
+      startingDate: new Date(),
+      endingDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+      description: ''
+    });
+    
+    this.dialog.open(this.addMilestoneDialogTemplate, {
+      width: '600px'
+    });
   }
 
   openEditMilestoneDialog(milestone: any): void {
-    // This would open a dialog to edit an existing milestone
-    console.log('Open edit milestone dialog for', milestone);
+    console.log('Opening edit milestone dialog for', milestone);
+    this.currentMilestone = milestone;
+    
+    // Populate the form with the milestone data
+    this.milestoneForm.setValue({
+      name: milestone.name,
+      startingDate: new Date(milestone.startingDate),
+      endingDate: new Date(milestone.endingDate),
+      description: milestone.description || ''
+    });
+    
+    this.dialog.open(this.editMilestoneDialogTemplate, {
+      width: '600px'
+    });
   }
 
   deleteMilestone(milestone: any): void {
-    // This would delete a milestone
-    console.log('Delete milestone', milestone);
+    console.log('Deleting milestone', milestone);
+    if (confirm('¿Estás seguro de que quieres eliminar este hito?')) {
+      // Here you would call a service to delete the milestone
+      // For now, we'll just filter it out of the array
+      this.milestones = this.milestones.filter(m => m.id !== milestone.id);
+    }
   }
 
   openAddTaskDialog(milestone: any): void {
-  console.log('Open add task dialog for milestone', milestone);
-  this.dialog.open(this.addTaskDialogTemplate, {
-    width: '600px',
-    data: milestone
-  });
-}
+    console.log('Opening add task dialog for milestone', milestone);
+    this.currentMilestone = milestone;
+    
+    // Reset the form to initial values
+    this.taskForm.reset({
+      name: '',
+      specialty: Specialty.ARCHITECTURE,
+      status: TaskStatus.PENDING,
+      startingDate: new Date(),
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 7)),
+      description: ''
+    });
+    
+    this.dialog.open(this.addTaskDialogTemplate, {
+      width: '600px'
+    });
+  }
 
   openEditTaskDialog(task: any, milestone: any): void {
-    // This would open a dialog to edit an existing task
-    console.log('Open edit task dialog for task', task, 'in milestone', milestone);
+    console.log('Opening edit task dialog for task', task, 'in milestone', milestone);
+    this.currentTask = task;
+    this.currentMilestone = milestone;
+    
+    // Populate the form with the task data
+    this.taskForm.setValue({
+      name: task.name,
+      specialty: task.specialty,
+      status: task.status,
+      startingDate: new Date(task.startingDate),
+      dueDate: new Date(task.dueDate),
+      description: task.description || ''
+    });
+    
+    this.dialog.open(this.editTaskDialogTemplate, {
+      width: '600px'
+    });
   }
 
   deleteTask(task: any): void {
-    // This would delete a task
-    console.log('Delete task', task);
+    console.log('Deleting task', task);
+    if (confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
+      // Here you would call a service to delete the task
+      // For demonstration purposes, we'll just remove it from our test data
+      // In a real application, you would call a service method
+    }
   }
 
   openAssignResponsibleDialog(task: any): void {
-    // This would open a dialog to assign a responsible person to a task
-    console.log('Open assign responsible dialog for task', task);
+    console.log('Opening assign responsible dialog for task', task);
+    this.currentTask = task;
+    
+    // Reset the form and pre-select the current responsible if any
+    this.responsibleForm.reset({
+      responsibleId: task.responsibleId || ''
+    });
+    
+    this.dialog.open(this.assignResponsibleDialogTemplate, {
+      width: '500px'
+    });
   }
 
   getResponsibleName(responsibleId: string): string {
@@ -227,9 +353,27 @@ export class ScheduleComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // This would submit the milestone form
-    if (this.milestoneForm.valid) {
+    if (this.milestoneForm.valid && this.project) {
       console.log('Milestone submitted:', this.milestoneForm.value);
+      
+      // Create a new milestone object
+      const newMilestone = {
+        id: Math.floor(Math.random() * 1000).toString(), // Generate a temporary ID
+        name: this.milestoneForm.value.name,
+        startingDate: this.milestoneForm.value.startingDate,
+        endingDate: this.milestoneForm.value.endingDate,
+        description: this.milestoneForm.value.description,
+        projectId: this.project.id
+      };
+      
+      // In a real application, you would call a service to save the milestone
+      console.log('New milestone to be saved:', newMilestone);
+      
+      // Add to the current list for demonstration purposes
+      this.milestones.push(newMilestone);
+      
+      // Close the dialog
+      this.dialog.closeAll();
     }
   }
 }

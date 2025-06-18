@@ -112,7 +112,7 @@ export class InvitationListComponent implements OnInit {
     const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
     try {
-      const person: Person = await this.personService.getById(invitation.personId).toPromise();
+      const person: Person = await this.personService.getById({}, { id: invitation.personId }).toPromise();
 
       const newMember = {
         personId: invitation.personId,

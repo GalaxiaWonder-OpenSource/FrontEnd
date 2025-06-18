@@ -62,14 +62,6 @@
     }
   ],
   "organization-invitations": [
-    {
-      "organizationId": 1,
-      "personId": 3,
-      "invitedBy": "Henry Reaño",
-      "invitedAt": "2025-06-18T19:11:40.347Z",
-      "status": "PENDING",
-      "id": 1
-    }
   ],
   "organization-members": [
     {
@@ -81,6 +73,16 @@
       "memberType": "CONTRACTOR",
       "joinedAt": "2025-06-18T18:13:31.797Z",
       "id": 1
+    },
+    {
+      "personId": 3,
+      "organizationId": 1,
+      "memberType": "WORKER",
+      "joinedAt": "2025-06-18T19:37:07.214Z",
+      "firstName": "Mario",
+      "lastName": "López",
+      "email": "mario@example.com",
+      "id": 2
     }
   ],
   "projects": [],

@@ -517,7 +517,14 @@
     "title": "Project Team",
     "loading": "Loading team members...",
     "empty-state": "There are no members in this project team yet. Click 'Add Members' to get started.",
-
+    "actions": {
+      "add-members": "Add Members",
+      "try-again": "Try Again",
+      "cancel": "Cancel",
+      "add": "Add",
+      "remove-member": "Remove Member",
+      "confirm": "Confirm"
+    },
     "table": {
       "name": "Name",
       "role": "Role",
@@ -554,6 +561,7 @@
       "edit-member": "Edit Member",
       "remove-member": "Remove Member",
       "cancel": "Cancel",
+      "confirm": "Confirm",
       "add": "Add",
       "close": "Close",
       "try-again": "Try Again"
@@ -571,6 +579,12 @@
         "specialty": "Specialty",
         "select-role": "Select role",
         "select-specialty": "Select specialty"
+      },
+
+      "remove-member": {
+        "title": "Remove Member",
+        "confirmation": "Are you sure you want to remove this member from the team?",
+        "warning": "This action cannot be undone."
       }
     },
 

@@ -520,22 +520,34 @@
     "confirm-delete": "¿Está seguro de que desea eliminar este hito?"
   },
   "team": {
-    "title": "Equipo de Trabajo",
+    "title": "Equipo del Proyecto",
     "loading": "Cargando miembros del equipo...",
-    "empty-state": "No hay miembros en este equipo de proyecto todavía. Haz clic en 'Agregar Miembros' para comenzar.",
+    "empty-state": "Aún no hay miembros en este equipo de proyecto. Haz clic en 'Agregar miembros' para comenzar.",
+
+    "actions": {
+      "add-members": "Agregar miembros",
+      "view-details": "Ver detalles",
+      "edit-member": "Editar miembro",
+      "remove-member": "Eliminar miembro",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "close": "Cerrar",
+      "try-again": "Intentar nuevamente"
+    },
 
     "table": {
       "name": "Nombre",
       "role": "Rol",
       "specialty": "Especialidad",
-      "email": "Correo",
+      "email": "Correo electrónico",
       "status": "Estado",
       "actions": "Acciones"
     },
 
     "statuses": {
       "ACTIVE": "Activo",
-      "PENDING": "Pendiente de Confirmación",
+      "PENDING": "Pendiente de confirmación",
       "INACTIVE": "Inactivo"
     },
 
@@ -547,71 +559,50 @@
     "specialties": {
       "ARCHITECTURE": "Arquitectura",
       "STRUCTURES": "Estructuras",
-      "HSA": "Seguridad y Salud",
+      "HSA": "Salud y Seguridad",
       "TOPOGRAPHY": "Topografía",
       "SANITATION": "Saneamiento",
       "ELECTRICITY": "Electricidad",
       "COMMUNICATIONS": "Comunicaciones"
     },
 
-    "actions": {
-      "add-members": "Agregar Miembros",
-      "view-details": "Ver Detalles",
-      "edit-member": "Editar Miembro",
-      "remove-member": "Eliminar Miembro",
-      "cancel": "Cancelar",
-      "add": "Agregar",
-      "save": "Guardar",
-      "close": "Cerrar",
-      "try-again": "Intentar Nuevamente",
-      "confirm": "Confirmar"
-    },
-
     "dialogs": {
       "add-members": {
-        "title": "Agregar Miembros al Equipo",
-        "search": "Buscar por nombre o correo",
-        "no-results": "No se encontraron miembros que coincidan con tu criterio de búsqueda.",
+        "title": "Agregar miembros al equipo",
+        "search": "Buscar por nombre o correo electrónico",
+        "no-results": "No se encontraron miembros que coincidan con la búsqueda.",
         "select": "Seleccionar",
         "name": "Nombre",
-        "email": "Correo",
+        "email": "Correo electrónico",
         "role": "Rol",
         "specialty": "Especialidad",
-        "select-role": "Seleccionar rol",
-        "select-specialty": "Seleccionar especialidad"
+        "select-role": "Selecciona un rol",
+        "select-specialty": "Selecciona una especialidad"
       },
-      "edit-member": {
-        "title": "Editar Miembro del Equipo",
-        "role": "Rol",
-        "specialty": "Especialidad",
-        "select-role": "Seleccionar rol",
-        "select-specialty": "Seleccionar especialidad"
-      },
+
       "remove-member": {
-        "title": "Eliminar Miembro del Equipo",
-        "confirmation": "¿Está seguro de que desea eliminar a este miembro del equipo?",
+        "title": "Eliminar miembro",
+        "confirmation": "¿Estás seguro de que deseas eliminar a este miembro del equipo?",
         "warning": "Esta acción no se puede deshacer."
       }
     },
 
     "errors": {
-      "no-project-id": "No se encontró ID del proyecto en la sesión",
+      "no-project-id": "No se encontró el ID del proyecto en la sesión",
       "load-project": "Error al cargar la información del proyecto",
       "load-members": "Error al cargar los miembros del equipo",
       "load-org-members": "Error al cargar los miembros de la organización",
-      "invalid-form": "Por favor complete todos los campos requeridos",
-      "no-members-selected": "Por favor seleccione al menos un miembro para agregar",
+      "invalid-form": "Por favor, completa todos los campos requeridos",
+      "no-members-selected": "Selecciona al menos un miembro para agregar",
       "specialists-need-specialty": "Los miembros especialistas deben tener una especialidad asignada",
       "add-members": "Error al agregar miembros al equipo",
-      "update-member": "Error al actualizar el miembro del equipo",
-      "remove-member": "Error al eliminar el miembro del equipo",
-      "member-exists": "El miembro ya existe en este equipo"
+      "member-exists": "Este miembro ya pertenece al equipo"
     },
 
     "success": {
-      "members-added": "Miembros agregados al equipo exitosamente",
-      "member-updated": "Miembro del equipo actualizado exitosamente",
-      "member-removed": "Miembro eliminado del equipo exitosamente"
+      "members-added": "Miembros agregados exitosamente al equipo",
+      "member-updated": "Miembro actualizado con éxito",
+      "member-removed": "Miembro eliminado del equipo correctamente"
     }
   },
 

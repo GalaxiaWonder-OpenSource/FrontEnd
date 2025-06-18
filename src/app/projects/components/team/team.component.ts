@@ -435,7 +435,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     const addMemberRequests = membersArray.controls.map(control => {
       const memberId = control.get('id')?.value;
       const role = control.get('role')?.value;
-      const specialty = control.get('specialty')?.value || Specialty.ARCHITECTURE; // Valor por defecto si no es especialista
+      const specialty = control.get('specialty')?.value; // Valor por defecto si no es especialista
 
       // Encontrar el miembro de la organización correspondiente
       const orgMember = this.orgMembers.find(m => m.id === memberId);
@@ -452,8 +452,8 @@ export class TeamComponent implements OnInit, OnDestroy {
         id: 0, // Valor temporal
         name: '',
         lastName: '',
-        role: role || ProjectRole.COORDINATOR,
-        specialty: specialty || Specialty.ARCHITECTURE,
+        role: role,
+        specialty: specialty,
         memberId: Number(orgMember.id ? orgMember.id.toString() : 0),
         projectId: Number(this.projectId ? this.projectId.toString() : 0),
         personId: Number(personId)

@@ -15,6 +15,7 @@ import { OrganizationMemberService } from '../../services/organization-member.se
 import {TranslatePipe} from '@ngx-translate/core';
 import {OrganizationService} from '../../services/organization.service';
 import {PersonService} from '../../../iam/services/person.service';
+import {Person} from '../../../iam/model/person.entity';
 
 @Component({
   selector: 'app-invitation-list',
@@ -61,7 +62,7 @@ export class InvitationListComponent implements OnInit {
     this.loadInvitations();
   }
 
-  private async loadInvitations() {
+  loadInvitations() {
     this.loading.set(true);
     try {
       const currentPersonId = this.sessionService.getPersonId();
@@ -111,22 +112,28 @@ export class InvitationListComponent implements OnInit {
     const id = invitation.invitationId?.toString() ?? '';
     this.processingInvitation.set(id);
     try {
+      const person: Person = await this.personService.getById(invitation.personId).toPromise();
 
-      await this.organizationMemberService.create({
+      const newMember = {
         personId: invitation.personId,
         organizationId: invitation.organizationId,
         memberType: 'WORKER',
-        joinedAt: new Date()
-      }).toPromise();
+        joinedAt: new Date(),
+        firstName: person.firstName,
+        lastName: person.lastName,
+        email: person.email
+      };
 
-      await this.invitationService.delete({}, {id}).toPromise();
+      await this.organizationMemberService.create(newMember).toPromise();
+
+      await this.invitationService.delete({}, { id }).toPromise();
 
       invitation.accept();
       this.showSnackBar('¡Accepted invitation!', 'success');
       await this.loadInvitations();
     } catch (error) {
       console.error('Error accepting invitation:', error);
-      this.showSnackBar('Error accepting Invitations', 'error');
+      this.showSnackBar('Error accepting invitation', 'error');
     } finally {
       this.processingInvitation.set(null);
     }

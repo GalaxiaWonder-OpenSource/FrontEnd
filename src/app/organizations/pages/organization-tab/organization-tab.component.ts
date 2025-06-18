@@ -15,6 +15,8 @@ import {OrganizationStatus} from '../../model/organization-status.vo';
 import {OrganizationMember} from '../../model/organization-member.entity';
 import {OrganizationMemberType} from '../../model/organization-member-type.vo';
 import {OrganizationMemberService} from '../../services/organization-member.service';
+import {PersonService} from '../../../iam/services/person.service';
+import {Person} from '../../../iam/model/person.entity';
 
 @Component({
   selector: 'app-organization-tab',
@@ -38,7 +40,8 @@ export class OrganizationTabComponent {
     private organizationService: OrganizationService,
     private dialog: MatDialog,
     private session: SessionService,
-    private organizationMemberService: OrganizationMemberService
+    private organizationMemberService: OrganizationMemberService,
+    private personService: PersonService
   ) {
     this.loadOrganizations();
   }
@@ -96,22 +99,31 @@ export class OrganizationTabComponent {
             status: OrganizationStatus.ACTIVE
           });
 
-          this.organizationService.create(newOrg).subscribe({
-            next: (createdOrg: Organization) => {
-              const member = new OrganizationMember({
-                personId: creatorId,
-                organizationId: createdOrg.id,
-                memberType: OrganizationMemberType.CONTRACTOR
-              });
+          // Query te person data to inject it into the organization member model
+          this.personService.getById({},{id: this.session.getPersonId()}).subscribe({
+            next: (person: Person) => {
+              // Second request embedded on the next procedure of the first one
+              // because I suck at using proper scoping at javascript
+              this.organizationService.create(newOrg).subscribe({
+                next: (createdOrg: Organization) => {
+                  const member = new OrganizationMember({
+                    firstName: person.firstName,
+                    lastName: person.lastName,
+                    email: person.email,
+                    personId: creatorId,
+                    organizationId: createdOrg.id,
+                    memberType: OrganizationMemberType.CONTRACTOR
+                  });
 
-              this.organizationMemberService.create(member).subscribe({
-                next: () => this.loadOrganizations(),
-                error: (err: any) => console.error('Failed to create organization member:', err)
+                  this.organizationMemberService.create(member).subscribe({
+                    next: () => this.loadOrganizations(),
+                    error: (err: any) => console.error('Failed to create organization member:', err)
+                  });
+                },
+                error: (err: any) => console.error('Failed to create organization:', err)
               });
-            },
-            error: (err: any) => console.error('Failed to create organization:', err)
+            }
           });
-
         } catch (err) {
           console.error('Validation failed when creating organization:', err);
         }

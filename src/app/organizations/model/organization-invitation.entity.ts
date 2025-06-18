@@ -7,7 +7,7 @@ export class OrganizationInvitation {
   public readonly invitationId: number | undefined;
   public readonly organizationId: number | undefined;
   public readonly personId: number | undefined;
-  public readonly invitedBy: number | undefined;
+  public readonly invitedBy: string | undefined;
   public readonly invitedAt: Date;
   public acceptedAt?: Date;
   public status: InvitationStatus;
@@ -17,8 +17,8 @@ export class OrganizationInvitation {
    *
    * @param invitationId - Optional ID (default: new UUID).
    * @param organizationId - Target organization.
-   * @param personId - Person being invited.
-   * @param invitedBy - Person who sent the invitation.
+   * @param personId - ID of the person being invited.
+   * @param invitedBy - Name of the person who sent the invitation.
    * @param invitedAt - Optional timestamp (default: now).
    * @param acceptedAt - Optional acceptance timestamp.
    * @param status - Optional status (default: PENDING).
@@ -35,7 +35,7 @@ export class OrganizationInvitation {
     invitationId?:  number;
     organizationId?: number;
     personId?: number;
-    invitedBy?: number;
+    invitedBy?: string;
     invitedAt?: Date;
     acceptedAt?: Date;
     status?: InvitationStatus;

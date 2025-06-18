@@ -1,5 +1,3 @@
-import { EmailAddress } from '../../shared/model/email-adress.vo';
-
 /**
  * Entity representing a user registration request.
  * Stores registration intent, credentials, and time-bound metadata.
@@ -9,7 +7,7 @@ export class RegistrationRequest {
   public readonly id: number | undefined;
 
   /** Email address provided by the user. */
-  public readonly email: EmailAddress;
+  public readonly email: string;
 
   /** Raw or hashed password provided during registration. */
   public readonly password: string;
@@ -44,7 +42,7 @@ export class RegistrationRequest {
                 expiresAt
               }: {
     id?: number;
-    email: EmailAddress;
+    email: string;
     password: string;
     fullName: string;
     requestedAt?: Date;
@@ -78,7 +76,7 @@ export class RegistrationRequest {
   toJSON() {
     return {
       id: this.id,
-      email: this.email.value,
+      email: this.email,
       password: this.password,
       fullName: this.fullName,
       requestedAt: this.requestedAt.toISOString(),

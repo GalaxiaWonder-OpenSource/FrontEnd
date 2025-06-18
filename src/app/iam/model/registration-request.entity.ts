@@ -1,4 +1,3 @@
-import { EmailAddress } from '../../shared/model/email-adress.vo';
 import { RegistrationRequestStatus } from './registration-request-status.vo';
 
 /**
@@ -10,7 +9,7 @@ export class RegistrationRequest {
   public readonly id: number | undefined;
 
   /** Email address provided for registration. */
-  public readonly email: EmailAddress;
+  public readonly email: string;
 
   /** Raw or hashed password submitted during registration. */
   public readonly password: string;
@@ -50,7 +49,7 @@ export class RegistrationRequest {
                 status = RegistrationRequestStatus.CONFIRMATION_PENDING
               }: {
     id?: number;
-    email: EmailAddress;
+    email: string;
     password: string;
     fullName: string;
     requestedAt?: Date;
@@ -93,7 +92,7 @@ export class RegistrationRequest {
   toJSON() {
     return {
       id: this.id,
-      email: this.email.value,
+      email: this.email,
       password: this.password,
       fullName: this.fullName,
       requestedAt: this.requestedAt.toISOString(),

@@ -1,4 +1,3 @@
-import { EmailAddress } from '../../shared/model/email-adress.vo';
 import { PhoneNumber } from './phone-number.vo';
 import { ProfessionalId } from './professional-id.vo';
 
@@ -11,7 +10,7 @@ export class Person {
   public readonly id: number | undefined;
 
   /** Person's primary email address. */
-  public readonly email: EmailAddress;
+  public readonly email: string;
 
   /** Person's phone number. */
   public readonly phone: PhoneNumber;
@@ -51,7 +50,7 @@ export class Person {
                 profession
               }: {
     id?: number;
-    email: EmailAddress;
+    email: string;
     phone: PhoneNumber;
     firstName: string;
     lastName: string;
@@ -87,7 +86,7 @@ export class Person {
   toJSON() {
     return {
       id: this.id,
-      email: this.email.value,
+      email: this.email,
       phone: this.phone.value,
       firstName: this.firstName,
       lastName: this.lastName,

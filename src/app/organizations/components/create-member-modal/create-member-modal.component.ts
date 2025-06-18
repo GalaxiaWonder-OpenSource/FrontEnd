@@ -123,12 +123,6 @@ export class CreateMemberModalComponent implements OnInit {
       clearTimeout(this.searchTimeout);
     }
 
-    // Don't search if email is empty
-    if (!trimmedEmail) {
-      this.isSearching = false;
-      return;
-    }
-
     // Set up debounced search
     this.searchTimeout = setTimeout(() => {
       this.performEmailSearch(trimmedEmail);
@@ -139,13 +133,7 @@ export class CreateMemberModalComponent implements OnInit {
    * Performs the actual email search
    */
   private performEmailSearch(email: string): void {
-    if (!this.isValidEmail(email)) {
-      this.searchError = 'create-member.invalid-email';
-      return;
-    }
-
     this.isSearching = true;
-    this.searchError = null;
 
     this.searchPersonByEmail(email).then(result => {
       this.isSearching = false;

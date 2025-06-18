@@ -8,7 +8,6 @@ import {Organization} from '../../model/organization.entity';
 import {PersonService} from '../../../iam/services/person.service';
 import {Person} from '../../../iam/model/person.entity';
 import {NgIf} from '@angular/common';
-import {EmailAddress} from '../../../shared/model/email-adress.vo';
 import {PhoneNumber} from '../../../iam/model/phone-number.vo';
 
 @Component({
@@ -75,7 +74,7 @@ export class OrganizationInformationTabComponent {
       // Creamos un contratista con datos predeterminados
       this.contractor = new Person({
         id: 0,
-        email: new EmailAddress('no.disponible@example.com'),
+        email: 'no.disponible@example.com',
         phone: new PhoneNumber('0000000000'),
         firstName: 'Información',
         lastName: 'No disponible'

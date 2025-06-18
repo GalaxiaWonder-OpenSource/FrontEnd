@@ -1,17 +1,21 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SessionService } from '../../../iam/services/session.service';
-import { OrganizationMemberService } from '../../services/organization-member.service';
-import { OrganizationService } from '../../services/organization.service';
-import { OrganizationInvitationService } from '../../services/organization-invitation.service';
-import { OrganizationMember } from '../../model/organization-member.entity';
-import { CreateMemberModalComponent } from '../create-member-modal/create-member-modal.component';
-import { DeleteMemberModalComponent } from '../delete-member-modal/delete-member-modal.component';
-import { MemberCardComponent } from '../member-card/member-card.component';
+import {Component, computed, OnInit, signal} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SessionService} from '../../../iam/services/session.service';
+import {OrganizationMemberService} from '../../services/organization-member.service';
+import {OrganizationService} from '../../services/organization.service';
+import {OrganizationInvitationService} from '../../services/organization-invitation.service';
+import {OrganizationMember} from '../../model/organization-member.entity';
+import {CreateMemberModalComponent} from '../create-member-modal/create-member-modal.component';
+import {DeleteMemberModalComponent} from '../delete-member-modal/delete-member-modal.component';
+import {MemberCardComponent} from '../member-card/member-card.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {PersonService} from '../../../iam/services/person.service';
+import {Person} from '../../../iam/model/person.entity';
+import {OrganizationInvitation} from '../../model/organization-invitation.entity';
+import {InvitationStatus} from '../../model/invitation-status.vo';
 
 @Component({
   selector: 'app-member',
@@ -37,7 +41,8 @@ export class MemberComponent implements OnInit {
     private organizationService: OrganizationService,
     private dialog: MatDialog,
     private organizationInvitationService: OrganizationInvitationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private personService: PersonService
   ) {}
 
   ngOnInit(): void {
@@ -77,20 +82,24 @@ export class MemberComponent implements OnInit {
     });
   }
 
-  private createMember(memberData: any): void {
+  async createMember(memberData: any): Promise<void> {
     const organizationId = this.session.getOrganizationId();
     const invitedBy = this.session.getPersonId();
 
     if (!organizationId || !invitedBy) {
-      console.error('No organization ID or invitedBy found in session');
+      console.error('No organizationId or personId found in session');
       return;
     }
 
-    const invitation = {
-      organizationId: organizationId.toString(),
-      personId: memberData.personId.toString(),
-      invitedBy: invitedBy.toString()
-    };
+    const invitationSender: Person = await this.personService.getById(invitedBy).toPromise();
+
+    const invitation = new OrganizationInvitation({
+      organizationId: organizationId,
+      personId: memberData.personId,
+      invitedBy: invitationSender.fullName,
+      invitedAt: new Date(),
+      status: InvitationStatus.PENDING
+    });
 
     this.organizationInvitationService.create(invitation).subscribe({
       next: () => {
@@ -132,7 +141,6 @@ export class MemberComponent implements OnInit {
 
   removeMember(member: OrganizationMember): void {
     const currentUserId = this.session.getPersonId();
-    const organizationId = this.session.getOrganizationId();
 
     if (!this.isCreator()) {
       this.snackBar.open('No tienes permisos para eliminar miembros', 'Cerrar', {

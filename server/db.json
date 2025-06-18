@@ -50,11 +50,11 @@
   ],
   "organizations": [
     {
-      "legalName": "Reaño Consultores",
-      "commercialName": "Reaño S.A.C.",
-      "ruc": "20600406788",
+      "legalName": "RE",
+      "commercialName": "RES",
+      "ruc": "20123456789",
       "createdBy": 1,
-      "createdAt": "2025-06-18T06:32:06.313Z",
+      "createdAt": "2025-06-18T18:13:31.765Z",
       "status": "ACTIVE",
       "members": [],
       "invitations": [],
@@ -65,46 +65,18 @@
   "organization-members": [
     {
       "personId": 1,
+      "name": "Henry",
+      "lastName": "Reaño",
+      "email": "henry@example.com",
       "organizationId": 1,
       "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-18T06:32:06.325Z",
+      "joinedAt": "2025-06-18T18:13:31.797Z",
       "id": 1
     }
   ],
-  "projects": [
-    {
-      "id": 1,
-      "name": "Casa del señor Ramírez",
-      "description": "La casa del señor Ramírez. Vivirá en ella con su esposa y dos hijos.",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2025-03-20T00:00:00.000Z",
-      "endingDate": "2026-01-20T00:00:00.000Z",
-      "team": [],
-      "organizationId": 1,
-      "contractor": 1,
-      "contractingEntityId": 1
-    }
-  ],
-  "project-team-members": [
-    {
-      "id": 1,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 1,
-      "personId": 1,
-      "projectId": 1
-    }
-  ],
+  "projects": [],
+  "project-team-members": [],
   "change-process": [],
-  "milestones": [
-    {
-      "name": "Estudios Básicos: Medidas descriptivas",
-      "startingDate": "2025-04-30T05:00:00.000Z",
-      "endingDate": "2025-05-20T05:00:00.000Z",
-      "projectId": null,
-      "description": "Se quieren obtener datos precisos sobre el lugar de la obra, especialmente en términos de topología del suelo.",
-      "id": 1
-    }
-  ],
+  "milestones": [],
   "tasks": []
 }

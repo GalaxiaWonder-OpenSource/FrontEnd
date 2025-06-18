@@ -189,9 +189,7 @@ export class TeamComponent implements OnInit, OnDestroy {
                 // Si no encontramos la persona, creamos una representación genérica
                 const firstName = person?.firstName || 'Unknown';
                 const lastName = person?.lastName || 'User';
-                const email = person?.email ?
-                  (typeof person.email === 'string' ? person.email : person.email.toString()) :
-                  'no-email@example.com';
+                const email = person?.email
 
                 return {
                   id: member.id.toString(),

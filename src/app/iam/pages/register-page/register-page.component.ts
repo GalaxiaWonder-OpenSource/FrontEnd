@@ -66,7 +66,7 @@ export class RegisterPageComponent {
     // First check if username is already taken
     this.userAccountService.getAll().subscribe({
       next: (accounts: any[]) => {
-        const userExists = accounts.some(account => 
+        const userExists = accounts.some(account =>
           account.username?.toLowerCase() === formData.username.toLowerCase()
         );
 
@@ -87,21 +87,15 @@ export class RegisterPageComponent {
         this.personService.create(personData).subscribe({
           next: (person: any) => {
             console.log('Person created:', person);
-            
             // Step 2: Create a user account with a reference to the person
             // Use the UserRole enum value directly
-            let roleValue = UserRole.TYPE_WORKER; // default
-            if (formData.role === UserRole.TYPE_CLIENT) {
-              roleValue = UserRole.TYPE_CLIENT;
-            } else if (formData.role === UserRole.TYPE_WORKER) {
-              roleValue = UserRole.TYPE_WORKER;
-            }
-            
+            let roleValue = formData.role;
+
             const userAccountData = {
               username: formData.username.toLowerCase(),
               password: formData.password,
               personId: person.id,
-              role: roleValue, // Mapped role value for the database
+              role: roleValue,
               status: 'ACTIVE'
             };
 

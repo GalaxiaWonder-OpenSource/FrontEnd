@@ -13,21 +13,15 @@ const auth = `${environment.authenticationUser}:${environment.authenticationPass
 export class UserAccountService {
   private readonly service = createDynamicService<UserAccount>([
     createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'user-accounts'),
-    createEndpointConfig({ name: 'getByUsername', method: HttpMethod.GET }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'user-accounts', '/:id'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'user-accounts', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id'),
-    createEndpointConfig({ name: 'signIn', method: HttpMethod.GET }, undefined, 'user-accounts', ''),
-    createEndpointConfig({ name: 'signUp', method: HttpMethod.POST }, undefined, 'user-accounts', '')
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id')
   ]);
 
   getAll = this.service['getAll'];
-  getByUsername = this.service['getByUsername']
   getById = this.service['getById'];
   create = this.service['create'];
   update = this.service['update'];
   delete = this.service['delete'];
-  signIn = this.service['signIn'];
-  signUp = this.service['signUp'];
 }

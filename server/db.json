@@ -1,408 +1,44 @@
 {
   "user-accounts": [
     {
-      "id": 101,
-      "username": "luna",
-      "password": "LunaPass2025",
-      "personId": 201,
-      "role": "TYPE_WORKER",
-      "status": "ACTIVE"
-    },
-    {
-      "personId": 203,
-      "username": "bebebe",
-      "password": "ASDFGH123",
+      "username": "widoshiny",
+      "password": "ASDFGH!#",
+      "personId": 1,
       "role": "TYPE_WORKER",
       "status": "ACTIVE",
-      "id": 102
+      "id": 1
     },
     {
-      "id": 103,
-      "username": "nova",
-      "password": "ASDFGH123",
-      "personId": 205,
-      "role": "TYPE_WORKER",
-      "status": "ACTIVE"
-    },
-    {
-      "username": "pedro",
-      "password": "ASDFGH123",
-      "personId": 205,
-      "role": "TYPE_WORKER",
-      "status": "ACTIVE",
-      "id": 104
-    },
-    {
-      "username": "sahur",
-      "password": "ASDFGH123",
-      "personId": 206,
-      "role": "TYPE_WORKER",
-      "status": "ACTIVE",
-      "id": 105
-    },
-    {
-      "username": "victor",
-      "password": "ASDFGH123",
-      "personId": 207,
+      "username": "iconicmiau",
+      "password": "ASDFGH!#",
+      "personId": 2,
       "role": "TYPE_CLIENT",
       "status": "ACTIVE",
-      "id": 106
+      "id": 2
     }
   ],
   "persons": [
     {
-      "id": 201,
-      "firstName": "Luna",
-      "lastName": "Estelar",
-      "email": "luna@galaxia.com"
-    },
-    {
-      "id": 202,
-      "firstName": "Sol",
-      "lastName": "Radiante",
-      "email": "sol@galaxia.com"
-    },
-    {
-      "email": "shh@example.com",
-      "phone": "900900800",
-      "firstName": "shhhh",
-      "lastName": "shhxd",
-      "id": 203
-    },
-    {
-      "email": "test@example.com",
-      "phone": "+51983728374",
-      "firstName": "test",
-      "lastName": "test lastname",
-      "id": 204
-    },
-    {
-      "email": "dsadasaa@gmail.com",
-      "phone": "+51989898987",
-      "firstName": "pedro",
-      "lastName": "jeje",
-      "id": 205
-    },
-    {
-      "email": "brosaa@gmail.com",
-      "phone": "+51989898987",
-      "firstName": "sahur",
-      "lastName": "kitty",
-      "id": 206
-    },
-    {
-      "email": "brossahur@gmail.com",
-      "phone": "+51999111221",
-      "firstName": "victor",
-      "lastName": "victorinox",
-      "id": 207
-    }
-  ],
-  "organizations": [
-    {
-      "id": 301,
-      "legalName": "Nebulosa Creativa S.A.",
-      "commercialName": "Nebulosa",
-      "ruc": "20198765432",
-      "createdBy": 201
-    },
-    {
-      "legalName": "JEJE",
-      "commercialName": "JAJA",
-      "ruc": "10738890871",
-      "createdBy": 203,
-      "createdAt": "2025-06-10T22:39:26.440Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 302
-    },
-    {
-      "legalName": "TIARAS SAC",
-      "commercialName": "TIARAS",
-      "ruc": "20773747571",
-      "createdBy": 5,
-      "createdAt": "2025-06-12T17:42:30.966Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 303
-    },
-    {
-      "legalName": "daeqwe",
-      "commercialName": "ewqewqewq",
-      "ruc": "20538856674",
-      "createdBy": 2,
-      "createdAt": "2025-06-16T23:44:01.398Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 304
-    },
-    {
-      "legalName": "dadadawdwad",
-      "commercialName": "dawdawdwadawdadawd",
-      "ruc": "20538856674",
-      "createdBy": 2,
-      "createdAt": "2025-06-17T01:37:10.216Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 305
-    },
-    {
-      "legalName": "ddasdasd",
-      "commercialName": "dasdas",
-      "ruc": "20538856674",
-      "createdBy": 201,
-      "createdAt": "2025-06-17T19:45:29.889Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 306
-    },
-    {
-      "legalName": "hola",
-      "commercialName": "holas",
-      "ruc": "20538856674",
-      "createdBy": 205,
-      "createdAt": "2025-06-17T21:39:15.663Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 307
-    },
-    {
-      "legalName": "mario",
-      "commercialName": "marids",
-      "ruc": "20538856674",
-      "createdBy": 206,
-      "createdAt": "2025-06-17T21:58:45.675Z",
-      "status": "ACTIVE",
-      "members": [],
-      "invitations": [],
-      "id": 308
-    }
-  ],
-  "organization-invitations": [
-    {
-      "id": 401,
-      "organizationId": 301,
-      "personId": 202,
-      "invitedBy": 201,
-      "invitedAt": "2025-06-09T15:00:00Z",
-      "status": "PENDING"
-    },
-    {
-      "organizationId": "303",
-      "personId": "203",
-      "invitedBy": "5",
-      "id": 402
-    },
-    {
-      "organizationId": "303",
-      "personId": "203",
-      "invitedBy": "5",
-      "id": 403
-    },
-    {
-      "organizationId": "303",
-      "personId": "203",
-      "invitedBy": "5",
-      "id": 404
-    },
-    {
-      "organizationId": "303",
-      "personId": "203",
-      "invitedBy": "5",
-      "id": 405
-    },
-    {
-      "organizationId": "306",
-      "personId": "206",
-      "invitedBy": "201",
-      "id": 406
-    }
-  ],
-  "organization-members": [
-    {
-      "personId": 5,
-      "organizationId": 303,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-12T17:42:31.016Z",
-      "id": 503,
-      "firstName": "test",
-      "lastName": "test lastname",
-      "email": "test@example.com"
-    },
-    {
-      "personId": 2,
-      "organizationId": 304,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-16T23:44:01.421Z",
-      "id": 504
-    },
-    {
-      "personId": 2,
-      "organizationId": 305,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-17T01:37:10.239Z",
-      "id": 505
-    },
-    {
-      "personId": 201,
-      "organizationId": 306,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-17T19:45:29.904Z",
-      "id": 506
-    },
-    {
-      "personId": 205,
-      "organizationId": 307,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-17T21:39:15.670Z",
-      "id": 507
-    },
-    {
-      "personId": 206,
-      "organizationId": 308,
-      "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-17T21:58:45.684Z",
-      "id": 508
-    }
-  ],
-  "projects": [
-    {
-      "id": 601,
-      "name": "Constelacion UX",
-      "description": "Diseno de interfaz para sistema interplanetario",
-      "organizationId": 301,
-      "status": "ACTIVE",
-      "startingDate": "2025-06-10",
-      "endingDate": "2025-12-31",
-      "clientId": 207
-    },
-    {
-      "id": 602,
-      "name": "Dress to impress",
-      "description": "shape of my heart",
-      "status": "APPROVED",
-      "startingDate": "2025-06-15T00:00:00.000Z",
-      "endingDate": "2025-09-20T00:00:00.000Z",
-      "team": [],
-      "organizationId": "303",
-      "contractor": "5",
-      "contractingEntityId": "5"
-    },
-    {
-      "id": 603,
-      "name": "sqw",
-      "description": "wqwqw",
-      "status": "BASIC_STUDIES",
-      "startingDate": "+012212-02-21T05:00:00.000Z",
-      "endingDate": "2131-03-12T00:00:00.000Z",
-      "team": [],
-      "organizationId": 304,
-      "contractor": 2,
-      "contractingEntityId": 2
-    },
-    {
-      "id": 604,
-      "name": "dasdsad",
-      "description": "asdsadasd",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2025-12-12T00:00:00.000Z",
-      "endingDate": "2026-12-12T00:00:00.000Z",
-      "team": [],
-      "organizationId": 306,
-      "contractor": 201,
-      "contractingEntityId": 201
-    },
-    {
-      "id": 605,
-      "name": "test",
-      "description": "fasd",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2025-12-12T00:00:00.000Z",
-      "endingDate": "2026-12-12T00:00:00.000Z",
-      "team": [],
-      "organizationId": 307,
-      "contractor": 205,
-      "contractingEntityId": 205
-    },
-    {
-      "id": 606,
-      "name": "sdsadsa",
-      "description": "dasdsad",
-      "status": "BASIC_STUDIES",
-      "startingDate": "+022121-11-12T05:00:00.000Z",
-      "endingDate": "+012121-02-21T05:00:00.000Z",
-      "team": [],
-      "organizationId": 308,
-      "contractor": 206,
-      "contractingEntityId": 206
-    }
-  ],
-  "project-team-members": [
-    {
-      "id": 701,
-      "projectId": 601,
-      "personId": 201,
-      "role": "Coordinator"
-    },
-    {
-      "id": 702,
-      "projectId": 601,
-      "personId": 202,
-      "role": "Specialist"
-    },
-    {
-      "id": 703,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 5,
-      "personId": 5,
-      "projectId": 602
-    },
-    {
-      "id": 705,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 201,
-      "personId": 201,
-      "projectId": 604
-    },
-    {
-      "id": 706,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 206,
-      "personId": 206,
-      "projectId": 606
-    }
-  ],
-  "changeProcess": [],
-  "milestones": [
-    {
-      "name": "mario",
-      "startingDate": "2025-12-12T05:00:00.000Z",
-      "endingDate": "2025-12-12T05:00:00.000Z",
-      "projectId": null,
-      "description": "asd",
+      "email": "henry@example.com",
+      "phone": "+51123456789",
+      "firstName": "Henry",
+      "lastName": "Reaño",
       "id": 1
+    },
+    {
+      "email": "andrea@example,com",
+      "phone": "+51123456788",
+      "firstName": "Andrea",
+      "lastName": "Aponte",
+      "id": 2
     }
   ],
-  "tasks": [
-    {
-      "id": 1,
-      "name": "asdas",
-      "description": "dasdsa",
-      "specialty": "STRUCTURES",
-      "startingDate": "1970-01-01T05:00:00.000Z",
-      "dueDate": "1970-01-01T05:00:00.000Z",
-      "status": "PENDING",
-      "responsibleId": 702,
-      "milestoneId": 1
-    }
-  ]
+  "organizations": [],
+  "organization-invitations": [],
+  "organization-members": [],
+  "projects": [],
+  "project-team-members": [],
+  "change-process": [],
+  "milestones": [],
+  "tasks": []
 }

@@ -1,16 +1,16 @@
 <div class="modal-container">
-  <h2>{{ 'create-member.title' | translate }}</h2>
+  <h2>{{ 'organization-members.invite-modal.title' | translate }}</h2>
   <form (ngSubmit)="submit()">
     <!-- Email Input Field -->
     <mat-form-field appearance="outline">
-      <mat-label>{{ 'create-member.enter-email' | translate }}</mat-label>
+      <mat-label>{{ 'organization-members.invite-modal.email-field-label' | translate }}</mat-label>
       <input
         matInput
         type="email"
         [(ngModel)]="emailInput"
         name="emailInput"
         (input)="onEmailChange()"
-        placeholder="{{ 'create-member.email-placeholder' | translate }}"
+        [placeholder]="'organization-members.invite-modal.placeholder' | translate"
         required>
 
       <!-- Loading spinner -->

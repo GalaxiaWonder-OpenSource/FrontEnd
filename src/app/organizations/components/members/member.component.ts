@@ -11,6 +11,7 @@ import { OrganizationMember } from '../../model/organization-member.entity';
 import { CreateMemberModalComponent } from '../create-member-modal/create-member-modal.component';
 import { DeleteMemberModalComponent } from '../delete-member-modal/delete-member-modal.component';
 import { MemberCardComponent } from '../member-card/member-card.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member',
@@ -19,7 +20,8 @@ import { MemberCardComponent } from '../member-card/member-card.component';
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    MemberCardComponent
+    MemberCardComponent,
+    TranslatePipe
   ],
   templateUrl: './member.component.html',
   styleUrls: ['./member.component.css']

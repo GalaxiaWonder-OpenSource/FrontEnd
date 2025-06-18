@@ -659,7 +659,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "confirm": "Confirm",
-    "back": "Back"
+    "back": "Back",
+    "create": "Send"
   },
 
   "invitation": {
@@ -669,6 +670,17 @@
     "empty": {
       "title": "No invitations found",
       "description": "There are not currently pending invitations for you"
+    }
+  },
+
+  "organization-members": {
+    "title": "Organization members",
+    "invite-button": "Invite a new member",
+    "no-members": "No other members have joined yet",
+    "invite-modal": {
+      "title": "Invite a new member",
+      "email-field-label": "Email address",
+      "placeholder": "johndoe@example.com"
     }
   }
 }

@@ -681,7 +681,8 @@
     "delete": "Eliminar",
     "edit": "Editar",
     "confirm": "Confirmar",
-    "back": "Volver"
+    "back": "Volver",
+    "create": "Enviar"
   },
 
   "invitation": {
@@ -691,6 +692,17 @@
     "empty": {
       "title": "No se encontraron invitaciones",
       "description": "Actualmente no tienes invitaciones pendientes"
+    }
+  },
+
+  "organization-members": {
+    "title": "Miembros de la organización",
+    "invite-button": "Invitar a un nuevo miembro",
+    "no-members": "Aún no se ha unido ningún otro miembro",
+    "invite-modal": {
+      "title": "Invitar a un nuevo miembro",
+      "email-field-label": "Dirección de correo electrónico",
+      "placeholder": "juanperez@ejemplo.com"
     }
   }
 }

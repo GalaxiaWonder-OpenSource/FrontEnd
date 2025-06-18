@@ -1,9 +1,7 @@
 <div class="member-list-container">
-  <!-- Botón para añadir miembros, solo visible para el creador -->
-  <div>Debug: isCreator = {{ isCreator() }}</div>
   <div class="members-header" *ngIf="isCreator()">
     <button mat-raised-button color="primary" (click)="openInvitationModal()">
-      Invitar miembro
+      {{ 'organization-members.invite-button' | translate }}
     </button>
   </div>
 
@@ -19,7 +17,7 @@
   </div>
 
   <!-- Mensaje cuando no hay miembros -->
-  <div class="no-members" *ngIf="members().length === 0">
-    <p>No hay miembros en esta organización</p>
+  <div class="no-members" *ngIf="members().length === 1">
+    <p>{{ 'organization-members.no-members' | translate }}</p>
   </div>
 </div>

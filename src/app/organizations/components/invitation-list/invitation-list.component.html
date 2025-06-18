@@ -20,8 +20,8 @@
 
     <div *ngIf="!loading() && invitations().length === 0" class="empty-state">
       <mat-icon class="empty-icon">inbox</mat-icon>
-      <h3>{{ 'invitation.empty-title' | translate }}</h3>
-      <p>{{ 'invitation.empty-description' | translate }}</p>
+      <h3>{{ 'invitation.empty.title' | translate }}</h3>
+      <p>{{ 'invitation.empty.description' | translate }}</p>
     </div>
 
     <div *ngIf="!loading() && invitations().length > 0" class="table-container">

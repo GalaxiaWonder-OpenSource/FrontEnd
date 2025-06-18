@@ -64,7 +64,7 @@ export class InvitationListComponent implements OnInit {
   private async loadInvitations() {
     this.loading.set(true);
     try {
-      const currentPersonId = this.getCurrentPersonId();
+      const currentPersonId = this.sessionService.getPersonId();
 
       if (!currentPersonId) {
         console.warn('No person ID found in session');
@@ -75,24 +75,19 @@ export class InvitationListComponent implements OnInit {
 
       this.invitationService.getAll().subscribe({
         next: (allInvitations: any[]) => {
-
-          if (!Array.isArray(allInvitations)) {
-            console.warn('API response is not an array:', allInvitations);
-            this.invitations.set([]);
-            return;
-          }
-
           const filteredInvitations = allInvitations.filter((inv: any) => {
 
             const invPersonId = typeof inv.personId === 'string' ? inv.personId : inv.personId?.value;
-            return invPersonId === currentPersonId;
+            return inv.personId === currentPersonId;
           });
 
           const mappedInvitations = filteredInvitations
             .map(data => this.mapToInvitation(data))
-            .filter(inv => inv !== null); // Filtrar invitaciones que no se pudieron mapear
+            .filter(inv => inv !== null);
 
           this.invitations.set(mappedInvitations);
+          if(this.invitations.length == 0) this.loading.set(false);
+
         },
         error: (error: any) => {
           console.error('Error loading invitations:', error);
@@ -166,51 +161,18 @@ export class InvitationListComponent implements OnInit {
     });
   }
 
-  private getCurrentPersonId(): string | null {
-    try {
-      const personId = this.sessionService.getPersonId();
-
-      if (!personId) return null;
-
-      if (typeof personId === 'object' && personId) {
-        return personId;
-      }
-
-      if (typeof personId === 'string') {
-        return personId;
-      }
-
-      console.warn('Unexpected personId format:', personId);
-      return null;
-    } catch (error) {
-      console.error('Error getting person ID:', error);
-      return null;
-    }
-  }
-
   private mapToInvitation(data: any): OrganizationInvitation | null {
-    try {
-      console.log('Mapping invitation data:', data);
+    const invitationId = data.id;
 
-      const invitationId = data.invitationId || data.id;
-      if (!invitationId || !data.organizationId || !data.personId) {
-        console.warn('Missing required fields in invitation data:', data);
-        return null;
-      }
-
-      return new OrganizationInvitation({
-        invitationId: invitationId,
-        organizationId: data.organizationId,
-        personId: data.personId,
-        invitedBy: data.invitedBy,
-        invitedAt: data.invitedAt ? new Date(data.invitedAt) : new Date(),
-        acceptedAt: data.acceptedAt ? new Date(data.acceptedAt) : undefined,
-        status: data.status || InvitationStatus.PENDING
-      });
-    } catch (error) {
-      console.error('Error mapping invitation data:', error, data);
-      return null;
-    }
+    return new OrganizationInvitation({
+      invitationId: invitationId,
+      organizationId: data.organizationId,
+      personId: data.personId,
+      invitedBy: data.invitedBy,
+      invitedAt: data.invitedAt ? new Date(data.invitedAt) : new Date(),
+      acceptedAt: data.acceptedAt ? new Date(data.acceptedAt) : undefined,
+      status: data.status || InvitationStatus.PENDING
+    });
   }
 
   getOrganizationName(id: string): string {

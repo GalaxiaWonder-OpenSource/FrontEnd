@@ -660,6 +660,16 @@
     "edit": "Edit",
     "confirm": "Confirm",
     "back": "Back"
+  },
+
+  "invitation": {
+    "title": "My invitations",
+    "pending": "invitations pending",
+    "loading": "Looking for invitations...",
+    "empty": {
+      "title": "No invitations found",
+      "description": "There are not currently pending invitations for you"
+    }
   }
 }
 

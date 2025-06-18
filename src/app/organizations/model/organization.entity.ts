@@ -53,33 +53,12 @@ export class Organization {
     this.id = id;
     this.legalName = legalName ?? '';
     this.commercialName = commercialName ?? '';
-    this.ruc = ruc ?? new Ruc(); // Asegura que siempre haya algo válido
+    this.ruc = ruc ?? new Ruc();
     this.createdBy = createdBy;
     this.createdAt = createdAt;
     this.status = status;
     this.members = members;
     this.invitations = invitations;
-  }
-
-  /**
-   * Updates the legal name of the organization.
-   */
-  updateLegalName(name: string): void {
-    this.legalName = name;
-  }
-
-  /**
-   * Updates or sets the commercial name of the organization.
-   */
-  updateCommercialName(name: string): void {
-    this.commercialName = name;
-  }
-
-  /**
-   * Marks the organization as inactive.
-   */
-  deactivate(): void {
-    this.status = OrganizationStatus.INACTIVE;
   }
 
   /**

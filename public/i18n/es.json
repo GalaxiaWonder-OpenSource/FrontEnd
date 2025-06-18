@@ -682,5 +682,15 @@
     "edit": "Editar",
     "confirm": "Confirmar",
     "back": "Volver"
+  },
+
+  "invitation": {
+    "title": "Mis invitaciones",
+    "pending": "invitaciones pendientes",
+    "loading": "Buscando invitaciones...",
+    "empty": {
+      "title": "No se encontraron invitaciones",
+      "description": "Actualmente no tienes invitaciones pendientes"
+    }
   }
 }

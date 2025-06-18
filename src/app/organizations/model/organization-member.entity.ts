@@ -28,14 +28,17 @@ export class OrganizationMember {
    * Constructs a new OrganizationMember instance.
    *
    * @param id - Optional unique identifier (default: new UUID).
-   * @param personId - ID of the person.
+   * @param firstName - First name of the organization member.
+   * @param lastName - Last name of the organization member.
+   * @param email - Email addres of the organization member.
+   * @param personId - ID of the person entity associated with the organization member.
    * @param organizationId - ID of the organization.
    * @param memberType - Type of membership.
    * @param joinedAt - Optional joined date (default: now).
    */
   constructor({
                 id,
-                name,
+                firstName,
                 lastName,
                 email,
                 personId,
@@ -44,7 +47,7 @@ export class OrganizationMember {
                 joinedAt = new Date()
               }: {
     id?: number;
-    name?: string;
+    firstName?: string;
     lastName?: string;
     email?: string;
     personId?: number;
@@ -57,7 +60,7 @@ export class OrganizationMember {
     }
 
     this.id = id;
-    this.name = name;
+    this.name = firstName;
     this.lastName = lastName;
     this.email = email;
     this.personId = personId;

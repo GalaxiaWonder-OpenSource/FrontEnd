@@ -9,7 +9,7 @@ import {ProjectAccessGuard} from './projects/guards/project-acces-guard';
 import {ProjectLayoutComponent} from './projects/pages/project-layout/project-layout.component';
 import {MilestoneAccessGuard} from './projects/guards/milestone-acces-guard';
 import {MilestoneLayoutComponent} from './projects/pages/milestone-layout/milestone-layout.component';
-import {UserRole} from './iam/model/user-role.vo';
+import {UserType} from './iam/model/user-type.vo';
 import {OrganizationMemberType} from './organizations/model/organization-member-type.vo';
 
 export const routes: Routes = [
@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.TYPE_WORKER },
+    data: { expectedUserType: UserType.TYPE_WORKER },
     component: WorkerLayoutComponent,
     children: [
       {
@@ -46,7 +46,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.TYPE_CLIENT },
+    data: { expectedUserType: UserType.TYPE_CLIENT },
     component: ClientLayoutComponent,
     children: [
       {

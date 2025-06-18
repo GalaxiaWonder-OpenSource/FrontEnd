@@ -33,9 +33,29 @@
       "id": 2
     }
   ],
-  "organizations": [],
+  "organizations": [
+    {
+      "legalName": "Reaño Consultores",
+      "commercialName": "Reaño S.A.C.",
+      "ruc": "20600406788",
+      "createdBy": 1,
+      "createdAt": "2025-06-18T06:32:06.313Z",
+      "status": "ACTIVE",
+      "members": [],
+      "invitations": [],
+      "id": 1
+    }
+  ],
   "organization-invitations": [],
-  "organization-members": [],
+  "organization-members": [
+    {
+      "personId": 1,
+      "organizationId": 1,
+      "memberType": "CONTRACTOR",
+      "joinedAt": "2025-06-18T06:32:06.325Z",
+      "id": 1
+    }
+  ],
   "projects": [],
   "project-team-members": [],
   "change-process": [],

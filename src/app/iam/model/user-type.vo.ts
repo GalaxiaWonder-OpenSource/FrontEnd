@@ -4,7 +4,7 @@
  *
  * @enum {string}
  */
-export enum UserRole {
+export enum UserType {
   /**
    * Role assigned to a standard end-user or client.
    */

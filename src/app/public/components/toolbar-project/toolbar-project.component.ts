@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { OrgRole, SessionService, UserType, ProjectRoleType } from '../../../iam/services/session.service';
+import { Router } from '@angular/router';
+import { SessionService} from '../../../iam/services/session.service';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,9 +8,10 @@ import { RouterModule } from '@angular/router';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
-import { UserRole } from '../../../iam/model/user-role.vo';
+import { UserType } from '../../../iam/model/user-type.vo';
 import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
+import {ProjectRole} from '../../../projects/model/project-role.vo';
 
 @Component({
   selector: 'app-toolbar-project',
@@ -30,8 +31,8 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
 })
 export class ToolbarProjectComponent {
   projectId: number = 0;
-  projectRole: ProjectRoleType | null = null;
-  organizationRole: OrgRole | null = null;
+  projectRole: ProjectRole | null = null;
+  organizationRole: OrganizationMemberType | null = null;
   userType: UserType | null = null;
 
   constructor(
@@ -69,11 +70,11 @@ export class ToolbarProjectComponent {
 
   get isClient() {
     // ProjectRoleType doesn't have 'Client' value, so we need to check user type only
-    return this.userType === UserRole.TYPE_CLIENT;
+    return this.userType === UserType.TYPE_CLIENT;
   }
 
   get isOrganizationUser() {
-    return this.userType === UserRole.TYPE_WORKER;
+    return this.userType === UserType.TYPE_WORKER;
   }
 
   goBackToOrganization() {

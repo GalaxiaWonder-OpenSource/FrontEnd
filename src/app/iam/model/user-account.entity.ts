@@ -1,7 +1,5 @@
-import { UserRole } from './user-role.vo';
+import { UserType } from './user-type.vo';
 import { AccountStatus } from './account-status.vo';
-import { Username } from './username.vo';
-import { Password } from './password.vo';
 
 /**
  * Entity representing a user account in the system.
@@ -9,22 +7,19 @@ import { Password } from './password.vo';
  */
 export class UserAccount {
   /** Unique identifier for the user account. */
-  public readonly id: number | undefined;
+  public readonly id: number;
 
   /** Optional reference to the person this account belongs to. */
-  public readonly personId: number | undefined;
+  public readonly personId: number;
 
   /** Username used for login and identification. */
-  public username: Username;
+  public username: string;
 
   /** Password used for authentication. */
-  public password: Password;
+  public password: string;
 
   /** Role assigned to the user (e.g., client, organization user). */
-  public role: UserRole;
-
-  /** Current status of the account (e.g., active, suspended). */
-  public status: AccountStatus;
+  public role: UserType;
 
   /**
    * Constructs a new UserAccount instance.
@@ -42,16 +37,14 @@ export class UserAccount {
                 id,
                 username,
                 password,
-                role = UserRole.TYPE_CLIENT,
-                status = AccountStatus.ACTIVE,
+                role,
                 personId
               }: {
-    id?: number;
-    username: Username;
-    password: Password;
-    role?: UserRole;
-    status?: AccountStatus;
-    personId?: number;
+    id: number;
+    username: string;
+    password: string;
+    role: UserType;
+    personId: number;
   }) {
     if (!username) {
       throw new Error('Username is required.');
@@ -61,43 +54,15 @@ export class UserAccount {
       throw new Error('Password is required.');
     }
 
-    if (!Object.values(UserRole).includes(role)) {
-      throw new Error(`Invalid user role: ${role}`);
-    }
-
-    if (!Object.values(AccountStatus).includes(status)) {
-      throw new Error(`Invalid account status: ${status}`);
+    if (!role || !Object.values(UserType).includes(role)) {
+      throw new Error(`Invalid or missing user role: ${role}`);
     }
 
     this.id = id;
     this.username = username;
     this.password = password;
     this.role = role;
-    this.status = status;
     this.personId = personId;
-  }
-
-  /**
-   * Checks whether the user account is currently active.
-   *
-   * @returns True if the account status is ACTIVE.
-   */
-  isActive(): boolean {
-    return this.status === AccountStatus.ACTIVE;
-  }
-
-  /**
-   * Sets the account status to SUSPENDED.
-   */
-  suspend() {
-    this.status = AccountStatus.SUSPENDED;
-  }
-
-  /**
-   * Sets the account status to ACTIVE.
-   */
-  activate() {
-    this.status = AccountStatus.ACTIVE;
   }
 
   /**
@@ -108,10 +73,9 @@ export class UserAccount {
   toJSON() {
     return {
       id: this.id,
-      username: this.username.value,
-      password: this.password.value,
+      username: this.username,
+      password: this.password,
       role: this.role,
-      status: this.status,
       personId: this.personId ?? null
     };
   }

@@ -1,12 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
-import {UserRole} from '../model/user-role.vo';
+import {UserType} from '../model/user-type.vo';
 import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
 import { ProjectRole } from '../../projects/model/project-role.vo';
-
-export type UserType = UserRole.TYPE_WORKER | UserRole.TYPE_CLIENT;
-export type OrgRole = OrganizationMemberType.CONTRACTOR | OrganizationMemberType.WORKER;
-export type ProjectRoleType = ProjectRole.COORDINATOR | ProjectRole.SPECIALIST;
-
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -14,9 +9,9 @@ export class SessionService {
   private personId = signal<number | undefined>(this.loadFromStorage('personId'));
   private userType = signal<UserType | undefined>(this.loadFromStorage('userType'));
   private organizationId = signal<number | undefined>(this.loadFromStorage('organizationId'));
-  private organizationRole = signal<OrgRole | undefined>(this.loadFromStorage('organizationRole'));
+  private organizationRole = signal<OrganizationMemberType | undefined>(this.loadFromStorage('organizationRole'));
   private projectId = signal<number | undefined>(this.loadFromStorage('projectId'));
-  private projectRole = signal<ProjectRoleType | undefined>(this.loadFromStorage('projectRole'));
+  private projectRole = signal<ProjectRole | undefined>(this.loadFromStorage('projectRole'));
   private milestoneId = signal<number | undefined>(this.loadFromStorage('milestoneId'));
   private token = signal<string | undefined>(this.loadFromStorage('token'));
 
@@ -43,12 +38,12 @@ export class SessionService {
     this.userType.set(type);
   }
 
-  setOrganization(id: number | undefined, role: OrgRole) {
+  setOrganization(id: number | undefined, role: OrganizationMemberType) {
     this.organizationId.set(id);
     this.organizationRole.set(role);
   }
 
-  setProject(id: number, role: ProjectRoleType | undefined) {
+  setProject(id: number, role: ProjectRole | undefined) {
     this.projectId.set(id);
     this.projectRole.set(role);
   }
@@ -110,7 +105,7 @@ export class SessionService {
     return this.organizationId();
   }
 
-  getOrganizationRole(): OrgRole | undefined {
+  getOrganizationRole(): OrganizationMemberType | undefined {
     return this.organizationRole();
   }
 
@@ -118,7 +113,7 @@ export class SessionService {
     return this.projectId();
   }
 
-  getProjectRole(): ProjectRoleType | undefined {
+  getProjectRole(): ProjectRole | undefined {
     return this.projectRole();
   }
 

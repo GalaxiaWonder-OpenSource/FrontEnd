@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {SessionService} from '../../iam/services/session.service';
-import {UserRole} from '../../iam/model/user-role.vo';
+import {UserType} from '../../iam/model/user-type.vo';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectAccessGuard implements CanActivate {

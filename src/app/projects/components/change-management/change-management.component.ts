@@ -4,7 +4,7 @@ import {ChangeProcess} from '../../../changes/model/change-process.entity';
 import {ChangeProcessStatus} from '../../../changes/model/change-process-status.vo';
 import {ChangeProcessService} from '../../../changes/services/change-process.service';
 import {SessionService} from '../../../iam/services/session.service';
-import {UserRole} from '../../../iam/model/user-role.vo';
+import {UserType} from '../../../iam/model/user-type.vo';
 import {
   MatCard,
   MatCardModule,
@@ -76,8 +76,8 @@ export class ChangeManagementComponent{
 
   private loadUserRole(): void {
     const userType = this.sessionService.getUserType();
-    this.isClient = userType === UserRole.TYPE_CLIENT;
-    this.isContractor = userType === UserRole.TYPE_WORKER;
+    this.isClient = userType === UserType.TYPE_CLIENT;
+    this.isContractor = userType === UserType.TYPE_WORKER;
   }
 
   private async loadChangeRequests(): Promise<void> {

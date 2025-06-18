@@ -18,7 +18,7 @@ import {ProjectRole} from '../../model/project-role.vo';
 import {Specialty} from '../../model/specialty.vo';
 import {OrganizationService} from '../../../organizations/services/organization.service';
 import {ActivatedRoute} from '@angular/router';
-import {UserRole} from '../../../iam/model/user-role.vo';
+import {UserType} from '../../../iam/model/user-type.vo';
 import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
@@ -40,7 +40,7 @@ export class ProjectTabComponent implements OnInit {
   currentOrganization = signal<Organization | null>(null);
   loading = signal<boolean>(true);
   organizationId: number | null = null;
-  userType = UserRole.TYPE_WORKER; // Utilizar el valor correcto definido en el enum
+  userType = UserType.TYPE_WORKER; // Utilizar el valor correcto definido en el enum
   organizationRole = OrganizationMemberType.CONTRACTOR;
 
   constructor(
@@ -109,7 +109,7 @@ export class ProjectTabComponent implements OnInit {
     console.log('Opening create project dialog');
     const currentOrg = this.currentOrganization();
     const orgId = currentOrg && currentOrg.id ? Number(currentOrg.id) : 0;
-                 
+
     const dialogRef = this.dialog.open(CreateProjectModalComponent, {
       width: '500px',
       disableClose: true,
@@ -126,15 +126,15 @@ export class ProjectTabComponent implements OnInit {
           if (!personIdVal) {
             throw new Error("No person ID available in session");
           }
-          
+
           const currentOrg = this.currentOrganization();
           if (!currentOrg || !currentOrg.id) {
             throw new Error("Organization ID is required");
           }
-          
+
           const orgIdNum = Number(currentOrg.id);
           const personIdNum = Number(personIdVal);
-          
+
           const newPro = new Project({
             name: result.name,
             description: result.description,
@@ -154,11 +154,11 @@ export class ProjectTabComponent implements OnInit {
                 console.error("No person ID available in session");
                 return;
               }
-              
+
               // Ya no es necesario convertir los IDs ya que ya son numbers
               const projectIdNum = createdProject.id;
               const personIdNum = Number(personIdVal);
-              
+
               // Crear un nuevo miembro del equipo del proyecto
               const member = new ProjectTeamMember({
                 id: 0, // ID temporal, será reemplazado por el backend
@@ -176,7 +176,7 @@ export class ProjectTabComponent implements OnInit {
                   console.log('Project team member created successfully');
                   // Recargar los proyectos de la organización actual
                   if (this.currentOrganization()) {
-                    const orgIdNum = this.currentOrganization()!.id ? 
+                    const orgIdNum = this.currentOrganization()!.id ?
                                     Number(this.currentOrganization()!.id) : 0;
                     if (orgIdNum) {
                       this.loadProjectsForOrganization(orgIdNum);

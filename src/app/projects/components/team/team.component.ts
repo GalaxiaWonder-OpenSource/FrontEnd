@@ -22,7 +22,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ProjectTeamMemberService } from '../../services/project-team-member.service';
 import { OrganizationMemberService } from '../../../organizations/services/organization-member.service';
 import { PersonService } from '../../../iam/services/person.service';
-import { SessionService, ProjectRoleType } from '../../../iam/services/session.service';
+import { SessionService } from '../../../iam/services/session.service';
 import { ProjectService } from '../../services/project.service';
 
 import { ProjectTeamMember } from '../../model/project-team-member.entity';
@@ -35,7 +35,7 @@ import { Project } from '../../model/project.entity';
 interface TeamMemberDisplay {
   id: string;
   name: string;
-  role: ProjectRoleType;
+  role: ProjectRole;
   specialty: string;
   email: string;
   status: string;
@@ -46,7 +46,7 @@ interface OrganizationMemberDisplay {
   name: string;
   email: string;
   selected: boolean;
-  role: ProjectRoleType | null;
+  role: ProjectRole | null;
   specialty: Specialty | null;
 }
 
@@ -180,19 +180,19 @@ export class TeamComponent implements OnInit, OnDestroy {
                   personMap.set(person.id, person);
                 }
               });
-              
+
               return members.map((member: ProjectTeamMember) => {
                 // Buscar la persona en nuestro mapa de personas
                 const personId = typeof member.personId === 'object' ? String(member.personId) : member.personId;
                 const person = personMap.get(Number(personId));
-                
+
                 // Si no encontramos la persona, creamos una representación genérica
                 const firstName = person?.firstName || 'Unknown';
                 const lastName = person?.lastName || 'User';
-                const email = person?.email ? 
-                  (typeof person.email === 'string' ? person.email : person.email.toString()) : 
+                const email = person?.email ?
+                  (typeof person.email === 'string' ? person.email : person.email.toString()) :
                   'no-email@example.com';
-                
+
                 return {
                   id: member.id.toString(),
                   name: `${firstName} ${lastName}`,
@@ -262,7 +262,7 @@ export class TeamComponent implements OnInit, OnDestroy {
               this.orgMembers = [];
               return [];
             }
-            
+
             // Instead of making individual requests, get all persons at once
             return this.personService.getAll().pipe(
               map((allPersons: Person[]) => {
@@ -273,47 +273,47 @@ export class TeamComponent implements OnInit, OnDestroy {
                     personMap.set(person.id, person);
                   }
                 });
-                
+
                 const displayMembers: OrganizationMemberDisplay[] = [];
-                
+
                 for (const member of members) {
                   if (!member || !member.personId) {
                     continue;
                   }
-                  
+
                   // Convert personId to number safely
                   const personIdRaw = member.personId;
-                  const personIdNum = typeof personIdRaw === 'object' 
-                    ? parseInt(personIdRaw.toString(), 10) 
-                    : typeof personIdRaw === 'string' 
-                      ? parseInt(personIdRaw, 10) 
+                  const personIdNum = typeof personIdRaw === 'object'
+                    ? parseInt(personIdRaw.toString(), 10)
+                    : typeof personIdRaw === 'string'
+                      ? parseInt(personIdRaw, 10)
                       : personIdRaw;
-                  
+
                   if (isNaN(personIdNum)) {
                     console.warn('Invalid person ID:', personIdRaw);
                     continue;
                   }
-                  
+
                   // Get person from our map
                   const person = personMap.get(personIdNum);
-                  
+
                   if (!person) {
                     console.warn(`Person with ID ${personIdNum} not found in database`);
                     continue;
                   }
-                  
+
                   // Safe email handling
                   let email = 'no-email@example.com';
                   if (person.email) {
                     email = typeof person.email === 'string' ? person.email : String(person.email);
                   }
-                  
+
                   // Check if already a team member
                   const isTeamMember = this.teamMembers.some(tm => tm.email === email);
                   if (isTeamMember) {
                     continue; // Skip if already a team member
                   }
-                  
+
                   // Add to display members
                   displayMembers.push({
                     id: member.id ? member.id.toString() : '',
@@ -324,7 +324,7 @@ export class TeamComponent implements OnInit, OnDestroy {
                     specialty: null
                   });
                 }
-                
+
                 return displayMembers;
               })
             );
@@ -506,7 +506,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   // Traducciones para roles y especialidades
-  getProjectRoleTranslation(role: ProjectRoleType): string {
+  getProjectRoleTranslation(role: ProjectRole): string {
     return this.translate.instant(`team.roles.${role}`);
   }
 
@@ -515,7 +515,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   // Métodos para actualizar roles y especialidades durante la adición de miembros
-  updateMemberRole(member: OrganizationMemberDisplay, role: ProjectRoleType): void {
+  updateMemberRole(member: OrganizationMemberDisplay, role: ProjectRole): void {
     member.role = role;
 
     const membersArray = this.memberForm.get('members') as FormArray;

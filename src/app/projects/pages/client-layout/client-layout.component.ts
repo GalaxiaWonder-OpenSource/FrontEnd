@@ -6,7 +6,7 @@ import {Project} from '../../model/project.entity';
 import {SessionService} from '../../../iam/services/session.service';
 import {ProjectTeamMemberService} from '../../services/project-team-member.service';
 import {ProjectTeamMember} from '../../model/project-team-member.entity';
-import {UserRole} from '../../../iam/model/user-role.vo';
+import {UserType} from '../../../iam/model/user-type.vo';
 
 @Component({
   selector: 'app-client-layout',
@@ -21,7 +21,7 @@ import {UserRole} from '../../../iam/model/user-role.vo';
 
 export class ClientLayoutComponent {
   projects = signal<Project[]>([]);
-  userType = UserRole.TYPE_CLIENT; // Utilizar el valor correcto definido en el enum
+  userType = UserType.TYPE_CLIENT; // Utilizar el valor correcto definido en el enum
 
   constructor(
     private projectService: ProjectService,

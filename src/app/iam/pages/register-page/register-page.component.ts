@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserAccountService } from '../../services/user-account.service';
 import { PersonService } from '../../services/person.service';
-import { UserRole } from '../../model/user-role.vo';
+import { UserType } from '../../model/user-type.vo';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import {MatButton} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -54,7 +54,7 @@ export class RegisterPageComponent {
     phone: string;
     username: string;
     password: string;
-    role: UserRole;
+    role: UserType;
   }) {
     this.resetValues();
 

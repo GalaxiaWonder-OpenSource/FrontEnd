@@ -4,7 +4,11 @@ import {ChangeOrder} from './change-order.vo';
 import {ChangeResponse} from './change-response.vo';
 
 export class ChangeProcess {
+<<<<<<< Updated upstream
   public readonly id: number | undefined;
+=======
+  public readonly id: number|undefined
+>>>>>>> Stashed changes
   public readonly origin: ChangeOrigin;
   public readonly status: ChangeProcessStatus;
   public readonly justification: string;
@@ -13,7 +17,11 @@ export class ChangeProcess {
   public readonly approvedBy?: Date;
   public readonly changeOrder?: ChangeOrder;
   public readonly response?: ChangeResponse;
+<<<<<<< Updated upstream
   public readonly projectId: number | undefined;
+=======
+  public readonly projectId: number|undefined;
+>>>>>>> Stashed changes
 
   constructor({
     id,
@@ -28,14 +36,24 @@ export class ChangeProcess {
     projectId,
               }:{
     id?: number,
+<<<<<<< Updated upstream
     origin: ChangeOrigin,
+=======
+    origin?: ChangeOrigin,
+>>>>>>> Stashed changes
     status: ChangeProcessStatus,
     justification: string,
     description: string,
     approvedAt?: Date,
+<<<<<<< Updated upstream
     approvedBy?: Date,
     changeOrder?: ChangeOrder,
     response?: ChangeResponse,
+=======
+    approvedBy: Date,
+    changeOrder: ChangeOrder,
+    response: ChangeResponse,
+>>>>>>> Stashed changes
     projectId: number;
   }) {
     if(!justification.trim())throw new Error('Justification cannot be empty');

@@ -90,9 +90,9 @@ export class MemberComponent implements OnInit {
       console.error('No organizationId or personId found in session');
       return;
     }
-    console.log("XD");
+
     const invitationSender: Person = await this.personService.getById({}, {id: invitedBy}).toPromise();
-    console.log("XD2");
+
     const invitation = new OrganizationInvitation({
       organizationId: organizationId,
       personId: memberData.id,
@@ -100,7 +100,7 @@ export class MemberComponent implements OnInit {
       invitedAt: new Date(),
       status: InvitationStatus.PENDING
     });
-    console.log("XD3");
+
 
     this.organizationInvitationService.create(invitation).subscribe({
       next: () => {
@@ -127,7 +127,7 @@ export class MemberComponent implements OnInit {
           members.map((member) => ({
             memberType: member.memberType,
             joinedAt: member.joinedAt,
-            fullName: `${member.name ?? ''} ${member.lastName ?? ''}`.trim(),
+            fullName: `${member.firstName ?? ''} ${member.lastName ?? ''}`.trim(),
             email: member.email ?? '',
             member
           }))

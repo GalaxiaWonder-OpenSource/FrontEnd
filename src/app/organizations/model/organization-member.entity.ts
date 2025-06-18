@@ -11,7 +11,7 @@ export class OrganizationMember {
   public readonly personId: number|undefined;
 
   /** Optional personal info used for display (retrieved from person or enriched API). */
-  public readonly name?: string;
+  public readonly firstName?: string;
   public readonly lastName?: string;
   public readonly email?: string;
 
@@ -60,7 +60,7 @@ export class OrganizationMember {
     }
 
     this.id = id;
-    this.name = firstName;
+    this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.personId = personId;
@@ -75,7 +75,7 @@ export class OrganizationMember {
   toJSON() {
     return {
       id: this.id,
-      name: this.name,
+      name: this.firstName,
       lastName: this.lastName,
       email: this.email,
       personId: this.personId,

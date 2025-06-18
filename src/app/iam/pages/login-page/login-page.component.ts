@@ -41,57 +41,38 @@ export class LoginPageComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // For working with local db.json, we need to get all users and find the matching one
-    this.userAccountService.getAll().subscribe({
-      next: (accounts: any[]) => {
-        // Find user with matching username and password
-        const user = accounts.find(account => 
-          account.username?.toLowerCase() === formData.username.toLowerCase() && 
-          account.password === formData.password
-        );
+    const request = {
+      userName: formData.username.toLowerCase(),
+      password: formData.password
+    };
 
-        if (user) {
-          console.log('User found:', user);
-          
-          // User found, set session data
-          this.session.setPersonId(user.personId);
-          
-          // Map the role from db.json to UserRole enum
-          let userRole: UserRole;
-          if (user.role === 'ORGANIZATION_USER') {
-            userRole = UserRole.TYPE_WORKER;
-          } else if (user.role === 'CLIENT_USER') {
-            userRole = UserRole.TYPE_CLIENT;
-          } else {
-            userRole = UserRole.TYPE_WORKER; // Default to WORKER if role is not recognized
-          }
-          
-          this.session.setUserType(userRole);
-          
-          // Get person details if needed
-          this.personService.getById({ id: user.personId }).subscribe({
-            next: (person: any) => {
-              console.log('Person details:', person);
-              // Store additional person info if needed
-            },
-            error: (personErr: any) => {
-              console.error('Error fetching person details', personErr);
-            }
-          });
+    this.userAccountService.signIn(request).subscribe({
+      next: (response: {
+        user: {
+          userName: string;
+          userType: string;
+          personId: number;
+        },
+        token: string
+      }) => {
+        const { user, token } = response;
 
-          // Generate a mock token for auth simulation
-          const mockToken = btoa(`${user.username}:${Date.now()}`);
-          this.session.setToken(mockToken);
+        // ✅ Guardamos en sesión lo necesario
+        this.session.setPersonId(user.personId);
+        this.session.setUserType(UserRole[user.userType as keyof typeof UserRole]);
 
-          // Redirect based on user role
+        // ✅ Opcional: guardar el token si lo necesitas
+        //this.session.setToken?.(token);
+
+        // ✅ Redirección según tipo de usuario
+        if (user.userType === 'TYPE_WORKER') {
           this.router.navigate(['/organizations']);
         } else {
-          this.setError('login-page.errors.invalid-credentials');
+          this.router.navigate(['/projects']);
         }
       },
-      error: (err: any) => {
-        console.error('Error during login', err);
-        this.setError('login-page.errors.server-error');
+      error: () => {
+        this.setError('login-page.errors.invalid-credentials');
       },
       complete: () => {
         this.isLoading = false;

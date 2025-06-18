@@ -89,11 +89,19 @@ export class RegisterPageComponent {
             console.log('Person created:', person);
             
             // Step 2: Create a user account with a reference to the person
+            // Use the UserRole enum value directly
+            let roleValue = UserRole.TYPE_WORKER; // default
+            if (formData.role === UserRole.TYPE_CLIENT) {
+              roleValue = UserRole.TYPE_CLIENT;
+            } else if (formData.role === UserRole.TYPE_WORKER) {
+              roleValue = UserRole.TYPE_WORKER;
+            }
+            
             const userAccountData = {
               username: formData.username.toLowerCase(),
               password: formData.password,
               personId: person.id,
-              role: 'ORGANIZATION_USER', // Mapped from UserRole to match db.json structure
+              role: roleValue, // Mapped role value for the database
               status: 'ACTIVE'
             };
 

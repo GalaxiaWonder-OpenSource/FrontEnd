@@ -5,14 +5,14 @@
       "username": "luna",
       "password": "LunaPass2025",
       "personId": 201,
-      "role": "ORGANIZATION_USER",
+      "role": "TYPE_WORKER",
       "status": "ACTIVE"
     },
     {
       "personId": 203,
       "username": "bebebe",
       "password": "ASDFGH123",
-      "role": "ORGANIZATION_USER",
+      "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 102
     },
@@ -21,14 +21,14 @@
       "username": "nova",
       "password": "ASDFGH123",
       "personId": 205,
-      "role": "ORGANIZATION_USER",
+      "role": "TYPE_WORKER",
       "status": "ACTIVE"
     },
     {
       "username": "pedro",
       "password": "ASDFGH123",
       "personId": 205,
-      "role": "ORGANIZATION_USER",
+      "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 104
     },
@@ -36,9 +36,17 @@
       "username": "sahur",
       "password": "ASDFGH123",
       "personId": 206,
-      "role": "ORGANIZATION_USER",
+      "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 105
+    },
+    {
+      "username": "victor",
+      "password": "ASDFGH123",
+      "personId": 207,
+      "role": "TYPE_CLIENT",
+      "status": "ACTIVE",
+      "id": 106
     }
   ],
   "persons": [
@@ -81,6 +89,13 @@
       "firstName": "sahur",
       "lastName": "kitty",
       "id": 206
+    },
+    {
+      "email": "brossahur@gmail.com",
+      "phone": "+51999111221",
+      "firstName": "victor",
+      "lastName": "victorinox",
+      "id": 207
     }
   ],
   "organizations": [
@@ -201,6 +216,12 @@
       "personId": "203",
       "invitedBy": "5",
       "id": 405
+    },
+    {
+      "organizationId": "306",
+      "personId": "206",
+      "invitedBy": "201",
+      "id": 406
     }
   ],
   "organization-members": [
@@ -258,7 +279,8 @@
       "organizationId": 301,
       "status": "ACTIVE",
       "startingDate": "2025-06-10",
-      "endingDate": "2025-12-31"
+      "endingDate": "2025-12-31",
+      "clientId": 207
     },
     {
       "id": 602,
@@ -343,14 +365,6 @@
       "projectId": 602
     },
     {
-      "id": 704,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 2,
-      "personId": 2,
-      "projectId": 603
-    },
-    {
       "id": 705,
       "role": "COORDINATOR",
       "specialty": "ARCHITECTURE",
@@ -390,6 +404,5 @@
       "responsibleId": 702,
       "milestoneId": 1
     }
-  ],
-  "register": []
+  ]
 }

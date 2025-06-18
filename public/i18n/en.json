@@ -172,8 +172,8 @@
         "password": "Password",
         "user-type": {
           "label": "User type",
-          "CLIENT_USER": "Client",
-          "ORGANIZATION_USER": "Organization"
+          "TYPE_CLIENT": "Client user",
+          "TYPE_WORKER": "Worker user"
         }
       },
       "errors": {
@@ -517,7 +517,7 @@
     "title": "Project Team",
     "loading": "Loading team members...",
     "empty-state": "There are no members in this project team yet. Click 'Add Members' to get started.",
-    
+
     "table": {
       "name": "Name",
       "role": "Role",
@@ -526,18 +526,18 @@
       "status": "Status",
       "actions": "Actions"
     },
-    
+
     "statuses": {
       "ACTIVE": "Active",
       "PENDING": "Pending Confirmation",
       "INACTIVE": "Inactive"
     },
-    
+
     "roles": {
       "COORDINATOR": "Coordinator",
       "SPECIALIST": "Specialist"
     },
-    
+
     "specialties": {
       "ARCHITECTURE": "Architecture",
       "STRUCTURES": "Structures",
@@ -547,7 +547,7 @@
       "ELECTRICITY": "Electricity",
       "COMMUNICATIONS": "Communications"
     },
-    
+
     "actions": {
       "add-members": "Add Members",
       "view-details": "View Details",
@@ -558,7 +558,7 @@
       "close": "Close",
       "try-again": "Try Again"
     },
-    
+
     "dialogs": {
       "add-members": {
         "title": "Add Team Members",
@@ -573,7 +573,7 @@
         "select-specialty": "Select specialty"
       }
     },
-    
+
     "errors": {
       "no-project-id": "No project ID found in session",
       "load-project": "Error loading project information",
@@ -585,14 +585,14 @@
       "add-members": "Error adding team members",
       "member-exists": "Member already exists in this team"
     },
-    
+
     "success": {
       "members-added": "Team members added successfully",
       "member-updated": "Team member updated successfully",
       "member-removed": "Member removed from team successfully"
     }
   },
-  
+
   "tasks": {
     "title": "Tasks",
     "add": "Add Task",
@@ -641,7 +641,7 @@
       "completed": "Completed"
     }
   },
-  
+
   "specialties": {
     "ARCHITECTURE": "Architecture",
     "SOFTWARE_DEVELOPMENT": "Software Development",
@@ -651,7 +651,7 @@
     "PROJECT_MANAGEMENT": "Project Management",
     "CYBERSECURITY": "Cybersecurity"
   },
-  
+
   "common": {
     "save": "Save",
     "cancel": "Cancel",

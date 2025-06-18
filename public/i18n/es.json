@@ -172,8 +172,8 @@
         "password": "Contraseña",
         "user-type": {
           "label": "Tipo de usuario",
-          "CLIENT_USER": "Cliente",
-          "ORGANIZATION_USER": "Organización"
+          "TYPE_CLIENT": "Cliente",
+          "TYPE_WORKER": "Trabajador"
         }
       },
       "errors": {
@@ -523,7 +523,7 @@
     "title": "Equipo de Trabajo",
     "loading": "Cargando miembros del equipo...",
     "empty-state": "No hay miembros en este equipo de proyecto todavía. Haz clic en 'Agregar Miembros' para comenzar.",
-    
+
     "table": {
       "name": "Nombre",
       "role": "Rol",
@@ -532,18 +532,18 @@
       "status": "Estado",
       "actions": "Acciones"
     },
-    
+
     "statuses": {
       "ACTIVE": "Activo",
       "PENDING": "Pendiente de Confirmación",
       "INACTIVE": "Inactivo"
     },
-    
+
     "roles": {
       "COORDINATOR": "Coordinador",
       "SPECIALIST": "Especialista"
     },
-    
+
     "specialties": {
       "ARCHITECTURE": "Arquitectura",
       "STRUCTURES": "Estructuras",
@@ -553,7 +553,7 @@
       "ELECTRICITY": "Electricidad",
       "COMMUNICATIONS": "Comunicaciones"
     },
-    
+
     "actions": {
       "add-members": "Agregar Miembros",
       "view-details": "Ver Detalles",
@@ -566,7 +566,7 @@
       "try-again": "Intentar Nuevamente",
       "confirm": "Confirmar"
     },
-    
+
     "dialogs": {
       "add-members": {
         "title": "Agregar Miembros al Equipo",
@@ -593,7 +593,7 @@
         "warning": "Esta acción no se puede deshacer."
       }
     },
-    
+
     "errors": {
       "no-project-id": "No se encontró ID del proyecto en la sesión",
       "load-project": "Error al cargar la información del proyecto",
@@ -607,14 +607,14 @@
       "remove-member": "Error al eliminar el miembro del equipo",
       "member-exists": "El miembro ya existe en este equipo"
     },
-    
+
     "success": {
       "members-added": "Miembros agregados al equipo exitosamente",
       "member-updated": "Miembro del equipo actualizado exitosamente",
       "member-removed": "Miembro eliminado del equipo exitosamente"
     }
   },
-  
+
   "tasks": {
     "title": "Tareas",
     "add": "Añadir tarea",
@@ -663,7 +663,7 @@
       "completed": "Completadas"
     }
   },
-  
+
   "specialties": {
     "ARCHITECTURE": "Arquitectura",
     "SOFTWARE_DEVELOPMENT": "Desarrollo de Software",
@@ -673,7 +673,7 @@
     "PROJECT_MANAGEMENT": "Gestión de Proyectos",
     "CYBERSECURITY": "Ciberseguridad"
   },
-  
+
   "common": {
     "save": "Guardar",
     "cancel": "Cancelar",

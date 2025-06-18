@@ -704,5 +704,21 @@
       "email-field-label": "Dirección de correo electrónico",
       "placeholder": "juanperez@ejemplo.com"
     }
+  },
+
+  "invitation-table": {
+    "organization": "Organización:",
+    "invitedBy": "Invitado por:",
+    "invitedAt": "Fecha de invitación:",
+    "status": "Estado:",
+    "actions": "Acciones:",
+    "accept": "Aceptar",
+    "reject": "Rechazar"
+  },
+
+  "invitation-statuses": {
+    "pending": "Pendiente",
+    "accepted": "Aceptada",
+    "rejected": "Rechazada"
   }
 }

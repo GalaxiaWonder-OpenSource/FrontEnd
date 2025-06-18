@@ -682,6 +682,22 @@
       "email-field-label": "Email address",
       "placeholder": "johndoe@example.com"
     }
+  },
+
+  "invitation-table": {
+    "organization": "Organization:",
+    "invitedBy": "Invited by:",
+    "invitedAt": "Invited at:",
+    "status": "Status:",
+    "actions": "Actions:",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+
+  "invitation-statuses": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected"
   }
 }
 

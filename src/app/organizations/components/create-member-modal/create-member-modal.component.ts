@@ -12,6 +12,8 @@ import { PersonService } from '../../../iam/services/person.service';
 import { UserAccountService } from '../../../iam/services/user-account.service';
 import { OrganizationMemberService } from '../../services/organization-member.service';
 import { SessionService } from '../../../iam/services/session.service';
+import {Person} from '../../../iam/model/person.entity';
+import {OrganizationMember} from '../../model/organization-member.entity';
 
 /**
  * Component that displays a modal to invite a new member to the organization.
@@ -40,7 +42,7 @@ export class CreateMemberModalComponent implements OnInit {
   public emailInput: string = '';
 
   /** Found person based on email search */
-  public foundPerson: { id: string; fullName: string; email: string } | null = null;
+  public foundPerson: Person | null = null;
 
   /** Selected member type, fixed as 'WORKER' */
   public memberType: string = 'WORKER';
@@ -54,17 +56,12 @@ export class CreateMemberModalComponent implements OnInit {
   /** Current organization ID */
   private organizationId: number | null = null;
 
-  /** List of existing member person IDs */
-  private existingMemberIds: string[] = [];
-
   /** Timeout ID for debouncing */
   private searchTimeout: any = null;
 
   constructor(
     private dialogRef: MatDialogRef<CreateMemberModalComponent>,
     private personService: PersonService,
-    private userAccountService: UserAccountService,
-    private organizationMemberService: OrganizationMemberService,
     private session: SessionService
   ) {}
 
@@ -80,8 +77,6 @@ export class CreateMemberModalComponent implements OnInit {
       this.dialogRef.close();
       return;
     }
-
-    this.loadExistingMembers(this.organizationId.toString());
   }
 
   /** Closes the modal without saving any changes */
@@ -94,10 +89,9 @@ export class CreateMemberModalComponent implements OnInit {
    */
   public submit(): void {
     if (this.isFormValid) {
-      this.dialogRef.close({
-        personId: this.foundPerson!.id,
-        memberType: this.memberType
-      });
+      this.dialogRef.close(
+        this.foundPerson!
+      );
     }
   }
 
@@ -106,7 +100,7 @@ export class CreateMemberModalComponent implements OnInit {
    * @returns true if person is found
    */
   public get isFormValid(): boolean {
-    return !!this.foundPerson;
+    return this.foundPerson != null;
   }
 
   /**
@@ -155,20 +149,12 @@ export class CreateMemberModalComponent implements OnInit {
   }
 
   /**
-   * Validates email format
-   */
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  /**
    * Searches for a person by email
    */
-  private searchPersonByEmail(email: string): Promise<{ id: string; fullName: string; email: string } | null> {
+  private searchPersonByEmail(email: string): Promise<Person | null> {
     return new Promise((resolve) => {
       this.personService.getAll().subscribe({
-        next: (people: any[]) => {
+        next: (people: Person[]) => {
           const person = people.find(p =>
             p.email && p.email.toLowerCase() === email.toLowerCase()
           );
@@ -178,60 +164,12 @@ export class CreateMemberModalComponent implements OnInit {
             return;
           }
 
-          // Check if person is already a member
-          if (this.existingMemberIds.includes(person.id)) {
-            this.searchError = 'create-member.already-member';
-            resolve(null);
-            return;
-          }
-
-          // Check if person has ORGANIZATION_USER account
-          this.userAccountService.getAll().subscribe({
-            next: (accounts: any[]) => {
-              const hasOrgAccount = accounts.some(account =>
-                account.personId === person.id &&
-                account.role === 'ORGANIZATION_USER'
-              );
-
-              if (!hasOrgAccount) {
-                this.searchError = 'create-member.not-organization-user';
-                resolve(null);
-                return;
-              }
-
-              resolve({
-                id: person.id,
-                fullName: person.firstName && person.lastName
-                  ? `${person.firstName} ${person.lastName}`
-                  : 'Name not available',
-                email: person.email
-              });
-            },
-            error: () => {
-              resolve(null);
-            }
-          });
+          resolve(person);
         },
         error: () => {
           resolve(null);
         }
       });
-    });
-  }
-
-  /**
-   * Loads existing organization members to filter them out
-   */
-  private loadExistingMembers(organizationId: string): void {
-    this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
-      next: (members: any[]) => {
-        this.existingMemberIds = members
-          .filter(m => m.organizationId === organizationId)
-          .map(m => m.personId);
-      },
-      error: (err: any) => {
-        console.error('Failed to load organization members:', err);
-      }
     });
   }
 }

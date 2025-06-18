@@ -82,7 +82,7 @@ export class MemberComponent implements OnInit {
     });
   }
 
-  async createMember(memberData: any): Promise<void> {
+  async createMember(memberData: Person): Promise<void> {
     const organizationId = this.session.getOrganizationId();
     const invitedBy = this.session.getPersonId();
 
@@ -90,16 +90,17 @@ export class MemberComponent implements OnInit {
       console.error('No organizationId or personId found in session');
       return;
     }
-
-    const invitationSender: Person = await this.personService.getById(invitedBy).toPromise();
-
+    console.log("XD");
+    const invitationSender: Person = await this.personService.getById({}, {id: invitedBy}).toPromise();
+    console.log("XD2");
     const invitation = new OrganizationInvitation({
       organizationId: organizationId,
-      personId: memberData.personId,
-      invitedBy: invitationSender.fullName,
+      personId: memberData.id,
+      invitedBy: `${invitationSender.firstName} ${invitationSender.lastName}`.trim(),
       invitedAt: new Date(),
       status: InvitationStatus.PENDING
     });
+    console.log("XD3");
 
     this.organizationInvitationService.create(invitation).subscribe({
       next: () => {

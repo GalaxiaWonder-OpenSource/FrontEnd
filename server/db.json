@@ -65,7 +65,7 @@
   "organization-members": [
     {
       "personId": 1,
-      "name": "Henry",
+      "firstName": "Henry",
       "lastName": "Reaño",
       "email": "henry@example.com",
       "organizationId": 1,

@@ -23,6 +23,14 @@
       "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 3
+    },
+    {
+      "username": "ariana",
+      "password": "ASDFGH!#",
+      "personId": 4,
+      "role": "TYPE_CLIENT",
+      "status": "ACTIVE",
+      "id": 4
     }
   ],
   "persons": [
@@ -46,6 +54,13 @@
       "firstName": "Mario",
       "lastName": "López",
       "id": 3
+    },
+    {
+      "email": "ariana@example.com",
+      "phone": "+51303030304",
+      "firstName": "Ariana",
+      "lastName": "Grande",
+      "id": 4
     }
   ],
   "organizations": [
@@ -61,7 +76,16 @@
       "id": 1
     }
   ],
-  "organization-invitations": [],
+  "organization-invitations": [
+    {
+      "organizationId": 1,
+      "personId": 4,
+      "invitedBy": "Henry Reaño",
+      "invitedAt": "2025-06-19T09:43:53.577Z",
+      "status": "PENDING",
+      "id": 1
+    }
+  ],
   "organization-members": [
     {
       "personId": 1,
@@ -102,6 +126,24 @@
         "id": 2
       },
       "currentUserRoleOnProject": "COORDINATOR"
+    },
+    {
+      "id": 2,
+      "name": "ksdkasd",
+      "description": "dasdasd",
+      "status": "BASIC_STUDIES",
+      "startingDate": "2029-05-20T00:00:00.000Z",
+      "endingDate": "2030-10-30T00:00:00.000Z",
+      "team": [],
+      "organizationId": 1,
+      "contractingEntity": {
+        "email": "andrea@example.com",
+        "phone": "+51123456788",
+        "firstName": "Andrea",
+        "lastName": "Aponte",
+        "id": 2
+      },
+      "currentUserRoleOnProject": "COORDINATOR"
     }
   ],
   "project-team-members": [
@@ -111,6 +153,13 @@
       "specialty": "ARCHITECTURE",
       "personId": 1,
       "projectId": 1
+    },
+    {
+      "id": 2,
+      "role": "COORDINATOR",
+      "specialty": "ARCHITECTURE",
+      "personId": 1,
+      "projectId": 2
     }
   ],
   "change-processes": [

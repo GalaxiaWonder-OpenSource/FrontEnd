@@ -46,6 +46,9 @@
   },
   "project-info": {
     "title": "Información del Proyecto",
+    "contracting-entity": "Entidad contratante",
+    "email": "Email",
+    "phone": "Celular",
     "name": "Nombre",
     "description": "Descripción",
     "status": "Estado",

@@ -35,7 +35,10 @@
       "schedule": "Schedule",
       "working-team": "Working Team",
       "change-management": "Change Management",
-      "configuration": "Configuration"
+      "configuration": "Configuration",
+      "list": {
+        "empty": "No projects for you yet"
+      }
     },
     "milestone": {
       "title": "Milestone",
@@ -47,6 +50,9 @@
   "project-info": {
     "title": "Project Information",
     "name": "Name",
+    "contracting-entity": "Contracting Entity",
+    "email": "Email",
+    "phone": "Phone",
     "description": "Description",
     "status": "Status",
     "starting-date": "Starting Date",

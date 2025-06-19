@@ -8,6 +8,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectStatus } from '../../model/project-status.vo';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import {Person} from '../../../iam/model/person.entity';
+import {PhoneNumber} from '../../../iam/model/phone-number.vo';
+import {ProjectTeamMember} from '../../model/project-team-member.entity';
 
 @Component({
   selector: 'app-project-info',
@@ -57,7 +60,32 @@ export class ProjectInfoComponent implements OnInit, OnDestroy {
     this.error = null;
 
     this.projectService.getById(null, { id: projectId }).subscribe({
-      next: (project: Project) => {
+      next: (json: any) => {
+        const phoneRaw = json.contractingEntity.phone || '0000000000';
+
+        const contractingEntity = new Person({
+          id: json.contractingEntity.id,
+          firstName: json.contractingEntity.firstName,
+          lastName: json.contractingEntity.lastName,
+          email: json.contractingEntity.email,
+          phone: new PhoneNumber(phoneRaw)
+        });
+
+
+        const project = new Project({
+          id: json.projectId,
+          name: json.name,
+          description: json.description,
+          status: json.status,
+          startingDate: new Date(json.startingDate),
+          endingDate: new Date(json.endingDate),
+          organizationId: json.organizationId,
+          contractingEntity,
+          activeChangeProcessId: json.activeChangeProcessId,
+          currentUserRoleOnProject: json.currentUserRoleOnProject,
+          team: json.team?.map((member: any) => new ProjectTeamMember(member)) ?? []
+        });
+
         this.project = project;
         this.loading = false;
       },

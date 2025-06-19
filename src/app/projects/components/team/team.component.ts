@@ -454,7 +454,6 @@ export class TeamComponent implements OnInit, OnDestroy {
         lastName: '',
         role: role,
         specialty: specialty,
-        memberId: Number(orgMember.id ? orgMember.id.toString() : 0),
         projectId: Number(this.projectId ? this.projectId.toString() : 0),
         personId: Number(personId)
       });

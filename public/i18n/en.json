@@ -245,6 +245,7 @@
     "title": "Create new project",
     "name": "Project name",
     "description": "Description",
+    "contracting-entity-email": "Client's email address",
     "organization": "Organization",
     "starting-date": "Start date",
     "ending-date": "End date",

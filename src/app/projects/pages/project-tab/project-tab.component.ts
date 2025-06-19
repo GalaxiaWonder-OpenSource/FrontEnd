@@ -16,6 +16,8 @@ import {ProjectStatus} from '../../model/project-status.vo';
 import {ProjectRole} from '../../model/project-role.vo';
 import {Specialty} from '../../model/specialty.vo';
 import {OrganizationService} from '../../../organizations/services/organization.service';
+import {Person} from '../../../iam/model/person.entity';
+import {PersonService} from '../../../iam/services/person.service';
 
 @Component({
   selector: 'app-project-tab',
@@ -35,13 +37,15 @@ export class ProjectTabComponent implements OnInit {
   projects = signal<Project[]>([]);
   loading = signal<boolean>(true);
   organizationId: number | null = null;
+  private contractingEntityId: number = 0;
 
   constructor(
     private projectService: ProjectService,
     private dialog: MatDialog,
     private session: SessionService,
     private projectTeamMemberService: ProjectTeamMemberService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private personService: PersonService
   ) {}
   ngOnInit(): void {
     const orgId = this.session.getOrganizationId() ?? null;
@@ -104,11 +108,20 @@ export class ProjectTabComponent implements OnInit {
             throw new Error("No person ID available in session");
           }
 
+          const contractorPersonId: number = this.session.getPersonId() ?? 0;
+
           if (!this.organizationId) {
             throw new Error("Organization ID is required");
           }
 
-          const personIdNum = this.organizationId; // ???
+          this.personService.getAll().subscribe({
+            next: (people: Person[]) => {
+              const person = people.find(p =>
+                p.email && p.email.toLowerCase() === result.contractingEntityEmail.toLowerCase()
+              );
+              if(person && person.id) this.contractingEntityId = person.id;
+            }
+          });
 
           const newPro = new Project({
             name: result.name,
@@ -117,7 +130,7 @@ export class ProjectTabComponent implements OnInit {
             endingDate: new Date(result.endingDate),
             status: ProjectStatus.BASIC_STUDIES,
             organizationId: this.organizationId,
-            contractingEntityId: personIdNum, // ???
+            contractingEntityId: this.contractingEntityId,
             currentUserRoleOnProject: ProjectRole.COORDINATOR
           });
 
@@ -126,8 +139,7 @@ export class ProjectTabComponent implements OnInit {
               const member = new ProjectTeamMember({
                 role: ProjectRole.COORDINATOR,
                 specialty: Specialty.ARCHITECTURE,
-                memberId: personIdNum,
-                personId: personIdNum,
+                personId: contractorPersonId,
                 projectId: createdProject.id
               });
 

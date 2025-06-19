@@ -17,8 +17,6 @@ export class ProjectTeamMember {
 
   public specialty: Specialty;
 
-  public readonly memberId: number;
-
   public readonly personId: number;
 
   public readonly projectId: number;
@@ -42,7 +40,6 @@ export class ProjectTeamMember {
                 lastName,
                 role,
                 specialty,
-                memberId,
                 personId,
                 projectId
               }: {
@@ -51,11 +48,10 @@ export class ProjectTeamMember {
     lastName?: string;
     role: ProjectRole;
     specialty: Specialty;
-    memberId: number;
     personId: number;
     projectId: number;
   }) {
-    if (!role || !specialty || !memberId) {
+    if (!role || !specialty) {
       throw new Error('Missing required fields in ProjectTeamMember.');
     }
 
@@ -64,7 +60,6 @@ export class ProjectTeamMember {
     this.lastName = lastName;
     this.role = role;
     this.specialty = specialty;
-    this.memberId = memberId;
     this.personId = personId;
     this.projectId = projectId;
   }
@@ -79,7 +74,6 @@ export class ProjectTeamMember {
       lastName: this.lastName,
       role: this.role,
       specialty: this.specialty,
-      memberId: this.memberId.toString(),
       personId: this.personId.toString(),
       projectId: this.projectId.toString()
     };

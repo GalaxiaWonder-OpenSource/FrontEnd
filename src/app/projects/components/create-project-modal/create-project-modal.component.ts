@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle, MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -9,12 +9,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {CommonModule} from '@angular/common';
 import { SessionService } from '../../../iam/services/session.service';
 import { Organization } from '../../../organizations/model/organization.entity';
-import { OrganizationService } from '../../../organizations/services/organization.service';
-// Removed OrganizationId import as we now use string type for IDs
-
-interface DialogData {
-  preselectedOrganizationId?: number;
-}
 
 @Component({
   selector: 'app-create-project-modal',
@@ -34,85 +28,18 @@ interface DialogData {
   templateUrl: './create-project-modal.component.html',
   styleUrl: './create-project-modal.component.css'
 })
-export class CreateProjectModalComponent implements OnInit {
+export class CreateProjectModalComponent {
   name='';
   description='';
   startingDate=new Date();
-  endingDate= '';
+  endingDate = new Date();
   organizations: Organization[] = [];
-  selectedOrganization: number = 0;
-  selectedOrganizationName: string = '';
-  showOrgSelection: boolean = false;
+  contractingEntityEmail: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<CreateProjectModalComponent>,
-    private organizationService: OrganizationService,
-    private session: SessionService,
-    @Inject(MAT_DIALOG_DATA) private data: DialogData
+    private session: SessionService
   ) {
-    // Si tenemos un ID preseleccionado, lo usamos directamente
-    if (data?.preselectedOrganizationId) {
-      this.selectedOrganization = data.preselectedOrganizationId;
-      this.showOrgSelection = false;
-
-      // Obtener el nombre de la organización
-      this.loadSelectedOrganizationName();
-    } else {
-      this.showOrgSelection = true;
-    }
-  }
-
-  ngOnInit(): void {
-    // Solo cargamos las organizaciones si no tenemos una preseleccionada
-    if (this.showOrgSelection) {
-      this.loadOrganizations();
-    }
-  }
-
-  loadOrganizations(): void {
-    const personId = this.session.getPersonId();
-    if (!personId) {
-      console.warn('No person ID found in session');
-      return;
-    }
-
-    this.organizationService.getAll().subscribe({
-      next: (orgs: Organization[]) => {
-        // Filtramos las organizaciones donde el usuario actual es un miembro
-        this.organizations = orgs.filter(org =>
-          org.createdBy && org.createdBy.toString() === personId.toString()
-        );
-
-        // Buscar la organización GOLA y seleccionarla por defecto
-        const golaOrg = this.organizations.find(org =>
-          org.commercialName === "GOLASAC" ||
-          org.legalName === "GOLA"
-        );
-
-        if (golaOrg && golaOrg.id) {
-          console.log("Preselecting GOLA organization:", golaOrg);
-          this.selectedOrganization = Number(golaOrg.id);
-        } else if (this.organizations.length > 0 && this.organizations[0].id) {
-          // Si no hay GOLA, seleccionamos la primera organización
-          this.selectedOrganization = Number(this.organizations[0].id);
-        }
-      },
-      error: (err: Error) => console.error('Failed to load organizations:', err)
-    });
-  }
-
-  loadSelectedOrganizationName(): void {
-    if (!this.selectedOrganization) return;
-
-    this.organizationService.getById({}, {id: this.selectedOrganization}).subscribe({
-      next: (org: Organization) => {
-        this.selectedOrganizationName = org.commercialName || org.legalName;
-        console.log(`Selected organization: ${this.selectedOrganizationName}`);
-      },
-      error: (err: Error) => {
-        console.error('Failed to load organization name:', err);
-      }
-    });
   }
 
   close(): void {
@@ -120,32 +47,28 @@ export class CreateProjectModalComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.name && this.description && this.endingDate && this.selectedOrganization) {
-      console.log("Submitting project creation form with organization:", this.selectedOrganization);
+    const orgId = this.session.getOrganizationId();
 
-      const startDate = typeof this.startingDate === 'string'
-        ? new Date(this.startingDate)
-        : this.startingDate;
-
-      const endDate = new Date(this.endingDate);
+    if (this.name && this.description && this.endingDate && orgId) {
+      const startDate = this.startingDate;
+      const endDate = this.endingDate;
 
       const data = {
         name: this.name,
         description: this.description,
         startingDate: startDate,
         endingDate: endDate,
-        organizationId: this.selectedOrganization,
+        organizationId: orgId,
         creator: this.session.getPersonId()
       };
 
-      console.log("Project data:", data);
       this.dialogRef.close(data);
     } else {
       console.warn("Form validation failed:", {
         name: this.name,
         description: this.description,
         endingDate: this.endingDate,
-        selectedOrganization: this.selectedOrganization
+        organizationId: orgId
       });
     }
   }

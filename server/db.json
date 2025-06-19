@@ -85,8 +85,27 @@
     }
   ],
   "projects": [
+    {
+      "id": 1,
+      "name": "Saquenme de la carrera",
+      "description": "Quiero morir sí sí, quiero morir sí sí",
+      "status": "BASIC_STUDIES",
+      "startingDate": "2025-06-25T00:00:00.000Z",
+      "endingDate": "2026-12-25T00:00:00.000Z",
+      "team": [],
+      "organizationId": 1,
+      "contractingEntityId": 0,
+      "currentUserRoleOnProject": "COORDINATOR"
+    }
   ],
   "project-team-members": [
+    {
+      "id": 1,
+      "role": "COORDINATOR",
+      "specialty": "ARCHITECTURE",
+      "personId": 1,
+      "projectId": 1
+    }
   ],
   "change-process": [],
   "milestones": [],

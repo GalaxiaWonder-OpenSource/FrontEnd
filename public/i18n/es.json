@@ -664,7 +664,46 @@
     "PROJECT_MANAGEMENT": "Gestión de Proyectos",
     "CYBERSECURITY": "Ciberseguridad"
   },
-
+  "change-management": {
+    "title": "Gestión de Cambios",
+    "new-request-button": "Nueva solicitud de cambio",
+    "no-requests": "No hay solicitudes registradas",
+    "no-description": "Sin descripción",
+    "pending": "Pendiente",
+    "success-message": "¡Solicitud enviada correctamente!",
+    "status-label": "Estado",
+    "description-label": "Descripción",
+    "project-label": "Proyecto",
+    "check-date-label": "Fecha de evaluación",
+    "approve-button": "Aprobar",
+    "reject-button": "Rechazar",
+    "form": {
+      "title-label": "Título",
+      "description-label": "Descripción",
+      "submit-button": "Enviar",
+      "cancel-button": "Cancelar"
+    },
+    "status": {
+      "PENDING": "Pendiente",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "UNDER_REVIEW": "En Revisión",
+      "CHANGE_REQUEST": "Solicitud de Cambio",
+      "CHANGE_PENDING": "Cambio Pendiente"
+    },
+    "errors": {
+      "load-requests": "Error al cargar las solicitudes de cambio",
+      "submit-request": "Error al enviar la solicitud de cambio",
+      "approve-request": "Error al aprobar la solicitud de cambio",
+      "reject-request": "Error al rechazar la solicitud de cambio",
+      "no-project-id": "No se encontró el ID del proyecto"
+    },
+    "messages": {
+      "request-approved": "Solicitud de cambio aprobada exitosamente",
+      "request-rejected": "Solicitud de cambio rechazada exitosamente",
+      "loading": "Cargando solicitudes de cambio..."
+    }
+  },
   "common": {
     "save": "Guardar",
     "cancel": "Cancelar",

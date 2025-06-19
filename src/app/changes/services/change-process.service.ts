@@ -9,11 +9,11 @@ import {HttpMethod} from '../../shared/model/http-method.vo';
 })
 export class ChangeProcessService {
   private readonly service = createDynamicService<ChangeProcess>([
-    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'changeProcess'),
-    createEndpointConfig({ name: 'getByProject', method: HttpMethod.GET }, undefined, 'changeProcess'),
-    createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'changeProcess'),
-    createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'changeProcess', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'changeProcess','/:id'),
+    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'change-processes'),
+    createEndpointConfig({ name: 'getByProject', method: HttpMethod.GET }, undefined, 'change-processes'),
+    createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'change-processes'),
+    createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'change-processes', '/:id'),
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'change-processes','/:id'),
   ]);
   getAll = this.service['getAll'];
   getByProject = this.service['getByProject'];

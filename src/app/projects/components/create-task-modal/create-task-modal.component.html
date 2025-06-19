@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ data.task ? 'schedule.dialogs.edit-task.title' : 'schedule.dialogs.add-task.title' | translate }}</h2>
+<h2 mat-dialog-title>{{ (data.task ? 'schedule.dialogs.edit-task.title' : 'schedule.dialogs.add-task.title') | translate }}</h2>
 
 <div mat-dialog-content class="form-container">
   <!-- Nombre -->
@@ -68,6 +68,6 @@
   </button>
   <button mat-raised-button color="primary" (click)="submit()"
           [disabled]="!name || !specialty || !startDate || !endDate">
-    {{ data.task ? 'schedule.actions.update' : 'schedule.actions.create' | translate }}
+    {{ (data.task ? 'schedule.actions.update' : 'schedule.actions.create') | translate }}
   </button>
 </div>

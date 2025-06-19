@@ -113,7 +113,90 @@
       "projectId": 1
     }
   ],
-  "change-process": [],
-  "milestones": [],
-  "tasks": []
+  "change-processes": [
+    {
+      "id": 1,
+      "projectId": 1,
+      "origin": "CHANGE_REQUEST",
+      "status": "REJECTED",
+      "justification": "EROTICO SE OUSO EL ENCUENTRO ENTRE TU YO",
+      "description": "OLVIDA SI ES CORRECTO Y MOMENTO VIVETELO, MAMI POR QUE TU BAILA ASIIIIII COMO SI ESTUVIERAMO EN LA CAM Q RICA  TIENES Q SENTIR DENUITA SIN ND",
+      "approvedAt": "2025-06-19T05:26:12.962Z",
+      "approvedBy": "Contractor"
+    },
+    {
+      "projectId": 1,
+      "origin": "CHANGE_REQUEST",
+      "status": "APPROVED",
+      "justification": "DISCULPAME",
+      "description": "AQUELLOS CELOS TAN INTENSOS QUE SRNTÍ POR TI",
+      "approvedAt": "2025-06-19T05:29:05.563Z",
+      "approvedBy": "Contractor",
+      "id": 2
+    },
+    {
+      "projectId": 1,
+      "origin": "CHANGE_REQUEST",
+      "status": "APPROVED",
+      "justification": "PERO ME",
+      "description": "PERDÍ EN TU MIRADA OOO MAMIIII DIME QUE POLQ E FUISTE",
+      "approvedAt": "2025-06-19T05:32:33.669Z",
+      "approvedBy": "Contractor",
+      "id": 3
+    },
+    {
+      "projectId": 1,
+      "origin": "CHANGE_REQUEST",
+      "status": "APPROVED",
+      "justification": "BB Q FUE",
+      "description": "Q HACE BUSCANDOME E LAO SI SABE Q YO ERROES NO EREPITO",
+      "approvedAt": "2025-06-19T05:37:00.316Z",
+      "approvedBy": "Contractor",
+      "id": 4
+    },
+    {
+      "projectId": 1,
+      "origin": "CHANGE_REQUEST",
+      "status": "REJECTED",
+      "justification": "O Q ME LO INTEO",
+      "description": "YO TENIA MI BBBB ERA ALGO BIEN ESPECIALLLLL PERO ME OBSESIONÉ CONA LGO Q EL LE HACIA MAL ",
+      "approvedAt": "2025-06-19T05:41:01.398Z",
+      "approvedBy": "Contractor",
+      "id": 5
+    }
+  ],
+  "milestones": [
+    {
+      "name": "MILE 1",
+      "startingDate": "2025-09-30T05:00:00.000Z",
+      "endingDate": "2025-10-25T05:00:00.000Z",
+      "projectId": null,
+      "description": "JASDLKJASLDAS",
+      "id": 1
+    }
+  ],
+  "tasks": [
+    {
+      "name": "TASKKKKKKKKKK 1",
+      "description": "THIS IS A TASK AGH",
+      "specialty": "HSA",
+      "startingDate": "2025-09-12T05:00:00.000Z",
+      "dueDate": "2025-09-16T05:00:00.000Z",
+      "status": "DRAFT",
+      "responsibleId": 1,
+      "milestoneId": 1,
+      "id": 1
+    },
+    {
+      "name": "TASKKK 2",
+      "description": "Q PASARIA SI VOLVIERAN ESAS NOCHES DENTRO DE TI",
+      "specialty": "HSA",
+      "startingDate": "2025-09-12T05:00:00.000Z",
+      "dueDate": "2025-09-15T05:00:00.000Z",
+      "status": "PENDING",
+      "responsibleId": 1,
+      "milestoneId": 1,
+      "id": 2
+    }
+  ]
 }

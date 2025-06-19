@@ -4,7 +4,7 @@ import {ChangeOrder} from './change-order.vo';
 import {ChangeResponse} from './change-response.vo';
 
 export class ChangeProcess {
-  public readonly id: number | undefined;
+  public readonly id?: number | undefined;
   public readonly origin: ChangeOrigin;
   public readonly status: ChangeProcessStatus;
   public readonly justification: string;

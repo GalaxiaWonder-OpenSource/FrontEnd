@@ -52,3 +52,22 @@ button {
   margin: 4px 0;
   font-size: 14px;
 }
+.warn {
+  color: #ff9800;
+  font-weight: 500;
+}
+
+.primary {
+  color: #34ef60;
+  font-weight: 500;
+}
+
+.accent {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.basic {
+  color: #666;
+  font-weight: 500;
+}

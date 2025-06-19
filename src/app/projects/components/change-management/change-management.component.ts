@@ -41,8 +41,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatCardModule
   ],
 })
-export class ChangeManagementComponent{
+export class ChangeManagementComponent {
   changeProcess = signal<ChangeProcess[]>([]);
+
+  pendingRequest = signal<ChangeProcess | null>(null);
+  resolvedRequests = signal<ChangeProcess[]>([]);
 
   changeRequest: any = {title: '', description: ''};
   changeRequests: ChangeProcess[] = [];
@@ -78,6 +81,8 @@ export class ChangeManagementComponent{
     const userType = this.sessionService.getUserType();
     this.isClient = userType === UserType.TYPE_CLIENT;
     this.isContractor = userType === UserType.TYPE_WORKER;
+    console.log('💼 User type:', this.sessionService.getUserType());
+
   }
 
   private async loadChangeRequests(): Promise<void> {
@@ -213,11 +218,13 @@ export class ChangeManagementComponent{
         approvedBy: 'Contractor'
       };
 
-      await this.changeProcessService.update(updated); // Actualizar estado
-      await this.changeProcessService.delete({}, { id: request.id }).toPromise(); // Eliminar del json-server
+      await this.changeProcessService.update(updated, { id: request.id }).toPromise();
+
+      await this.loadChangeRequests();
+
 
       this.showSnackBar('Cambio aprobado y eliminado', 'success');
-      await this.loadChangeRequests(); // Refrescar lista
+      await this.loadChangeRequests();
     } catch (error) {
       console.error('Error al aprobar y eliminar cambio:', error);
       this.showSnackBar('Error al aprobar solicitud', 'error');
@@ -237,13 +244,14 @@ export class ChangeManagementComponent{
         approvedBy: 'Contractor'
       };
 
-      await this.changeProcessService.update(updated);
-      await this.changeProcessService.delete({}, { id: request.id }).toPromise();
+      console.log('Actualizando cambio con ID:', request.id);
 
-      this.showSnackBar('Cambio rechazado y eliminado', 'info');
+      await this.changeProcessService.update(updated, { id: request.id }).toPromise();
       await this.loadChangeRequests();
+
+      this.showSnackBar('Cambio rechazado correctamente', 'info');
     } catch (error) {
-      console.error('Error al rechazar y eliminar cambio:', error);
+      console.error('Error al rechazar cambio:', error);
       this.showSnackBar('Error al rechazar solicitud', 'error');
     } finally {
       this.loading = false;
@@ -259,7 +267,4 @@ export class ChangeManagementComponent{
     }
   }
 
-  getStatusTranslation(status: ChangeProcessStatus): string {
-    return `change-management.status.${status.toLowerCase()}`;
-  }
 }

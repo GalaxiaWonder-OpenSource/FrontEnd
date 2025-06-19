@@ -47,7 +47,9 @@ function extractParamValue(val: any): any {
  * @param params - An object containing key-value pairs for substitution
  * @returns A URL with all dynamic parameters replaced
  */
+
 function replacePathParams(url: string, params: Record<string, any>): string {
+
   const result = url.replace(/:([a-zA-Z]+)/g, (match, key) => {
 
     if (!params || !(key in params)) {
@@ -61,9 +63,11 @@ function replacePathParams(url: string, params: Record<string, any>): string {
     }
 
     return encodeURIComponent(String(val));
+
   });
 
   return result;
+
 }
 
 /**

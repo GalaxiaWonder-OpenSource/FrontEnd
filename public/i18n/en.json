@@ -656,7 +656,46 @@
       "completed": "Completed"
     }
   },
-
+  "change-management": {
+    "title": "Change Management",
+    "new-request-button": "New Change Request",
+    "no-requests": "No change requests found",
+    "no-description": "No description provided",
+    "pending": "Pending",
+    "success-message": "Request submitted successfully!",
+    "status-label": "Status",
+    "description-label": "Description",
+    "project-label": "Project",
+    "check-date-label": "Check Date",
+    "approve-button": "Approve",
+    "reject-button": "Reject",
+    "form": {
+      "title-label": "Title",
+      "description-label": "Description",
+      "submit-button": "Submit",
+      "cancel-button": "Cancel"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "UNDER_REVIEW": "Under Review",
+      "CHANGE_REQUEST": "Change Request",
+      "CHANGE_PENDING": "Change Pending"
+    },
+    "errors": {
+      "load-requests": "Error loading change requests",
+      "submit-request": "Error submitting change request",
+      "approve-request": "Error approving change request",
+      "reject-request": "Error rejecting change request",
+      "no-project-id": "No project ID found"
+    },
+    "messages": {
+      "request-approved": "Change request approved successfully",
+      "request-rejected": "Change request rejected successfully",
+      "loading": "Loading change requests..."
+    }
+  },
   "specialties": {
     "ARCHITECTURE": "Architecture",
     "SOFTWARE_DEVELOPMENT": "Software Development",

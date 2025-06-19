@@ -34,7 +34,7 @@
       "id": 1
     },
     {
-      "email": "andrea@example,com",
+      "email": "andrea@example.com",
       "phone": "+51123456788",
       "firstName": "Andrea",
       "lastName": "Aponte",
@@ -87,14 +87,20 @@
   "projects": [
     {
       "id": 1,
-      "name": "Saquenme de la carrera",
-      "description": "Quiero morir sí sí, quiero morir sí sí",
+      "name": "XDD",
+      "description": "XDDD",
       "status": "BASIC_STUDIES",
       "startingDate": "2025-06-25T00:00:00.000Z",
-      "endingDate": "2026-12-25T00:00:00.000Z",
+      "endingDate": "2026-06-25T00:00:00.000Z",
       "team": [],
       "organizationId": 1,
-      "contractingEntityId": 0,
+      "contractingEntity": {
+        "email": "andrea@example.com",
+        "phone": "+51123456788",
+        "firstName": "Andrea",
+        "lastName": "Aponte",
+        "id": 2
+      },
       "currentUserRoleOnProject": "COORDINATOR"
     }
   ],

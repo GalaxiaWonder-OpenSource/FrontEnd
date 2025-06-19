@@ -1,6 +1,7 @@
 import {ProjectTeamMember} from './project-team-member.entity';
 import {ProjectStatus} from './project-status.vo';
 import {ProjectRole} from './project-role.vo';
+import {Person} from '../../iam/model/person.entity';
 
 
 export class Project {
@@ -13,7 +14,7 @@ export class Project {
   public readonly team: ProjectTeamMember[] = [];
 
   public readonly organizationId: number;
-  public readonly contractingEntityId: number;
+  public readonly contractingEntity: Person|undefined;
   public readonly activeChangeProcessId: number|undefined;
 
   // Required because of front end design
@@ -29,8 +30,7 @@ export class Project {
    * @param status - Optional project status (default: BASIC_STUDIES).
    * @param team - Optional existing team members.
    * @param organizationId - ID of the organization associated with the project.
-   * @param contractor - ID of the contractor associated with the project.
-   * @param contractingEntityId - ID of the contracting entity associated with the project.
+   * @param contractingEntity - ID of the contracting entity associated with the project.
    *
    */
   constructor({
@@ -42,7 +42,7 @@ export class Project {
                 endingDate = new Date(),
                 team = [],
                 organizationId,
-                contractingEntityId,
+                contractingEntity,
                 activeChangeProcessId,
                 currentUserRoleOnProject
               }: {
@@ -54,7 +54,7 @@ export class Project {
     endingDate: Date;
     team?: ProjectTeamMember[];
     organizationId: number;
-    contractingEntityId: number;
+    contractingEntity: Person|undefined;
     activeChangeProcessId?: number;
     currentUserRoleOnProject: ProjectRole;
   }) {
@@ -73,7 +73,7 @@ export class Project {
 
     // Optional fields
     this.organizationId = organizationId;
-    this.contractingEntityId = contractingEntityId;
+    this.contractingEntity = contractingEntity;
     this.activeChangeProcessId = activeChangeProcessId;
     this.currentUserRoleOnProject = currentUserRoleOnProject;
   }
@@ -135,7 +135,7 @@ export class Project {
       endingDate: this.endingDate.toISOString(),
       team: this.team.map((m) => m.toJSON()),
       organizationId: this.organizationId,
-      contractingEntityId: this.contractingEntityId,
+      contractingEntity: this.contractingEntity?.firstName,
       activeChangeProcessId: this.activeChangeProcessId
     };
   }

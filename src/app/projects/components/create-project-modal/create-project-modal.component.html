@@ -44,7 +44,9 @@
   <button mat-button (click)="close()">
     {{ 'create-project.cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!name || !description">
+  <button mat-raised-button color="primary"
+          (click)="submit()"
+          [disabled]="!name || !description || !contractingEntityEmail">
     {{ 'create-project.submit' | translate }}
   </button>
 </div>

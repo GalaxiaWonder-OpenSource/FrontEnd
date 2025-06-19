@@ -58,20 +58,18 @@ export class CreateTaskModalComponent {
   private loadTeamMembers() {
     this.teamService.getAll().subscribe({
       next: (members: any) => {
-        console.log('Loaded team members:', members);
-        
         // Process the members to ensure they have the required properties
         this.teamMembers = members.map((member: any) => {
           // If team member is missing fullName property, construct it from firstName and lastName
           if (!member.fullName && (member.firstName || member.lastName)) {
             member.fullName = `${member.firstName || ''} ${member.lastName || ''}`.trim();
           }
-          
+
           // If no name is available, use a placeholder
           if (!member.fullName) {
             member.fullName = `Member #${member.id}`;
           }
-          
+
           return member;
         });
       },
@@ -107,20 +105,20 @@ export class CreateTaskModalComponent {
       this.specialty = task.specialty;
       this.status = task.status;
       this.responsibleId = task.responsibleId;
-      
+
       // Format dates for datetime-local input
       if (task.startingDate) {
         const startDate = new Date(task.startingDate);
         this.startDate = this.formatDateForInput(startDate);
       }
-      
+
       if (task.dueDate) {
         const dueDate = new Date(task.dueDate);
         this.endDate = this.formatDateForInput(dueDate);
       }
     }
   }
-  
+
   private formatDateForInput(date: Date): string {
     return date.toISOString().slice(0, 10); // Only keep YYYY-MM-DD part
   }

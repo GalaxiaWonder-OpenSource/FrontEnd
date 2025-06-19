@@ -563,7 +563,6 @@ export class TeamComponent implements OnInit, OnDestroy {
 
     // Obtener el ID del miembro seleccionado y ejecutar un GET primero para obtener el objeto completo
     const memberId = this.selectedMember.id;
-    console.log('ID a eliminar (raw):', memberId);
 
     // Crear un objeto ProjectTeamMemberId para el ID
     // import { ProjectTeamMemberId } from '../../../shared/model/project-team-member-id.vo';
@@ -573,13 +572,11 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.teamMemberService.getById(null, { id: memberId })
       .subscribe({
         next: (memberData: ProjectTeamMember) => {
-          console.log('Datos del miembro a eliminar:', memberData);
 
           // Ahora que tenemos el objeto completo, procedemos a eliminarlo
           this.teamMemberService.delete(null, { id: memberData.id.toString() })
             .subscribe({
               next: (response: any) => {
-                console.log('Respuesta exitosa al eliminar miembro:', response);
                 this.dialog.closeAll();
                 this.loading = false;
 

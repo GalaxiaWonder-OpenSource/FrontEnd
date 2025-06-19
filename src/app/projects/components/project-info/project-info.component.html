@@ -27,6 +27,21 @@
         <span class="label">{{ 'project-info.ending-date' | translate }}</span>
         <span class="value">{{ project.endingDate | date }}</span>
       </div>
+
+      <!-- Entidad contratante -->
+      <div class="info-field" *ngIf="project.contractingEntity">
+        <span class="label">{{ 'project-info.contracting-entity' | translate }}</span>
+        <span class="value">{{ project.contractingEntity?.fullName }}</span>
+      </div>
+      <div class="info-field" *ngIf="project.contractingEntity">
+        <span class="label">{{ 'project-info.email' | translate }}</span>
+        <span class="value">{{ project.contractingEntity?.email }}</span>
+      </div>
+      <div class="info-field" *ngIf="project.contractingEntity?.phone">
+        <span class="label">{{ 'project-info.phone' | translate }}</span>
+        <span class="value">{{ project.contractingEntity?.phone?.value }}</span>
+      </div>
+
     </mat-card-content>
   </mat-card>
 

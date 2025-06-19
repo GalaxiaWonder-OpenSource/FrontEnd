@@ -31,36 +31,33 @@ export class ProjectInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Cargar el proyecto inmediatamente usando la sesión o parámetro de ruta
     this.loadProject();
-    
+
     // También suscribirse a cambios en la ruta
     const routeSub = this.route.parent?.paramMap.subscribe(params => {
       const projectId = params.get('projectId');
       if (projectId) {
-        console.log('Detected route parameter change, projectId:', projectId);
         this.loadProjectById(projectId);
       }
     });
-    
+
     if (routeSub) {
       this.routeSubscription = routeSub;
     }
   }
-  
+
   ngOnDestroy(): void {
     // Limpiar suscripción para prevenir memory leaks
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
   }
-  
+
   loadProjectById(projectId: string): void {
     this.loading = true;
     this.error = null;
-    console.log('Loading project with ID:', projectId);
-    
+
     this.projectService.getById(null, { id: projectId }).subscribe({
       next: (project: Project) => {
-        console.log('Project loaded successfully:', project);
         this.project = project;
         this.loading = false;
       },
@@ -74,12 +71,10 @@ export class ProjectInfoComponent implements OnInit, OnDestroy {
 
   loadProject(): void {
     const projectId = this.sessionService.getProjectId();
-    console.log('Loading project information, ID from session:', projectId);
-    
+
     if (projectId) {
       this.projectService.getById(null, { id: projectId }).subscribe({
         next: (project: Project) => {
-          console.log('Project loaded successfully:', project);
           this.project = project;
         },
         error: (error: Error) => {

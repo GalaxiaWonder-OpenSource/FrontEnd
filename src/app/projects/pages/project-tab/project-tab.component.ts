@@ -37,7 +37,7 @@ export class ProjectTabComponent implements OnInit {
   projects = signal<Project[]>([]);
   loading = signal<boolean>(true);
   organizationId: number | null = null;
-  private contractingEntityId: number = 0;
+  private contractingEntity: Person|undefined;
 
   constructor(
     private projectService: ProjectService,
@@ -77,8 +77,6 @@ export class ProjectTabComponent implements OnInit {
 
         this.projects.set(orgProjects);
         this.loading.set(false);
-
-        console.log(`Loaded ${orgProjects.length} projects for organization ${organizationId}`);
       },
       error: (err: Error) => {
         console.error(`Failed to load projects for organization ${organizationId.toString()}:`, err);
@@ -116,44 +114,42 @@ export class ProjectTabComponent implements OnInit {
 
           this.personService.getAll().subscribe({
             next: (people: Person[]) => {
-              const person = people.find(p =>
-                p.email && p.email.toLowerCase() === result.contractingEntityEmail.toLowerCase()
+              this.contractingEntity = people.find(p =>
+                p.email === result.contractingEntityEmail
               );
-              if(person && person.id) this.contractingEntityId = person.id;
+
+              const newPro = new Project({
+                name: result.name,
+                description: result.description,
+                startingDate: new Date(result.startingDate),
+                endingDate: new Date(result.endingDate),
+                status: ProjectStatus.BASIC_STUDIES,
+                organizationId: this.organizationId ?? 0,
+                contractingEntity: this.contractingEntity,
+                currentUserRoleOnProject: ProjectRole.COORDINATOR
+              });
+
+              this.projectService.create(newPro).subscribe({
+                next: (createdProject: Project) => {
+                  const member = new ProjectTeamMember({
+                    role: ProjectRole.COORDINATOR,
+                    specialty: Specialty.ARCHITECTURE,
+                    personId: contractorPersonId,
+                    projectId: createdProject.id
+                  });
+
+                  this.projectTeamMemberService.create(member).subscribe({
+                    next: () => {
+                      if(this.organizationId) this.loadProjectsForOrganization(this.organizationId);
+                    },
+                    error: (err: Error) => console.error('Failed to create project team member:', err)
+                  });
+
+                },
+                error: (err: Error) => console.error('Failed to create project:', err)
+              });
             }
           });
-
-          const newPro = new Project({
-            name: result.name,
-            description: result.description,
-            startingDate: new Date(result.startingDate),
-            endingDate: new Date(result.endingDate),
-            status: ProjectStatus.BASIC_STUDIES,
-            organizationId: this.organizationId,
-            contractingEntityId: this.contractingEntityId,
-            currentUserRoleOnProject: ProjectRole.COORDINATOR
-          });
-
-          this.projectService.create(newPro).subscribe({
-            next: (createdProject: Project) => {
-              const member = new ProjectTeamMember({
-                role: ProjectRole.COORDINATOR,
-                specialty: Specialty.ARCHITECTURE,
-                personId: contractorPersonId,
-                projectId: createdProject.id
-              });
-
-              this.projectTeamMemberService.create(member).subscribe({
-                next: () => {
-                  if(this.organizationId) this.loadProjectsForOrganization(this.organizationId);
-                },
-                error: (err: Error) => console.error('Failed to create project team member:', err)
-              });
-
-            },
-            error: (err: Error) => console.error('Failed to create project:', err)
-          });
-
         } catch (err) {
           console.error('Validation failed when creating project:', err);
         }

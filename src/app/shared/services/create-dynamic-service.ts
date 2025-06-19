@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EndpointConfig } from '../model/endpoint-config.vo';
-import { HttpMethod } from '../model/http-method.vo';
+import {HttpClient} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {Observable} from 'rxjs';
+import {EndpointConfig} from '../model/endpoint-config.vo';
+import {HttpMethod} from '../model/http-method.vo';
 
 /**
  * Extracts the underlying value from an object.
@@ -20,17 +20,11 @@ function extractParamValue(val: any): any {
   if (val === null || val === undefined) return val;
 
   if (typeof val === 'object') {
-    // Debug para ver qué tipo de objeto es
-    console.log(`[ParamExtract] Extracting value from:`, val);
-    
     if ('value' in val) {
-      console.log(`[ParamExtract] Found 'value' property:`, val.value);
       return val.value;
     }
     if (typeof val.toJSON === 'function') {
-      const jsonValue = val.toJSON();
-      console.log(`[ParamExtract] Using toJSON() method:`, jsonValue);
-      return jsonValue;
+      return val.toJSON();
     }
   }
 
@@ -54,30 +48,21 @@ function extractParamValue(val: any): any {
  * @returns A URL with all dynamic parameters replaced
  */
 function replacePathParams(url: string, params: Record<string, any>): string {
-  console.log(`[PathReplace] Input URL: ${url}, Params:`, params);
-  
   const result = url.replace(/:([a-zA-Z]+)/g, (match, key) => {
-    console.log(`[PathReplace] Replacing token :${key}`);
-    
+
     if (!params || !(key in params)) {
-      console.warn(`[PathReplace] WARNING: No param value found for :${key}`);
       return match; // Devolvemos el token original si no hay valor
     }
-    
+
     const val = extractParamValue(params[key]);
-    console.log(`[PathReplace] Extracted value for ${key}:`, val);
-    
+
     if (val === undefined || val === null) {
-      console.warn(`[PathReplace] WARNING: Param value for :${key} is undefined/null`);
       return match;
     }
-    
-    const encoded = encodeURIComponent(String(val));
-    console.log(`[PathReplace] Encoded value: ${encoded}`);
-    return encoded;
+
+    return encodeURIComponent(String(val));
   });
-  
-  console.log(`[PathReplace] Final URL: ${result}`);
+
   return result;
 }
 
@@ -146,13 +131,11 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
           }
         }
       }
-      
+
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
-      
+
       // Debug log para ver qué URL se está generando
-      console.log(`[API DEBUG] ${cfg.name} - Original URL: ${cfg.url}, Params:`, params, `Final URL: ${url}`);
-      
       switch (cfg.method) {
         case HttpMethod.GET:
           const queryParams = new URLSearchParams(serializeData(params)).toString();

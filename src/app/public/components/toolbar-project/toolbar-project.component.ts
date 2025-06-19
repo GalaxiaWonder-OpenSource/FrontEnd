@@ -46,7 +46,6 @@ export class ToolbarProjectComponent {
     this.projectRole = this.session.getProjectRole() || null;
     this.organizationRole = this.session.getOrganizationRole() || null;
     this.userType = this.session.getUserType() || null;
-    console.log('Toolbar loaded with projectId:', this.projectId);
 
     // Si la URL contiene un projectId pero no está en la sesión, lo extraemos y guardamos
     if (!this.projectId) {
@@ -54,7 +53,6 @@ export class ToolbarProjectComponent {
       const projectMatch = currentUrl.match(/\/projects\/([^\/]+)/);
       if (projectMatch && projectMatch[1]) {
         this.projectId = Number(projectMatch[1]);
-        console.log('Extracted project ID from URL:', this.projectId);
       }
     }
   }

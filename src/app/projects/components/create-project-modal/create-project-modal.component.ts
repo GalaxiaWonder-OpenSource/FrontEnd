@@ -59,7 +59,8 @@ export class CreateProjectModalComponent {
         startingDate: startDate,
         endingDate: endDate,
         organizationId: orgId,
-        creator: this.session.getPersonId()
+        creator: this.session.getPersonId(),
+        contractingEntityEmail: this.contractingEntityEmail.trim()
       };
 
       this.dialogRef.close(data);

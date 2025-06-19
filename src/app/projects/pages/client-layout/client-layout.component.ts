@@ -33,17 +33,14 @@ export class ClientLayoutComponent {
 
   loadProjects() {
     const personId = this.session.getPersonId();
-    console.log("ANTES")
     /**
     if (!personId) {
       console.warn('No person ID found in session. Aborting project load.');
       return;
     }
      */
-    console.log("DESPUES")
     this.projectService.getByClientId({},{clientId: personId}).subscribe({
       next: (projects: Project[]) => {
-        console.log("PROYECTOS", projects);
         this.projects.set(projects);
       },
       error: (error: any) => {

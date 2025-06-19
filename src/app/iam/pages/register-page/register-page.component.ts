@@ -86,7 +86,6 @@ export class RegisterPageComponent {
         // Create the person using the Angular service
         this.personService.create(personData).subscribe({
           next: (person: any) => {
-            console.log('Person created:', person);
             // Step 2: Create a user account with a reference to the person
             // Use the UserRole enum value directly
             let roleValue = formData.role;
@@ -102,7 +101,6 @@ export class RegisterPageComponent {
             // Create the user account using Angular service
             this.userAccountService.create(userAccountData).subscribe({
               next: (userAccount: any) => {
-                console.log('User account created:', userAccount);
                 this.isRegistered = true;
                 this.isLoading = false;
               },

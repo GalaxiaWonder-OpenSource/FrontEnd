@@ -88,9 +88,6 @@ export class ScheduleComponent {
         const filtered = rawTasks.filter(t =>
           this.milestones().some(m => m.id === t.milestoneId)
         );
-        console.log('Filtered tasks:', filtered);
-        console.log('Milestone IDs:', this.milestones().map(m => m.id));
-
         const parsedTasks = filtered.map(t => new Task({
           id: t.id,
           name: t.name,
@@ -209,13 +206,13 @@ export class ScheduleComponent {
     // Optimistic update: Remove the task from local state first
     const currentTasks = this.tasks();
     const taskIndex = currentTasks.findIndex(t => t.id === task.id);
-    
+
     if (taskIndex !== -1) {
       // Create a copy of the tasks array without the deleted task
       const updatedTasks = [...currentTasks];
       updatedTasks.splice(taskIndex, 1);
       this.tasks.set(updatedTasks);
-      
+
       // Show immediate feedback
       this.snackBar.open('Tarea eliminada correctamente', 'Cerrar', { duration: 3000 });
     }
@@ -226,7 +223,7 @@ export class ScheduleComponent {
         console.error('Failed to delete task:', err);
         // Even if there's a server error, we've already updated the UI
         // The task will be deleted on the next server refresh
-        
+
         // Refresh tasks from the server after a short delay to allow the server to process
         setTimeout(() => this.loadTasks(), 500);
       }

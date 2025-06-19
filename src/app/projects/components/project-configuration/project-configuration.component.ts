@@ -163,10 +163,8 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       endingDate: new Date(formValues.endingDate).toISOString(),
       team: this.project.team || [],
       organizationId: this.project.organizationId || null,
-      contractingEntityId: this.project.contractingEntityId || null
+      contractingEntityId: this.project.contractingEntity || null
     };
-
-    console.log('Enviando datos actualizados:', projectData);
 
     // Usar el servicio de proyectos para actualizar
     this.loading = true;
@@ -174,12 +172,10 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     // Usar HttpClient directamente con la ruta correcta
     // La ruta en el servidor es /projects/:id (sin /api/v1)
     const url = `${environment.propgmsApiBaseUrl}/projects/${projectId}`;
-    console.log(`Enviando PUT a URL: ${url}`);
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http.put<Project>(url, projectData, { headers }).subscribe({
       next: (updatedProject: Project) => {
-        console.log('Proyecto actualizado exitosamente:', updatedProject);
         this.loading = false;
 
         this.snackBar.open('Proyecto actualizado correctamente', 'Cerrar', {
@@ -231,8 +227,6 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
 
     // Usamos el ID directamente como número
     const projectId = Number(this.project.id);
-
-    console.log('Eliminando proyecto con ID:', projectId);
     this.loading = true;
 
     // Pasamos el ID como un simple string en el objeto params

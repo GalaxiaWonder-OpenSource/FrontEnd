@@ -34,7 +34,6 @@ export class ConfigurationTabComponent {
 
   loadOrganization() {
     const id = this.session.getOrganizationId();
-    console.log("ORGANIZATION ID: ", id);
     if (!id) {
       console.warn('No organization ID found in session.');
       return;

@@ -450,7 +450,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       // Crear el nuevo miembro del equipo
       const newTeamMember = new ProjectTeamMember({
         id: 0, // Valor temporal
-        name: '',
+        firstName: '',
         lastName: '',
         role: role,
         specialty: specialty,

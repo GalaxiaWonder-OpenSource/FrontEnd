@@ -149,10 +149,10 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       return;
     }
      const formValues = this.projectForm.value;
-    
+
     // Usamos el ID directamente como número
     const projectId = Number(this.project.id);
-    
+
     // Preparar los datos para actualizar como un objeto plano para JSON
     const projectData = {
       id: projectId, // Usamos el ID como número
@@ -163,7 +163,6 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
       endingDate: new Date(formValues.endingDate).toISOString(),
       team: this.project.team || [],
       organizationId: this.project.organizationId || null,
-      contractor: this.project.contractor || null,
       contractingEntityId: this.project.contractingEntityId || null
     };
 
@@ -229,10 +228,10 @@ export class ProjectConfigurationComponent implements OnInit, OnDestroy {
     if (!this.project) {
       return;
     }
-    
+
     // Usamos el ID directamente como número
     const projectId = Number(this.project.id);
-      
+
     console.log('Eliminando proyecto con ID:', projectId);
     this.loading = true;
 

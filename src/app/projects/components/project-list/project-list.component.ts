@@ -15,8 +15,6 @@ import { OrganizationMemberType } from '../../../organizations/model/organizatio
 })
 export class ProjectListComponent {
   @Input() projects: Project[] = [];
-  @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
-  @Input() userType?: UserType;
   @Input() organizationRole?: OrganizationMemberType;
 
   definirConsoleLog() {

@@ -1,24 +1,23 @@
 import {ProjectTeamMember} from './project-team-member.entity';
 import {ProjectStatus} from './project-status.vo';
+import {ProjectRole} from './project-role.vo';
 
 
 export class Project {
   public readonly id: number;
   public name: string;
   public description: string;
-  //public contract: Contract;
-  //public technicalFile: TechnicalFile;
   public status: ProjectStatus;
-  //public schedule: Schedule;
-  //public budget: Money;
   public readonly startingDate: Date;
   public readonly endingDate: Date;
   public readonly team: ProjectTeamMember[] = [];
 
   public readonly organizationId: number;
-  public readonly contractor: number;
   public readonly contractingEntityId: number;
-  //public readonly activeChangeProcessId: ChangeProcessId;
+  public readonly activeChangeProcessId: number|undefined;
+
+  // Required because of front end design
+  public readonly currentUserRoleOnProject: ProjectRole;
 
   /**
    * Constructs a new Project instance.
@@ -38,35 +37,26 @@ export class Project {
                 id = 0,
                 name,
                 description,
-                //contract,
-                //technicalFile,
                 status,
-                //schedule,
-                //budget,
                 startingDate = new Date(),
                 endingDate = new Date(),
                 team = [],
                 organizationId,
-                contractor,
                 contractingEntityId,
-                //activeChangeProcessId
-
+                activeChangeProcessId,
+                currentUserRoleOnProject
               }: {
     id?: number;
     name: string;
     description: string;
-    //contract: Contract;
-    //technicalFile: TechnicalFile;
     status: ProjectStatus;
-    //schedule: Schedule;
-    //budget: Money;
     startingDate: Date;
     endingDate: Date;
     team?: ProjectTeamMember[];
     organizationId: number;
-    contractor: number;
     contractingEntityId: number;
-    //activeChangeProcessId: ChangeProcessId;
+    activeChangeProcessId?: number;
+    currentUserRoleOnProject: ProjectRole;
   }) {
     if (!name
     || !startingDate || !endingDate) {
@@ -76,20 +66,16 @@ export class Project {
     this.id = id;
     this.name = name;
     this.description = description;
-    //this.contract = contract;
-    //this.technicalFile = technicalFile;
     this.status = status;
-    //this.schedule = schedule;
-    //this.budget = budget;
     this.startingDate = startingDate;
     this.endingDate = endingDate;
     this.team = team;
 
     // Optional fields
     this.organizationId = organizationId;
-    this.contractor = contractor;
     this.contractingEntityId = contractingEntityId;
-    //this.activeChangeProcessId = activeChangeProcessId;
+    this.activeChangeProcessId = activeChangeProcessId;
+    this.currentUserRoleOnProject = currentUserRoleOnProject;
   }
 
   /**
@@ -135,6 +121,7 @@ export class Project {
     }
   }
    */
+
   /**
    * Serializes the project to JSON.
    */
@@ -143,18 +130,13 @@ export class Project {
       projectId: this.id,
       name: this.name,
       description: this.description,
-      //contract: this.contract.toJSON(),
-      //technicalFile: this.technicalFile.toJSON(),
       status: this.status,
-      //schedule: this.schedule.toJSON(),
-      //budget: this.budget.toJSON(),
       startingDate: this.startingDate.toISOString(),
       endingDate: this.endingDate.toISOString(),
       team: this.team.map((m) => m.toJSON()),
       organizationId: this.organizationId,
-      contractor: this.contractor,
       contractingEntityId: this.contractingEntityId,
-      //activeChangeProcessId: this.activeChangeProcessId
+      activeChangeProcessId: this.activeChangeProcessId
     };
   }
 }

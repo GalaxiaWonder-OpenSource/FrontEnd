@@ -9,7 +9,7 @@ export class ProjectTeamMember {
 
   public readonly id: number;
 
-  public readonly name?: string;
+  public readonly firstName?: string;
 
   public readonly lastName?: string;
 
@@ -27,6 +27,8 @@ export class ProjectTeamMember {
    * Constructs a new ProjectTeamMember instance.
    *
    * @param id - Optional unique identifier (default: new UUID).
+   * @param firstName - Project Team Member first firstName
+   * @param lastName - Project Team Member last firstName
    * @param role - Role of the member in the project.
    * @param specialty - Specialty of the member in the project.
    * @param memberId - ID of the organization member.
@@ -35,8 +37,8 @@ export class ProjectTeamMember {
    */
 
   constructor({
-                id,
-                name,
+                id = 0,
+                firstName,
                 lastName,
                 role,
                 specialty,
@@ -44,8 +46,8 @@ export class ProjectTeamMember {
                 personId,
                 projectId
               }: {
-    id: number;
-    name?: string;
+    id?: number;
+    firstName?: string;
     lastName?: string;
     role: ProjectRole;
     specialty: Specialty;
@@ -58,7 +60,7 @@ export class ProjectTeamMember {
     }
 
     this.id = id;
-    this.name = name;
+    this.firstName = firstName;
     this.lastName = lastName;
     this.role = role;
     this.specialty = specialty;
@@ -73,7 +75,7 @@ export class ProjectTeamMember {
   toJSON(): object {
     return {
       id: this.id.toString(),
-      firstName: this.name,
+      firstName: this.firstName,
       lastName: this.lastName,
       role: this.role,
       specialty: this.specialty,
@@ -84,6 +86,6 @@ export class ProjectTeamMember {
   }
 
   get fullName(): string {
-    return `${this.name} ${this.lastName}`;
+    return `${this.firstName} ${this.lastName}`;
   }
 }

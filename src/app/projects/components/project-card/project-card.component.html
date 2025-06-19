@@ -1,6 +1,6 @@
 <mat-card class="project-card" (click)="navigateToProject()" role="button" tabindex="0">
   <div class="status-badge" [ngClass]="getStatusClass()">{{ getStatusTranslation() | translate }}</div>
-  
+
   <mat-card-header>
     <mat-card-title>
       <span class="project-title">{{ project.name }}</span>
@@ -21,7 +21,7 @@
           <span class="detail-value">{{ project.startingDate | date:'mediumDate' }}</span>
         </div>
       </div>
-      
+
       <div class="detail-item">
         <div class="detail-icon">
           <span class="material-icons">event_available</span>
@@ -42,18 +42,18 @@
         </div>
       </div>
 
-      <div class="detail-item" *ngIf="projectRole">
+      <div class="detail-item" *ngIf="project.currentUserRoleOnProject">
         <div class="detail-icon">
           <span class="material-icons">badge</span>
         </div>
         <div class="detail-content">
           <span class="detail-label">{{ 'project-card.role' | translate }}</span>
-          <span class="detail-value">{{ projectRole }}</span>
+          <span class="detail-value">{{ project.currentUserRoleOnProject }}</span>
         </div>
       </div>
     </div>
   </mat-card-content>
-  
+
   <mat-card-actions>
     <button mat-button class="view-details-btn">
       <span class="material-icons">visibility</span>

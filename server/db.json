@@ -85,28 +85,8 @@
     }
   ],
   "projects": [
-    {
-      "id": 1,
-      "name": "ciclo",
-      "description": "ciclo es un lugar",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2025-03-12T00:00:00.000Z",
-      "endingDate": "2025-12-12T00:00:00.000Z",
-      "team": [],
-      "organizationId": 1,
-      "contractor": 3,
-      "contractingEntityId": 3
-    }
   ],
   "project-team-members": [
-    {
-      "id": 1,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "memberId": 3,
-      "personId": 3,
-      "projectId": 1
-    }
   ],
   "change-process": [],
   "milestones": [],

@@ -1,16 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { Project } from '../../model/project.entity';
-import { TranslatePipe } from '@ngx-translate/core';
-import { ProjectStatus } from '../../model/project-status.vo';
-import { SessionService } from '../../../iam/services/session.service';
-import { UserType } from '../../../iam/model/user-type.vo';
-import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
-import { ProjectRole } from '../../model/project-role.vo';
+import {Component, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {Router} from '@angular/router';
+import {Project} from '../../model/project.entity';
+import {TranslatePipe} from '@ngx-translate/core';
+import {ProjectStatus} from '../../model/project-status.vo';
+import {SessionService} from '../../../iam/services/session.service';
+import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
 
 @Component({
   selector: 'app-project-card',
@@ -21,8 +19,6 @@ import { ProjectRole } from '../../model/project-role.vo';
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
-  @Input() projectRole: 'Client' | 'Contractor' | 'Coordinator' | 'Specialist' = 'Client';
-  @Input() userType?: UserType;
   @Input() organizationRole?: OrganizationMemberType;
 
   constructor(
@@ -32,29 +28,11 @@ export class ProjectCardComponent {
 
   navigateToProject(): void {
     if (this.project && this.project.id) {
-      // Preservar el tipo de usuario actual si no se especifica uno nuevo
-      if (!this.userType) {
-        this.userType = this.sessionService.getUserType() as UserType;
-      }
-
-      // Convertir projectRole string al tipo ProjectRoleType esperado por setProject
-      let projectRoleEnum: ProjectRole | undefined = undefined;
-      if (this.projectRole === 'Coordinator') {
-        projectRoleEnum = ProjectRole.COORDINATOR;
-      } else if (this.projectRole === 'Specialist') {
-        projectRoleEnum = ProjectRole.SPECIALIST;
-      }
-
       // Establecer el ID del proyecto y su rol en la sesión
       // Ya que project.id es ahora directamente un número, lo usamos sin conversiones
       const projectIdValue = this.project.id;
 
-      this.sessionService.setProject(projectIdValue, projectRoleEnum);
-
-      // Asegurarnos de que el tipo de usuario también esté establecido
-      if (this.userType) {
-        this.sessionService.setUserType(this.userType);
-      }
+      this.sessionService.setProject(projectIdValue, this.project.currentUserRoleOnProject);
 
       // Si tenemos un rol de organización, asegurémonos de establecerlo
       if (this.organizationRole && this.sessionService.getOrganizationId()) {

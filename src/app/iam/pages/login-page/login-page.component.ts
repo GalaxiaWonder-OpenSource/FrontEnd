@@ -39,19 +39,29 @@ export class LoginPageComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.userAccountService.getAll().subscribe({
-      next: (response: UserAccount[]) => {
-        const matchedUser = response.find(user =>
-          user.username === formData.username &&
-          user.password === formData.password
-        );
+    const request = {
+      userName: formData.username.toLowerCase(),
+      password: formData.password
+    };
 
-        if (!matchedUser) return;
+    this.userAccountService.signIn(request).subscribe({
+      next: (response: {
+        user: {
+          userName: string;
+          userType: string;
+          personId: number;
+        },
+        token: string
+      }) => {
+        const { user, token } = response;
 
-        this.session.setPersonId(matchedUser.personId);
-        this.session.setUserType(UserType[matchedUser.role as keyof typeof UserType]);
-
-        if (this.session.getUserType() == UserType.TYPE_WORKER) {
+        // ✅ Guardamos en sesión lo necesario
+        this.session.setPersonId(user.personId);
+        this.session.setUserType(UserType[user.userType as keyof typeof UserType]);
+        // ✅ Opcional: guardar el token si lo necesitasAdd commentMore actions
+        this.session.setToken?.(token);
+        // ✅ Redirección según tipo de usuarioAdd commentMore actions
+        if (user.userType === 'TYPE_WORKER') {
           this.router.navigate(['/organizations']);
         } else {
           this.router.navigate(['/projects']);
@@ -65,7 +75,6 @@ export class LoginPageComponent {
       }
     });
   }
-
   private setError(translationKey: string) {
     this.errorMessage = this.translate.instant(translationKey);
     this.isLoading = false;

@@ -58,71 +58,40 @@ export class RegisterPageComponent {
   }) {
     this.resetValues();
 
+    const request = {
+      userName: formData.username.toLowerCase(),
+      password: formData.password,
+      userType: formData.role.toString(),
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone
+    }
+
+    console.log('HOLA',request);
+
+    // Call the API to create the user account
+    this.userAccountService.signUp(request).subscribe({
+      next: (response:{
+        username: string;
+        userType: string;
+        personId: number;
+      })=> {
+        const {username, userType, personId} = response;
+
+        this.isRegistered = true;
+      },
+      error: (err: any) => {
+        this.setError('register-page.form.errors.create-account', err.message);
+      }
+    })
+    this.resetValues();
+
     // For local db.json integration, we need to:
     // 1. Check if username is already taken
     // 2. Create a person entry
     // 3. Create a user account linked to that person
-
-    // First check if username is already taken
-    this.userAccountService.getAll().subscribe({
-      next: (accounts: any[]) => {
-        const userExists = accounts.some(account =>
-          account.username?.toLowerCase() === formData.username.toLowerCase()
-        );
-
-        if (userExists) {
-          this.setError('register-page.errors.username-taken', '');
-          return;
-        }
-
-        // Step 1: Create a person entry
-        const personData = {
-          email: formData.email,
-          phone: formData.phone,
-          firstName: formData.firstName,
-          lastName: formData.lastName
-        };
-
-        // Create the person using the Angular service
-        this.personService.create(personData).subscribe({
-          next: (person: any) => {
-            // Step 2: Create a user account with a reference to the person
-            // Use the UserRole enum value directly
-            let roleValue = formData.role;
-
-            const userAccountData = {
-              username: formData.username.toLowerCase(),
-              password: formData.password,
-              personId: person.id,
-              role: roleValue,
-              status: 'ACTIVE'
-            };
-
-            // Create the user account using Angular service
-            this.userAccountService.create(userAccountData).subscribe({
-              next: (userAccount: any) => {
-                this.isRegistered = true;
-                this.isLoading = false;
-              },
-              error: (error: any) => {
-                console.error('Error creating user account:', error);
-                this.setError('register-page.errors.create-account', 'Failed to create user account');
-                this.isLoading = false;
-              }
-            });
-          },
-          error: (error: any) => {
-            console.error('Error creating person:', error);
-            this.setError('register-page.errors.create-account', 'Failed to create person');
-            this.isLoading = false;
-          }
-        });
-      },
-      error: (err: any) => {
-        console.error('Error checking existing users', err);
-        this.setError('register-page.errors.server-error', '');
-      }
-    });
+    this.resetValues();
   }
 }
 

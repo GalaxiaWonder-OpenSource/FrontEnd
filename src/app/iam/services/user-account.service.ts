@@ -16,7 +16,9 @@ export class UserAccountService {
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'user-accounts', '/:id'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'user-accounts'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'user-accounts', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id')
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'user-accounts', '/:id'),
+    createEndpointConfig({ name: 'signIn', method : HttpMethod.POST }, undefined, 'auth/signin', '', auth),
+    createEndpointConfig({ name: 'signUp', method : HttpMethod.POST }, undefined, 'auth/signup', '', auth)
   ]);
 
   getAll = this.service['getAll'];
@@ -24,4 +26,6 @@ export class UserAccountService {
   create = this.service['create'];
   update = this.service['update'];
   delete = this.service['delete'];
+  signIn = this.service['signIn'];
+  signUp = this.service['signUp'];
 }

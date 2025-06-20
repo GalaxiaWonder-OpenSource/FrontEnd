@@ -3,6 +3,8 @@ import {UserType} from '../model/user-type.vo';
 import {OrganizationMemberType} from '../../organizations/model/organization-member-type.vo';
 import { ProjectRole } from '../../projects/model/project-role.vo';
 
+export type userType = UserType.TYPE_WORKER | UserType.TYPE_CLIENT;
+
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   // SIGNALS
@@ -34,7 +36,7 @@ export class SessionService {
     this.personId.set(id);
   }
 
-  setUserType(type: UserType) {
+  setUserType(type: userType) {
     this.userType.set(type);
   }
 

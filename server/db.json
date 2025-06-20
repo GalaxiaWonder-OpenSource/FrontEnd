@@ -1,146 +1,164 @@
 {
   "user-accounts": [
     {
-      "username": "widoshiny",
-      "password": "ASDFGH!#",
+      "username": "andrea",
+      "password": "Genzandre13#",
       "personId": 1,
       "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 1
     },
     {
-      "username": "iconicmiau",
-      "password": "ASDFGH!#",
+      "username": "martin",
+      "password": "lol171002",
       "personId": 2,
       "role": "TYPE_CLIENT",
       "status": "ACTIVE",
       "id": 2
     },
     {
-      "username": "mariobros",
-      "password": "ASDFGH!#",
+      "username": "jorge",
+      "password": "1805Meme",
       "personId": 3,
       "role": "TYPE_WORKER",
       "status": "ACTIVE",
       "id": 3
     },
     {
-      "username": "ariana",
-      "password": "ASDFGH!#",
-      "personId": 4,
+      "username": "aaron11",
+      "password": "123a",
+      "personId": 5,
       "role": "TYPE_CLIENT",
       "status": "ACTIVE",
-      "id": 4
+      "id": 5
+    },
+    {
+      "username": "wsalcedo",
+      "password": "L990208p",
+      "personId": 6,
+      "role": "TYPE_WORKER",
+      "status": "ACTIVE",
+      "id": 6
+    },
+    {
+      "username": "leocab",
+      "password": "leonardo985",
+      "personId": 7,
+      "role": "TYPE_CLIENT",
+      "status": "ACTIVE",
+      "id": 7
+    },
+    {
+      "username": "vord0505@",
+      "password": "Vord0505@",
+      "personId": 8,
+      "role": "TYPE_WORKER",
+      "status": "ACTIVE",
+      "id": 8
     }
   ],
   "persons": [
     {
-      "email": "henry@example.com",
-      "phone": "+51123456789",
-      "firstName": "Henry",
-      "lastName": "Reaño",
+      "email": "andrea@example.com",
+      "phone": "+51900900900",
+      "firstName": "Andrea",
+      "lastName": "Aponte",
       "id": 1
     },
     {
-      "email": "andrea@example.com",
-      "phone": "+51123456788",
-      "firstName": "Andrea",
-      "lastName": "Aponte",
+      "email": "lolyaapo@gmail.com",
+      "phone": "+51990080813",
+      "firstName": "Martin",
+      "lastName": "Salcedo",
       "id": 2
     },
     {
-      "email": "mario@example.com",
-      "phone": "+51987654321",
-      "firstName": "Mario",
-      "lastName": "López",
+      "email": "jg1536454@gmail.com",
+      "phone": "+51959356033",
+      "firstName": "Jorge",
+      "lastName": "Garcia ",
       "id": 3
     },
     {
-      "email": "ariana@example.com",
-      "phone": "+51303030304",
-      "firstName": "Ariana",
-      "lastName": "Grande",
-      "id": 4
+      "email": "aaron@gmail.com",
+      "phone": "+51907326229",
+      "firstName": "Aaron",
+      "lastName": "Ravines",
+      "id": 5
+    },
+    {
+      "email": "wilysalcedo@hotmail.com",
+      "phone": "+51960124258",
+      "firstName": "William Martin",
+      "lastName": "Salcedo Vasquez",
+      "id": 6
+    },
+    {
+      "email": "leo.cahu@outlook.com",
+      "phone": "+51971331340",
+      "firstName": "Leonardo",
+      "lastName": "Caballa",
+      "id": 7
+    },
+    {
+      "email": "victorreinoso306@gmail.com",
+      "phone": "+51930591604",
+      "firstName": "victor",
+      "lastName": "reinoso",
+      "id": 8
     }
   ],
   "organizations": [
     {
-      "legalName": "RE",
-      "commercialName": "RES",
-      "ruc": "20123456789",
+      "legalName": "inmobiliaria",
+      "commercialName": "inmobiliaria A",
+      "ruc": "10202020201",
       "createdBy": 1,
-      "createdAt": "2025-06-18T18:13:31.765Z",
+      "createdAt": "2025-06-19T23:58:34.804Z",
       "status": "ACTIVE",
       "members": [],
       "invitations": [],
       "id": 1
     }
   ],
-  "organization-invitations": [
-    {
-      "organizationId": 1,
-      "personId": 4,
-      "invitedBy": "Henry Reaño",
-      "invitedAt": "2025-06-19T09:43:53.577Z",
-      "status": "PENDING",
-      "id": 1
-    }
-  ],
+  "organization-invitations": [],
   "organization-members": [
     {
       "personId": 1,
-      "firstName": "Henry",
-      "lastName": "Reaño",
-      "email": "henry@example.com",
+      "firstName": "Andrea",
+      "lastName": "Aponte",
+      "email": "andrea@example.com",
       "organizationId": 1,
       "memberType": "CONTRACTOR",
-      "joinedAt": "2025-06-18T18:13:31.797Z",
+      "joinedAt": "2025-06-19T23:58:34.897Z",
       "id": 1
     },
     {
-      "personId": 3,
+      "personId": 8,
       "organizationId": 1,
       "memberType": "WORKER",
-      "joinedAt": "2025-06-18T19:37:07.214Z",
-      "firstName": "Mario",
-      "lastName": "López",
-      "email": "mario@example.com",
+      "joinedAt": "2025-06-20T00:01:36.129Z",
+      "firstName": "victor",
+      "lastName": "reinoso",
+      "email": "victorreinoso306@gmail.com",
       "id": 2
     }
   ],
   "projects": [
     {
       "id": 1,
-      "name": "XDD",
-      "description": "XDDD",
+      "name": "Edificio A",
+      "description": "Este es un edificio residencial",
       "status": "BASIC_STUDIES",
-      "startingDate": "2025-06-25T00:00:00.000Z",
-      "endingDate": "2026-06-25T00:00:00.000Z",
+      "startingDate": "2025-09-12T00:00:00.000Z",
+      "endingDate": "2025-09-19T00:00:00.000Z",
       "team": [],
       "organizationId": 1,
       "contractingEntity": {
-        "email": "andrea@example.com",
-        "phone": "+51123456788",
-        "firstName": "Andrea",
-        "lastName": "Aponte",
-        "id": 2
-      },
-      "currentUserRoleOnProject": "COORDINATOR"
-    },
-    {
-      "id": 2,
-      "name": "ksdkasd",
-      "description": "dasdasd",
-      "status": "BASIC_STUDIES",
-      "startingDate": "2029-05-20T00:00:00.000Z",
-      "endingDate": "2030-10-30T00:00:00.000Z",
-      "team": [],
-      "organizationId": 1,
-      "contractingEntity": {
-        "email": "andrea@example.com",
-        "phone": "+51123456788",
-        "firstName": "Andrea",
-        "lastName": "Aponte",
+        "email": "lolyaapo@gmail.com",
+        "phone": "+51990080813",
+        "firstName": "Martin",
+        "lastName": "Salcedo",
         "id": 2
       },
       "currentUserRoleOnProject": "COORDINATOR"
@@ -153,99 +171,9 @@
       "specialty": "ARCHITECTURE",
       "personId": 1,
       "projectId": 1
-    },
-    {
-      "id": 2,
-      "role": "COORDINATOR",
-      "specialty": "ARCHITECTURE",
-      "personId": 1,
-      "projectId": 2
     }
   ],
-  "change-processes": [
-    {
-      "id": 1,
-      "projectId": 1,
-      "origin": "CHANGE_REQUEST",
-      "status": "REJECTED",
-      "justification": "EROTICO SE OUSO EL ENCUENTRO ENTRE TU YO",
-      "description": "OLVIDA SI ES CORRECTO Y MOMENTO VIVETELO, MAMI POR QUE TU BAILA ASIIIIII COMO SI ESTUVIERAMO EN LA CAM Q RICA  TIENES Q SENTIR DENUITA SIN ND",
-      "approvedAt": "2025-06-19T05:26:12.962Z",
-      "approvedBy": "Contractor"
-    },
-    {
-      "projectId": 1,
-      "origin": "CHANGE_REQUEST",
-      "status": "APPROVED",
-      "justification": "DISCULPAME",
-      "description": "AQUELLOS CELOS TAN INTENSOS QUE SRNTÍ POR TI",
-      "approvedAt": "2025-06-19T05:29:05.563Z",
-      "approvedBy": "Contractor",
-      "id": 2
-    },
-    {
-      "projectId": 1,
-      "origin": "CHANGE_REQUEST",
-      "status": "APPROVED",
-      "justification": "PERO ME",
-      "description": "PERDÍ EN TU MIRADA OOO MAMIIII DIME QUE POLQ E FUISTE",
-      "approvedAt": "2025-06-19T05:32:33.669Z",
-      "approvedBy": "Contractor",
-      "id": 3
-    },
-    {
-      "projectId": 1,
-      "origin": "CHANGE_REQUEST",
-      "status": "APPROVED",
-      "justification": "BB Q FUE",
-      "description": "Q HACE BUSCANDOME E LAO SI SABE Q YO ERROES NO EREPITO",
-      "approvedAt": "2025-06-19T05:37:00.316Z",
-      "approvedBy": "Contractor",
-      "id": 4
-    },
-    {
-      "projectId": 1,
-      "origin": "CHANGE_REQUEST",
-      "status": "REJECTED",
-      "justification": "O Q ME LO INTEO",
-      "description": "YO TENIA MI BBBB ERA ALGO BIEN ESPECIALLLLL PERO ME OBSESIONÉ CONA LGO Q EL LE HACIA MAL ",
-      "approvedAt": "2025-06-19T05:41:01.398Z",
-      "approvedBy": "Contractor",
-      "id": 5
-    }
-  ],
-  "milestones": [
-    {
-      "name": "MILE 1",
-      "startingDate": "2025-09-30T05:00:00.000Z",
-      "endingDate": "2025-10-25T05:00:00.000Z",
-      "projectId": null,
-      "description": "JASDLKJASLDAS",
-      "id": 1
-    }
-  ],
-  "tasks": [
-    {
-      "name": "TASKKKKKKKKKK 1",
-      "description": "THIS IS A TASK AGH",
-      "specialty": "HSA",
-      "startingDate": "2025-09-12T05:00:00.000Z",
-      "dueDate": "2025-09-16T05:00:00.000Z",
-      "status": "DRAFT",
-      "responsibleId": 1,
-      "milestoneId": 1,
-      "id": 1
-    },
-    {
-      "name": "TASKKK 2",
-      "description": "Q PASARIA SI VOLVIERAN ESAS NOCHES DENTRO DE TI",
-      "specialty": "HSA",
-      "startingDate": "2025-09-12T05:00:00.000Z",
-      "dueDate": "2025-09-15T05:00:00.000Z",
-      "status": "PENDING",
-      "responsibleId": 1,
-      "milestoneId": 1,
-      "id": 2
-    }
-  ]
+  "change-processes": [],
+  "milestones": [],
+  "tasks": []
 }

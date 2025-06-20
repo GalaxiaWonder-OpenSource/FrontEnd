@@ -43,12 +43,14 @@ interface TeamMemberDisplay {
 
 interface OrganizationMemberDisplay {
   id: string;
+  personId: number;
   name: string;
   email: string;
   selected: boolean;
   role: ProjectRole | null;
   specialty: Specialty | null;
 }
+
 
 @Component({
   selector: 'app-team',
@@ -315,6 +317,7 @@ export class TeamComponent implements OnInit, OnDestroy {
                   // Add to display members
                   displayMembers.push({
                     id: member.id ? member.id.toString() : '',
+                    personId: personIdNum, // ✅ ¡Este es el verdadero ID de la persona!
                     name: `${person.firstName || ''} ${person.lastName || ''}`,
                     email: email,
                     selected: false,
@@ -497,9 +500,8 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   // Método para extraer el personId de un miembro de la organización
   // Esto podría necesitar ajustes según cómo esté estructurada tu aplicación
-  private getPersonIdFromOrgMember(orgMember: OrganizationMemberDisplay): string {
-    // Asumimos que tenemos el email y podemos encontrar a la persona por él
-    return orgMember.id;
+  private getPersonIdFromOrgMember(orgMember: OrganizationMemberDisplay): number {
+    return orgMember.personId;
   }
 
   // Traducciones para roles y especialidades

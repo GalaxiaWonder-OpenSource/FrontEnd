@@ -51,8 +51,12 @@ export class ProjectTeamMember {
     personId: number;
     projectId: number;
   }) {
-    if (!role || !specialty) {
-      throw new Error('Missing required fields in ProjectTeamMember.');
+    if (!role) {
+      throw new Error('Missing role in ProjectTeamMember.');
+    }
+
+    if (role === ProjectRole.SPECIALIST && !specialty) {
+      throw new Error('Specialty is required for specialists.');
     }
 
     this.id = id;

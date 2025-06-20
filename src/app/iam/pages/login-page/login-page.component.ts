@@ -58,9 +58,9 @@ export class LoginPageComponent {
         // ✅ Guardamos en sesión lo necesario
         this.session.setPersonId(user.personId);
         this.session.setUserType(UserType[user.userType as keyof typeof UserType]);
-        // ✅ Opcional: guardar el token si lo necesitasAdd commentMore actions
+        // ✅ Opcional: guardar el token si lo necesitas
         this.session.setToken?.(token);
-        // ✅ Redirección según tipo de usuarioAdd commentMore actions
+        // ✅ Redirección según tipo de usuario
         if (user.userType === 'TYPE_WORKER') {
           this.router.navigate(['/organizations']);
         } else {

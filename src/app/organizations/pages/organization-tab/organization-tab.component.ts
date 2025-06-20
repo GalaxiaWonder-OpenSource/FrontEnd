@@ -91,43 +91,30 @@ export class OrganizationTabComponent {
       if (result) {
         try {
           const creatorId = this.session.getPersonId();
-          const newOrg = new Organization({
+
+          const organizationPayload = {
             legalName: result.legalName,
             commercialName: result.commercialName,
-            ruc: new Ruc(result.ruc),
+            ruc: result.ruc,
             createdBy: creatorId,
-            status: OrganizationStatus.ACTIVE
-          });
+          };
 
-          // Query te person data to inject it into the organization member model
-          this.personService.getById({},{id: this.session.getPersonId()}).subscribe({
-            next: (person: Person) => {
-              // Second request embedded on the next procedure of the first one
-              // because I suck at using proper scoping at javascript
-              this.organizationService.create(newOrg).subscribe({
-                next: (createdOrg: Organization) => {
-                  const member = new OrganizationMember({
-                    firstName: person.firstName,
-                    lastName: person.lastName,
-                    email: person.email,
-                    personId: creatorId,
-                    organizationId: createdOrg.id,
-                    memberType: OrganizationMemberType.CONTRACTOR
-                  });
+          console.log('Creando organización con payload:', organizationPayload);
 
-                  this.organizationMemberService.create(member).subscribe({
-                    next: () => this.loadOrganizations(),
-                    error: (err: any) => console.error('Failed to create organization member:', err)
-                  });
-                },
-                error: (err: any) => console.error('Failed to create organization:', err)
-              });
+          this.organizationService.create(organizationPayload).subscribe({
+            next: (createdOrg: any) => {
+              console.log('Organización creada exitosamente:', createdOrg);
+              this.loadOrganizations(); // Si quieres recargar la lista después de crear
+            },
+            error: (err: any) => {
+              console.error('Error al crear organización:', err);
             }
           });
         } catch (err) {
-          console.error('Validation failed when creating organization:', err);
+          console.error('Error de validación al crear organización:', err);
         }
       }
     });
   }
+
 }

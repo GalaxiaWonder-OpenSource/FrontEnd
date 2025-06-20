@@ -3,6 +3,7 @@ import {inject} from '@angular/core';
 import {Observable} from 'rxjs';
 import {EndpointConfig} from '../model/endpoint-config.vo';
 import {HttpMethod} from '../model/http-method.vo';
+import {SessionService} from '../../iam/services/session.service';
 
 /**
  * Extracts the underlying value from an object.
@@ -117,8 +118,9 @@ function serializeData(data: any): any {
  */
 export function createDynamicService<T>(configs: EndpointConfig[]): Record<string, Function> {
   const http = inject(HttpClient);
-  const httpOptions = { headers: { 'Content-Type': 'application/json' } };
+  const sessionService = inject(SessionService); // Asegúrate de que SessionService esté correctamente inyectado
   const service: Record<string, Function> = {};
+
 
   for (const cfg of configs) {
     service[cfg.name] = (data: any = {}, params: any = {}): Observable<T> => {
@@ -138,6 +140,20 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
 
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
+
+      // ----- ARMAR LOS HEADERS DINÁMICAMENTE -----
+      // TOMA EL TOKEN DIRECTAMENTE DEL SESSION SERVICE
+      let token = sessionService.getToken();
+      // Por seguridad, elimina comillas si existieran
+      if (token && token.startsWith('"') && token.endsWith('"')) {
+        token = token.slice(1, -1);
+      }
+      const headers: any = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const httpOptions = { headers };
+      // -------------------------------------------
 
       // Debug log para ver qué URL se está generando
       switch (cfg.method) {

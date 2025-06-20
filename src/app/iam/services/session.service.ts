@@ -9,7 +9,7 @@ export type userType = UserType.TYPE_WORKER | UserType.TYPE_CLIENT;
 export class SessionService {
   // SIGNALS
   private personId = signal<number | undefined>(this.loadFromStorage('personId'));
-  private userType = signal<UserType | undefined>(this.loadFromStorage('userType'));
+  private userType = signal<userType | undefined>(this.loadFromStorage('userType'));
   private organizationId = signal<number | undefined>(this.loadFromStorage('organizationId'));
   private organizationRole = signal<OrganizationMemberType | undefined>(this.loadFromStorage('organizationRole'));
   private projectId = signal<number | undefined>(this.loadFromStorage('projectId'));
@@ -127,14 +127,18 @@ export class SessionService {
     return this.token();
   }
 
-  // Helpers de persistencia
   private saveToStorage(key: string, value: any) {
     if (value !== undefined) {
-      localStorage.setItem(key, JSON.stringify(value));
+      if (key === 'token' && typeof value === 'string') {
+        localStorage.setItem(key, value); // guarda el token tal cual
+      } else {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
     } else {
       localStorage.removeItem(key);
     }
   }
+
 
   private loadFromStorage(key: string): any {
     const val = localStorage.getItem(key);

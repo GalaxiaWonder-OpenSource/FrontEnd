@@ -4,12 +4,15 @@ import { createEndpointConfig } from '../../shared/model/endpoint-config.vo';
 import { HttpMethod } from '../../shared/model/http-method.vo';
 import { OrganizationMember } from '../model/organization-member.entity';
 
+const TOKEN = localStorage.getItem('token') || undefined;
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationMemberService {
   private readonly service = createDynamicService<OrganizationMember>([
-    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'organization-members'),
+    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, 'http://localhost:8080/api/v1', 'organizations/by-person-id', '/:id', TOKEN),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organization-members', '/:id'),
     createEndpointConfig({ name: 'getByOrganizationId', method: HttpMethod.GET }, undefined, 'organization-members'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organization-members'),

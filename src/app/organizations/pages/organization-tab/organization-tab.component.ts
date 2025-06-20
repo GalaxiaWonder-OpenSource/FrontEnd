@@ -10,13 +10,9 @@ import { OrganizationListComponent } from '../../components/organization-list/or
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import {SessionService} from '../../../iam/services/session.service';
-import {Ruc} from '../../model/ruc.vo';
-import {OrganizationStatus} from '../../model/organization-status.vo';
 import {OrganizationMember} from '../../model/organization-member.entity';
-import {OrganizationMemberType} from '../../model/organization-member-type.vo';
 import {OrganizationMemberService} from '../../services/organization-member.service';
 import {PersonService} from '../../../iam/services/person.service';
-import {Person} from '../../../iam/model/person.entity';
 
 @Component({
   selector: 'app-organization-tab',
@@ -54,32 +50,18 @@ export class OrganizationTabComponent {
       return;
     }
 
-    this.organizationMemberService.getAll().subscribe({
-      next: (memberships: OrganizationMember[]) => {
-        const myMemberships = memberships.filter(m =>
-          m.personId != undefined ? m.personId.toString() === personId.toString() : false
-        );
-
-        const orgIds = myMemberships.map(m => m.organizationId);
-
-        const organizationRequests = orgIds.map(id =>
-          this.organizationService.getById({}, { id })
-        );
-
-        Promise.all(organizationRequests.map(obs => obs.toPromise())).then(
-          (organizations) => {
-            this.organizations.set(organizations);
-          },
-          (error) => {
-            console.error('Failed to load one or more organizations:', error);
-          }
-        );
+    // Debes usar el OrganizationService y el método correcto:
+    this.organizationService.getByPersonId({}, { id: personId }).subscribe({
+      next: (organizations: Organization[]) => {
+        this.organizations.set(organizations);
       },
       error: (err: any) => {
-        console.error('Failed to load organization memberships:', err);
+        console.error('Failed to load organizations by personId:', err);
+        this.organizations.set([]);
       }
     });
   }
+
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateOrganizationModalComponent, {

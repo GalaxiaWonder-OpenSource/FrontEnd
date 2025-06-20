@@ -6,7 +6,7 @@ import { Organization } from '../model/organization.entity';
 import { Observable, map } from 'rxjs';
 
 const TOKEN = localStorage.getItem('token') || undefined;
-console.log(TOKEN);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,11 +15,11 @@ export class OrganizationService {
     createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'organizations'),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'getByContractorId', method: HttpMethod.GET }, undefined, 'organizations'),
-    createEndpointConfig({ name: 'create', method: HttpMethod.POST },'http://localhost:8080/api/v1', '/organizations', '', TOKEN),
+    createEndpointConfig({ name: 'create', method: HttpMethod.POST },undefined, '/organizations', '', TOKEN),
+    createEndpointConfig({ name: 'getByPersonId', method: HttpMethod.GET }, 'http://localhost:8080/api/v1', 'organizations/by-person-id', '/:id'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations', '/:id'),
     createEndpointConfig({ name: 'deactivate', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id/deactivate'),
-    createEndpointConfig({name: 'getByPersonId', method: HttpMethod.GET }, 'http://localhost:8080/api/v1', '/organizations/by-person-id', '/:id'),
   ]);
 
   getAll = this.service['getAll'];

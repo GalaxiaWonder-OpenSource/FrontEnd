@@ -18,6 +18,7 @@ export class SessionService {
   private token = signal<string | undefined>(this.loadFromStorage('token'));
 
   constructor() {
+    console.log('[SessionService] Constructor, token en storage:', localStorage.getItem('token'));
     // Persistencia reactiva automática
     effect(() => {
       this.saveToStorage('personId', this.personId());
@@ -56,6 +57,7 @@ export class SessionService {
   }
 
   setToken(token: string) {
+    console.log('[SessionService] setToken:', token);
     this.token.set(token);
     this.saveToStorage('token', token);
   }
@@ -83,7 +85,7 @@ export class SessionService {
 
   clearToken() {
     this.token.set(undefined);
-    this.saveToStorage('token', undefined);
+    localStorage.removeItem('token'); // Aquí borras del storage
   }
 
   clearAll() {
@@ -124,28 +126,35 @@ export class SessionService {
   }
 
   getToken(): string | undefined {
+    console.log('token', this.token());
     return this.token();
   }
 
   private saveToStorage(key: string, value: any) {
+    // Solo borra el token cuando se llame explícitamente (no en efecto general)
     if (value !== undefined) {
       if (key === 'token' && typeof value === 'string') {
-        localStorage.setItem(key, value); // guarda el token tal cual
+        localStorage.setItem(key, value);
       } else {
         localStorage.setItem(key, JSON.stringify(value));
       }
-    } else {
+    } else if (key !== 'token') {
+      // solo otros valores pueden borrarse automáticamente
       localStorage.removeItem(key);
     }
   }
 
 
+
   private loadFromStorage(key: string): any {
     const val = localStorage.getItem(key);
+    if (val === null) return undefined; // No hay nada guardado
+    if (key === 'token') return val;    // Devuelve el token plano, sin parsear
     try {
-      return val ? JSON.parse(val) : undefined;
+      return JSON.parse(val);
     } catch {
       return undefined;
     }
   }
+
 }

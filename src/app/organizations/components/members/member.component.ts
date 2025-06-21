@@ -121,14 +121,15 @@ export class MemberComponent implements OnInit {
       return;
     }
 
-    this.organizationMemberService.getByOrganizationId({ organizationId }).subscribe({
-      next: (members: OrganizationMember[]) => {
+    this.organizationMemberService.getAll({}, { id: organizationId }).subscribe({
+      next: (members: any[]) => {
         this.members.set(
           members.map((member) => ({
             memberType: member.memberType,
             joinedAt: member.joinedAt,
-            fullName: `${member.firstName ?? ''} ${member.lastName ?? ''}`.trim(),
-            email: member.email ?? '',
+            fullName: member.fullName ?? '',
+            // Si no viene email en el response, no puedes mostrarlo
+            email: member.email ?? '', // ← Si no existe, será string vacío
             member
           }))
         );

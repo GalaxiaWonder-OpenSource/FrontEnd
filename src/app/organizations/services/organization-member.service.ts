@@ -12,7 +12,7 @@ const TOKEN = localStorage.getItem('token') || undefined;
 })
 export class OrganizationMemberService {
   private readonly service = createDynamicService<OrganizationMember>([
-    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, 'http://localhost:8080/api/v1', 'organizations/by-person-id', '/:id', TOKEN),
+    createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'organizations/:id', '/members', TOKEN),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organization-members', '/:id'),
     createEndpointConfig({ name: 'getByOrganizationId', method: HttpMethod.GET }, undefined, 'organization-members'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organization-members'),

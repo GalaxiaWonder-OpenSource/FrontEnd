@@ -52,6 +52,7 @@ export class ConfigurationTabComponent {
 
     const updated = this.formComponent.getUpdatedOrganization();
 
+
     // Validación 1: legalName vacío
     if (!updated.legalName || updated.legalName.trim() === '') {
       this.message = 'organization-configuration.errors.empty-legal-name';
@@ -71,7 +72,13 @@ export class ConfigurationTabComponent {
     }
 
     // PATCH
-    this.organizationService.update(updated, { id: this.org.id }).subscribe({
+    this.organizationService.update(
+      {
+        commercialName: updated.commercialName,
+        legalName: updated.legalName
+      },
+      { id: this.org.id }
+    ).subscribe({
       next: () => {
         this.message = 'organization-configuration.success.updated';
         this.messageType = 'success';

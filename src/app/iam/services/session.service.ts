@@ -18,7 +18,6 @@ export class SessionService {
   private token = signal<string | undefined>(this.loadFromStorage('token'));
 
   constructor() {
-    console.log('[SessionService] Constructor, token en storage:', localStorage.getItem('token'));
     // Persistencia reactiva automática
     effect(() => {
       this.saveToStorage('personId', this.personId());
@@ -57,7 +56,6 @@ export class SessionService {
   }
 
   setToken(token: string) {
-    console.log('[SessionService] setToken:', token);
     this.token.set(token);
     this.saveToStorage('token', token);
   }
@@ -126,7 +124,6 @@ export class SessionService {
   }
 
   getToken(): string | undefined {
-    console.log('token', this.token());
     return this.token();
   }
 

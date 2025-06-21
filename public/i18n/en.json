@@ -237,7 +237,11 @@
     },
     "success": {
       "updated": "Organization updated successfully!"
-    }
+    },
+    "title-danger": "Danger Zone",
+    "ruc-label": "RUC",
+    "ruc-placeholder": "Enter the RUC",
+    "delete": "Delete"
   },
   "project-tab": {
     "title": "Projects",

@@ -226,7 +226,11 @@
     },
     "success": {
       "updated": "¡Organización actualizada correctamente!"
-    }
+    },
+    "title-danger": "Zona de Peligro",
+    "ruc-label": "RUC",
+    "ruc-placeholder": "Ingrese el RUC de la organización",
+    "delete": "Eliminar"
   },
   "project-tab": {
     "title": "Gestión de Proyectos",

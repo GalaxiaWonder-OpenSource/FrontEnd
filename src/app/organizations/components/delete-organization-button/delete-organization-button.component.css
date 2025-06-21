@@ -1,0 +1,20 @@
+.delete-org-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  /* <--- centrado vertical */
+  gap: 32px;
+  width: 100%;
+}
+
+.delete-org-input {
+  flex: 1 1 auto;
+  min-width: 240px;
+  max-width: 500px;
+}
+
+.delete-org-btn {
+  min-width: 120px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  /* Elimina align-self si lo habías puesto antes */
+}

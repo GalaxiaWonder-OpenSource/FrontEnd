@@ -18,7 +18,7 @@ export class OrganizationService {
     createEndpointConfig({ name: 'create', method: HttpMethod.POST },undefined, '/organizations', '', TOKEN),
     createEndpointConfig({ name: 'getByPersonId', method: HttpMethod.GET }, 'http://localhost:8080/api/v1', 'organizations/by-person-id', '/:id'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations', '/:id'),
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations', '/:ruc'),
     createEndpointConfig({ name: 'deactivate', method: HttpMethod.PATCH }, undefined, 'organizations', '/:id/deactivate'),
   ]);
 

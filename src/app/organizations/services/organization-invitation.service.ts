@@ -20,8 +20,8 @@ export class OrganizationInvitationService {
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organizations', '/invitations'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organization-invitations', '/:id'),
-    createEndpointConfig({ name: 'accept', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id/accept'),
-    createEndpointConfig({ name: 'reject', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id/reject'),
+    createEndpointConfig({ name: 'accept', method: HttpMethod.PATCH }, undefined, 'organizations/invitations', '/:id/accept'),
+    createEndpointConfig({ name: 'reject', method: HttpMethod.PATCH }, undefined, 'organizations/invitations', '/:id/reject'),
     createEndpointConfig({ name: 'acceptInvitation', method: HttpMethod.PATCH }, 'http://localhost:8080/api/v1/organizations', '/invitations', '/{id}/accept'),
     createEndpointConfig({ name: 'rejectInvitation', method: HttpMethod.PATCH }, 'http://localhost:8080/api/v1/organizations', '/invitations', '/{id}/reject'),
 

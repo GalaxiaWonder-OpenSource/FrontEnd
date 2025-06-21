@@ -17,7 +17,7 @@ export class OrganizationMemberService {
     createEndpointConfig({ name: 'getByOrganizationId', method: HttpMethod.GET }, undefined, 'organization-members'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organization-members'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PUT }, undefined, 'organization-members', '/:id'),
-    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organization-members', '/:id')
+    createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organizations/organization-members', '/:id')
   ]);
 
   getAll = this.service['getAll'];

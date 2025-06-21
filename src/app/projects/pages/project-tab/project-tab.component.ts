@@ -20,6 +20,7 @@ import { Person } from '../../../iam/model/person.entity';
 import { PersonService } from '../../../iam/services/person.service';
 import {UserType} from '../../../iam/model/user-type.vo';
 
+
 @Component({
   selector: 'app-project-tab',
   standalone: true,
@@ -73,7 +74,9 @@ export class ProjectTabComponent implements OnInit {
   loadProjectsForOrganization(organizationId: number): void {
     this.loading.set(true);
 
-    this.projectService.getAll().subscribe({
+    const currentPersonId = this.session.getPersonId();
+
+    this.projectTeamMemberService.getByPersonId({}, { personId: currentPersonId }).subscribe({
       next: (allProjects: Project[]) => {
         const userType = this.session.getUserType();
         const currentPersonId = this.session.getPersonId();
@@ -81,17 +84,17 @@ export class ProjectTabComponent implements OnInit {
         console.log('[DEBUG] userType:', userType);
         console.log('[DEBUG] currentPersonId:', currentPersonId);
 
-        const orgProjects = allProjects
-          .filter(project => project.organizationId === organizationId)
-          .filter(project => {
-            if (userType === UserType.TYPE_CLIENT) {
-              return project.contractingEntity?.id === currentPersonId;
-            }
-            return true;
-          });
+        // Filtrar por organización
+        const orgProjects = allProjects.filter(project => project.organizationId === organizationId);
 
+        // Si es cliente, filtra solo los que contrató
+        const visibleProjects = (userType === UserType.TYPE_CLIENT)
+          ? orgProjects.filter(p => p.contractingEntity?.id === currentPersonId)
+          : orgProjects;
+
+        // Logging para ver qué se va a mostrar
         console.log('[DEBUG] Proyectos para mostrar:');
-        orgProjects.forEach(p => {
+        visibleProjects.forEach(p => {
           console.log({
             id: p.id,
             name: p.name,
@@ -101,14 +104,15 @@ export class ProjectTabComponent implements OnInit {
           });
         });
 
-        this.projects.set(orgProjects);
+        this.projects.set(visibleProjects);
         this.loading.set(false);
       },
-      error: (err: Error) => {
-        console.error(`Failed to load projects for organization ${organizationId.toString()}:`, err);
+      error: (err: any) => {
+        console.error('[ERROR] Cargando proyectos:', err);
         this.loading.set(false);
       }
     });
+
   }
 
   openCreateDialog(): void {

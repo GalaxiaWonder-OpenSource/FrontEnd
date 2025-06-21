@@ -1,5 +1,3 @@
-import { RegistrationRequestId } from '../../shared/model/registration-request-id.vo';
-import { EmailAddress } from '../../shared/model/email-adress.vo';
 import { RegistrationRequestStatus } from './registration-request-status.vo';
 
 /**
@@ -8,10 +6,10 @@ import { RegistrationRequestStatus } from './registration-request-status.vo';
  */
 export class RegistrationRequest {
   /** Unique identifier of the registration request. */
-  public readonly id: RegistrationRequestId;
+  public readonly id: number | undefined;
 
   /** Email address provided for registration. */
-  public readonly email: EmailAddress;
+  public readonly email: string;
 
   /** Raw or hashed password submitted during registration. */
   public readonly password: string;
@@ -42,7 +40,7 @@ export class RegistrationRequest {
    * @throws Error if validations fail (empty name, short password, invalid expiration).
    */
   constructor({
-                id = new RegistrationRequestId(),
+                id,
                 email,
                 password,
                 fullName,
@@ -50,8 +48,8 @@ export class RegistrationRequest {
                 expiresAt,
                 status = RegistrationRequestStatus.CONFIRMATION_PENDING
               }: {
-    id?: RegistrationRequestId;
-    email: EmailAddress;
+    id?: number;
+    email: string;
     password: string;
     fullName: string;
     requestedAt?: Date;
@@ -93,8 +91,8 @@ export class RegistrationRequest {
    */
   toJSON() {
     return {
-      id: this.id.value,
-      email: this.email.value,
+      id: this.id,
+      email: this.email,
       password: this.password,
       fullName: this.fullName,
       requestedAt: this.requestedAt.toISOString(),

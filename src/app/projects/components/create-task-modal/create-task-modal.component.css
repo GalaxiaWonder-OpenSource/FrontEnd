@@ -1,0 +1,41 @@
+/* Contenedor general */
+.create-task-modal {
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos para cada campo */
+.task-form-field {
+  display: block;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Botones */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 600px) {
+  .create-task-modal {
+    padding: 16px;
+  }
+}
+
+/* Título del modal */
+mat-dialog-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Contenido del modal */
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+}

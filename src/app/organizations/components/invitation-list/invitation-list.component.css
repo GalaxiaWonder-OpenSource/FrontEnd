@@ -1,0 +1,170 @@
+.invitation-card {
+  margin: 20px;
+  max-width: 1200px;
+}
+
+.invitation-card mat-card-header {
+  margin-bottom: 20px;
+}
+
+.invitation-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+}
+
+.pending-count {
+  margin-left: auto;
+}
+
+.debug-btn {
+  margin-bottom: 20px;
+  color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 15px;
+  color: #666;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.empty-state p {
+  margin: 0;
+  max-width: 400px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.invitations-table {
+  width: 100%;
+}
+
+.invitations-table th {
+  font-weight: 600;
+  color: #333;
+}
+
+.org-info,
+.person-info,
+.date-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.org-info mat-icon {
+  color: #2196f3;
+}
+
+.person-info mat-icon {
+  color: #4caf50;
+}
+
+.date-info mat-icon {
+  color: #ff9800;
+}
+
+.actions-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions-container button {
+  min-width: 100px;
+}
+
+.custom-chip {
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.chip-accepted {
+  background-color: #e0f2f1 !important;
+  color: #00796b !important;
+  border-color: #00796b !important;
+}
+
+.chip-rejected {
+  background-color: #ffebee !important;
+  color: #c62828 !important;
+  border-color: #c62828 !important;
+}
+
+.chip-pending {
+  background-color: #fff3e0 !important;
+  color: #ef6c00 !important;
+  border-color: #ef6c00 !important;
+}
+
+/* Opcional: Si decides mantener algo para estados no-pending */
+.no-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.muted-text {
+  color: #999;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .invitation-card {
+    margin: 10px;
+  }
+
+  .invitation-card mat-card-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .pending-count {
+    margin-left: 0;
+  }
+
+  .actions-container {
+    flex-direction: column;
+  }
+
+  .actions-container button {
+    width: 100%;
+  }
+}

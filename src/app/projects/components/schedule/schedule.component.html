@@ -1,1 +1,101 @@
-<p>schedule works!</p>
+<div class="schedule-container">
+  <!-- Loading -->
+  <ng-container *ngIf="loading(); else notLoading">
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <p class="loading-text">{{ 'schedule.loading' | translate }}</p>
+    </div>
+  </ng-container>
+
+  <!-- Not Loading -->
+  <ng-template #notLoading>
+    <!-- Error -->
+    <div class="error-container" *ngIf="error()">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <button mat-raised-button color="primary" (click)="loadData()">
+        {{ 'common.retry' | translate }}
+      </button>
+    </div>
+
+    <!-- Content -->
+    <ng-container *ngIf="!error()">
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="milestones().length === 0">
+        <mat-icon class="empty-icon">event_note</mat-icon>
+        <h3>{{ 'schedule.no-milestones' | translate }}</h3>
+        <p>{{ 'schedule.no-milestones-description' | translate }}</p>
+        <button mat-raised-button color="primary" (click)="openCreateMilestoneModal()">
+          <mat-icon>add</mat-icon>
+          {{ 'schedule.create-milestone' | translate }}
+        </button>
+      </div>
+
+      <!-- Milestones List -->
+      <div class="milestones-container" *ngIf="milestones().length > 0">
+        <div class="milestone-header">
+          <button mat-raised-button color="primary" (click)="openCreateMilestoneModal()">
+            <mat-icon>add</mat-icon>
+            {{ 'schedule.create-milestone' | translate }}
+          </button>
+        </div>
+
+        <mat-accordion multi="true">
+          <mat-expansion-panel *ngFor="let milestone of milestones()" class="milestone-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>flag</mat-icon> {{ milestone.name }}
+              </mat-panel-title>
+              <mat-panel-description>
+                <span *ngIf="milestone.startingDate && milestone.endingDate">
+                  <mat-icon>date_range</mat-icon>
+                  {{ milestone.startingDate | date: 'mediumDate' }} – {{ milestone.endingDate | date: 'mediumDate' }}
+                </span>
+                <span class="task-count">
+                  {{ getTasksForMilestone(milestone).length }} {{ 'schedule.tasks' | translate }}
+                </span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <!-- Milestone Description -->
+            <div *ngIf="milestone.description" class="milestone-info">
+              <p class="milestone-description-text">{{ milestone.description }}</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="milestone-actions">
+              <button mat-icon-button color="primary" (click)="openEditMilestoneModal(milestone)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteMilestone(milestone.id!)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <!-- Tasks Section -->
+            <div class="tasks-section">
+              <div class="task-header">
+                <h4><mat-icon>assignment</mat-icon> {{ 'schedule.tasks' | translate }}</h4>
+                <button
+                  mat-fab
+                  color="primary"
+                  class="add-task-btn"
+                  (click)="openCreateTaskDialog(milestone.id!)"
+                  [attr.aria-label]="'schedule.add-task' | translate">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+
+              <div class="tasks-container">
+                <app-task-list
+                  [tasks]="getTasksForMilestone(milestone)"
+                  (deleteTask)="onDeleteTask($event)"
+                  (editTask)="openEditTaskDialog($event)">
+                </app-task-list>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

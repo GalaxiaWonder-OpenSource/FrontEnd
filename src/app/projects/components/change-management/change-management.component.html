@@ -1,1 +1,80 @@
-<p>change-management works!</p>
+<mat-card>
+  <mat-card-title>{{ 'change-management.title' | translate }}</mat-card-title>
+
+  <!-- Cliente crea solicitudes -->
+  <div *ngIf="isClient">
+    <!-- Mostrar formulario -->
+    <div *ngIf="showForm">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'change-management.form.title-label' | translate }}</mat-label>
+        <input matInput [(ngModel)]="changeRequest.title" name="title" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'change-management.form.description-label' | translate }}</mat-label>
+        <textarea matInput [(ngModel)]="changeRequest.description" name="description" required></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isFormValid() || loading">
+        {{ 'change-management.form.submit-button' | translate }}
+      </button>
+      <button mat-button (click)="onCancel()">
+        {{ 'change-management.form.cancel-button' | translate }}
+      </button>
+    </div>
+
+    <!-- Mostrar botón para iniciar nueva solicitud -->
+    <div *ngIf="!showForm">
+      <button mat-raised-button color="primary" (click)="startNewChangeRequest()">
+        {{ 'change-management.new-request-button' | translate }}
+      </button>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <p *ngIf="success" style="color: green;">
+      {{ 'change-management.success-message' | translate }}
+    </p>
+  </div>
+
+  <!-- Contractor ve y gestiona solicitudes -->
+  <div *ngIf="isContractor">
+    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+
+    <div *ngIf="!loading && changeProcess().length === 0">
+      <p>{{ 'change-management.no-requests' | translate }}</p>
+    </div>
+
+    <mat-card *ngFor="let request of changeProcess()" class="request-card">
+      <mat-card-header>
+        <mat-card-title>{{ request.justification }}</mat-card-title>
+        <mat-card-subtitle>
+        <span [ngClass]="getStatusColor(request.status)">
+          {{ 'change-management.status-label' | translate }}: {{ ('change-management.status.' + request.status) | translate }}
+        </span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>{{ 'change-management.description-label' | translate }}:</strong>
+          {{ request.description || ('change-management.no-description' | translate) }}
+        </p>
+        <p><strong>{{ 'change-management.project-label' | translate }}:</strong> {{ request.projectId }}</p>
+        <p><strong>{{ 'change-management.check-date-label' | translate }}:</strong>
+          {{ request.approvedAt ? (request.approvedAt | date:'medium') : ('change-management.pending' | translate) }}
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="request.status === 'PENDING'">
+        <button mat-raised-button color="primary" (click)="approveChangeRequest(request)">
+          ✅ {{ 'change-management.approve-button' | translate }}
+        </button>
+        <button mat-raised-button color="warn" (click)="rejectChangeRequest(request)">
+          ❌ {{ 'change-management.reject-button' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Errores -->
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+</mat-card>

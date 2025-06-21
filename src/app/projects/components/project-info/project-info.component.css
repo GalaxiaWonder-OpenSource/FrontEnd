@@ -1,0 +1,32 @@
+.project-info-container {
+  padding: 20px;
+}
+
+.info-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.info-field {
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+}
+
+.label {
+  font-weight: bold;
+  color: #555;
+}
+
+.value {
+  color: #333;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 50px;
+  color: #666;
+  font-style: italic;
+}

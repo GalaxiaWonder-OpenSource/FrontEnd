@@ -5,12 +5,17 @@ import { SessionService } from '../../../iam/services/session.service';
 import { Organization } from '../../model/organization.entity';
 import {NgClass, NgIf} from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {TranslatePipe} from "@ngx-translate/core";
+import {Router} from '@angular/router';
+import {
+  DeleteOrganizationButtonComponent
+} from '../../components/delete-organization-button/delete-organization-button.component';
 
 @Component({
   selector: 'app-configuration-tab',
   standalone: true,
-  imports: [ConfigurationFormComponent, NgIf, MatButtonModule, TranslatePipe, NgClass],
+  imports: [ConfigurationFormComponent, NgIf, MatButtonModule, TranslatePipe, NgClass, DeleteOrganizationButtonComponent],
   templateUrl: './configuration-tab.component.html',
   styleUrls: ['./configuration-tab.component.css']
 })
@@ -26,15 +31,17 @@ export class ConfigurationTabComponent {
 
   constructor(
     private organizationService: OrganizationService,
-    private session: SessionService
+    private session: SessionService,
+    private snackBar: MatSnackBar,
+    private router: Router
 
-) {
+
+  ) {
     this.loadOrganization();
   }
 
   loadOrganization() {
     const id = this.session.getOrganizationId();
-    console.log("ORGANIZATION ID: ", id);
     if (!id) {
       console.warn('No organization ID found in session.');
       return;
@@ -49,9 +56,10 @@ export class ConfigurationTabComponent {
   }
 
   onSubmitChanges() {
-    if (!this.org?.id || !this.originalOrg) return;
+    if (!this.org?.id) return;
 
     const updated = this.formComponent.getUpdatedOrganization();
+
 
     // Validación 1: legalName vacío
     if (!updated.legalName || updated.legalName.trim() === '') {
@@ -62,8 +70,8 @@ export class ConfigurationTabComponent {
 
     // Validación 2: sin cambios
     const noChanges =
-      updated.legalName === this.originalOrg.legalName &&
-      updated.commercialName === this.originalOrg.commercialName;
+        updated.legalName === this.originalOrg?.legalName &&
+        updated.commercialName === this.originalOrg?.commercialName;
 
     if (noChanges) {
       this.message = 'organization-configuration.errors.no-changes';
@@ -71,25 +79,36 @@ export class ConfigurationTabComponent {
       return;
     }
 
-    // Generar nuevo objeto con todo (PUT)
-    const fullUpdate: any = {
-      ...this.originalOrg
-    };
-
-    fullUpdate.legalName = updated.legalName
-    fullUpdate.commercialName = updated.commercialName
-
-    this.organizationService.replace({legalName: fullUpdate.legalName, commercialName: fullUpdate.commercialName}, { id: this.org.id }).subscribe({
+    // PATCH
+    this.organizationService.update(
+      {
+        commercialName: updated.commercialName,
+        legalName: updated.legalName
+      },
+      { id: this.org.id }
+    ).subscribe({
       next: () => {
         this.message = 'organization-configuration.success.updated';
         this.messageType = 'success';
-        this.originalOrg = JSON.parse(JSON.stringify(fullUpdate));
-        this.org = JSON.parse(JSON.stringify(fullUpdate));
+        this.originalOrg = JSON.parse(JSON.stringify(this.org));
       },
       error: (err: any) => {
         console.error('Error', err);
         this.message = 'organization-configuration.errors.api-failed';
         this.messageType = 'error';
+      }
+    });
+  }
+
+  onDeleteOrganization(ruc: string): void {
+    this.organizationService.delete({}, { ruc }).subscribe({
+      next: () => {
+        this.snackBar.open('Organización eliminada exitosamente', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
+        this.router.navigate(['/organizations']);
+      },
+      error: (err: any) => {
+        this.snackBar.open('Error al eliminar organización', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
+        console.error('Error al eliminar organización:', err);
       }
     });
   }

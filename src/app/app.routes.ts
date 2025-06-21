@@ -9,7 +9,7 @@ import {ProjectAccessGuard} from './projects/guards/project-acces-guard';
 import {ProjectLayoutComponent} from './projects/pages/project-layout/project-layout.component';
 import {MilestoneAccessGuard} from './projects/guards/milestone-acces-guard';
 import {MilestoneLayoutComponent} from './projects/pages/milestone-layout/milestone-layout.component';
-import {UserRole} from './iam/model/user-role.vo';
+import {UserType} from './iam/model/user-type.vo';
 import {OrganizationMemberType} from './organizations/model/organization-member-type.vo';
 
 export const routes: Routes = [
@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.ORGANIZATION_USER },
+    data: { expectedUserType: UserType.TYPE_WORKER },
     component: WorkerLayoutComponent,
     children: [
       {
@@ -46,7 +46,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [UserTypeGuard],
-    data: { expectedUserType: UserRole.CLIENT_USER },
+    data: { expectedUserType: UserType.TYPE_CLIENT },
     component: ClientLayoutComponent,
     children: [
       {
@@ -70,10 +70,11 @@ export const routes: Routes = [
       {
         path: 'projects',
         loadComponent: () => import('./organizations/components/projects/projects.component').then(m => m.ProjectsComponent)
-      },
-      {
+      },      {
         path: 'members',
-        loadComponent: () => import('./organizations/components/members/members.component').then(m => m.MembersComponent)
+        canActivate: [OrgRoleGuard],
+        data:{roles: [OrganizationMemberType.CONTRACTOR, OrganizationMemberType.WORKER] },
+        loadComponent: () => import('./organizations/pages/member-tab/member-tab.component').then(m => m.MemberTabComponent)
       },
       {
         path: 'settings',
@@ -94,10 +95,6 @@ export const routes: Routes = [
       {
         path: 'information',
         loadComponent: () => import('./projects/components/project-info/project-info.component').then(m => m.ProjectInfoComponent)
-      },
-      {
-        path: 'technical-file',
-        loadComponent: () => import('./projects/components/technical-file/technical-file.component').then(m => m.TechnicalFileComponent)
       },
       {
         path: 'schedule',

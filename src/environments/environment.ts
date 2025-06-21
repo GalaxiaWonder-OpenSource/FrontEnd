@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  propgmsApiBaseUrl: 'https://682584880f0188d7e72d3e85.mockapi.io/v1',
-  userAccountsEndpointPath: '/users'
+  propgmsApiBaseUrl: 'http://localhost:3000/api/v1',
+  authenticationUser: 'user',
+  authenticationPassword: 'f5f1b3f1-ceea-4fec-ac36-3bddc1d845af'
 };
+

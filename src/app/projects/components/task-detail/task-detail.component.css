@@ -1,0 +1,22 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .task-form {
+    min-width: 280px;
+  }
+}

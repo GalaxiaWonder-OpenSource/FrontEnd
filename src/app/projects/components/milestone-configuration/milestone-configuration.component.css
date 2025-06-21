@@ -1,0 +1,62 @@
+.milestone-config-container {
+  padding: 20px;
+}
+
+.milestone-config-card {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #f44336;
+  text-align: center;
+}
+
+.empty-state {
+  padding: 40px 0;
+  text-align: center;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.milestone-table-container {
+  margin-top: 20px;
+}
+
+.milestone-table {
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.actions-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .milestone-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

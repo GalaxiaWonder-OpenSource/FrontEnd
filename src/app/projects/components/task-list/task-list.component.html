@@ -1,1 +1,42 @@
-<p>task-list works!</p>
+<div class="task-cards-container">
+  <mat-card *ngFor="let task of tasks" class="task-item">
+    <mat-card-header>
+      <mat-card-title>{{ getTaskName(task) }}</mat-card-title>
+      <mat-card-subtitle>{{ task.startingDate | date }} - {{ task.dueDate | date }}</mat-card-subtitle>
+      <div class="spacer"></div>
+      <div class="task-actions">
+        <button mat-icon-button color="primary" (click)="onEdit(task)" [title]="'schedule.actions.edit-task' | translate">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(task)" [title]="'schedule.actions.delete-task' | translate">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="task-specialty">
+        <strong>{{ 'schedule.task-specialty' | translate }}:</strong>
+        <span class="specialty-badge specialty-{{ task.specialty }}">
+          {{ getSpecialtyTranslation(task.specialty) }}
+        </span>
+      </div>
+      <div class="task-status">
+        <strong>{{ 'schedule.task-status' | translate }}:</strong>
+        <span class="task-status-{{ task.status }}">
+          {{ getStatusTranslation(task.status) }}
+        </span>
+      </div>
+      <div class="task-responsible">
+        <strong>{{ 'schedule.task-responsible' | translate }}:</strong>
+        <span>{{ getResponsibleName(task.responsibleId) }}</span>
+      </div>
+      <p *ngIf="task.description" class="task-description">{{ task.description }}</p>
+      <div class="assign-responsible-container">
+        <button mat-stroked-button color="primary" (click)="onAssign(task)">
+          <mat-icon>person_add</mat-icon>
+          {{ 'schedule.actions.assign-responsible' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

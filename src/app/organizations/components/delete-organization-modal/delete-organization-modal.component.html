@@ -1,0 +1,10 @@
+<form (ngSubmit)="onDelete()">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>RUC de la organización</mat-label>
+    <input matInput [(ngModel)]="ruc" name="ruc" placeholder="Ingrese el RUC" maxlength="11" required />
+    <mat-error *ngIf="ruc && !isFormValid">El RUC debe tener 11 dígitos numéricos</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="warn" [disabled]="!isFormValid" type="submit">
+    Eliminar
+  </button>
+</form>

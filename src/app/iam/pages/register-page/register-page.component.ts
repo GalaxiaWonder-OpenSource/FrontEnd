@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
-import { PersonService } from '../../services/person.service';
 import { UserAccountService } from '../../services/user-account.service';
-import { EmailAddress } from '../../../shared/model/email-adress.vo';
-import { PhoneNumber } from '../../model/phone-number.vo';
-import { Username } from '../../model/username.vo';
-import { Password } from '../../model/password.vo';
-import { Person } from '../../model/person.entity';
-import { UserAccount } from '../../model/user-account.entity';
-import { UserRole } from '../../model/user-role.vo';
-import { AccountStatus } from '../../model/account-status.vo';
+import { PersonService } from '../../services/person.service';
+import { UserType } from '../../model/user-type.vo';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import {MatButton} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -30,8 +23,8 @@ export class RegisterPageComponent {
   isLoading = false;
 
   constructor(
-    private personService: PersonService,
     private userAccountService: UserAccountService,
+    private personService: PersonService,
     private translate: TranslateService,
     private router: Router
   ) {}
@@ -46,46 +39,6 @@ export class RegisterPageComponent {
     this.router.navigate(['/login']);
   }
 
-  private buildPerson(formData: any): Person {
-    return new Person({
-      email: new EmailAddress(formData.email),
-      phone: new PhoneNumber(formData.phone),
-      firstName: formData.firstName,
-      lastName: formData.lastName
-    });
-  }
-
-  private buildAccount(personId: any, formData: any): UserAccount {
-    return new UserAccount({
-      username: new Username(formData.username),
-      password: new Password(formData.password),
-      role: formData.role,
-      status: AccountStatus.ACTIVE,
-      personId
-    });
-  }
-
-  private createPersonAndAccount(person: Person, formData: any) {
-    this.personService.create(person).subscribe({
-      next: (createdPerson: Person) => {
-        const account = this.buildAccount(createdPerson.id, formData);
-
-        this.userAccountService.create(account).subscribe({
-          next: () => {
-            this.successMessage = this.translate.instant('register-page.success-card.title');
-            this.isLoading = false;
-            this.isRegistered = true;
-          },
-          error: (err: any) => {
-            this.setError('register-page.errors.create-account', err.message);
-          }
-        });
-      },
-      error: (err: any) => {
-        this.setError('register-page.errors.create-person', err.message);
-      }
-    });
-  }
 
   private setError(translationKey: string, details?: string) {
     this.errorMessage = this.translate.instant(translationKey) + (details ? ` ${details}` : '');
@@ -101,30 +54,44 @@ export class RegisterPageComponent {
     phone: string;
     username: string;
     password: string;
+    role: UserType;
   }) {
     this.resetValues();
 
-    this.personService.getByEmail({}, { email: formData.email }).subscribe({
-      next: (existingUsers: any[]) => {
-        if (existingUsers.length > 0) {
-          this.setError('register-page.errors.email-taken');
-          return;
-        }
+    const request = {
+      userName: formData.username.toLowerCase(),
+      password: formData.password,
+      userType: formData.role.toString(),
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone
+    }
 
-        const person = this.buildPerson(formData);
-        this.createPersonAndAccount(person, formData);
+    console.log('HOLA',request);
+
+    // Call the API to create the user account
+    this.userAccountService.signUp(request).subscribe({
+      next: (response:{
+        username: string;
+        userType: string;
+        personId: number;
+      })=> {
+        const {username, userType, personId} = response;
+
+        this.isRegistered = true;
       },
       error: (err: any) => {
-        // Si es un 404, tratamos como si no hubiera resultados
-        if (err.status === 404 && err.statusText === 'Not Found') {
-          const person = this.buildPerson(formData);
-          this.createPersonAndAccount(person, formData);
-        } else {
-          // Otros errores sí los mostramos
-          this.setError('register-page.errors.check-email', err.message);
-        }
+        this.setError('register-page.form.errors.create-account', err.message);
       }
-    });
+    })
+    this.resetValues();
+
+    // For local db.json integration, we need to:
+    // 1. Check if username is already taken
+    // 2. Create a person entry
+    // 3. Create a user account linked to that person
+    this.resetValues();
   }
 }
 

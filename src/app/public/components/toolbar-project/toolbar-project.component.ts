@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SessionService } from '../../../iam/services/session.service';
+import { Router } from '@angular/router';
+import { SessionService} from '../../../iam/services/session.service';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatIcon} from '@angular/material/icon';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { UserType } from '../../../iam/model/user-type.vo';
+import { OrganizationMemberType } from '../../../organizations/model/organization-member-type.vo';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
+import {ProjectRole} from '../../../projects/model/project-role.vo';
 
 @Component({
   selector: 'app-toolbar-project',
@@ -19,15 +23,17 @@ import {MatIcon} from '@angular/material/icon';
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-project.component.html',
   styleUrls: ['./toolbar-project.component.css']
 })
 export class ToolbarProjectComponent {
-  projectId = '';
-  projectRole: string | null = null;
-  organizationRole: string | null = null;
+  projectId: number = 0;
+  projectRole: ProjectRole | null = null;
+  organizationRole: OrganizationMemberType | null = null;
+  userType: UserType | null = null;
 
   constructor(
     private session: SessionService,
@@ -35,9 +41,20 @@ export class ToolbarProjectComponent {
   ) {}
 
   ngOnInit() {
-    this.projectId = this.session.getProjectId() ?? '';
-    this.projectRole = this.session.getProjectRole();
-    this.organizationRole = this.session.getOrganizationRole();
+    const projectIdValue = this.session.getProjectId();
+    this.projectId = projectIdValue !== undefined ? projectIdValue : 0;
+    this.projectRole = this.session.getProjectRole() || null;
+    this.organizationRole = this.session.getOrganizationRole() || null;
+    this.userType = this.session.getUserType() || null;
+
+    // Si la URL contiene un projectId pero no está en la sesión, lo extraemos y guardamos
+    if (!this.projectId) {
+      const currentUrl = window.location.pathname;
+      const projectMatch = currentUrl.match(/\/projects\/([^\/]+)/);
+      if (projectMatch && projectMatch[1]) {
+        this.projectId = Number(projectMatch[1]);
+      }
+    }
   }
 
   navigateTo(subpath: string) {
@@ -45,16 +62,22 @@ export class ToolbarProjectComponent {
   }
 
   get isContractor() {
-    return this.organizationRole === 'Contractor';
+    return (this.organizationRole === OrganizationMemberType.CONTRACTOR);
+    // ProjectRoleType doesn't have 'Contractor' value, so we removed that check
   }
 
   get isClient() {
-    return this.projectRole === 'Client';
+    // ProjectRoleType doesn't have 'Client' value, so we need to check user type only
+    return this.userType === UserType.TYPE_CLIENT;
+  }
+
+  get isOrganizationUser() {
+    return this.userType === UserType.TYPE_WORKER;
   }
 
   goBackToOrganization() {
     const orgId = this.session.getOrganizationId();
-    if (orgId && this.isContractor) {
+    if (orgId && (this.isContractor || this.isOrganizationUser)) {
       this.router.navigate([`/organizations/${orgId}/info`]);
     }
     else{

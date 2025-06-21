@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EndpointConfig } from '../model/endpoint-config.vo';
-import { HttpMethod } from '../model/http-method.vo';
+import {HttpClient} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {Observable} from 'rxjs';
+import {EndpointConfig} from '../model/endpoint-config.vo';
+import {HttpMethod} from '../model/http-method.vo';
+import {SessionService} from '../../iam/services/session.service';
 
 /**
  * Extracts the underlying value from an object.
@@ -20,8 +21,12 @@ function extractParamValue(val: any): any {
   if (val === null || val === undefined) return val;
 
   if (typeof val === 'object') {
-    if ('value' in val) return val.value;
-    if (typeof val.toJSON === 'function') return val.toJSON();
+    if ('value' in val) {
+      return val.value;
+    }
+    if (typeof val.toJSON === 'function') {
+      return val.toJSON();
+    }
   }
 
   return val;
@@ -43,11 +48,27 @@ function extractParamValue(val: any): any {
  * @param params - An object containing key-value pairs for substitution
  * @returns A URL with all dynamic parameters replaced
  */
+
 function replacePathParams(url: string, params: Record<string, any>): string {
-  return url.replace(/:([a-zA-Z]+)/g, (_, key) => {
+
+  const result = url.replace(/:([a-zA-Z]+)/g, (match, key) => {
+
+    if (!params || !(key in params)) {
+      return match; // Devolvemos el token original si no hay valor
+    }
+
     const val = extractParamValue(params[key]);
-    return val !== undefined ? encodeURIComponent(String(val)) : `:${key}`;
+
+    if (val === undefined || val === null) {
+      return match;
+    }
+
+    return encodeURIComponent(String(val));
+
   });
+
+  return result;
+
 }
 
 /**
@@ -97,16 +118,56 @@ function serializeData(data: any): any {
  */
 export function createDynamicService<T>(configs: EndpointConfig[]): Record<string, Function> {
   const http = inject(HttpClient);
-  const httpOptions = { headers: { 'Content-Type': 'application/json' } };
+  const sessionService = inject(SessionService); // Asegúrate de que SessionService esté correctamente inyectado
   const service: Record<string, Function> = {};
+
 
   for (const cfg of configs) {
     service[cfg.name] = (data: any = {}, params: any = {}): Observable<T> => {
+      // Procesamiento especial para el parámetro 'id' si existe
+      if (params && params.id) {
+        // Asegurarse de obtener el valor simple del ID en caso de que sea un objeto
+        if (typeof params.id === 'object') {
+          if (params.id.value !== undefined) {
+            params.id = params.id.value;
+          } else if (typeof params.id.toJSON === 'function') {
+            params.id = params.id.toJSON();
+          } else if (typeof params.id.toString === 'function') {
+            params.id = params.id.toString();
+          }
+        }
+      }
+
       const url = replacePathParams(cfg.url, params);
       const body = serializeData(data);
+
+      // ----- ARMAR LOS HEADERS DINÁMICAMENTE -----
+      // TOMA EL TOKEN DIRECTAMENTE DEL SESSION SERVICE
+      let token = sessionService.getToken();
+      // Por seguridad, elimina comillas si existieran
+      if (token && token.startsWith('"') && token.endsWith('"')) {
+        token = token.slice(1, -1);
+      }
+      const headers: any = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const httpOptions = { headers };
+      // -------------------------------------------
+      console.log('[createDynamicService] Token:', token);
+      console.log('[createDynamicService] Headers:', headers);
+      console.log('[createDynamicService] URL:', url);
+      console.log('[createDynamicService] Body:', body);
+
+
+      // Debug log para ver qué URL se está generando
       switch (cfg.method) {
         case HttpMethod.GET:
-          const queryParams = new URLSearchParams(serializeData(params)).toString();
+          const paramsCopy = { ...params };
+          // Elimina los usados en el path
+          const usedKeys = [...cfg.url.matchAll(/:([a-zA-Z0-9_]+)/g)].map(match => match[1]);
+          usedKeys.forEach(key => { delete paramsCopy[key]; });
+          const queryParams = new URLSearchParams(serializeData(paramsCopy)).toString();
           const fullUrl = queryParams ? `${url}?${queryParams}` : url;
           return http.get<T>(fullUrl, httpOptions);
         case HttpMethod.POST:

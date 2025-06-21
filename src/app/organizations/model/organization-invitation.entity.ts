@@ -1,16 +1,13 @@
-import { OrganizationInvitationId } from '../../shared/model/organization-invitation-id.vo';
-import { OrganizationId } from '../../shared/model/organization-id.vo';
-import { PersonId } from '../../shared/model/person-id.vo';
 import { InvitationStatus } from './invitation-status.vo';
 
 /**
  * Entity representing an invitation to join an organization.
  */
 export class OrganizationInvitation {
-  public readonly invitationId: OrganizationInvitationId;
-  public readonly organizationId: OrganizationId;
-  public readonly personId: PersonId;
-  public readonly invitedBy: PersonId;
+  public readonly invitationId: number | undefined;
+  public readonly organizationId: number | undefined;
+  public readonly personId: number | undefined;
+  public readonly invitedBy: string | undefined;
   public readonly invitedAt: Date;
   public acceptedAt?: Date;
   public status: InvitationStatus;
@@ -20,14 +17,14 @@ export class OrganizationInvitation {
    *
    * @param invitationId - Optional ID (default: new UUID).
    * @param organizationId - Target organization.
-   * @param personId - Person being invited.
-   * @param invitedBy - Person who sent the invitation.
+   * @param personId - ID of the person being invited.
+   * @param invitedBy - Name of the person who sent the invitation.
    * @param invitedAt - Optional timestamp (default: now).
    * @param acceptedAt - Optional acceptance timestamp.
    * @param status - Optional status (default: PENDING).
    */
   constructor({
-                invitationId = new OrganizationInvitationId(),
+                invitationId,
                 organizationId,
                 personId,
                 invitedBy,
@@ -35,10 +32,10 @@ export class OrganizationInvitation {
                 acceptedAt,
                 status = InvitationStatus.PENDING
               }: {
-    invitationId?: OrganizationInvitationId;
-    organizationId: OrganizationId;
-    personId: PersonId;
-    invitedBy: PersonId;
+    invitationId?:  number;
+    organizationId?: number;
+    personId?: number;
+    invitedBy?: string;
     invitedAt?: Date;
     acceptedAt?: Date;
     status?: InvitationStatus;
@@ -93,10 +90,10 @@ export class OrganizationInvitation {
    */
   toJSON() {
     return {
-      invitationId: this.invitationId.value,
-      organizationId: this.organizationId.value,
-      personId: this.personId.value,
-      invitedBy: this.invitedBy.value,
+      invitationId: this.invitationId,
+      organizationId: this.organizationId,
+      personId: this.personId,
+      invitedBy: this.invitedBy,
       invitedAt: this.invitedAt.toISOString(),
       acceptedAt: this.acceptedAt?.toISOString() ?? null,
       status: this.status

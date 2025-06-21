@@ -1,1 +1,76 @@
-<p>task-detail works!</p>
+<form [formGroup]="form" class="task-form">
+  <!-- Nombre -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.name.label' | translate }}</mat-label>
+    <input matInput formControlName="name" required [placeholder]="'schedule.dialogs.add-task.name.placeholder' | translate">
+    <mat-hint>{{ 'schedule.dialogs.add-task.name.hint' | translate }}</mat-hint>
+    <mat-error *ngIf="form.get('name')?.hasError('required')">
+      {{ 'schedule.dialogs.add-task.name.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Especialidad -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.specialty.label' | translate }}</mat-label>
+    <mat-select formControlName="specialty" required>
+      <mat-option *ngFor="let s of specialties" [value]="s">{{ getSpecialtyTranslation(s) }}</mat-option>
+    </mat-select>
+    <mat-hint>{{ 'schedule.dialogs.add-task.specialty.hint' | translate }}</mat-hint>
+    <mat-error *ngIf="form.get('specialty')?.hasError('required')">
+      {{ 'schedule.dialogs.add-task.specialty.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Estado -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.status.label' | translate }}</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option *ngFor="let status of statuses" [value]="status">
+        {{ getStatusTranslation(status) }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>{{ 'schedule.dialogs.add-task.status.hint' | translate }}</mat-hint>
+    <mat-error *ngIf="form.get('status')?.hasError('required')">
+      {{ 'schedule.dialogs.add-task.status.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Fecha de Inicio -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.startingDate.label' | translate }}</mat-label>
+    <input matInput [matDatepicker]="startDatePicker" formControlName="startingDate" required>
+    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+    <mat-error *ngIf="form.get('startingDate')?.hasError('required')">
+      {{ 'schedule.dialogs.add-task.startingDate.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Fecha de Vencimiento -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.dueDate.label' | translate }}</mat-label>
+    <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate" required>
+    <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #dueDatePicker></mat-datepicker>
+    <mat-error *ngIf="form.get('dueDate')?.hasError('required')">
+      {{ 'schedule.dialogs.add-task.dueDate.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.description.label' | translate }}</mat-label>
+    <textarea matInput formControlName="description" rows="3" [placeholder]="'schedule.dialogs.add-task.description.placeholder' | translate"></textarea>
+    <mat-hint>{{ 'schedule.dialogs.add-task.description.hint' | translate }}</mat-hint>
+  </mat-form-field>
+
+  <!-- Botones -->
+  <div class="form-actions">
+    <button mat-button type="button" (click)="onCancel()">
+      {{ 'schedule.actions.cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]="form.invalid">
+      {{ isEdit ? ('schedule.actions.update' | translate) : ('schedule.actions.create' | translate) }}
+    </button>
+  </div>
+</form>

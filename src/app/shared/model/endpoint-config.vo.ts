@@ -24,6 +24,9 @@ export interface EndpointConfig<TInput = any, TOutput = any> {
 
   /** The full URL for the endpoint, including any dynamic path params (e.g., '/users/:id') */
   url: string;
+
+  /** Basic auth string for service authentication*/
+  auth?: string;
 }
 
 /**
@@ -44,6 +47,7 @@ export interface EndpointConfig<TInput = any, TOutput = any> {
  * @param baseUrl - Optional base URL for the API. Defaults to the environment base URL.
  * @param resource - Optional resource segment to append to the base URL (e.g., 'users')
  * @param pathSuffix - Optional suffix to append after the resource (e.g., '/:id')
+ * @param auth - A string item that concatenates user and password information for Basic Auth.
  * @returns A complete and ready-to-use `EndpointConfig` object
  *
  * @example
@@ -54,7 +58,8 @@ export function createEndpointConfig<TInput = any, TOutput = any>(
   config: Omit<EndpointConfig<TInput, TOutput>, 'url'> & Partial<Pick<EndpointConfig<TInput, TOutput>, 'url'>>,
   baseUrl: string = defaultBaseUrl,
   resource?: string,
-  pathSuffix: string = ''
+  pathSuffix: string = '',
+  auth?: string
 ): EndpointConfig<TInput, TOutput> {
   if (!config.name) {
     throw new Error('EndpointConfig "name" is required');
@@ -73,7 +78,8 @@ export function createEndpointConfig<TInput = any, TOutput = any>(
   return {
     name: config.name,
     method: config.method,
-    url
+    url,
+    auth
   };
 }
 

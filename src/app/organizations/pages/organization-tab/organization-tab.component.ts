@@ -10,12 +10,9 @@ import { OrganizationListComponent } from '../../components/organization-list/or
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 import {SessionService} from '../../../iam/services/session.service';
-import {Ruc} from '../../model/ruc.vo';
-import {OrganizationStatus} from '../../model/organization-status.vo';
-import {PersonId} from '../../../shared/model/person-id.vo';
 import {OrganizationMember} from '../../model/organization-member.entity';
-import {OrganizationMemberType} from '../../model/organization-member-type.vo';
 import {OrganizationMemberService} from '../../services/organization-member.service';
+import {PersonService} from '../../../iam/services/person.service';
 
 @Component({
   selector: 'app-organization-tab',
@@ -39,7 +36,8 @@ export class OrganizationTabComponent {
     private organizationService: OrganizationService,
     private dialog: MatDialog,
     private session: SessionService,
-    private organizationMemberService: OrganizationMemberService
+    private organizationMemberService: OrganizationMemberService,
+    private personService: PersonService
   ) {
     this.loadOrganizations();
   }
@@ -52,32 +50,18 @@ export class OrganizationTabComponent {
       return;
     }
 
-    this.organizationMemberService.getAll().subscribe({
-      next: (memberships: OrganizationMember[]) => {
-        const myMemberships = memberships.filter(m =>
-          m.personId.toString() === personId.toString()
-        );
-
-        const orgIds = myMemberships.map(m => m.organizationId);
-
-        const organizationRequests = orgIds.map(id =>
-          this.organizationService.getById({}, { id })
-        );
-
-        Promise.all(organizationRequests.map(obs => obs.toPromise())).then(
-          (organizations) => {
-            this.organizations.set(organizations);
-          },
-          (error) => {
-            console.error('Failed to load one or more organizations:', error);
-          }
-        );
+    // Debes usar el OrganizationService y el método correcto:
+    this.organizationService.getByPersonId({}, { id: personId }).subscribe({
+      next: (organizations: Organization[]) => {
+        this.organizations.set(organizations);
       },
       error: (err: any) => {
-        console.error('Failed to load organization memberships:', err);
+        console.error('Failed to load organizations by personId:', err);
+        this.organizations.set([]);
       }
     });
   }
+
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateOrganizationModalComponent, {
@@ -88,35 +72,31 @@ export class OrganizationTabComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         try {
-          const creatorId = new PersonId(this.session.getPersonId()?.toString());
-          const newOrg = new Organization({
+          const creatorId = this.session.getPersonId();
+
+          const organizationPayload = {
             legalName: result.legalName,
             commercialName: result.commercialName,
-            ruc: new Ruc(result.ruc),
+            ruc: result.ruc,
             createdBy: creatorId,
-            status: OrganizationStatus.ACTIVE
-          });
+          };
 
-          this.organizationService.create(newOrg).subscribe({
-            next: (createdOrg: Organization) => {
-              const member = new OrganizationMember({
-                personId: creatorId,
-                organizationId: createdOrg.id,
-                memberType: OrganizationMemberType.CONTRACTOR
-              });
+          console.log('Creando organización con payload:', organizationPayload);
 
-              this.organizationMemberService.create(member).subscribe({
-                next: () => this.loadOrganizations(),
-                error: (err: any) => console.error('Failed to create organization member:', err)
-              });
+          this.organizationService.create(organizationPayload).subscribe({
+            next: (createdOrg: any) => {
+              console.log('Organización creada exitosamente:', createdOrg);
+              this.loadOrganizations(); // Si quieres recargar la lista después de crear
             },
-            error: (err: any) => console.error('Failed to create organization:', err)
+            error: (err: any) => {
+              console.error('Error al crear organización:', err);
+            }
           });
-
         } catch (err) {
-          console.error('Validation failed when creating organization:', err);
+          console.error('Error de validación al crear organización:', err);
         }
       }
     });
   }
+
 }

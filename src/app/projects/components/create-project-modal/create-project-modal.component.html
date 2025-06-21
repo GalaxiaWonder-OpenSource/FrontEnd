@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{ 'create-project.title' | translate }}</h2>
+
+<div mat-dialog-content class="form-container">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.name' | translate }}</mat-label>
+    <input matInput [(ngModel)]="name" required
+           [placeholder]="'create-project.name' | translate"
+           [title]="'create-project.name' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.description' | translate }}</mat-label>
+    <input matInput [(ngModel)]="description"
+           [placeholder]="'create-project.description' | translate"
+           [title]="'create-project.description' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.contracting-entity-email' | translate }}</mat-label>
+    <input matInput
+           type="email"
+           [(ngModel)]="contractingEntityEmail"
+           required
+           [placeholder]="'create-project.contracting-entity-email' | translate"
+           [title]="'create-project.contractor-email' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.starting-date' | translate }}</mat-label>
+    <input matInput type="date" [(ngModel)]="startingDate" name="startingDate" required
+           [placeholder]="'create-project.starting-date' | translate"
+           [title]="'create-project.starting-date' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'create-project.ending-date' | translate }}</mat-label>
+    <input matInput type="date" [(ngModel)]="endingDate" name="endingDate" required
+           [placeholder]="'create-project.ending-date' | translate"
+           [title]="'create-project.ending-date' | translate" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">
+    {{ 'create-project.cancel' | translate }}
+  </button>
+  <button mat-raised-button color="primary"
+          (click)="submit()"
+          [disabled]="!name || !description || !contractingEntityEmail">
+    {{ 'create-project.submit' | translate }}
+  </button>
+</div>

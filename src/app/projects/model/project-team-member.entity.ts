@@ -1,9 +1,5 @@
-import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
-import {ProjectTeamMemberId} from '../../shared/model/project-team-member-id.vo';
 import {ProjectRole} from './project-role.vo';
 import {Specialty} from './specialty.vo';
-import {PersonId} from '../../shared/model/person-id.vo';
-import {ProjectId} from '../../shared/model/project-id.vo';
 
 /**
  * Entity representing a member of a team project.
@@ -11,23 +7,26 @@ import {ProjectId} from '../../shared/model/project-id.vo';
 
 export class ProjectTeamMember {
 
-  public readonly id: ProjectTeamMemberId;
+  public readonly id: number;
 
+  public readonly firstName?: string;
+
+  public readonly lastName?: string;
 
   public role: ProjectRole;
 
   public specialty: Specialty;
 
-  public readonly memberId: OrganizationMemberId;
+  public readonly personId: number;
 
-  public readonly personId: PersonId;
-
-  public readonly projectId: ProjectId;
+  public readonly projectId: number;
 
   /**
    * Constructs a new ProjectTeamMember instance.
    *
    * @param id - Optional unique identifier (default: new UUID).
+   * @param firstName - Project Team Member first firstName
+   * @param lastName - Project Team Member last firstName
    * @param role - Role of the member in the project.
    * @param specialty - Specialty of the member in the project.
    * @param memberId - ID of the organization member.
@@ -36,28 +35,31 @@ export class ProjectTeamMember {
    */
 
   constructor({
-                id = new ProjectTeamMemberId(),
+                id = 0,
+                firstName,
+                lastName,
                 role,
                 specialty,
-                memberId,
-                personId = new PersonId(),
-                projectId = new ProjectId()
+                personId,
+                projectId
               }: {
-    id?: ProjectTeamMemberId;
+    id?: number;
+    firstName?: string;
+    lastName?: string;
     role: ProjectRole;
     specialty: Specialty;
-    memberId: OrganizationMemberId;
-    personId?: PersonId;
-    projectId?: ProjectId;
+    personId: number;
+    projectId: number;
   }) {
-    if (!role || !specialty || !memberId) {
+    if (!role || !specialty) {
       throw new Error('Missing required fields in ProjectTeamMember.');
     }
 
     this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.role = role;
     this.specialty = specialty;
-    this.memberId = memberId;
     this.personId = personId;
     this.projectId = projectId;
   }
@@ -68,11 +70,16 @@ export class ProjectTeamMember {
   toJSON(): object {
     return {
       id: this.id.toString(),
+      firstName: this.firstName,
+      lastName: this.lastName,
       role: this.role,
       specialty: this.specialty,
-      memberId: this.memberId.toString(),
       personId: this.personId.toString(),
       projectId: this.projectId.toString()
     };
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
   }
 }

@@ -1,0 +1,23 @@
+<div class="member-list-container">
+  <div class="members-header" *ngIf="isCreator()">
+    <button mat-raised-button color="primary" (click)="openInvitationModal()">
+      {{ 'organization-members.invite-button' | translate }}
+    </button>
+  </div>
+
+  <!-- Grid de tarjetas de miembros -->
+  <div class="members-grid">
+    <app-member-card
+      *ngFor="let member of sortedMembers()"
+      [member]="member"
+      [isCreator]="isCreator()"
+      [currentPersonId]="currentPersonId()"
+      (removeMember)="removeMember($event)">
+    </app-member-card>
+  </div>
+
+  <!-- Mensaje cuando no hay miembros -->
+  <div class="no-members" *ngIf="members().length === 1">
+    <p>{{ 'organization-members.no-members' | translate }}</p>
+  </div>
+</div>

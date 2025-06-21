@@ -32,6 +32,12 @@ export class PhoneNumber {
    * @returns True if valid, false otherwise.
    */
   static isValid(phone: string): boolean {
+    // Adding checks for E.164 format and adds '+'
+    // if not added by the user, as required from the backend
+    if (!phone.startsWith('+')) {
+      phone = '+' + phone;
+    }
+
     const phoneRegex = /^\+?\d{7,15}$/;
     return phoneRegex.test(phone);
   }

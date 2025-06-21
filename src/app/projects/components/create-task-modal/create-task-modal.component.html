@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>{{ (data.task ? 'schedule.dialogs.edit-task.title' : 'schedule.dialogs.add-task.title') | translate }}</h2>
+
+<div mat-dialog-content class="form-container">
+  <!-- Nombre -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.name.label' | translate }}</mat-label>
+    <input matInput [(ngModel)]="name" required
+           [placeholder]="'schedule.dialogs.add-task.name.placeholder' | translate" />
+  </mat-form-field>
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.description.label' | translate }}</mat-label>
+    <textarea matInput rows="3" [(ngModel)]="description"
+              [placeholder]="'schedule.dialogs.add-task.description.placeholder' | translate"></textarea>
+  </mat-form-field>
+
+  <!-- Especialidad -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.specialty.label' | translate }}</mat-label>
+    <mat-select [(ngModel)]="specialty" required>
+      <mat-option *ngFor="let value of specialtyValues" [value]="value">
+        {{ ('schedule.specialties.' + value) | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Estado -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.status.label' | translate }}</mat-label>
+    <mat-select [(ngModel)]="status">
+      <mat-option *ngFor="let value of taskStatusValues" [value]="value">
+        {{ ('schedule.task-statuses.' + value) | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Responsable -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.task-responsible' | translate }}</mat-label>
+    <mat-select [(ngModel)]="responsibleId">
+      <mat-option [value]="undefined">
+        {{ 'schedule.errors.no-responsible' | translate }}
+      </mat-option>
+      <mat-option *ngFor="let member of teamMembers" [value]="member.id">
+        {{ member.fullName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Fechas -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.startingDate.label' | translate }}</mat-label>
+    <input matInput type="date" [(ngModel)]="startDate"
+           required [placeholder]="'schedule.dialogs.add-task.startingDate.label' | translate" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'schedule.dialogs.add-task.dueDate.label' | translate }}</mat-label>
+    <input matInput type="date" [(ngModel)]="endDate"
+           required [placeholder]="'schedule.dialogs.add-task.dueDate.label' | translate" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">
+    {{ 'schedule.actions.cancel' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="submit()"
+          [disabled]="!name || !specialty || !startDate || !endDate">
+    {{ (data.task ? 'schedule.actions.update' : 'schedule.actions.create') | translate }}
+  </button>
+</div>

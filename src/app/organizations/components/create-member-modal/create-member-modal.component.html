@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>
+  {{ 'organization-members.invite-modal.title' | translate }}
+</h2>
+<form (ngSubmit)="submit()">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>{{ 'organization-members.invite-modal.email-field-label' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="emailInput"
+      name="email"
+      required
+      [placeholder]="'organization-members.invite-modal.placeholder' | translate"
+      autocomplete="off"
+    />
+  </mat-form-field>
+  <div *ngIf="searchError" class="error-message">{{ searchError | translate }}</div>
+  <div class="modal-actions">
+    <button mat-button type="button" (click)="close()">
+      {{ 'common.cancel' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!emailInput"
+    >
+      {{ 'common.create' | translate }}
+    </button>
+  </div>
+</form>

@@ -8,6 +8,7 @@ import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
 import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
+import {UserMenuComponent} from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-toolbar-milestone',
@@ -19,14 +20,15 @@ import {OrganizationMemberType} from '../../../organizations/model/organization-
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-milestone.component.html',
   styleUrls: ['./toolbar-milestone.component.css']
 })
 export class ToolbarMilestoneComponent {
-  projectId = '';
-  milestoneId = '';
+  projectId = 0;
+  milestoneId = 0;
   isContractor = false;
 
   constructor(
@@ -35,8 +37,10 @@ export class ToolbarMilestoneComponent {
   ) {}
 
   ngOnInit() {
-    this.projectId = this.session.getProjectId() ?? '';
-    this.milestoneId = this.session.getMilestoneId?.() ?? ''; // si implementas esta función
+    const projectIdVal = this.session.getProjectId();
+    this.projectId = projectIdVal !== undefined ? projectIdVal : 0;
+    
+    this.milestoneId = this.session.getMilestoneId?.() ?? 0; // si implementas esta función
     this.isContractor = this.session.getOrganizationRole() === OrganizationMemberType.CONTRACTOR;
   }
 

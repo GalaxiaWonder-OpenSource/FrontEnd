@@ -1,7 +1,5 @@
-import {OrganizationMemberId} from '../../shared/model/organization-member-id.vo';
-
 export class ChangeResponse {
-  public readonly responseBy: OrganizationMemberId;
+  public readonly responseBy: number|undefined;
   public readonly responseAt: Date;
   public readonly notes: string;
 
@@ -10,7 +8,7 @@ export class ChangeResponse {
     responseAt,
     notes
               }:{
-    responseBy: OrganizationMemberId;
+    responseBy?: number;
     responseAt: Date;
     notes: string;
   }){

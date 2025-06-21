@@ -7,11 +7,15 @@ import {OrganizationService} from '../../services/organization.service';
 import {Organization} from '../../model/organization.entity';
 import {PersonService} from '../../../iam/services/person.service';
 import {Person} from '../../../iam/model/person.entity';
+import {NgIf} from '@angular/common';
+import {PhoneNumber} from '../../../iam/model/phone-number.vo';
 
 @Component({
   selector: 'app-organization-information-tab',
+  standalone: true,
   imports: [
-    OrganizationInformationCardComponent
+    OrganizationInformationCardComponent,
+    NgIf
   ],
   templateUrl: './organization-information-tab.component.html',
   styleUrl: './organization-information-tab.component.css'
@@ -46,13 +50,37 @@ export class OrganizationInformationTabComponent {
     // @ts-ignore
     const contractorId = this.organization.createdBy;
 
+    if (!contractorId) {
+      console.warn('No hay ID de contratista disponible');
+      // Si no hay ID de contratista, usamos datos predeterminados
+      this.createDefaultContractor();
+      return;
+    }
+
+    // Corregimos la llamada al servicio para el formato correcto con json-server
     this.personService.getById({}, { id: contractorId }).subscribe({
       next: (personData: any) => {
         this.contractor = new Person(personData);
       },
       error: (err: any) => {
         console.error('Error al obtener el contractor', err);
+        this.createDefaultContractor();
       }
     });
+  }
+
+  private createDefaultContractor(): void {
+    try {
+      // Creamos un contratista con datos predeterminados
+      this.contractor = new Person({
+        id: 0,
+        email: 'no.disponible@example.com',
+        phone: new PhoneNumber('0000000000'),
+        firstName: 'Información',
+        lastName: 'No disponible'
+      });
+    } catch (e) {
+      console.error('Error al crear persona por defecto', e);
+    }
   }
 }

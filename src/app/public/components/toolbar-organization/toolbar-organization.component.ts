@@ -8,6 +8,7 @@ import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
 import {OrganizationMemberType} from '../../../organizations/model/organization-member-type.vo';
+import {UserMenuComponent} from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'app-toolbar-organization',
@@ -19,26 +20,24 @@ import {OrganizationMemberType} from '../../../organizations/model/organization-
     MatButtonModule,
     LanguageSwitcherComponent,
     TranslatePipe,
-    MatIcon
+    MatIcon,
+    UserMenuComponent
   ],
   templateUrl: './toolbar-organization.component.html',
   styleUrls: ['./toolbar-organization.component.css']
 })
 export class ToolbarOrganizationComponent {
-  orgId = '';
-  organizationRole: string | null = null;
+  orgId: number = 0;
+  organizationRole: OrganizationMemberType | undefined = undefined;
 
   constructor(
     private session: SessionService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.organizationRole = this.session.getOrganizationRole();
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.orgId = this.session.getOrganizationId() ?? '';
+    this.orgId = this.session.getOrganizationId() ?? 0;
     this.organizationRole = this.session.getOrganizationRole();
   }
 

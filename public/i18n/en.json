@@ -1,4 +1,16 @@
 {
+  "create-milestone": {
+    "title": "Create Milestone",
+    "name": "Name",
+    "description": "Description",
+    "starting-date": "Starting Date",
+    "ending-date": "Ending Date",
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
+  "user-menu": {
+    "logout": "Logout"
+  },
   "navigation": {
     "client": {
       "title": "Client area",
@@ -23,13 +35,82 @@
       "schedule": "Schedule",
       "working-team": "Working Team",
       "change-management": "Change Management",
-      "configuration": "Configuration"
+      "configuration": "Configuration",
+      "list": {
+        "empty": "No projects for you yet"
+      }
     },
     "milestone": {
       "title": "Milestone",
       "tasks": "Tasks",
       "meetings": "Meetings",
       "configuration": "Configuration"
+    }
+  },
+  "project-info": {
+    "title": "Project Information",
+    "name": "Name",
+    "contracting-entity": "Contracting Entity",
+    "email": "Email",
+    "phone": "Phone",
+    "description": "Description",
+    "status": "Status",
+    "starting-date": "Starting Date",
+    "ending-date": "Ending Date",
+    "loading": "Loading project information..."
+  },
+  "project-configuration": {
+    "title": "Project Configuration",
+    "id": "ID",
+    "loading": "Loading project information...",
+    "try-again": "Try again",
+    "name": {
+      "label": "Project Name",
+      "placeholder": "Enter project name",
+      "hint": "Name should be descriptive and unique",
+      "required": "Project name is required",
+      "minLength": "Name must be at least 3 characters long"
+    },
+    "description": {
+      "label": "Project Description",
+      "placeholder": "Enter project description",
+      "hint": "Provide a brief description of the project"
+    },
+    "status": {
+      "label": "Project Status",
+      "hint": "Select the current project status",
+      "required": "Project status is required"
+    },
+    "endingDate": {
+      "label": "End Date",
+      "hint": "MM/DD/YYYY",
+      "required": "End date is required"
+    },
+    "deleteProject": "Delete Project",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes",
+    "deleteConfirmation": {
+      "title": "Confirm Deletion",
+      "message": "Are you sure you want to delete the project",
+      "warning": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "messages": {
+      "update-success": "Project updated successfully",
+      "update-error": "Error updating project:",
+      "delete-success": "Project deleted successfully",
+      "delete-error": "Error deleting project:",
+      "load-error": "Error loading project",
+      "no-project-id": "No project ID found in session",
+      "unknown-error": "Unknown error",
+      "close": "Close"
+    },
+    "statuses": {
+      "BASIC_STUDIES": "Basic Studies",
+      "DESIGN_IN_PROCESS": "Design in Process",
+      "REJECT": "Rejected",
+      "APPROVED": "Approved"
     }
   },
   "footer": {
@@ -97,8 +178,8 @@
         "password": "Password",
         "user-type": {
           "label": "User type",
-          "CLIENT_USER": "Client",
-          "ORGANIZATION_USER": "Organization"
+          "TYPE_CLIENT": "Client user",
+          "TYPE_WORKER": "Worker user"
         }
       },
       "errors": {
@@ -156,29 +237,531 @@
     },
     "success": {
       "updated": "Organization updated successfully!"
-    }
+    },
+    "title-danger": "Danger Zone",
+    "ruc-label": "RUC",
+    "ruc-placeholder": "Enter the RUC",
+    "delete": "Delete"
+  },
+  "project-tab": {
+    "title": "Projects",
+    "create": "New project",
+    "organization-selector": "Select an organization",
+    "organization-projects": "Organization projects",
+    "no-organizations": "You have no organizations. Create an organization first.",
+    "no-projects": "This organization has no projects yet."
+  },
+  "create-project": {
+    "title": "Create new project",
+    "name": "Project name",
+    "description": "Description",
+    "contracting-entity-email": "Client's email address",
+    "organization": "Organization",
+    "starting-date": "Start date",
+    "ending-date": "End date",
+    "cancel": "Cancel",
+    "submit": "Create"
   },
   "project-card": {
     "starting-date": "Start date",
     "ending-date": "End date",
+    "status": "Status",
+    "team-members": "Team members",
+    "role": "Your role",
+    "view-details": "View details",
     "descriptions": {
       "project-a": "Description of Project A"
+    },
+    "status-types": {
+      "BASIC_STUDIES": "Basic Studies",
+      "DESIGN_IN_PROCESS": "Design in Process",
+      "UNDER_REVIEW": "Under Review",
+      "CHANGE_REQUEST": "Change Request",
+      "CHANGE_PENDING": "Change Pending",
+      "REJECT": "Rejected",
+      "APPROVED": "Approved"
     }
   },
-  "organization-configuration": {
-    "title": "Edit Organization",
-    "legal-name": "Legal Name",
-    "commercial-name": "Commercial Name",
-    "submit": "Change",
-    "errors": {
-      "empty-legal-name": "The legal name cannot be empty.",
-      "no-changes": "No changes were made.",
-      "api-failed": "An error occurred while updating the organization."
+  "schedule": {
+    "title": "Project Schedule",
+    "loading": "Loading schedule...",
+    "empty-state": "No milestones have been added yet. Click 'Add Milestone' to get started.",
+    "empty-tasks-state": "No tasks have been added to this milestone yet.",
+    "no-matching-tasks": "No tasks match the current filters.",
+    "create-milestone": "Create Milestone",
+    "no-milestones": "No Milestones",
+    "no-milestones-description": "You haven't added any milestones to this project yet. Add your first milestone to start planning your project.",
+    "tasks": "Tasks",
+    "add-task": "Add Task",
+    "task-list-title": "Tasks",
+    "task-specialty": "Specialty",
+    "task-status": "Status",
+    "task-responsible": "Responsible",
+    "confirm-delete": "Are you sure you want to delete this milestone? All associated tasks will be deleted.",
+    "confirm-delete-task": "Are you sure you want to delete this task?",
+    "actions": {
+      "add-milestone": "Add Milestone",
+      "edit-milestone": "Edit Milestone",
+      "delete-milestone": "Delete Milestone",
+      "add-task": "Add Task",
+      "edit-task": "Edit Task",
+      "delete-task": "Delete Task",
+      "assign-responsible": "Assign Responsible",
+      "assign": "Assign",
+      "close": "Close",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "try-again": "Try Again"
+    },
+    "filter": {
+      "title": "Filter Tasks",
+      "by-specialty": "Filter by Specialty",
+      "by-status": "Filter by Status",
+      "all-specialties": "All Specialties",
+      "all-statuses": "All Statuses",
+      "clear": "Clear Filters"
+    },
+    "warnings": {
+      "adjusted-dates": "End date has been automatically adjusted to match start date",
+      "dates-adjusted-to-project": "Dates have been adjusted to fit within project timeframe",
+      "task-adjusted-dates": "Due date has been automatically adjusted to match start date",
+      "dates-adjusted-to-milestone": "Dates have been adjusted to fit within milestone timeframe"
+    },
+    "dialogs": {
+      "add-milestone": {
+        "title": "Add New Milestone",
+        "name": {
+          "label": "Milestone Name",
+          "placeholder": "Enter milestone name",
+          "hint": "Provide a descriptive name for this milestone",
+          "required": "Milestone name is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this milestone begin",
+          "required": "Starting date is required"
+        },
+        "endingDate": {
+          "label": "Ending Date",
+          "hint": "When should this milestone be completed",
+          "required": "Ending date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this milestone"
+        }
+      },
+      "edit-milestone": {
+        "title": "Edit Milestone",
+        "name": {
+          "label": "Milestone Name",
+          "placeholder": "Enter milestone name",
+          "hint": "Provide a descriptive name for this milestone",
+          "required": "Milestone name is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this milestone begin",
+          "required": "Starting date is required"
+        },
+        "endingDate": {
+          "label": "Ending Date",
+          "hint": "When should this milestone be completed",
+          "required": "Ending date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this milestone"
+        }
+      },
+      "add-task": {
+        "title": "Add New Task",
+        "name": {
+          "label": "Task Name",
+          "placeholder": "Enter task name",
+          "hint": "Provide a descriptive name for this task",
+          "required": "Task name is required"
+        },
+        "specialty": {
+          "label": "Required Specialty",
+          "hint": "Select the specialty required for this task",
+          "required": "Specialty is required"
+        },
+        "status": {
+          "label": "Task Status",
+          "hint": "Select the current status of this task",
+          "required": "Status is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this task begin",
+          "required": "Starting date is required"
+        },
+        "dueDate": {
+          "label": "Due Date",
+          "hint": "When should this task be completed",
+          "required": "Due date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this task"
+        }
+      },
+      "edit-task": {
+        "title": "Edit Task",
+        "name": {
+          "label": "Task Name",
+          "placeholder": "Enter task name",
+          "hint": "Provide a descriptive name for this task",
+          "required": "Task name is required"
+        },
+        "specialty": {
+          "label": "Required Specialty",
+          "hint": "Select the specialty required for this task",
+          "required": "Specialty is required"
+        },
+        "status": {
+          "label": "Task Status",
+          "hint": "Select the current status of this task",
+          "required": "Status is required"
+        },
+        "startingDate": {
+          "label": "Starting Date",
+          "hint": "When does this task begin",
+          "required": "Starting date is required"
+        },
+        "dueDate": {
+          "label": "Due Date",
+          "hint": "When should this task be completed",
+          "required": "Due date is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter description (optional)",
+          "hint": "Provide additional details about this task"
+        }
+      },
+      "assign-responsible": {
+        "title": "Assign Responsible Person",
+        "responsible": {
+          "label": "Choose Responsible",
+          "hint": "Select a team member with the required specialty",
+          "required": "A responsible person is required"
+        }
+      }
     },
     "success": {
-      "updated": "Organization updated successfully!"
+      "milestone-created": "Milestone created successfully",
+      "milestone-updated": "Milestone updated successfully",
+      "milestone-deleted": "Milestone deleted successfully",
+      "task-created": "Task created successfully",
+      "task-updated": "Task updated successfully",
+      "task-deleted": "Task deleted successfully",
+      "task-assigned": "Responsible person assigned successfully"
+    },
+    "errors": {
+      "load-project": "Failed to load project",
+      "load-milestones": "Failed to load milestones",
+      "no-project-id": "No project ID found",
+      "create-milestone": "Error creating milestone",
+      "update-milestone": "Error updating milestone",
+      "delete-milestone": "Error deleting milestone",
+      "create-task": "Error creating task",
+      "update-task": "Error updating task",
+      "delete-task": "Error deleting task",
+      "assign-task": "Error assigning responsible person",
+      "no-responsible": "You must select a responsible person",
+      "no-compatible-members": "No members with the required specialty are available",
+      "loading-person-name": "Loading..."
+    },
+    "specialties": {
+      "ARCHITECTURE": "Architecture",
+      "STRUCTURES": "Structures",
+      "HSA": "Health & Safety",
+      "TOPOGRAPHY": "Topography",
+      "SANITATION": "Sanitation",
+      "ELECTRICITY": "Electricity",
+      "COMMUNICATIONS": "Communications"
+    },
+    "task-statuses": {
+      "DRAFT": "Draft",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELED": "Canceled"
     }
-  }
+  },
+  "milestone-configuration": {
+    "title": "Milestone Configuration",
+    "loading": "Loading milestones...",
+    "empty-state": "No milestones defined for this project.",
+    "actions": {
+      "add-milestone": "Add Milestone",
+      "go-to-schedule": "Go to Schedule",
+      "try-again": "Try Again",
+      "delete-milestone": "Delete Milestone",
+      "close": "Close"
+    },
+    "errors": {
+      "no-project-id": "No project ID found in session",
+      "load-project": "Error loading project information",
+      "load-milestones": "Error loading project milestones",
+      "delete-milestone": "Error deleting milestone"
+    },
+    "success": {
+      "milestone-deleted": "Milestone deleted successfully"
+    },
+    "table": {
+      "name": "Name",
+      "startingDate": "Start Date",
+      "endingDate": "End Date",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "confirm-delete": "Are you sure you want to delete this milestone?"
+  },
+  "team": {
+    "title": "Project Team",
+    "loading": "Loading team members...",
+    "empty-state": "There are no members in this project team yet. Click 'Add Members' to get started.",
+    "actions": {
+      "add-members": "Add Members",
+      "try-again": "Try Again",
+      "cancel": "Cancel",
+      "add": "Add",
+      "remove-member": "Remove Member",
+      "confirm": "Confirm"
+    },
+    "table": {
+      "name": "Name",
+      "role": "Role",
+      "specialty": "Specialty",
+      "email": "Email",
+      "status": "Status",
+      "actions": "Actions"
+    },
 
+    "statuses": {
+      "ACTIVE": "Active",
+      "PENDING": "Pending Confirmation",
+      "INACTIVE": "Inactive"
+    },
+
+    "roles": {
+      "COORDINATOR": "Coordinator",
+      "SPECIALIST": "Specialist"
+    },
+
+    "specialties": {
+      "ARCHITECTURE": "Architecture",
+      "STRUCTURES": "Structures",
+      "HSA": "Health & Safety",
+      "TOPOGRAPHY": "Topography",
+      "SANITATION": "Sanitation",
+      "ELECTRICITY": "Electricity",
+      "COMMUNICATIONS": "Communications"
+    },
+
+    "actions": {
+      "add-members": "Add Members",
+      "view-details": "View Details",
+      "edit-member": "Edit Member",
+      "remove-member": "Remove Member",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "add": "Add",
+      "close": "Close",
+      "try-again": "Try Again"
+    },
+
+    "dialogs": {
+      "add-members": {
+        "title": "Add Team Members",
+        "search": "Search by name or email",
+        "no-results": "No members found matching your search criteria.",
+        "select": "Select",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "specialty": "Specialty",
+        "select-role": "Select role",
+        "select-specialty": "Select specialty"
+      },
+
+      "remove-member": {
+        "title": "Remove Member",
+        "confirmation": "Are you sure you want to remove this member from the team?",
+        "warning": "This action cannot be undone."
+      }
+    },
+
+    "errors": {
+      "no-project-id": "No project ID found in session",
+      "load-project": "Error loading project information",
+      "load-members": "Error loading team members",
+      "load-org-members": "Error loading organization members",
+      "invalid-form": "Please complete all required fields",
+      "no-members-selected": "Please select at least one member to add",
+      "specialists-need-specialty": "Specialist members must have a specialty assigned",
+      "add-members": "Error adding team members",
+      "member-exists": "Member already exists in this team"
+    },
+
+    "success": {
+      "members-added": "Team members added successfully",
+      "member-updated": "Team member updated successfully",
+      "member-removed": "Member removed from team successfully"
+    }
+  },
+
+  "tasks": {
+    "title": "Tasks",
+    "add": "Add Task",
+    "noTasks": "No tasks available",
+    "viewDetails": "View Details",
+    "newTask": "New Task",
+    "editTask": "Edit Task",
+    "created": "Task created successfully",
+    "updated": "Task updated successfully",
+    "errors": {
+      "load": "Error loading tasks",
+      "save": "Error saving task",
+      "noMilestone": "No milestone selected"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELED": "Canceled"
+    },
+    "form": {
+      "name": "Name",
+      "specialty": "Specialty",
+      "status": "Status",
+      "startingDate": "Starting Date",
+      "dueDate": "Due Date",
+      "responsible": "Responsible",
+      "description": "Description",
+      "unassigned": "Unassigned",
+      "errors": {
+        "nameRequired": "Name is required",
+        "nameTooLong": "Name is too long",
+        "specialtyRequired": "Specialty is required",
+        "statusRequired": "Status is required",
+        "startingDateRequired": "Starting date is required",
+        "dueDateRequired": "Due date is required"
+      }
+    },
+    "dashboard": {
+      "title": "Task Management",
+      "createNew": "Create New Task",
+      "allTasks": "All Tasks",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed"
+    }
+  },
+  "change-management": {
+    "title": "Change Management",
+    "new-request-button": "New Change Request",
+    "no-requests": "No change requests found",
+    "no-description": "No description provided",
+    "pending": "Pending",
+    "success-message": "Request submitted successfully!",
+    "status-label": "Status",
+    "description-label": "Description",
+    "project-label": "Project",
+    "check-date-label": "Check Date",
+    "approve-button": "Approve",
+    "reject-button": "Reject",
+    "form": {
+      "title-label": "Title",
+      "description-label": "Description",
+      "submit-button": "Submit",
+      "cancel-button": "Cancel"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "UNDER_REVIEW": "Under Review",
+      "CHANGE_REQUEST": "Change Request",
+      "CHANGE_PENDING": "Change Pending"
+    },
+    "errors": {
+      "load-requests": "Error loading change requests",
+      "submit-request": "Error submitting change request",
+      "approve-request": "Error approving change request",
+      "reject-request": "Error rejecting change request",
+      "no-project-id": "No project ID found"
+    },
+    "messages": {
+      "request-approved": "Change request approved successfully",
+      "request-rejected": "Change request rejected successfully",
+      "loading": "Loading change requests..."
+    }
+  },
+  "specialties": {
+    "ARCHITECTURE": "Architecture",
+    "SOFTWARE_DEVELOPMENT": "Software Development",
+    "DATA_ENGINEERING": "Data Engineering",
+    "QUALITY_ASSURANCE": "Quality Assurance",
+    "UX_DESIGN": "UX Design",
+    "PROJECT_MANAGEMENT": "Project Management",
+    "CYBERSECURITY": "Cybersecurity"
+  },
+
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "back": "Back",
+    "create": "Send"
+  },
+
+  "invitation": {
+    "title": "My invitations",
+    "pending": "invitations pending",
+    "loading": "Looking for invitations...",
+    "empty": {
+      "title": "No invitations found",
+      "description": "There are not currently pending invitations for you"
+    }
+  },
+
+  "organization-members": {
+    "title": "Organization members",
+    "invite-button": "Invite a new member",
+    "no-members": "No other members have joined yet",
+    "invite-modal": {
+      "title": "Invite a new member",
+      "email-field-label": "Email address",
+      "placeholder": "johndoe@example.com"
+    }
+  },
+
+  "invitation-table": {
+    "organization": "Organization:",
+    "invitedBy": "Invited by:",
+    "invitedAt": "Invited at:",
+    "status": "Status:",
+    "actions": "Actions:",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+
+  "invitation-statuses": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected"
+  }
 }
 

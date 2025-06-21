@@ -1,0 +1,115 @@
+/* Styles for task-list.component.css */
+
+.task-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.task-item {
+  border-left: 4px solid #ff4081;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-specialty,
+.task-status,
+.task-responsible {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.task-description {
+  color: #666;
+  font-size: 14px;
+  margin-top: 8px;
+  white-space: pre-line;
+}
+
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.task-status-DRAFT { color: #ff9800; }
+.task-status-PENDING { color: #673ab7; }
+.task-status-IN_PROGRESS { color: #2196f3; }
+.task-status-COMPLETED { color: #4caf50; }
+.task-status-CANCELED { color: #f44336; }
+
+.assign-responsible-container {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.assign-responsible-container button {
+  width: 100%;
+}
+
+.task-responsible {
+  margin-bottom: 8px;
+  font-size: 14px;
+  border-top: 1px dashed #e0e0e0;
+  padding-top: 8px;
+}
+
+.specialty-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  margin-right: 4px;
+  background-color: #e0e0e0;
+}
+
+.specialty-ARCHITECTURE {
+  background-color: #bbdefb;
+  color: #0d47a1;
+}
+
+.specialty-STRUCTURES {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+}
+
+.specialty-HSA {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+}
+
+.specialty-TOPOGRAPHY {
+  background-color: #fff9c4;
+  color: #f57f17;
+}
+
+.specialty-SANITATION {
+  background-color: #b2dfdb;
+  color: #004d40;
+}
+
+.specialty-ELECTRICITY {
+  background-color: #ffccbc;
+  color: #bf360c;
+}
+
+.specialty-COMMUNICATIONS {
+  background-color: #e1bee7;
+  color: #4a148c;
+}
+
+.empty-tasks-state {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-top: 16px;
+}

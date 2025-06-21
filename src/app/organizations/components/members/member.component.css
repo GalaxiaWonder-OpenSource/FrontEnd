@@ -1,0 +1,25 @@
+.member-list-container {
+  padding: 1rem;
+}
+
+.members-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1rem 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.members-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.no-members {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #666;
+}

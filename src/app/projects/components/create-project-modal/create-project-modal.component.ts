@@ -31,8 +31,8 @@ import { Organization } from '../../../organizations/model/organization.entity';
 export class CreateProjectModalComponent {
   name='';
   description='';
-  startingDate=new Date();
-  endingDate = new Date();
+  startingDate='';
+  endingDate = '';
   organizations: Organization[] = [];
   contractingEntityEmail: string = '';
 
@@ -40,6 +40,12 @@ export class CreateProjectModalComponent {
     private dialogRef: MatDialogRef<CreateProjectModalComponent>,
     private session: SessionService
   ) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    this.startingDate = `${yyyy}-${mm}-${dd}`;
+    this.endingDate = `${yyyy}-${mm}-${dd}`;
   }
 
   close(): void {
@@ -50,16 +56,13 @@ export class CreateProjectModalComponent {
     const orgId = this.session.getOrganizationId();
 
     if (this.name && this.description && this.endingDate && orgId) {
-      const startDate = this.startingDate;
-      const endDate = this.endingDate;
 
       const data = {
-        name: this.name,
+        projectName: this.name,
         description: this.description,
-        startingDate: startDate,
-        endingDate: endDate,
-        organizationId: orgId,
-        creator: this.session.getPersonId(),
+        startDate: this.startingDate,
+        endDate: this.endingDate,
+        organizationId: this.session.getOrganizationId(),
         contractingEntityEmail: this.contractingEntityEmail.trim()
       };
 
@@ -73,4 +76,5 @@ export class CreateProjectModalComponent {
       });
     }
   }
+
 }

@@ -70,32 +70,26 @@ export class InvitationListComponent implements OnInit {
       if (!currentPersonId) {
         console.warn('No person ID found in session');
         this.invitations.set([]);
-        this.showSnackBar('\n' + 'Could not get user information', 'error');
+        this.showSnackBar('Could not get user information', 'error');
+        this.loading.set(false);
         return;
       }
 
-      this.invitationService.getAll().subscribe({
-        next: (allInvitations: any[]) => {
-          const filteredInvitations = allInvitations.filter((inv: any) => {
+      this.invitationService.getByPersonId({}, { personId: currentPersonId }).subscribe({
+        next: (invitations: any[]) => {
+          console.log('[Invitations API Response]', invitations); // <-- Aquí el log
 
-            const invPersonId = typeof inv.personId === 'string' ? inv.personId : inv.personId?.value;
-            return inv.personId === currentPersonId;
-          });
-
-          const mappedInvitations = filteredInvitations
+          const mappedInvitations = invitations
             .map(data => this.mapToInvitation(data))
             .filter(inv => inv !== null);
 
           this.invitations.set(mappedInvitations);
-          if(this.invitations.length == 0) this.loading.set(false);
-
+          this.loading.set(false);
         },
         error: (error: any) => {
           console.error('Error loading invitations:', error);
           this.showSnackBar('Error loading Invitations', 'error');
           this.invitations.set([]);
-        },
-        complete: () => {
           this.loading.set(false);
         }
       });

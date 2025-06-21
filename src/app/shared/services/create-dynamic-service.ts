@@ -163,7 +163,11 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
       // Debug log para ver qué URL se está generando
       switch (cfg.method) {
         case HttpMethod.GET:
-          const queryParams = new URLSearchParams(serializeData(params)).toString();
+          const paramsCopy = { ...params };
+          // Elimina los usados en el path
+          const usedKeys = [...cfg.url.matchAll(/:([a-zA-Z0-9_]+)/g)].map(match => match[1]);
+          usedKeys.forEach(key => { delete paramsCopy[key]; });
+          const queryParams = new URLSearchParams(serializeData(paramsCopy)).toString();
           const fullUrl = queryParams ? `${url}?${queryParams}` : url;
           return http.get<T>(fullUrl, httpOptions);
         case HttpMethod.POST:

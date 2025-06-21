@@ -16,7 +16,7 @@ export class OrganizationInvitationService {
   private readonly service = createDynamicService<OrganizationInvitation>([
     createEndpointConfig({ name: 'getAll', method: HttpMethod.GET }, undefined, 'organization-invitations'),
     createEndpointConfig({ name: 'getById', method: HttpMethod.GET }, undefined, 'organization-invitations', '/:id'),
-    createEndpointConfig({ name: 'getByPersonId', method: HttpMethod.GET }, undefined, 'organization-invitations'),
+    createEndpointConfig({ name: 'getByPersonId', method: HttpMethod.GET }, undefined, 'organizations/invitations/by-person-id', '/:personId'),
     createEndpointConfig({ name: 'create', method: HttpMethod.POST }, undefined, 'organizations', '/invitations'),
     createEndpointConfig({ name: 'update', method: HttpMethod.PATCH }, undefined, 'organization-invitations', '/:id'),
     createEndpointConfig({ name: 'delete', method: HttpMethod.DELETE }, undefined, 'organization-invitations', '/:id'),

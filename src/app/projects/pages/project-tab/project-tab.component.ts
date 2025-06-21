@@ -127,61 +127,30 @@ export class ProjectTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        try {
-          if (!this.session.getPersonId()) {
-            throw new Error("No person ID available in session");
+        // Asegúrate de que result tenga las claves correctas:
+        // projectName, description, startDate, endDate, organizationId, contractingEntityEmail
+
+        const payload = {
+          projectName: result.projectName,
+          description: result.description,
+          startDate: result.startDate,
+          endDate: result.endDate,
+          organizationId: this.organizationId,
+          contractingEntityEmail: result.contractingEntityEmail
+        };
+
+        this.projectService.create(payload).subscribe({
+          next: (createdProject: Project) => {
+            console.log('Project created successfully:', createdProject);
+            this.loadProjectsForOrganization(this.organizationId!);
+          },
+          error: (err: Error) => {
+            console.error('Failed to create project:', err);
           }
+        });
 
-          const contractorPersonId: number = this.session.getPersonId() ?? 0;
-
-          if (!this.organizationId) {
-            throw new Error("Organization ID is required");
-          }
-
-          this.personService.getAll().subscribe({
-            next: (people: Person[]) => {
-              this.contractingEntity = people.find(p =>
-                p.email === result.contractingEntityEmail
-              );
-
-              const newPro = new Project({
-                name: result.name,
-                description: result.description,
-                startingDate: new Date(result.startingDate),
-                endingDate: new Date(result.endingDate),
-                status: ProjectStatus.BASIC_STUDIES,
-                organizationId: this.organizationId ?? 0,
-                contractingEntity: this.contractingEntity,
-                currentUserRoleOnProject: ProjectRole.COORDINATOR
-              });
-
-              this.projectService.create(newPro).subscribe({
-                next: (createdProject: Project) => {
-                  const member = new ProjectTeamMember({
-                    role: ProjectRole.COORDINATOR,
-                    specialty: Specialty.ARCHITECTURE,
-                    personId: contractorPersonId,
-                    projectId: createdProject.id
-                  });
-
-                  this.projectTeamMemberService.create(member).subscribe({
-                    next: () => {
-                      if (this.organizationId)
-                        this.loadProjectsForOrganization(this.organizationId);
-                    },
-                    error: (err: Error) =>
-                      console.error('Failed to create project team member:', err)
-                  });
-                },
-                error: (err: Error) =>
-                  console.error('Failed to create project:', err)
-              });
-            }
-          });
-        } catch (err) {
-          console.error('Validation failed when creating project:', err);
-        }
       }
     });
   }
+
 }

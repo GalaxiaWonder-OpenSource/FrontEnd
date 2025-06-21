@@ -154,6 +154,11 @@ export function createDynamicService<T>(configs: EndpointConfig[]): Record<strin
       }
       const httpOptions = { headers };
       // -------------------------------------------
+      console.log('[createDynamicService] Token:', token);
+      console.log('[createDynamicService] Headers:', headers);
+      console.log('[createDynamicService] URL:', url);
+      console.log('[createDynamicService] Body:', body);
+
 
       // Debug log para ver qué URL se está generando
       switch (cfg.method) {

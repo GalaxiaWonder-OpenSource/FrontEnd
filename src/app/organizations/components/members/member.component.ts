@@ -75,43 +75,54 @@ export class MemberComponent implements OnInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.createMember(result);
+    dialogRef.afterClosed().subscribe((email: string | undefined) => {
+      if (email) {
+        this.createMember(email);
       }
     });
   }
 
-  async createMember(memberData: Person): Promise<void> {
+  /**
+   * Envía invitación a un email
+   */
+  createMember(email: string): void {
     const organizationId = this.session.getOrganizationId();
-    const invitedBy = this.session.getPersonId();
 
-    if (!organizationId || !invitedBy) {
-      console.error('No organizationId or personId found in session');
+    if (!organizationId) {
+      this.snackBar.open(
+        'No organizationId found in session',
+        'Close',
+        { duration: 3000, panelClass: ['snackbar-error'] }
+      );
       return;
     }
 
-    const invitationSender: Person = await this.personService.getById({}, {id: invitedBy}).toPromise();
+    const invitationData = {
+      organizationId,
+      email // el email ya viene directamente del modal
+    };
 
-    const invitation = new OrganizationInvitation({
-      organizationId: organizationId,
-      personId: memberData.id,
-      invitedBy: `${invitationSender.firstName} ${invitationSender.lastName}`.trim(),
-      invitedAt: new Date(),
-      status: InvitationStatus.PENDING
-    });
+    console.log(invitationData);
 
-
-    this.organizationInvitationService.create(invitation).subscribe({
+    this.organizationInvitationService.create(invitationData).subscribe({
       next: () => {
-        this.snackBar.open('Invitation sent successfully', 'Close', { duration: 3000, panelClass: ['snackbar-success'] });
+        this.snackBar.open('Invitation sent successfully', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        // Puedes recargar la lista aquí si lo necesitas:
+        // this.loadMembers();
       },
       error: (err: unknown) => {
-        this.snackBar.open('Error sending invitation', 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
+        this.snackBar.open('Error sending invitation', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
         console.error('Error sending invitation:', err);
       }
     });
   }
+
 
   private loadMembers(): void {
     const organizationId = this.session.getOrganizationId();
